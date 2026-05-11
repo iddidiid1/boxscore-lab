@@ -1,0 +1,22 @@
+{
+  "name": "fantasy-league-stats",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "dev": "concurrently \"pnpm dev:backend\" \"pnpm dev:frontend\"",
+    "dev:frontend": "pnpm --filter @fantasy-league-stats/frontend dev",
+    "dev:backend": "pnpm --filter @fantasy-league-stats/backend dev",
+    "db:migrate": "prisma migrate dev --schema prisma/schema.prisma",
+    "db:generate": "prisma generate --schema prisma/schema.prisma",
+    "db:studio": "prisma studio --schema prisma/schema.prisma"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prisma": "^6.19.3",
+    "typescript": "^5.7.2"
+  }
+}

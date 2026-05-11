@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Team {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  description        String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  players            Player[]
+  homeMatches        Match[]              @relation("TeamAMatches")
+  awayMatches        Match[]              @relation("TeamBMatches")
+  matchPlayerStats   MatchPlayerStats[]
+  competitionResults CompetitionResult[]
+
+  @@index([name])
+}
+
+model Player {
+  id               Int                @id @default(autoincrement())
+  teamId           Int
+  firstName        String
+  lastName         String
+  position         String?
+  attribute        String?
+  description      String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  team             Team               @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  matchPlayerStats MatchPlayerStats[]
+
+  @@index([teamId])
+  @@index([lastName, firstName])
+}
+
+model Season {
+  id           Int           @id @default(autoincrement())
+  name         String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  competitions Competition[]
+
+  @@unique([name])
+}
+
+model Competition {
+  id                Int                 @id @default(autoincrement())
+  seasonId          Int
+  name              String
+  formatDescription String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  season            Season              @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  matches           Match[]
+  results           CompetitionResult[]
+
+  @@unique([seasonId, name])
+  @@index([seasonId])
+}
+
+model Match {
+  id               Int                @id @default(autoincrement())
+  competitionId    Int
+  teamAId          Int
+  teamBId          Int
+  scoreA           Int
+  scoreB           Int
+  matchDate        DateTime
+  stage            String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  competition      Competition        @relation(fields: [competitionId], references: [id], onDelete: Cascade)
+  teamA            Team               @relation("TeamAMatches", fields: [teamAId], references: [id], onDelete: Restrict)
+  teamB            Team               @relation("TeamBMatches", fields: [teamBId], references: [id], onDelete: Restrict)
+  matchPlayerStats MatchPlayerStats[]
+
+  @@index([competitionId])
+  @@index([teamAId])
+  @@index([teamBId])
+  @@index([matchDate])
+  @@index([stage])
+}
+
+model MatchPlayerStats {
+  id        Int      @id @default(autoincrement())
+  matchId   Int
+  playerId  Int
+  teamId    Int
+  points    Int      @default(0)
+  rebounds  Int      @default(0)
+  assists   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Restrict)
+
+  @@unique([matchId, playerId])
+  @@index([matchId])
+  @@index([playerId])
+  @@index([teamId])
+}
+
+model CompetitionResult {
+  id            Int         @id @default(autoincrement())
+  competitionId Int
+  teamId        Int
+  rank          Int
+  points        Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  competition   Competition @relation(fields: [competitionId], references: [id], onDelete: Cascade)
+  team          Team        @relation(fields: [teamId], references: [id], onDelete: Restrict)
+
+  @@unique([competitionId, teamId])
+  @@unique([competitionId, rank])
+  @@index([competitionId])
+  @@index([teamId])
+}

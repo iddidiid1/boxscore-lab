@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.vite/
+.env
+.env.*
+!.env.example
+*.log
+.logs/
+prisma/dev.db
+prisma/dev.db-journal
+git status
