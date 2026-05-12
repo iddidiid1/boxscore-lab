@@ -4,6 +4,7 @@ export function TeamsPage() {
   return (
     <PagePlaceholder
       description="Placeholder for team records and basic team details."
+      signal="Roster grouping"
       title="Teams"
     />
   );
