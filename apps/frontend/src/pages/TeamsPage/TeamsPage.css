@@ -1,0 +1,162 @@
+.teams-page {
+  width: 100%;
+}
+
+.teams-header {
+  gap: 18px;
+}
+
+.create-team-button {
+  min-width: 142px;
+  border-radius: 4px;
+  background: #2563eb;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.create-team-button:hover {
+  background: #1d4ed8;
+}
+
+.division-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.division-section {
+  min-width: 0;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #121c2f;
+  padding: 16px;
+}
+
+.division-heading {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.78);
+}
+
+.division-heading h3 {
+  margin: 3px 0 0;
+  color: #f8fafc;
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+.team-card {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  border: 1px solid rgba(71, 85, 105, 0.76);
+  border-radius: 5px;
+  background: #0c1425;
+  padding: 11px 12px;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    transform 140ms ease;
+}
+
+.team-card:hover {
+  border-color: rgba(59, 130, 246, 0.7);
+  background: #101a2c;
+  transform: translateY(-1px);
+}
+
+.team-points {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.team-logo {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(100, 116, 139, 0.74);
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.team-logo-fallback {
+  background: #17243a;
+  color: #cbd5e1;
+}
+
+.team-logo-fallback svg {
+  color: #4edea3;
+  margin-bottom: -2px;
+}
+
+.team-logo-fallback span {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.team-card-main {
+  min-width: 0;
+}
+
+.team-name {
+  overflow: hidden;
+  color: #f8fafc;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team-points {
+  color: #dae2fd;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.team-rating {
+  color: #fbbf24;
+  font-size: 0.86rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .division-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .teams-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .create-team-button {
+    width: 100%;
+  }
+
+  .division-section {
+    padding: 13px;
+  }
+
+  .team-card {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .team-logo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .team-name {
+    white-space: normal;
+  }
+}
