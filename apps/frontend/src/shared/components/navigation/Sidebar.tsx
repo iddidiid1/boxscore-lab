@@ -23,22 +23,25 @@ export function Sidebar<Key extends string>({
 }: SidebarProps<Key>) {
   return (
     <Paper className="sidebar" component="aside">
-      <Stack gap="xl">
-        <SidebarHeader />
-        <ApiHealthCheckBox />
+      <Stack className="sidebar-layout" gap="xl">
+        <Stack gap="xl">
+          <SidebarHeader />
 
-        <Stack component="nav" gap={6} aria-label="Primary navigation">
-          {items.map((item) => (
-            <NavigationTab
-              active={item.key === activeKey}
-              icon={item.Icon}
-              key={item.key}
-              label={item.label}
-              onClick={() => onNavigate(item.key)}
-              path={item.key}
-            />
-          ))}
+          <Stack component="nav" gap={6} aria-label="Primary navigation">
+            {items.map((item) => (
+              <NavigationTab
+                active={item.key === activeKey}
+                icon={item.Icon}
+                key={item.key}
+                label={item.label}
+                onClick={() => onNavigate(item.key)}
+                path={item.key}
+              />
+            ))}
+          </Stack>
         </Stack>
+
+        <ApiHealthCheckBox />
       </Stack>
     </Paper>
   );
