@@ -6,6 +6,7 @@ import { Sidebar } from "../shared/components/navigation";
 
 function AppContent() {
   const [activePage, setActivePage] = useState<PageKey>("home");
+
   const page = useMemo(
     () => appPages.find((item) => item.key === activePage) ?? appPages[0],
     [activePage]
