@@ -1,4 +1,4 @@
-import { Box, Group, Text } from "@mantine/core";
+import { Anchor, Box, Group, Text } from "@mantine/core";
 import { Shield } from "lucide-react";
 import type { Team } from "../types";
 
@@ -34,11 +34,21 @@ function TeamLogo({ team }: { team: Team }) {
 }
 
 export function TeamCard({ team }: TeamCardProps) {
+  const teamDetailPath = `/teams/${team.id}`;
+
   return (
     <Box className="team-card">
-      <TeamLogo team={team} />
+      <Anchor
+        aria-label={`View ${team.name} details`}
+        className="team-logo-link"
+        href={teamDetailPath}
+      >
+        <TeamLogo team={team} />
+      </Anchor>
       <Box className="team-card-main">
-        <Text className="team-name">{team.name}</Text>
+        <Anchor className="team-name-link" href={teamDetailPath}>
+          <Text className="team-name">{team.name}</Text>
+        </Anchor>
         <Group gap="xs" justify="space-between" wrap="nowrap">
           <Text className="team-points">{team.points.toLocaleString()} pts</Text>
           <Text aria-label={`${team.overallRating} out of 5 rating`} className="team-rating">

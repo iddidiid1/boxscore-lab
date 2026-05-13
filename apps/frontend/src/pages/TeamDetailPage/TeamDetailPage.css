@@ -1,0 +1,339 @@
+.team-detail-page {
+  width: 100%;
+}
+
+.team-detail-back-link {
+  width: fit-content;
+  color: #adc6ff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.team-detail-back-link:hover {
+  color: #f8fafc;
+  text-decoration: none;
+}
+
+.team-detail-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.team-profile-summary {
+  width: 100%;
+  min-height: 330px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  padding: 24px;
+}
+
+.team-profile-logo {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 104px;
+  height: 104px;
+  border: 1px solid rgba(100, 116, 139, 0.74);
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.team-profile-logo-fallback {
+  background: #17243a;
+  color: #cbd5e1;
+}
+
+.team-profile-logo-fallback svg {
+  color: #4edea3;
+}
+
+.team-profile-logo-fallback span {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.team-profile-content {
+  min-width: 0;
+}
+
+.team-profile-content h1 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+.team-profile-division {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.team-profile-points {
+  color: #dae2fd;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.team-profile-rating {
+  color: #fbbf24;
+  font-size: 1rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.team-profile-description {
+  color: #94a3b8;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.team-radar-card,
+.team-summary-card,
+.roster-table-card {
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #121c2f;
+}
+
+.team-radar-card {
+  min-height: 330px;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.team-radar-title {
+  display: none;
+}
+
+.team-radar-card h2,
+.team-summary-card h2,
+.roster-table-card h2 {
+  margin: 0 0 14px;
+  color: #f8fafc;
+  font-size: 1.12rem;
+  line-height: 1.2;
+}
+
+.team-radar-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(240px, 26vw, 340px);
+  aspect-ratio: 1 / 1;
+}
+
+.team-radar-chart svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.radar-guide {
+  fill: transparent;
+  stroke: rgba(148, 163, 184, 0.2);
+  stroke-width: 1;
+}
+
+.radar-axis {
+  stroke: rgba(148, 163, 184, 0.14);
+  stroke-width: 1;
+}
+
+.radar-value {
+  filter: url("#radarGlow");
+  fill: rgba(78, 222, 163, 0.3);
+  stroke: #4edea3;
+  stroke-width: 2.5;
+}
+
+.radar-label {
+  fill: #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.radar-label-value {
+  color: #dae2fd;
+  fill: #dae2fd;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-weight: 800;
+}
+
+.team-summary-card,
+.roster-table-card {
+  padding: 20px 22px;
+}
+
+.team-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 8px;
+}
+
+.team-summary-stat {
+  min-width: 0;
+  padding: 18px 20px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.team-summary-stat + .team-summary-stat {
+  border-left: 1px solid rgba(51, 65, 85, 0.78);
+}
+
+.team-summary-value {
+  color: #f8fafc;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-top: 6px;
+}
+
+.roster-table-scroll {
+  overflow-x: auto;
+}
+
+.roster-table {
+  width: 100%;
+  min-width: 760px;
+}
+
+.roster-table th {
+  border-color: #334155;
+  padding: 8px 10px;
+}
+
+.roster-table td {
+  border-color: rgba(51, 65, 85, 0.76);
+  padding: 9px 10px;
+}
+
+.roster-table .roster-column-number {
+  width: 54px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.roster-table .roster-column-position {
+  width: 66px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.roster-table tbody tr:hover td {
+  background: rgba(30, 41, 59, 0.48);
+}
+
+.roster-sort-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  width: 100%;
+  min-height: 24px;
+  border: 0;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.roster-sort-button:hover {
+  color: #f8fafc;
+}
+
+.roster-sort-button:focus-visible {
+  outline: 2px solid #82a6ff;
+  outline-offset: 2px;
+}
+
+.roster-sort-indicator {
+  display: inline-block;
+  min-width: 8px;
+  color: #adc6ff;
+}
+
+.roster-value {
+  color: #dae2fd;
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+
+.roster-rating {
+  color: #fbbf24;
+  font-size: 0.82rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .team-detail-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .team-profile-summary {
+    align-items: flex-start;
+    width: 100%;
+    padding: 18px;
+    min-height: auto;
+  }
+
+  .team-profile-logo {
+    width: 68px;
+    height: 68px;
+  }
+
+  .team-profile-content h1 {
+    font-size: 1.45rem;
+  }
+
+  .team-radar-card {
+    min-height: auto;
+  }
+
+  .team-radar-chart {
+    width: min(100%, 320px);
+  }
+
+  .team-summary-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .team-summary-stat + .team-summary-stat {
+    border-left: 0;
+  }
+
+  .team-summary-stat {
+    border-top: 1px solid rgba(51, 65, 85, 0.78);
+  }
+
+  .team-summary-stat:nth-child(-n + 2) {
+    border-top: 0;
+  }
+
+  .team-summary-stat:nth-child(odd) {
+    border-right: 1px solid rgba(51, 65, 85, 0.78);
+  }
+}

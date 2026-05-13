@@ -81,6 +81,28 @@
   object-fit: cover;
 }
 
+.team-logo-link,
+.team-name-link {
+  text-decoration: none;
+}
+
+.team-logo-link {
+  display: block;
+  width: 46px;
+  height: 46px;
+  border-radius: 5px;
+}
+
+.team-logo-link:focus-visible,
+.team-name-link:focus-visible {
+  outline: 2px solid #82a6ff;
+  outline-offset: 3px;
+}
+
+.team-logo-link:hover .team-logo {
+  border-color: rgba(59, 130, 246, 0.92);
+}
+
 .team-logo-fallback {
   background: #17243a;
   color: #cbd5e1;
@@ -100,6 +122,16 @@
 
 .team-card-main {
   min-width: 0;
+}
+
+.team-name-link {
+  display: inline-block;
+  max-width: 100%;
+  border-radius: 3px;
+}
+
+.team-name-link:hover .team-name {
+  color: #adc6ff;
 }
 
 .team-name {
@@ -152,6 +184,11 @@
   }
 
   .team-logo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .team-logo-link {
     width: 42px;
     height: 42px;
   }
