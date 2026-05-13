@@ -2,6 +2,7 @@ import { Box } from "@mantine/core";
 import { useEffect, useMemo, useState } from "react";
 import { AppProviders } from "./providers";
 import { appPages, type PageKey } from "./router";
+import { ManageTeamPage } from "../pages/ManageTeamPage";
 import { TeamDetailPage } from "../pages/TeamDetailPage";
 import { Sidebar } from "../shared/components/navigation";
 
@@ -26,7 +27,8 @@ function AppContent() {
     [activePage]
   );
   const ActivePage = page.Component;
-  const isTeamDetailPage = pathname.startsWith("/teams/");
+  const isManageTeamPage = /^\/teams\/[^/]+\/manage\/?$/.test(pathname);
+  const isTeamDetailPage = pathname.startsWith("/teams/") && !isManageTeamPage;
 
   useEffect(() => {
     function handlePopState() {
@@ -54,7 +56,13 @@ function AppContent() {
       <Sidebar activeKey={activePage} items={appPages} onNavigate={handleNavigate} />
 
       <Box className="content" component="main">
-        {isTeamDetailPage ? <TeamDetailPage /> : <ActivePage />}
+        {isManageTeamPage ? (
+          <ManageTeamPage />
+        ) : isTeamDetailPage ? (
+          <TeamDetailPage />
+        ) : (
+          <ActivePage />
+        )}
       </Box>
     </Box>
   );

@@ -1,0 +1,199 @@
+.manage-team-page {
+  width: 100%;
+}
+
+.manage-team-header {
+  gap: 18px;
+}
+
+.manage-team-save-button {
+  min-width: 132px;
+  border-radius: 4px;
+  background: #2563eb;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.manage-team-save-button:hover {
+  background: #1d4ed8;
+}
+
+.manage-team-cancel-button {
+  min-width: 96px;
+  border-color: #334155;
+  border-radius: 4px;
+  color: #adc6ff;
+  font-weight: 700;
+}
+
+.manage-team-section {
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #121c2f;
+  padding: 24px;
+}
+
+.manage-team-section h2 {
+  margin: 0 0 18px;
+  color: #f8fafc;
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.team-basic-info-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.65fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.manage-team-input-label {
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.manage-team-input,
+.manage-team-textarea {
+  border-color: #334155;
+  border-radius: 4px;
+  background: #0c1425;
+  color: #f8fafc;
+}
+
+.manage-team-input:focus,
+.manage-team-input:focus-within,
+.manage-team-textarea:focus,
+.manage-team-textarea:focus-within {
+  border-color: #3b82f6;
+}
+
+.team-basic-info-preview {
+  border: 1px solid rgba(51, 65, 85, 0.78);
+  border-radius: 6px;
+  background: #0c1425;
+  padding: 18px;
+}
+
+.manage-team-logo-preview {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  margin-top: 10px;
+  border: 1px solid rgba(100, 116, 139, 0.74);
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.manage-team-logo-fallback {
+  background: #17243a;
+  color: #cbd5e1;
+}
+
+.manage-team-logo-fallback svg {
+  color: #4edea3;
+}
+
+.manage-team-logo-fallback span {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.manage-team-rating-preview {
+  color: #fbbf24;
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-top: 10px;
+}
+
+.manage-team-preview-value {
+  color: #dae2fd;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.profile-rating-list {
+  max-width: 920px;
+}
+
+.profile-rating-row {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr) 58px;
+  gap: 16px;
+  align-items: center;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.62);
+  padding: 6px 0 14px;
+}
+
+.profile-rating-row:last-child {
+  border-bottom: 0;
+  padding-bottom: 4px;
+}
+
+.profile-rating-label {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.profile-rating-value {
+  justify-self: end;
+  min-width: 52px;
+  border: 1px solid rgba(51, 65, 85, 0.86);
+  border-radius: 4px;
+  background: #0c1425;
+  color: #dae2fd;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 5px 8px;
+  text-align: center;
+}
+
+.profile-rating-slider {
+  min-width: 0;
+}
+
+.profile-rating-slider-track {
+  background: #0c1425;
+}
+
+.profile-rating-slider-bar {
+  background: #4edea3;
+}
+
+.profile-rating-slider-thumb {
+  border-color: #4edea3;
+  background: #111a2d;
+}
+
+.profile-rating-slider-mark {
+  border-color: rgba(148, 163, 184, 0.5);
+}
+
+@media (max-width: 900px) {
+  .team-basic-info-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .manage-team-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .profile-rating-row {
+    grid-template-columns: 1fr 54px;
+    gap: 10px 12px;
+  }
+
+  .profile-rating-slider {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}

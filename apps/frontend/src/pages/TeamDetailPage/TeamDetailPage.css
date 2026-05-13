@@ -15,6 +15,22 @@
   text-decoration: none;
 }
 
+.team-detail-actions {
+  gap: 14px;
+}
+
+.manage-team-button {
+  min-width: 128px;
+  border-radius: 4px;
+  background: #2563eb;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.manage-team-button:hover {
+  background: #1d4ed8;
+}
+
 .team-detail-hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 1fr);

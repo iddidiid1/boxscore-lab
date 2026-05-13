@@ -1,4 +1,4 @@
-import { Anchor, Box, Stack } from "@mantine/core";
+import { Anchor, Box, Button, Group, Stack } from "@mantine/core";
 import { RosterTable, type Player } from "./components/RosterTable";
 import { TeamRadarCard, type TeamRadarAttribute } from "./components/TeamRadarCard";
 import { TeamProfileSummary } from "./components/TeamProfileSummary";
@@ -6,6 +6,7 @@ import { TeamSummaryCard, type TeamSummaryStat } from "./components/TeamSummaryC
 import "./TeamDetailPage.css";
 
 const mockTeam = {
+  id: "falcon-united",
   name: "Falcon United",
   division: "Division A",
   points: 1280,
@@ -62,9 +63,14 @@ const mockPlayers: Player[] = [
 export function TeamDetailPage() {
   return (
     <Stack className="team-detail-page" gap="md">
-      <Anchor className="team-detail-back-link" href="/teams">
-        {"\u2190 Back to Teams"}
-      </Anchor>
+      <Group className="team-detail-actions" justify="space-between">
+        <Anchor className="team-detail-back-link" href="/teams">
+          {"\u2190 Back to Teams"}
+        </Anchor>
+        <Button className="manage-team-button" component="a" href={`/teams/${mockTeam.id}/manage`}>
+          Manage Team
+        </Button>
+      </Group>
 
       <Box className="team-detail-hero">
         <TeamProfileSummary
