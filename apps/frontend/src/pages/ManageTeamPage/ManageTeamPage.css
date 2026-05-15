@@ -175,6 +175,93 @@
   border-color: rgba(148, 163, 184, 0.5);
 }
 
+.player-management-header {
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.player-management-header h2 {
+  margin-bottom: 6px;
+}
+
+.player-add-button,
+.player-save-button {
+  border-radius: 4px;
+  background: #2563eb;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.player-add-button:hover,
+.player-save-button:hover {
+  background: #1d4ed8;
+}
+
+.player-cancel-button {
+  border-color: #334155;
+  border-radius: 4px;
+  color: #adc6ff;
+  font-weight: 700;
+}
+
+.player-inline-form {
+  border: 1px solid rgba(51, 65, 85, 0.78);
+  border-radius: 6px;
+  background: #0c1425;
+  margin-bottom: 18px;
+  padding: 16px;
+}
+
+.player-form-grid {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.5fr) minmax(140px, 0.6fr) minmax(220px, 1.4fr);
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.player-table-wrap {
+  overflow-x: auto;
+}
+
+.player-management-table {
+  min-width: 560px;
+}
+
+.player-management-table th {
+  border-color: #334155;
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 8px 10px;
+  text-transform: uppercase;
+}
+
+.player-management-table td {
+  border-color: rgba(51, 65, 85, 0.76);
+  color: #dae2fd;
+  font-size: 0.84rem;
+  padding: 9px 10px;
+}
+
+.player-management-table tbody tr:hover td {
+  background: rgba(30, 41, 59, 0.48);
+}
+
+.player-actions-cell {
+  text-align: right;
+}
+
+.player-table-action {
+  color: #adc6ff;
+  font-weight: 700;
+  padding-inline: 8px;
+}
+
+.player-table-action.danger {
+  color: #fca5a5;
+}
+
 @media (max-width: 900px) {
   .team-basic-info-layout {
     grid-template-columns: 1fr;
@@ -195,5 +282,14 @@
   .profile-rating-slider {
     grid-column: 1 / -1;
     grid-row: 2;
+  }
+
+  .player-management-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .player-form-grid {
+    grid-template-columns: 1fr;
   }
 }
