@@ -45,8 +45,8 @@ export const appPages: Array<{
   {
     key: "teams",
     label: "Teams",
-    description: "Placeholder for team records and basic team details.",
-    signal: "Roster grouping",
+    description: "League overview board for team divisions and rankings.",
+    signal: "Division board",
     Icon: Shield,
     Component: TeamsPage
   },
