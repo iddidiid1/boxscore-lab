@@ -2,6 +2,7 @@ import { Box, Table, Text, Title } from "@mantine/core";
 import type { PlayerRanking, PlayerRankingSortDirection, PlayerRankingSortField } from "../types";
 
 type PlayerRankingTableProps = {
+  onPlayerSelect?: (playerId: string) => void;
   onSort: (field: PlayerRankingSortField) => void;
   players: PlayerRanking[];
   sortDirection: PlayerRankingSortDirection;
@@ -12,7 +13,10 @@ type RankingColumn = {
   className?: string;
   key: keyof PlayerRanking;
   label: string;
-  render: (player: PlayerRanking) => React.ReactNode;
+  render: (
+    player: PlayerRanking,
+    onPlayerSelect?: (playerId: string) => void
+  ) => React.ReactNode;
   sortField?: PlayerRankingSortField;
 };
 
@@ -27,14 +31,24 @@ const columns: RankingColumn[] = [
     key: "name",
     label: "Name",
     className: "player-name-column",
-    render: (player) => (
+    render: (player, onPlayerSelect) => (
       <Box className="player-name-cell">
         <span
           aria-hidden="true"
           className="player-team-color-bar"
           style={{ backgroundColor: player.teamColor }}
         />
-        <Text className="player-name-value">{player.name}</Text>
+        {onPlayerSelect ? (
+          <button
+            className="player-name-button"
+            onClick={() => onPlayerSelect(player.id)}
+            type="button"
+          >
+            {player.name}
+          </button>
+        ) : (
+          <Text className="player-name-value">{player.name}</Text>
+        )}
       </Box>
     )
   },
@@ -89,6 +103,7 @@ function getRankingValueClass(player: PlayerRanking, columnKey: keyof PlayerRank
 }
 
 export function PlayerRankingTable({
+  onPlayerSelect,
   onSort,
   players,
   sortDirection,
@@ -144,7 +159,7 @@ export function PlayerRankingTable({
                 {columns.map((column) => (
                   <Table.Td className={column.className} key={column.key}>
                     {column.key === "name" ? (
-                      column.render(player)
+                      column.render(player, onPlayerSelect)
                     ) : (
                       <Text className={getRankingValueClass(player, column.key)}>
                         {column.render(player)}

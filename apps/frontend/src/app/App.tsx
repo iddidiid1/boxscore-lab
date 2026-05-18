@@ -4,6 +4,7 @@ import { AppProviders } from "./providers";
 import { appPages, type PageKey } from "./router";
 import { CreateTeamPage } from "../pages/CreateTeamPage";
 import { ManageTeamPage } from "../pages/ManageTeamPage";
+import { PlayerDetailPage } from "../pages/PlayerDetailPage";
 import { TeamDetailPage } from "../pages/TeamDetailPage";
 import { Sidebar } from "../shared/components/navigation";
 
@@ -31,6 +32,7 @@ function AppContent() {
   const isCreateTeamPage = pathname === "/teams/new" || pathname === "/teams/new/";
   const isManageTeamPage = /^\/teams\/[^/]+\/manage\/?$/.test(pathname);
   const isTeamDetailPage = pathname.startsWith("/teams/") && !isManageTeamPage && !isCreateTeamPage;
+  const isPlayerDetailPage = /^\/players\/[^/]+\/?$/.test(pathname);
 
   useEffect(() => {
     function handlePopState() {
@@ -64,6 +66,8 @@ function AppContent() {
           <ManageTeamPage />
         ) : isTeamDetailPage ? (
           <TeamDetailPage />
+        ) : isPlayerDetailPage ? (
+          <PlayerDetailPage />
         ) : (
           <ActivePage />
         )}

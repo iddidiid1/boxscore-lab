@@ -129,6 +129,13 @@ export function PlayersPage() {
     setSortDirection("desc");
   }
 
+  function handlePlayerSelect(playerId: string) {
+    const nextPath = `/players/${playerId}`;
+
+    window.history.pushState({}, "", nextPath);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }
+
   return (
     <Stack className="players-page" gap="xl">
       <Group align="flex-start" className="players-header" justify="space-between">
@@ -158,6 +165,7 @@ export function PlayersPage() {
         />
         <StatisticLeaderCards leaders={statisticLeaders} />
         <PlayerRankingTable
+          onPlayerSelect={handlePlayerSelect}
           onSort={handleSort}
           players={visiblePlayers}
           sortDirection={sortDirection}
