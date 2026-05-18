@@ -15,7 +15,7 @@ function getPageKeyFromPath(pathname: string): PageKey {
     return firstPathSegment as PageKey;
   }
 
-  return "home";
+  return "teams";
 }
 
 function AppContent() {
@@ -48,7 +48,7 @@ function AppContent() {
   }, []);
 
   function handleNavigate(pageKey: PageKey) {
-    const nextPath = pageKey === "home" ? "/" : `/${pageKey}`;
+    const nextPath = `/${pageKey}`;
 
     window.history.pushState({}, "", nextPath);
     setPathname(nextPath);

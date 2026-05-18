@@ -44,13 +44,10 @@ Page-level components. Pages compose shared UI and feature code, but should avoi
 
 Current pages:
 
-- `HomePage`
 - `TeamsPage`
 - `PlayersPage`
-- `SeasonsPage`
-- `CompetitionsPage`
 - `MatchesPage`
-- `StatsPage`
+- `EventsPage`
 
 ### `src/features`
 

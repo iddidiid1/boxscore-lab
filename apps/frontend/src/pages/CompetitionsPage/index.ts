@@ -1,1 +1,0 @@
-export { CompetitionsPage } from "./CompetitionsPage";

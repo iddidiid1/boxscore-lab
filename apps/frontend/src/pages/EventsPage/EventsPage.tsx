@@ -1,11 +1,11 @@
 import { PagePlaceholder } from "../../shared/components/PagePlaceholder";
 
-export function CompetitionsPage() {
+export function EventsPage() {
   return (
     <PagePlaceholder
-      description="Placeholder for competitions and manually entered results."
+      description="Placeholder for events and manually entered results."
       signal="Manual results"
-      title="Competitions"
+      title="Events"
     />
   );
 }
