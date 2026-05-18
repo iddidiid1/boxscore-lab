@@ -1,0 +1,301 @@
+.player-detail-page {
+  width: 100%;
+}
+
+.player-detail-back-link {
+  width: fit-content;
+  color: #adc6ff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.player-detail-back-link:hover {
+  color: #f8fafc;
+  text-decoration: none;
+}
+
+.player-detail-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.player-profile-header {
+  min-height: 300px;
+  border-radius: 6px;
+  background: transparent;
+  padding: 24px;
+}
+
+.player-profile-team-accent {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 112px;
+  border-radius: 3px;
+}
+
+.player-profile-content {
+  min-width: 0;
+}
+
+.player-profile-content h1 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 2.55rem;
+  line-height: 1.15;
+}
+
+.player-profile-secondary {
+  color: #94a3b8;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.player-performance-card,
+.player-summary-card,
+.player-match-card,
+.player-detail-event-filter,
+.player-detail-empty-state {
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #121c2f;
+}
+
+.player-performance-card,
+.player-summary-card,
+.player-match-card,
+.player-detail-event-filter,
+.player-detail-empty-state {
+  padding: 20px 22px;
+}
+
+.player-detail-event-filter {
+  display: flex;
+  align-items: flex-end;
+}
+
+.player-detail-event-filter .mantine-Select-root {
+  flex: 1 1 240px;
+  max-width: 340px;
+}
+
+.player-detail-filter-label {
+  margin-bottom: 6px;
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.player-detail-filter-input {
+  min-height: 40px;
+  border-color: rgba(71, 85, 105, 0.82);
+  border-radius: 4px;
+  background: #0c1425;
+  color: #dae2fd;
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.player-detail-filter-input:hover {
+  border-color: rgba(59, 130, 246, 0.62);
+}
+
+.player-performance-card h2,
+.player-summary-card h2,
+.player-match-card h2 {
+  margin: 0 0 14px;
+  color: #f8fafc;
+  font-size: 1.12rem;
+  line-height: 1.2;
+}
+
+.player-performance-helper {
+  color: #94a3b8;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.player-performance-bars {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.player-performance-row {
+  display: grid;
+  gap: 8px;
+}
+
+.player-performance-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.player-performance-score {
+  color: #dae2fd;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.player-performance-track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #0c1425;
+}
+
+.player-performance-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #4edea3;
+  box-shadow: 0 0 18px rgba(78, 222, 163, 0.22);
+}
+
+.player-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin-top: 8px;
+}
+
+.player-summary-stat {
+  min-width: 0;
+  padding: 18px 20px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.player-summary-stat + .player-summary-stat {
+  border-left: 1px solid rgba(51, 65, 85, 0.78);
+}
+
+.player-summary-value {
+  margin-top: 6px;
+  color: #f8fafc;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.player-match-table-scroll {
+  overflow-x: auto;
+}
+
+.player-match-history-section {
+  display: grid;
+  gap: 14px;
+}
+
+.player-match-table {
+  width: 100%;
+  min-width: 860px;
+}
+
+.player-match-table th {
+  border-color: rgba(51, 65, 85, 0.78);
+  padding: 9px 10px;
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.player-match-table td {
+  border-color: rgba(51, 65, 85, 0.42);
+  padding: 11px 10px;
+}
+
+.player-match-table tbody tr:hover td {
+  background: rgba(30, 41, 59, 0.58);
+}
+
+.player-match-value {
+  color: #dae2fd;
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+
+.player-match-table td:nth-child(n + 4) .player-match-value {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-weight: 750;
+}
+
+.player-detail-empty-state {
+  display: grid;
+  gap: 8px;
+  min-height: 180px;
+  align-content: center;
+}
+
+.player-detail-empty-title {
+  color: #f8fafc;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+@media (max-width: 980px) {
+  .player-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .player-summary-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .player-summary-stat + .player-summary-stat {
+    border-left: 0;
+  }
+
+  .player-summary-stat {
+    border-top: 1px solid rgba(51, 65, 85, 0.78);
+  }
+
+  .player-summary-stat:nth-child(-n + 3) {
+    border-top: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .player-profile-header {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .player-profile-team-accent {
+    height: 76px;
+  }
+
+  .player-profile-content h1 {
+    font-size: 1.85rem;
+  }
+
+  .player-summary-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .player-detail-event-filter .mantine-Select-root {
+    max-width: none;
+    width: 100%;
+  }
+
+  .player-summary-stat:nth-child(-n + 3) {
+    border-top: 1px solid rgba(51, 65, 85, 0.78);
+  }
+
+  .player-summary-stat:nth-child(-n + 2) {
+    border-top: 0;
+  }
+}
