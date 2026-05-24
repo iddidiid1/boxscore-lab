@@ -1,0 +1,331 @@
+.match-detail-page {
+  width: 100%;
+}
+
+.match-detail-back-link {
+  width: fit-content;
+  color: #adc6ff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.match-detail-back-link:hover {
+  color: #f8fafc;
+  text-decoration: none;
+}
+
+.match-detail-actions {
+  gap: 14px;
+}
+
+.edit-match-button {
+  min-width: 112px;
+  border-radius: 4px;
+  background: #2563eb;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.edit-match-button:hover {
+  background: #1d4ed8;
+}
+
+.match-detail-score-card,
+.match-box-score-card {
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #121c2f;
+}
+
+.match-detail-score-card {
+  padding: 22px 24px;
+}
+
+.match-detail-meta {
+  min-width: 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.62);
+}
+
+.match-detail-event {
+  overflow: hidden;
+  color: #adc6ff;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.match-detail-tag {
+  border: 1px solid rgba(71, 85, 105, 0.68);
+  border-radius: 3px;
+  background: rgba(15, 23, 42, 0.62);
+  color: #cbd5e1;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.match-detail-date {
+  margin-left: auto;
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.match-detail-scoreline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 260px) minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  padding-top: 22px;
+}
+
+.match-detail-team {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.match-detail-team-away {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.match-detail-team-logo {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(100, 116, 139, 0.74);
+  border-radius: 6px;
+  background: #17243a;
+  color: #cbd5e1;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.match-detail-team-copy {
+  min-width: 0;
+}
+
+.match-detail-team-side {
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.match-detail-team-name {
+  overflow: hidden;
+  color: #dae2fd;
+  font-size: 1.16rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.match-detail-team-name[data-winner],
+.match-detail-score-number[data-winner] {
+  color: #f8fafc;
+  font-weight: 900;
+}
+
+.match-detail-final-score {
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.match-detail-score-number {
+  min-width: 58px;
+  color: #7f8da3;
+  font-size: 3rem;
+  font-weight: 850;
+  line-height: 1;
+  text-align: center;
+}
+
+.match-detail-score-divider {
+  color: #526179;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.match-box-score-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.match-box-score-card {
+  padding: 20px 22px;
+}
+
+.match-box-score-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  color: #f8fafc;
+  font-size: 1.12rem;
+  line-height: 1.2;
+}
+
+.match-box-score-title-bar {
+  flex: 0 0 auto;
+  width: 4px;
+  height: 22px;
+  border-radius: 999px;
+}
+
+.match-box-score-scroll {
+  overflow-x: auto;
+}
+
+.match-box-score-table {
+  width: 100%;
+  min-width: 760px;
+}
+
+.match-box-score-table th {
+  border-color: #334155;
+  padding: 8px 10px;
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.match-box-score-table td {
+  border-color: rgba(51, 65, 85, 0.76);
+  padding: 9px 10px;
+}
+
+.match-box-score-table .box-score-column-position {
+  width: 66px;
+}
+
+.match-box-score-table tbody tr:hover td {
+  background: rgba(30, 41, 59, 0.48);
+}
+
+.match-box-score-other-row td {
+  background: rgba(15, 23, 42, 0.34);
+}
+
+.match-box-score-other-row .match-box-score-value {
+  color: #a8b4cc;
+  font-style: italic;
+}
+
+.match-box-score-total-row td {
+  border-top: 1px solid rgba(130, 166, 255, 0.42);
+  background: rgba(30, 41, 59, 0.58);
+}
+
+.match-box-score-total-row .match-box-score-value {
+  color: #f8fafc;
+  font-weight: 850;
+}
+
+.match-box-score-sort-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  width: 100%;
+  min-height: 24px;
+  border: 0;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.match-box-score-sort-button:hover {
+  color: #f8fafc;
+}
+
+.match-box-score-sort-button:focus-visible {
+  outline: 2px solid #82a6ff;
+  outline-offset: 2px;
+}
+
+.match-box-score-sort-indicator {
+  display: inline-block;
+  min-width: 8px;
+  color: #adc6ff;
+}
+
+.match-box-score-value {
+  color: #dae2fd;
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+
+.match-detail-fallback-note {
+  color: #94a3b8;
+  font-size: 0.84rem;
+}
+
+@media (max-width: 980px) {
+  .match-detail-scoreline {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .match-detail-final-score {
+    justify-content: flex-start;
+    order: 3;
+  }
+
+  .match-detail-team-away {
+    flex-direction: row;
+    text-align: left;
+  }
+}
+
+@media (max-width: 560px) {
+  .match-detail-score-card,
+  .match-box-score-card {
+    padding: 16px;
+  }
+
+  .match-detail-meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .match-detail-date {
+    margin-left: 0;
+  }
+
+  .match-detail-team-logo {
+    width: 52px;
+    height: 52px;
+  }
+
+  .match-detail-team-name {
+    white-space: normal;
+  }
+}

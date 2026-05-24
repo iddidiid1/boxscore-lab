@@ -1,7 +1,11 @@
 import { Box, Table, Text, Title } from "@mantine/core";
 import { useMemo, useState } from "react";
-
-export type PlayerPosition = "PG" | "SG" | "G" | "F" | "SF" | "PF" | "C";
+import {
+  comparePlayerPositions,
+  compareSortableValues,
+  type PlayerPosition,
+  type SortDirection
+} from "../../../shared/utils/playerSorting";
 
 export type Player = {
   id: string;
@@ -21,7 +25,6 @@ type RosterTableProps = {
   players: Player[];
 };
 
-type SortDirection = "asc" | "desc";
 type SortKey = keyof Omit<Player, "id">;
 
 type Column = {
@@ -29,16 +32,6 @@ type Column = {
   label: string;
   className?: string;
   render: (player: Player) => string;
-};
-
-const positionSortRank: Record<PlayerPosition, number> = {
-  PG: 0,
-  SG: 1,
-  G: 2,
-  F: 3,
-  SF: 4,
-  PF: 5,
-  C: 6
 };
 
 const columns: Column[] = [
@@ -81,27 +74,15 @@ const columns: Column[] = [
     label: "MIN",
     render: (player) => player.averageMinutes.toFixed(1)
   },
-  { key: "starRating", label: "Rating", render: (player) => getStars(player.starRating) }
+  { key: "starRating", label: "Rating", render: (player) => player.starRating.toFixed(1) }
 ];
-
-function getStars(rating: number) {
-  const roundedRating = Math.max(0, Math.min(5, Math.round(rating)));
-  return `${"\u2605".repeat(roundedRating)}${"\u2606".repeat(5 - roundedRating)}`;
-}
 
 function comparePlayers(firstPlayer: Player, secondPlayer: Player, sortKey: SortKey) {
   if (sortKey === "position") {
-    return positionSortRank[firstPlayer.position] - positionSortRank[secondPlayer.position];
+    return comparePlayerPositions(firstPlayer.position, secondPlayer.position);
   }
 
-  const firstValue = firstPlayer[sortKey];
-  const secondValue = secondPlayer[sortKey];
-
-  if (typeof firstValue === "number" && typeof secondValue === "number") {
-    return firstValue - secondValue;
-  }
-
-  return String(firstValue).localeCompare(String(secondValue));
+  return compareSortableValues(firstPlayer[sortKey], secondPlayer[sortKey]);
 }
 
 export function RosterTable({ players }: RosterTableProps) {
@@ -168,9 +149,7 @@ export function RosterTable({ players }: RosterTableProps) {
               <Table.Tr key={player.id}>
                 {columns.map((column) => (
                   <Table.Td className={column.className} key={column.key}>
-                    <Text
-                      className={column.key === "starRating" ? "roster-rating" : "roster-value"}
-                    >
+                    <Text className="roster-value">
                       {column.render(player)}
                     </Text>
                   </Table.Td>

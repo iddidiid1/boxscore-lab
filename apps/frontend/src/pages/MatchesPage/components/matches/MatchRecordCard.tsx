@@ -24,8 +24,15 @@ export function MatchRecordCard({ match }: MatchRecordCardProps) {
   const isTeamAWinner = winnerId === match.teamA.id;
   const isTeamBWinner = winnerId === match.teamB.id;
 
+  function handleMatchSelect() {
+    const nextPath = `/matches/${match.id}`;
+
+    window.history.pushState({}, "", nextPath);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }
+
   return (
-    <Box className="match-card">
+    <Box className="match-card" component="button" onClick={handleMatchSelect} type="button">
       <Box className="match-main">
         <Box className="match-scoreline">
           <Box className="match-team match-team-home">

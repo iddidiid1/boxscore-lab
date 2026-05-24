@@ -2,8 +2,11 @@ import { Box } from "@mantine/core";
 import { useEffect, useMemo, useState } from "react";
 import { AppProviders } from "./providers";
 import { appPages, type PageKey } from "./router";
+import { CreateMatchPage } from "../pages/CreateMatchPage";
 import { CreateTeamPage } from "../pages/CreateTeamPage";
+import { EditMatchPage } from "../pages/EditMatchPage";
 import { ManageTeamPage } from "../pages/ManageTeamPage";
+import { MatchDetailPage } from "../pages/MatchDetailPage";
 import { PlayerDetailPage } from "../pages/PlayerDetailPage";
 import { TeamDetailPage } from "../pages/TeamDetailPage";
 import { Sidebar } from "../shared/components/navigation";
@@ -30,9 +33,12 @@ function AppContent() {
   );
   const ActivePage = page.Component;
   const isCreateTeamPage = pathname === "/teams/new" || pathname === "/teams/new/";
+  const isCreateMatchPage = pathname === "/matches/create" || pathname === "/matches/create/";
+  const editMatchMatch = pathname.match(/^\/matches\/([^/]+)\/edit\/?$/);
   const isManageTeamPage = /^\/teams\/[^/]+\/manage\/?$/.test(pathname);
   const isTeamDetailPage = pathname.startsWith("/teams/") && !isManageTeamPage && !isCreateTeamPage;
   const isPlayerDetailPage = /^\/players\/[^/]+\/?$/.test(pathname);
+  const matchDetailMatch = pathname.match(/^\/matches\/([^/]+)\/?$/);
 
   useEffect(() => {
     function handlePopState() {
@@ -62,12 +68,18 @@ function AppContent() {
       <Box className="content" component="main">
         {isCreateTeamPage ? (
           <CreateTeamPage />
+        ) : isCreateMatchPage ? (
+          <CreateMatchPage />
+        ) : editMatchMatch ? (
+          <EditMatchPage matchId={editMatchMatch[1]} />
         ) : isManageTeamPage ? (
           <ManageTeamPage />
         ) : isTeamDetailPage ? (
           <TeamDetailPage />
         ) : isPlayerDetailPage ? (
           <PlayerDetailPage />
+        ) : matchDetailMatch ? (
+          <MatchDetailPage matchId={matchDetailMatch[1]} />
         ) : (
           <ActivePage />
         )}

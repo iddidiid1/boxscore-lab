@@ -295,13 +295,6 @@
   line-height: 1.25;
 }
 
-.roster-rating {
-  color: #fbbf24;
-  font-size: 0.82rem;
-  line-height: 1;
-  white-space: nowrap;
-}
-
 @media (max-width: 980px) {
   .team-detail-hero {
     grid-template-columns: 1fr;
