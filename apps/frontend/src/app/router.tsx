@@ -1,30 +1,17 @@
 import {
-  BarChart3,
   Calendar,
-  Home,
   Shield,
-  Swords,
   Trophy,
   Users,
   type LucideIcon
 } from "lucide-react";
 import type { ComponentType } from "react";
-import { CompetitionsPage } from "../pages/CompetitionsPage";
-import { HomePage } from "../pages/HomePage";
+import { EventsPage } from "../pages/EventsPage";
 import { MatchesPage } from "../pages/MatchesPage";
 import { PlayersPage } from "../pages/PlayersPage";
-import { SeasonsPage } from "../pages/SeasonsPage";
-import { StatsPage } from "../pages/StatsPage";
 import { TeamsPage } from "../pages/TeamsPage";
 
-export type PageKey =
-  | "home"
-  | "teams"
-  | "players"
-  | "seasons"
-  | "competitions"
-  | "matches"
-  | "stats";
+export type PageKey = "teams" | "players" | "matches" | "events";
 
 export const appPages: Array<{
   key: PageKey;
@@ -34,14 +21,6 @@ export const appPages: Array<{
   Icon: LucideIcon;
   Component: ComponentType;
 }> = [
-  {
-    key: "home",
-    label: "Home",
-    description: "MVP overview for the local fantasy league statistics app.",
-    signal: "System baseline",
-    Icon: Home,
-    Component: HomePage
-  },
   {
     key: "teams",
     label: "Teams",
@@ -59,35 +38,19 @@ export const appPages: Array<{
     Component: PlayersPage
   },
   {
-    key: "seasons",
-    label: "Seasons",
-    description: "Placeholder for season management.",
-    signal: "Competition timeline",
-    Icon: Calendar,
-    Component: SeasonsPage
-  },
-  {
-    key: "competitions",
-    label: "Competitions",
-    description: "Placeholder for competitions and manually entered results.",
-    signal: "Manual results",
-    Icon: Trophy,
-    Component: CompetitionsPage
-  },
-  {
     key: "matches",
     label: "Matches",
     description: "Placeholder for match creation, scores, and player stats.",
     signal: "Source of truth",
-    Icon: Swords,
+    Icon: Calendar,
     Component: MatchesPage
   },
   {
-    key: "stats",
-    label: "Stats",
-    description: "Placeholder for derived player and team statistics.",
-    signal: "Derived analytics",
-    Icon: BarChart3,
-    Component: StatsPage
+    key: "events",
+    label: "Events",
+    description: "Placeholder for events and manually entered results.",
+    signal: "Manual results",
+    Icon: Trophy,
+    Component: EventsPage
   }
 ];

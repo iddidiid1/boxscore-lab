@@ -1,0 +1,181 @@
+.create-match-page {
+  width: 100%;
+}
+
+.create-match-header {
+  gap: 18px;
+}
+
+.match-form-save-button {
+  min-width: 96px;
+  border-radius: 4px;
+  background: #2563eb;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.match-form-save-button:hover {
+  background: #1d4ed8;
+}
+
+.match-form-cancel-button {
+  min-width: 96px;
+  border-color: #334155;
+  border-radius: 4px;
+  color: #adc6ff;
+  font-weight: 700;
+}
+
+.match-form-section {
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #121c2f;
+  padding: 24px;
+}
+
+.match-form-section h2 {
+  margin: 0 0 18px;
+  color: #f8fafc;
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.match-form-input-label {
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.match-form-input {
+  min-height: 40px;
+  border-color: #334155;
+  border-radius: 4px;
+  background: #0c1425;
+  color: #f8fafc;
+}
+
+.match-form-input:focus,
+.match-form-input:focus-within {
+  border-color: #3b82f6;
+}
+
+.match-stats-section {
+  padding: 22px;
+}
+
+.match-stats-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.match-stats-score {
+  margin-left: auto;
+  color: #f8fafc;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.match-stats-title-bar {
+  flex: 0 0 auto;
+  width: 4px;
+  height: 22px;
+  border-radius: 999px;
+}
+
+.match-stats-table-scroll {
+  overflow-x: auto;
+}
+
+.match-stats-input-table {
+  width: 100%;
+  min-width: 1080px;
+}
+
+.match-stats-input-table th {
+  border-color: #334155;
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+.match-stats-input-table td {
+  border-color: rgba(51, 65, 85, 0.76);
+  padding: 10px;
+}
+
+.match-stats-input-table tbody tr:hover td {
+  background: rgba(30, 41, 59, 0.36);
+}
+
+.match-stats-other-row td {
+  background: rgba(15, 23, 42, 0.34);
+}
+
+.match-stats-other-row .match-stats-player-name,
+.match-stats-other-row .match-stats-readonly-value {
+  color: #a8b4cc;
+  font-style: italic;
+}
+
+.match-stats-readonly-value,
+.match-stats-player-name,
+.match-stats-calculated-value {
+  color: #dae2fd;
+  font-size: 0.84rem;
+  line-height: 1.25;
+}
+
+.match-stats-player-name {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.match-stats-calculated-value {
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-weight: 800;
+}
+
+.match-stats-input {
+  width: 76px;
+  min-height: 38px;
+  border-color: rgba(71, 85, 105, 0.82);
+  border-radius: 4px;
+  background: #0c1425;
+  color: #f8fafc;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.match-stats-input:focus,
+.match-stats-input:focus-within {
+  border-color: #3b82f6;
+}
+
+@media (max-width: 760px) {
+  .create-match-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .create-match-header > .mantine-Group-root {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .match-form-save-button,
+  .match-form-cancel-button {
+    width: 100%;
+  }
+
+  .match-form-section {
+    padding: 16px;
+  }
+}

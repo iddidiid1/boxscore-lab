@@ -1,0 +1,1 @@
+export { EditMatchPage } from "./EditMatchPage";

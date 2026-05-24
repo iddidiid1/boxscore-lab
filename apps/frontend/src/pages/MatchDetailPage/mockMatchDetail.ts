@@ -1,0 +1,253 @@
+import type { MatchDetailRecord } from "./types";
+
+const falconPlayers = [
+  {
+    id: "mason-cole",
+    teamId: "falcon-united",
+    position: "G" as const,
+    name: "Mason Cole",
+    points: 24,
+    rebounds: 5,
+    assists: 8,
+    fieldGoalsMade: 9,
+    fieldGoalsAttempted: 18,
+    fieldGoalPercentage: 50.0,
+    threePointersMade: 3,
+    threePointersAttempted: 7,
+    threePointPercentage: 42.9,
+    minutes: 34,
+    rating: 9.1
+  },
+  {
+    id: "eli-brooks",
+    teamId: "falcon-united",
+    position: "F" as const,
+    name: "Eli Brooks",
+    points: 18,
+    rebounds: 9,
+    assists: 3,
+    fieldGoalsMade: 7,
+    fieldGoalsAttempted: 13,
+    fieldGoalPercentage: 53.8,
+    threePointersMade: 1,
+    threePointersAttempted: 3,
+    threePointPercentage: 33.3,
+    minutes: 31,
+    rating: 8.2
+  },
+  {
+    id: "noah-kent",
+    teamId: "falcon-united",
+    position: "C" as const,
+    name: "Noah Kent",
+    points: 15,
+    rebounds: 11,
+    assists: 2,
+    fieldGoalsMade: 7,
+    fieldGoalsAttempted: 12,
+    fieldGoalPercentage: 58.3,
+    threePointersMade: 0,
+    threePointersAttempted: 0,
+    threePointPercentage: 0,
+    minutes: 29,
+    rating: 8.0
+  },
+  {
+    id: "owen-price",
+    teamId: "falcon-united",
+    position: "PG" as const,
+    name: "Owen Price",
+    points: 13,
+    rebounds: 3,
+    assists: 6,
+    fieldGoalsMade: 4,
+    fieldGoalsAttempted: 9,
+    fieldGoalPercentage: 44.4,
+    threePointersMade: 3,
+    threePointersAttempted: 8,
+    threePointPercentage: 37.5,
+    minutes: 28,
+    rating: 7.4
+  },
+  {
+    id: "liam-west",
+    teamId: "falcon-united",
+    position: "SF" as const,
+    name: "Liam West",
+    points: 9,
+    rebounds: 6,
+    assists: 1,
+    fieldGoalsMade: 4,
+    fieldGoalsAttempted: 10,
+    fieldGoalPercentage: 40.0,
+    threePointersMade: 1,
+    threePointersAttempted: 4,
+    threePointPercentage: 25.0,
+    minutes: 22,
+    rating: 6.5
+  },
+  {
+    id: "caleb-stone",
+    teamId: "falcon-united",
+    position: "SG" as const,
+    name: "Caleb Stone",
+    points: 8,
+    rebounds: 2,
+    assists: 4,
+    fieldGoalsMade: 3,
+    fieldGoalsAttempted: 7,
+    fieldGoalPercentage: 42.9,
+    threePointersMade: 2,
+    threePointersAttempted: 5,
+    threePointPercentage: 40.0,
+    minutes: 21,
+    rating: 6.8
+  }
+];
+
+const harborPlayers = [
+  {
+    id: "asher-finn",
+    teamId: "harbor-kings",
+    position: "G" as const,
+    name: "Asher Finn",
+    points: 27,
+    rebounds: 4,
+    assists: 5,
+    fieldGoalsMade: 12,
+    fieldGoalsAttempted: 25,
+    fieldGoalPercentage: 48.0,
+    threePointersMade: 5,
+    threePointersAttempted: 13,
+    threePointPercentage: 38.5,
+    minutes: 35,
+    rating: 8.8
+  },
+  {
+    id: "leo-martin",
+    teamId: "harbor-kings",
+    position: "F" as const,
+    name: "Leo Martin",
+    points: 16,
+    rebounds: 8,
+    assists: 2,
+    fieldGoalsMade: 6,
+    fieldGoalsAttempted: 13,
+    fieldGoalPercentage: 46.2,
+    threePointersMade: 2,
+    threePointersAttempted: 7,
+    threePointPercentage: 28.6,
+    minutes: 30,
+    rating: 7.2
+  },
+  {
+    id: "kai-rivers",
+    teamId: "harbor-kings",
+    position: "PG" as const,
+    name: "Kai Rivers",
+    points: 14,
+    rebounds: 3,
+    assists: 9,
+    fieldGoalsMade: 5,
+    fieldGoalsAttempted: 12,
+    fieldGoalPercentage: 41.7,
+    threePointersMade: 2,
+    threePointersAttempted: 6,
+    threePointPercentage: 33.3,
+    minutes: 32,
+    rating: 7.8
+  },
+  {
+    id: "theo-hayes",
+    teamId: "harbor-kings",
+    position: "C" as const,
+    name: "Theo Hayes",
+    points: 12,
+    rebounds: 10,
+    assists: 1,
+    fieldGoalsMade: 6,
+    fieldGoalsAttempted: 11,
+    fieldGoalPercentage: 54.5,
+    threePointersMade: 0,
+    threePointersAttempted: 0,
+    threePointPercentage: 0,
+    minutes: 27,
+    rating: 7.0
+  },
+  {
+    id: "jude-ellis",
+    teamId: "harbor-kings",
+    position: "SG" as const,
+    name: "Jude Ellis",
+    points: 8,
+    rebounds: 2,
+    assists: 3,
+    fieldGoalsMade: 4,
+    fieldGoalsAttempted: 11,
+    fieldGoalPercentage: 36.4,
+    threePointersMade: 3,
+    threePointersAttempted: 10,
+    threePointPercentage: 30.0,
+    minutes: 23,
+    rating: 5.9
+  },
+  {
+    id: "max-bryant",
+    teamId: "harbor-kings",
+    position: "PF" as const,
+    name: "Max Bryant",
+    points: 5,
+    rebounds: 7,
+    assists: 2,
+    fieldGoalsMade: 2,
+    fieldGoalsAttempted: 6,
+    fieldGoalPercentage: 33.3,
+    threePointersMade: 0,
+    threePointersAttempted: 0,
+    threePointPercentage: 0,
+    minutes: 18,
+    rating: 5.6
+  }
+];
+
+export const mockMatchDetails: MatchDetailRecord[] = [
+  {
+    id: "match-012",
+    eventName: "Winter Cup Finals",
+    date: "2026-05-17",
+    tags: ["Knockout", "Final"],
+    homeTeam: {
+      id: "falcon-united",
+      name: "Falcon United",
+      color: "#3b82f6",
+      score: 87
+    },
+    awayTeam: {
+      id: "harbor-kings",
+      name: "Harbor Kings",
+      color: "#f97316",
+      score: 82
+    },
+    players: [...falconPlayers, ...harborPlayers],
+    otherStats: {
+      "falcon-united": {
+        points: 0,
+        rebounds: 1,
+        assists: 0,
+        fieldGoalsMade: 0,
+        fieldGoalsAttempted: 1,
+        threePointersMade: 0,
+        threePointersAttempted: 0
+      },
+      "harbor-kings": {
+        points: 0,
+        rebounds: 2,
+        assists: 1,
+        fieldGoalsMade: 0,
+        fieldGoalsAttempted: 2,
+        threePointersMade: 0,
+        threePointersAttempted: 1
+      }
+    }
+  }
+];
