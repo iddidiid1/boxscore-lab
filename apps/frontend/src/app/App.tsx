@@ -5,6 +5,7 @@ import { appPages, type PageKey } from "./router";
 import { CreateMatchPage } from "../pages/CreateMatchPage";
 import { CreateTeamPage } from "../pages/CreateTeamPage";
 import { EditMatchPage } from "../pages/EditMatchPage";
+import { EventDetailPage } from "../pages/EventDetailPage";
 import { ManageTeamPage } from "../pages/ManageTeamPage";
 import { MatchDetailPage } from "../pages/MatchDetailPage";
 import { PlayerDetailPage } from "../pages/PlayerDetailPage";
@@ -38,6 +39,7 @@ function AppContent() {
   const isManageTeamPage = /^\/teams\/[^/]+\/manage\/?$/.test(pathname);
   const isTeamDetailPage = pathname.startsWith("/teams/") && !isManageTeamPage && !isCreateTeamPage;
   const isPlayerDetailPage = /^\/players\/[^/]+\/?$/.test(pathname);
+  const eventDetailMatch = pathname.match(/^\/events\/([^/]+)\/?$/);
   const matchDetailMatch = pathname.match(/^\/matches\/([^/]+)\/?$/);
 
   useEffect(() => {
@@ -78,6 +80,8 @@ function AppContent() {
           <TeamDetailPage />
         ) : isPlayerDetailPage ? (
           <PlayerDetailPage />
+        ) : eventDetailMatch ? (
+          <EventDetailPage eventId={eventDetailMatch[1]} />
         ) : matchDetailMatch ? (
           <MatchDetailPage matchId={matchDetailMatch[1]} />
         ) : (

@@ -1,4 +1,5 @@
 import { Anchor, Box, Button, Group, Stack } from "@mantine/core";
+import { Pencil } from "lucide-react";
 import { RosterTable, type Player } from "./components/RosterTable";
 import { TeamRadarCard, type TeamRadarAttribute } from "./components/TeamRadarCard";
 import { TeamProfileSummary } from "./components/TeamProfileSummary";
@@ -67,7 +68,12 @@ export function TeamDetailPage() {
         <Anchor className="team-detail-back-link" href="/teams">
           {"\u2190 Back to Teams"}
         </Anchor>
-        <Button className="manage-team-button" component="a" href={`/teams/${mockTeam.id}/manage`}>
+        <Button
+          className="manage-team-button"
+          component="a"
+          href={`/teams/${mockTeam.id}/manage`}
+          leftSection={<Pencil size={16} />}
+        >
           Manage Team
         </Button>
       </Group>
