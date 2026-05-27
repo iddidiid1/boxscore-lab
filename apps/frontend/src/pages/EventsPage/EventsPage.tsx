@@ -21,9 +21,10 @@ export function EventsPage() {
 
         <Button
           className="create-event-button"
+          component="a"
+          href="/events/new"
           leftSection={<Plus size={17} />}
           size="sm"
-          type="button"
         >
           Create Event
         </Button>

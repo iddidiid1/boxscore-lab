@@ -10,7 +10,10 @@ type EventResultsTableProps = {
 export function EventResultsTable({ resultTags, results }: EventResultsTableProps) {
   const tagsById = new Map(resultTags.map((tag) => [tag.id, tag]));
   const sortedResults = [...results].sort((firstResult, secondResult) => {
-    return secondResult.score - firstResult.score;
+    const firstPoints = tagsById.get(firstResult.resultTagId)?.rankingPoints ?? 0;
+    const secondPoints = tagsById.get(secondResult.resultTagId)?.rankingPoints ?? 0;
+
+    return secondPoints - firstPoints;
   });
 
   return (
@@ -36,6 +39,7 @@ export function EventResultsTable({ resultTags, results }: EventResultsTableProp
             {sortedResults.map((result, index) => {
               const tag = tagsById.get(result.resultTagId);
               const isWinner = Boolean(tag?.isWinnerTag);
+              const eventPoints = tag?.rankingPoints ?? 0;
 
               return (
                 <Table.Tr data-winner={isWinner || undefined} key={result.teamId}>
@@ -46,7 +50,7 @@ export function EventResultsTable({ resultTags, results }: EventResultsTableProp
                       <Text className="event-result-team">{result.teamName}</Text>
                     </Group>
                   </Table.Td>
-                  <Table.Td className="event-result-score">{result.score.toLocaleString()}</Table.Td>
+                  <Table.Td className="event-result-score">{eventPoints.toLocaleString()}</Table.Td>
                   <Table.Td>
                     <Text className="event-result-tag" data-winner={isWinner || undefined}>
                       {tag?.label ?? "Unassigned"}

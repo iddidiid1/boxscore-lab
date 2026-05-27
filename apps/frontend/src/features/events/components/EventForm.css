@@ -1,0 +1,224 @@
+.event-form-shell {
+  width: 100%;
+}
+
+.event-form-header {
+  gap: 18px;
+}
+
+.event-form-actions {
+  flex: 0 0 auto;
+}
+
+.event-form-cancel-button {
+  border-radius: 4px;
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.event-form-save-button,
+.event-form-secondary-button {
+  border-radius: 4px;
+  background: #2563eb;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.event-form-save-button:hover,
+.event-form-secondary-button:hover {
+  background: #1d4ed8;
+}
+
+.event-form-secondary-button {
+  min-width: 112px;
+}
+
+.event-form-quiet-button {
+  height: 30px;
+  border-radius: 4px;
+  color: #adc6ff;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.event-form-quiet-button:hover {
+  background: rgba(59, 130, 246, 0.12);
+  color: #dbe7ff;
+}
+
+.event-form-panel {
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #121c2f;
+  padding: 18px;
+}
+
+.event-form-kicker,
+.event-form-label,
+.event-result-tags-editor-table th {
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.event-form-title {
+  color: #f8fafc;
+  font-size: 1.14rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.event-form-input,
+.event-form-textarea {
+  border-color: rgba(71, 85, 105, 0.82);
+  border-radius: 4px;
+  background: #0c1425;
+  color: #dae2fd;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.event-form-textarea {
+  line-height: 1.55;
+}
+
+.event-form-input:hover,
+.event-form-textarea:hover {
+  border-color: rgba(59, 130, 246, 0.62);
+}
+
+.event-form-row {
+  align-items: center;
+}
+
+.event-form-row .mantine-TextInput-root {
+  flex: 1;
+}
+
+.event-participants-actions {
+  justify-content: flex-end;
+}
+
+.event-participants-count {
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.event-participants-chip-grid {
+  align-items: center;
+}
+
+.event-participant-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 30px;
+  max-width: 180px;
+  border: 1px solid rgba(71, 85, 105, 0.78);
+  border-radius: 4px;
+  background: rgba(12, 20, 37, 0.62);
+  color: #94a3b8;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1;
+  padding: 0 10px;
+}
+
+.event-participant-chip span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-participant-chip:hover {
+  border-color: rgba(96, 165, 250, 0.52);
+  color: #cbd5e1;
+}
+
+.event-participant-chip[data-selected] {
+  border-color: rgba(78, 222, 163, 0.58);
+  background: rgba(78, 222, 163, 0.1);
+  color: #dae2fd;
+}
+
+.event-participant-chip[data-selected] svg {
+  flex: 0 0 auto;
+  color: #4edea3;
+}
+
+.event-form-delete-button {
+  color: #94a3b8;
+}
+
+.event-form-delete-button:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
+}
+
+.event-result-tags-editor-wrap {
+  overflow-x: auto;
+}
+
+.event-result-tags-editor-table {
+  min-width: 660px;
+}
+
+.event-result-tags-editor-table td {
+  border-color: rgba(51, 65, 85, 0.72);
+}
+
+.event-result-tags-editor-table th:nth-child(2),
+.event-result-tags-editor-table td:nth-child(2) {
+  width: 84px;
+  text-align: center;
+}
+
+.event-result-tags-editor-table th:nth-child(3),
+.event-result-tags-editor-table td:nth-child(3) {
+  width: 156px;
+}
+
+.event-result-tags-editor-table th:last-child,
+.event-result-tags-editor-table td:last-child {
+  width: 52px;
+  text-align: right;
+}
+
+.event-form-checkbox {
+  border-color: rgba(71, 85, 105, 0.82);
+  background: #0c1425;
+}
+
+.event-form-save-message {
+  color: #4edea3;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+@media (max-width: 760px) {
+  .event-form-header,
+  .event-form-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .event-form-actions,
+  .event-participants-actions,
+  .event-form-cancel-button,
+  .event-form-save-button,
+  .event-form-secondary-button {
+    width: 100%;
+  }
+
+  .event-participants-actions {
+    justify-content: flex-start;
+  }
+}

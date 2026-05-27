@@ -8,7 +8,7 @@ type EventSummaryCardProps = {
 };
 
 const statusLabels: Record<EventSummary["status"], string> = {
-  "not-started": "Not Started",
+  preparing: "Preparing",
   ongoing: "Ongoing",
   completed: "Completed"
 };

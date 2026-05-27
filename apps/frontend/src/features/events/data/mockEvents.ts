@@ -28,44 +28,39 @@ export const mockEvents: EventSummary[] = [
       }
     ],
     resultTags: [
-      { id: "champion", label: "Champion", isWinnerTag: true },
-      { id: "runner-up", label: "Runner-up", isWinnerTag: false },
-      { id: "semifinalist", label: "Semifinalist", isWinnerTag: false },
-      { id: "participant", label: "Participant", isWinnerTag: false }
+      { id: "champion", label: "Champion", isWinnerTag: true, rankingPoints: 10 },
+      { id: "runner-up", label: "Runner-up", isWinnerTag: false, rankingPoints: 7 },
+      { id: "semifinalist", label: "Semifinalist", isWinnerTag: false, rankingPoints: 3 },
+      { id: "participant", label: "Participant", isWinnerTag: false, rankingPoints: 0 }
     ],
     results: [
       {
         teamId: "falcon-united",
         teamName: "Falcon United",
-        score: 360,
         resultTagId: "champion",
         notes: "Closed the final with the highest aggregate roster total."
       },
       {
         teamId: "capital-guard",
         teamName: "Capital Guard",
-        score: 332,
         resultTagId: "runner-up",
         notes: "Reached the title match through a narrow semifinal win."
       },
       {
         teamId: "summit-athletic",
         teamName: "Summit Athletic",
-        score: 304,
         resultTagId: "semifinalist",
         notes: "Strong group run before falling in the last four."
       },
       {
         teamId: "harbor-kings",
         teamName: "Harbor Kings",
-        score: 298,
         resultTagId: "semifinalist",
         notes: "Pushed the eventual champion in the semifinal."
       },
       {
         teamId: "metro-rangers",
         teamName: "Metro Rangers",
-        score: 244,
         resultTagId: "participant",
         notes: "Eliminated after group-stage tiebreakers."
       }
@@ -92,36 +87,32 @@ export const mockEvents: EventSummary[] = [
       }
     ],
     resultTags: [
-      { id: "leader", label: "Ladder Leader", isWinnerTag: true },
-      { id: "contender", label: "Contender", isWinnerTag: false },
-      { id: "participant", label: "Participant", isWinnerTag: false }
+      { id: "leader", label: "Ladder Leader", isWinnerTag: true, rankingPoints: 8 },
+      { id: "contender", label: "Contender", isWinnerTag: false, rankingPoints: 4 },
+      { id: "participant", label: "Participant", isWinnerTag: false, rankingPoints: 0 }
     ],
     results: [
       {
         teamId: "northside-crew",
         teamName: "Northside Crew",
-        score: 214,
         resultTagId: "leader",
         notes: "Current leader while final fixtures remain open."
       },
       {
         teamId: "redwood-town",
         teamName: "Redwood Town",
-        score: 206,
         resultTagId: "contender",
         notes: "Within striking distance entering the final review."
       },
       {
         teamId: "coastal-wolves",
         teamName: "Coastal Wolves",
-        score: 198,
         resultTagId: "contender",
         notes: "Needs one result to move into the top settlement band."
       },
       {
         teamId: "prairie-fc",
         teamName: "Prairie FC",
-        score: 172,
         resultTagId: "participant",
         notes: "Completed all posted fixtures."
       }
@@ -131,7 +122,7 @@ export const mockEvents: EventSummary[] = [
     id: "champions-showcase",
     name: "Champions Showcase",
     tier: "A",
-    status: "not-started",
+    status: "preparing",
     description:
       "Invitational event reserved for division leaders, with opening pairings seeded by current rating and manual score entry after each fixture.",
     participatingTeamCount: 6,
@@ -153,30 +144,27 @@ export const mockEvents: EventSummary[] = [
       }
     ],
     resultTags: [
-      { id: "champion", label: "Champion", isWinnerTag: true },
-      { id: "runner-up", label: "Runner-up", isWinnerTag: false },
-      { id: "semifinalist", label: "Semifinalist", isWinnerTag: false },
-      { id: "participant", label: "Participant", isWinnerTag: false }
+      { id: "champion", label: "Champion", isWinnerTag: true, rankingPoints: 10 },
+      { id: "runner-up", label: "Runner-up", isWinnerTag: false, rankingPoints: 7 },
+      { id: "semifinalist", label: "Semifinalist", isWinnerTag: false, rankingPoints: 3 },
+      { id: "participant", label: "Participant", isWinnerTag: false, rankingPoints: 0 }
     ],
     results: [
       {
         teamId: "summit-athletic",
         teamName: "Summit Athletic",
-        score: 0,
         resultTagId: "participant",
         notes: "Seeded entrant awaiting first match."
       },
       {
         teamId: "capital-guard",
         teamName: "Capital Guard",
-        score: 0,
         resultTagId: "participant",
         notes: "Seeded entrant awaiting first match."
       },
       {
         teamId: "falcon-united",
         teamName: "Falcon United",
-        score: 0,
         resultTagId: "participant",
         notes: "Seeded entrant awaiting first match."
       }
@@ -204,29 +192,26 @@ export const mockEvents: EventSummary[] = [
       }
     ],
     resultTags: [
-      { id: "champion", label: "Champion", isWinnerTag: true },
-      { id: "runner-up", label: "Runner-up", isWinnerTag: false },
-      { id: "participant", label: "Participant", isWinnerTag: false }
+      { id: "champion", label: "Champion", isWinnerTag: true, rankingPoints: 10 },
+      { id: "runner-up", label: "Runner-up", isWinnerTag: false, rankingPoints: 7 },
+      { id: "participant", label: "Participant", isWinnerTag: false, rankingPoints: 0 }
     ],
     results: [
       {
         teamId: "harbor-kings",
         teamName: "Harbor Kings",
-        score: 188,
         resultTagId: "champion",
         notes: "Won the opening title match."
       },
       {
         teamId: "capital-guard",
         teamName: "Capital Guard",
-        score: 176,
         resultTagId: "runner-up",
         notes: "Reached the final on point differential."
       },
       {
         teamId: "prairie-fc",
         teamName: "Prairie FC",
-        score: 144,
         resultTagId: "participant",
         notes: "Posted the strongest non-final pool score."
       }

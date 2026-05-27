@@ -8,7 +8,7 @@ type EventDetailHeroProps = {
 };
 
 const statusLabels: Record<EventStatus, string> = {
-  "not-started": "Not Started",
+  preparing: "Preparing",
   ongoing: "Ongoing",
   completed: "Completed"
 };

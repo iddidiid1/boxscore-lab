@@ -1,4 +1,4 @@
-export type EventStatus = "not-started" | "ongoing" | "completed";
+export type EventStatus = "preparing" | "ongoing" | "completed";
 export type EventTier = "S" | "A" | "B" | "C";
 
 export type EventSummary = {
@@ -24,12 +24,12 @@ export type EventResultTag = {
   id: string;
   label: string;
   isWinnerTag: boolean;
+  rankingPoints: number;
 };
 
 export type EventResult = {
   teamId: string;
   teamName: string;
-  score: number;
   resultTagId: string;
   notes?: string;
 };
