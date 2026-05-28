@@ -1,5 +1,6 @@
 import {
   Box,
+  Group,
   NumberInput,
   Select,
   Slider,
@@ -24,6 +25,7 @@ export type TeamEditorValues = {
   name: string;
   division: string;
   logoUrl: string;
+  primaryColor: string;
   overallRating: number;
   description: string;
   profileRatings: ProfileRatings;
@@ -34,6 +36,7 @@ type TeamEditorFormProps = {
 };
 
 const divisionOptions = ["Division A", "Division B", "Division C", "Division D"];
+const hexColorPattern = /^#([A-Fa-f0-9]{6})$/;
 
 const profileRatingFields = [
   { key: "defense", label: "Defense" },
@@ -65,6 +68,7 @@ export function TeamEditorForm({ initialValues }: TeamEditorFormProps) {
   const [teamName, setTeamName] = useState(initialValues.name);
   const [division, setDivision] = useState<string | null>(initialValues.division);
   const [logoUrl, setLogoUrl] = useState(initialValues.logoUrl);
+  const [primaryColor, setPrimaryColor] = useState(initialValues.primaryColor);
   const [overallRating, setOverallRating] = useState(initialValues.overallRating);
   const [teamDescription, setTeamDescription] = useState(initialValues.description);
   const [profileRatings, setProfileRatings] = useState<Record<ProfileRatingKey, number>>(
@@ -72,6 +76,7 @@ export function TeamEditorForm({ initialValues }: TeamEditorFormProps) {
   );
 
   const previewName = teamName.trim() || "New Team";
+  const isPrimaryColorValid = hexColorPattern.test(primaryColor);
 
   function updateProfileRating(key: ProfileRatingKey, value: number) {
     setProfileRatings((currentRatings) => ({
@@ -110,6 +115,31 @@ export function TeamEditorForm({ initialValues }: TeamEditorFormProps) {
               placeholder="/logos/falcon-united.svg"
               value={logoUrl}
             />
+
+            <Box>
+              <TextInput
+                classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+                error={
+                  isPrimaryColorValid
+                    ? undefined
+                    : "Enter a valid hex color, e.g. #3B82F6"
+                }
+                label="Primary Color *"
+                onChange={(event) => setPrimaryColor(event.currentTarget.value)}
+                placeholder="#3B82F6"
+                value={primaryColor}
+              />
+              <Group className="primary-color-preview-row" gap="sm">
+                <Box
+                  aria-label="Primary color preview"
+                  className="primary-color-swatch"
+                  style={{ backgroundColor: isPrimaryColorValid ? primaryColor : undefined }}
+                />
+                <Text className="primary-color-preview-text">
+                  {isPrimaryColorValid ? primaryColor.toUpperCase() : "Neutral preview"}
+                </Text>
+              </Group>
+            </Box>
 
             <NumberInput
               allowDecimal

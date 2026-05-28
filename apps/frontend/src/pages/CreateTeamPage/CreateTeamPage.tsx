@@ -10,6 +10,7 @@ const defaultTeam: TeamEditorValues = {
   name: "",
   division: "Division A",
   logoUrl: "",
+  primaryColor: "#3B82F6",
   overallRating: 0,
   description: "",
   profileRatings: {
