@@ -1,4 +1,5 @@
 import { Anchor, Box, Button, Group, Stack, Text } from "@mantine/core";
+import { Pencil } from "lucide-react";
 import { MatchBoxScoreTable, MatchScoreHeader } from "./components";
 import { mockMatchDetails } from "./mockMatchDetail";
 import "./MatchDetailPage.css";
@@ -18,7 +19,12 @@ export function MatchDetailPage({ matchId }: MatchDetailPageProps) {
         <Anchor className="match-detail-back-link" href="/matches">
           {"\u2190 Back to Matches"}
         </Anchor>
-        <Button className="edit-match-button" component="a" href={`/matches/${match.id}/edit`}>
+        <Button
+          className="edit-match-button"
+          component="a"
+          href={`/matches/${match.id}/edit`}
+          leftSection={<Pencil size={16} />}
+        >
           Edit Match
         </Button>
       </Group>

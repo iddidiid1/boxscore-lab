@@ -1,0 +1,223 @@
+.event-detail-page {
+  width: 100%;
+}
+
+.event-detail-hero,
+.event-detail-panel {
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #121c2f;
+}
+
+.event-detail-hero {
+  display: grid;
+  grid-template-columns: 124px minmax(0, 1fr);
+  gap: 22px;
+  padding: 20px;
+}
+
+.event-detail-hero .event-tier-crest {
+  min-height: 164px;
+}
+
+.event-detail-hero-main {
+  min-width: 0;
+}
+
+.event-detail-actions {
+  gap: 14px;
+}
+
+.event-detail-back-link {
+  color: #adc6ff;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.event-detail-back-link:hover {
+  color: #dbe7ff;
+}
+
+.edit-event-button {
+  min-width: 126px;
+  border-radius: 4px;
+  background: #2563eb;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.edit-event-button:hover {
+  background: #1d4ed8;
+}
+
+.event-detail-status,
+.event-panel-kicker {
+  color: #cbd5e1;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.event-detail-title {
+  color: #f8fafc;
+  font-size: 2.1rem;
+  line-height: 1.12;
+}
+
+.event-detail-description {
+  max-width: 920px;
+  color: #a7b4c8;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.72;
+}
+
+.event-detail-meta {
+  width: fit-content;
+  border: 1px solid rgba(71, 85, 105, 0.74);
+  border-radius: 4px;
+  background: rgba(12, 20, 37, 0.72);
+  color: #dae2fd;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 750;
+  padding: 9px 11px;
+}
+
+.event-detail-meta svg {
+  color: #adc6ff;
+}
+
+.event-detail-panel {
+  padding: 16px 18px;
+}
+
+.event-panel-title {
+  color: #f8fafc;
+  font-size: 1.2rem;
+  line-height: 1.25;
+}
+
+.event-tag-chip-row {
+  align-items: center;
+}
+
+.event-stage-chip,
+.event-result-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  border: 1px solid rgba(71, 85, 105, 0.78);
+  border-radius: 4px;
+  background: rgba(12, 20, 37, 0.62);
+  color: #cbd5e1;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding: 0 11px;
+  text-transform: uppercase;
+}
+
+.event-stage-chip {
+  border-color: rgba(96, 165, 250, 0.32);
+  color: #adc6ff;
+}
+
+.event-result-chip {
+  color: #cbd5e1;
+}
+
+.event-result-chip[data-winner] {
+  border-color: rgba(251, 191, 36, 0.48);
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+}
+
+.event-results-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.event-results-table-wrap {
+  overflow-x: auto;
+}
+
+.event-results-table {
+  min-width: 620px;
+}
+
+.event-results-table th {
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.event-results-table td {
+  border-color: rgba(51, 65, 85, 0.72);
+  color: #dae2fd;
+  font-size: 0.88rem;
+}
+
+.event-results-table tr[data-winner] td {
+  background: rgba(251, 191, 36, 0.08);
+}
+
+.event-result-rank,
+.event-result-score,
+.event-result-tag {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-weight: 800;
+}
+
+.event-result-rank-heading,
+.event-result-rank {
+  width: 64px;
+  min-width: 64px;
+  max-width: 64px;
+}
+
+.event-result-team {
+  color: #f8fafc;
+  font-weight: 800;
+}
+
+.event-result-trophy,
+.event-result-tag[data-winner] {
+  color: #fbbf24;
+}
+
+.event-detail-fallback-note {
+  color: #94a3b8;
+  font-size: 0.86rem;
+}
+
+@media (max-width: 760px) {
+  .event-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .event-detail-hero .event-tier-crest {
+    min-height: 108px;
+  }
+
+  .event-detail-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .edit-event-button {
+    width: 100%;
+  }
+
+  .event-detail-title {
+    font-size: 1.58rem;
+  }
+}
