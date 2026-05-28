@@ -116,6 +116,27 @@
   margin-top: 8px;
 }
 
+.primary-color-preview-row {
+  margin-top: 9px;
+}
+
+.primary-color-swatch {
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(100, 116, 139, 0.74);
+  border-radius: 4px;
+  background:
+    linear-gradient(135deg, rgba(148, 163, 184, 0.35), transparent 45%),
+    #334155;
+}
+
+.primary-color-preview-text {
+  color: #94a3b8;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
 .profile-rating-list {
   max-width: 920px;
 }

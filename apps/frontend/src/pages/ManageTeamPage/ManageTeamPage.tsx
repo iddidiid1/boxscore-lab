@@ -7,6 +7,7 @@ const mockTeam: TeamEditorValues = {
   name: "Falcon United",
   division: "Division A",
   logoUrl: "",
+  primaryColor: "#3B82F6",
   overallRating: 4,
   description:
     "A fast-paced squad built around transition scoring and disciplined half-court spacing.",
