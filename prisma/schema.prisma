@@ -7,99 +7,304 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Team {
-  id                 Int                  @id @default(autoincrement())
-  name               String
-  description        String?
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  players            Player[]
-  homeMatches        Match[]              @relation("TeamAMatches")
-  awayMatches        Match[]              @relation("TeamBMatches")
-  matchPlayerStats   MatchPlayerStats[]
-  competitionResults CompetitionResult[]
-
-  @@index([name])
+enum PlayerPosition {
+  PG
+  SG
+  G
+  F
+  SF
+  PF
+  C
 }
 
-model Player {
-  id               Int                @id @default(autoincrement())
-  teamId           Int
-  firstName        String
-  lastName         String
-  position         String?
-  attribute        String?
-  description      String?
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  team             Team               @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  matchPlayerStats MatchPlayerStats[]
+enum EventStatus {
+  PREPARING
+  ONGOING
+  COMPLETED
+  ARCHIVED
+}
 
-  @@index([teamId])
-  @@index([lastName, firstName])
+enum EventTier {
+  S
+  A
+  B
+  C
+}
+
+enum MatchTeamRole {
+  HOME
+  AWAY
+}
+
+enum PlayerAwardType {
+  EVENT_MVP
+  ALL_EVENT_FIRST_TEAM
+  ALL_EVENT_SECOND_TEAM
 }
 
 model Season {
-  id           Int           @id @default(autoincrement())
-  name         String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  competitions Competition[]
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@unique([name])
+  events    Event[]
 }
 
-model Competition {
-  id                Int                 @id @default(autoincrement())
-  seasonId          Int
-  name              String
-  formatDescription String?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  season            Season              @relation(fields: [seasonId], references: [id], onDelete: Cascade)
-  matches           Match[]
-  results           CompetitionResult[]
+model Division {
+  id        Int      @id @default(autoincrement())
+  name      String
+  slug      String   @unique
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@unique([seasonId, name])
+  teams     Team[]
+
+  @@index([sortOrder, name])
+}
+
+model Team {
+  id            Int      @id @default(autoincrement())
+  slug          String   @unique
+  name          String
+  divisionId    Int?
+  logoUrl       String?
+  primaryColor  String?
+  description   String?
+  overallRating Float?
+  archivedAt    DateTime?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  division      Division? @relation(fields: [divisionId], references: [id], onDelete: SetNull)
+  players       Player[]
+  profileRating TeamProfileRating?
+  eventParticipants EventParticipant[]
+  eventResults  EventTeamResult[]
+  eventPlayerAwards EventPlayerAward[]
+  matchTeams    MatchTeam[]
+  matchPlayerStats MatchPlayerStat[]
+  otherStats    MatchTeamOtherStat[]
+
+  @@index([divisionId])
+  @@index([name])
+  @@index([archivedAt])
+}
+
+model TeamProfileRating {
+  id          Int      @id @default(autoincrement())
+  teamId      Int      @unique
+  defense     Float
+  offense     Float
+  consistency Float
+  cohesion    Float
+  depth        Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  team        Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+}
+
+model Player {
+  id        Int            @id @default(autoincrement())
+  slug      String         @unique
+  teamId    Int
+  number    Int
+  name      String
+  position  PlayerPosition
+  isActive  Boolean        @default(true)
+
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  matchStats MatchPlayerStat[]
+  eventAwards EventPlayerAward[]
+
+  @@index([teamId])
+  @@index([position])
+  @@index([isActive])
+  @@unique([teamId, number])
+}
+
+model Event {
+  id               Int         @id @default(autoincrement())
+  slug             String      @unique
+  seasonId          Int?
+  name             String
+  tier             EventTier
+  status           EventStatus @default(PREPARING)
+  description      String?
+  rankingOrder     Int
+  countsForRanking Boolean     @default(true)
+  archivedAt       DateTime?
+  deletedAt        DateTime?
+
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  season           Season?     @relation(fields: [seasonId], references: [id], onDelete: SetNull)
+  stageTags        EventStageTag[]
+  resultTags       EventResultTag[]
+  participants     EventParticipant[]
+  teamResults      EventTeamResult[]
+  playerAwards     EventPlayerAward[]
+  matches          Match[]
+
+  @@unique([rankingOrder])
   @@index([seasonId])
+  @@index([status])
+  @@index([tier])
+  @@index([countsForRanking, rankingOrder])
+  @@index([archivedAt])
+  @@index([deletedAt])
+}
+
+model EventStageTag {
+  id          Int      @id @default(autoincrement())
+  eventId     Int
+  slug        String
+  label       String
+  description String?
+  sortOrder   Int      @default(0)
+
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  matches     Match[]
+
+  @@unique([eventId, slug])
+  @@index([eventId])
+  @@index([sortOrder])
+}
+
+model EventResultTag {
+  id            Int      @id @default(autoincrement())
+  eventId        Int
+  slug           String
+  label          String
+  isWinnerTag    Boolean  @default(false)
+  rankingPoints  Int      @default(0)
+  sortOrder      Int      @default(0)
+
+  event          Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  teamResults    EventTeamResult[]
+
+  @@unique([eventId, slug])
+  @@index([eventId])
+  @@index([sortOrder])
+}
+
+model EventParticipant {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  teamId    Int
+  createdAt DateTime @default(now())
+
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Restrict)
+
+  @@unique([eventId, teamId])
+  @@index([teamId])
+}
+
+model EventTeamResult {
+  id          Int      @id @default(autoincrement())
+  eventId     Int
+  teamId      Int
+  resultTagId Int
+  rank        Int?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  event       Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  team        Team           @relation(fields: [teamId], references: [id], onDelete: Restrict)
+  resultTag   EventResultTag @relation(fields: [resultTagId], references: [id], onDelete: Restrict)
+
+  @@unique([eventId, teamId])
+  @@index([eventId])
+  @@index([teamId])
+  @@index([resultTagId])
+}
+
+model EventPlayerAward {
+  id        Int             @id @default(autoincrement())
+  eventId   Int
+  playerId  Int
+  teamId    Int
+  awardType PlayerAwardType
+  notes     String?
+
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  event     Event           @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  player    Player          @relation(fields: [playerId], references: [id], onDelete: Restrict)
+  team      Team            @relation(fields: [teamId], references: [id], onDelete: Restrict)
+
+  @@unique([eventId, playerId, awardType])
+  @@index([eventId])
+  @@index([playerId])
+  @@index([teamId])
+  @@index([awardType])
 }
 
 model Match {
-  id               Int                @id @default(autoincrement())
-  competitionId    Int
-  teamAId          Int
-  teamBId          Int
-  scoreA           Int
-  scoreB           Int
-  matchDate        DateTime
-  stage            String
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  competition      Competition        @relation(fields: [competitionId], references: [id], onDelete: Cascade)
-  teamA            Team               @relation("TeamAMatches", fields: [teamAId], references: [id], onDelete: Restrict)
-  teamB            Team               @relation("TeamBMatches", fields: [teamBId], references: [id], onDelete: Restrict)
-  matchPlayerStats MatchPlayerStats[]
+  id          Int      @id @default(autoincrement())
+  eventId     Int
+  stageTagId  Int?
+  playedAt    DateTime
 
-  @@index([competitionId])
-  @@index([teamAId])
-  @@index([teamBId])
-  @@index([matchDate])
-  @@index([stage])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  event       Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  stageTag    EventStageTag? @relation(fields: [stageTagId], references: [id], onDelete: SetNull)
+  teams       MatchTeam[]
+  playerStats MatchPlayerStat[]
+  otherStats  MatchTeamOtherStat[]
+
+  @@index([eventId])
+  @@index([stageTagId])
+  @@index([playedAt])
 }
 
-model MatchPlayerStats {
-  id        Int      @id @default(autoincrement())
-  matchId   Int
-  playerId  Int
-  teamId    Int
-  points    Int      @default(0)
-  rebounds  Int      @default(0)
-  assists   Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
-  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  team      Team     @relation(fields: [teamId], references: [id], onDelete: Restrict)
+model MatchTeam {
+  id       Int           @id @default(autoincrement())
+  matchId  Int
+  teamId   Int
+  role     MatchTeamRole
+
+  match    Match         @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  team     Team          @relation(fields: [teamId], references: [id], onDelete: Restrict)
+
+  @@unique([matchId, role])
+  @@unique([matchId, teamId])
+  @@index([teamId])
+}
+
+model MatchPlayerStat {
+  id                     Int      @id @default(autoincrement())
+  matchId                Int
+  playerId               Int
+  teamId                 Int
+  points                 Int      @default(0)
+  rebounds               Int      @default(0)
+  assists                Int      @default(0)
+  fieldGoalsMade         Int      @default(0)
+  fieldGoalsAttempted    Int      @default(0)
+  threePointersMade      Int      @default(0)
+  threePointersAttempted Int      @default(0)
+  minutes                Int      @default(0)
+  rating                 Float?
+
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  match                  Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player                 Player   @relation(fields: [playerId], references: [id], onDelete: Restrict)
+  team                   Team     @relation(fields: [teamId], references: [id], onDelete: Restrict)
 
   @@unique([matchId, playerId])
   @@index([matchId])
@@ -107,19 +312,21 @@ model MatchPlayerStats {
   @@index([teamId])
 }
 
-model CompetitionResult {
-  id            Int         @id @default(autoincrement())
-  competitionId Int
-  teamId        Int
-  rank          Int
-  points        Int         @default(0)
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  competition   Competition @relation(fields: [competitionId], references: [id], onDelete: Cascade)
-  team          Team        @relation(fields: [teamId], references: [id], onDelete: Restrict)
+model MatchTeamOtherStat {
+  id                     Int @id @default(autoincrement())
+  matchId                Int
+  teamId                 Int
+  points                 Int @default(0)
+  rebounds               Int @default(0)
+  assists                Int @default(0)
+  fieldGoalsMade         Int @default(0)
+  fieldGoalsAttempted    Int @default(0)
+  threePointersMade      Int @default(0)
+  threePointersAttempted Int @default(0)
 
-  @@unique([competitionId, teamId])
-  @@unique([competitionId, rank])
-  @@index([competitionId])
+  match                  Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  team                   Team  @relation(fields: [teamId], references: [id], onDelete: Restrict)
+
+  @@unique([matchId, teamId])
   @@index([teamId])
 }
