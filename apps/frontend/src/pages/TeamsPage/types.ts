@@ -1,10 +1,16 @@
-export type Division = "A" | "B" | "C" | "D";
+export type Division = {
+  divisionId: number;
+  divisionName: string;
+  divisionSlug: string;
+  divisionSortOrder: number;
+};
 
 export type Team = {
-  id: string;
+  id: number;
+  slug: string;
   name: string;
-  division: Division;
-  logoUrl?: string;
-  points: number;
-  overallRating: number;
+  logoUrl: string | null;
+  primaryColor: string | null;
+  totalPoints: number;
+  overallRating: number | null;
 };

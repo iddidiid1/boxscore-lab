@@ -1,97 +1,164 @@
-import { Anchor, Box, Button, Group, Stack } from "@mantine/core";
+import { Alert, Anchor, Box, Button, Group, Skeleton, Stack, Text } from "@mantine/core";
 import { Pencil } from "lucide-react";
+import { useEffect, useState } from "react";
+import { fetchTeam, type TeamDetail } from "../../features/teams";
 import { RosterTable, type Player } from "./components/RosterTable";
 import { TeamRadarCard, type TeamRadarAttribute } from "./components/TeamRadarCard";
 import { TeamProfileSummary } from "./components/TeamProfileSummary";
 import { TeamSummaryCard, type TeamSummaryStat } from "./components/TeamSummaryCard";
 import "./TeamDetailPage.css";
 
-const mockTeam = {
-  id: "falcon-united",
-  name: "Falcon United",
-  division: "Division A",
-  points: 1280,
-  overallRating: 4,
-  description:
-    "A fast-paced squad built around transition scoring, high-volume guard play, and disciplined half-court spacing."
-};
+function getSlugFromPath() {
+  const match = window.location.pathname.match(/^\/teams\/([^/]+)\/?$/);
+  return match?.[1] ?? "";
+}
 
-const mockRadarAttributes: TeamRadarAttribute[] = [
-  { label: "DEF", value: 8.5 },
-  { label: "OFF", value: 8.0 },
-  { label: "CON", value: 7.5 },
-  { label: "COH", value: 7.0 },
-  { label: "DEP", value: 8.8 }
-];
-
-const mockSummaryStats: TeamSummaryStat[] = [
-  { label: "PTS", value: "112.4" },
-  { label: "REB", value: "43.8" },
-  { label: "AST", value: "26.1" },
-  { label: "FG%", value: "48.6%" },
-  { label: "3P%", value: "37.9%" }
-];
-
-const mockPlayers: Player[] = [
-  {
-    id: "mason-cole",
-    number: 7,
-    position: "G",
-    name: "Mason Cole",
-    points: 24.6,
-    rebounds: 4.8,
-    assists: 7.2,
-    fieldGoalPercentage: 48.3,
-    threePointPercentage: 39.1,
-    averageMinutes: 33.8,
-    starRating: 5
-  },
-  {
-    id: "eli-brooks",
-    number: 12,
-    position: "F",
-    name: "Eli Brooks",
-    points: 18.9,
-    rebounds: 8.1,
-    assists: 3.6,
-    fieldGoalPercentage: 51.7,
-    threePointPercentage: 34.5,
-    averageMinutes: 29.4,
-    starRating: 4
+function percentage(made: number, attempted: number) {
+  if (attempted === 0) {
+    return "0.0%";
   }
-];
+  return `${((made / attempted) * 100).toFixed(1)}%`;
+}
+
+function mapRadar(team: TeamDetail): TeamRadarAttribute[] | null {
+  if (team.profileRating === null) {
+    return null;
+  }
+  return [
+    { label: "DEF", value: team.profileRating.defense },
+    { label: "OFF", value: team.profileRating.offense },
+    { label: "CON", value: team.profileRating.consistency },
+    { label: "COH", value: team.profileRating.cohesion },
+    { label: "DEP", value: team.profileRating.depth }
+  ];
+}
+
+function mapSummary(team: TeamDetail): TeamSummaryStat[] {
+  return [
+    { label: "PTS", value: team.teamStats.avgPoints.toFixed(1) },
+    { label: "REB", value: team.teamStats.avgRebounds.toFixed(1) },
+    { label: "AST", value: team.teamStats.avgAssists.toFixed(1) },
+    {
+      label: "FG%",
+      value: percentage(team.teamStats.avgFieldGoalsMade, team.teamStats.avgFieldGoalsAttempted)
+    },
+    {
+      label: "3P%",
+      value: percentage(team.teamStats.avgThreePointersMade, team.teamStats.avgThreePointersAttempted)
+    }
+  ];
+}
+
+function mapPlayers(team: TeamDetail): Player[] {
+  return team.players.map((player) => ({
+    id: String(player.id),
+    number: player.number,
+    position: player.position,
+    name: player.name,
+    points: player.stats.avgPoints,
+    rebounds: player.stats.avgRebounds,
+    assists: player.stats.avgAssists,
+    fieldGoalPercentage:
+      player.stats.avgFieldGoalsAttempted === 0
+        ? 0
+        : (player.stats.avgFieldGoalsMade / player.stats.avgFieldGoalsAttempted) * 100,
+    threePointPercentage:
+      player.stats.avgThreePointersAttempted === 0
+        ? 0
+        : (player.stats.avgThreePointersMade / player.stats.avgThreePointersAttempted) * 100,
+    averageMinutes: player.stats.avgMinutes,
+    starRating: player.stats.avgRating
+  }));
+}
 
 export function TeamDetailPage() {
+  const slug = getSlugFromPath();
+  const [team, setTeam] = useState<TeamDetail | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    setIsLoading(true);
+    setError(null);
+    fetchTeam(slug, controller.signal)
+      .then(setTeam)
+      .catch((loadError: unknown) => {
+        if (controller.signal.aborted) {
+          return;
+        }
+        setError(loadError instanceof Error ? loadError.message : "Unable to load team.");
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+        }
+      });
+    return () => controller.abort();
+  }, [slug]);
+
+  if (isLoading) {
+    return (
+      <Stack className="team-detail-page" gap="md">
+        <Skeleton height={40} radius={4} />
+        <Skeleton height={280} radius={6} />
+        <Skeleton height={160} radius={6} />
+      </Stack>
+    );
+  }
+
+  if (error || team === null) {
+    return (
+      <Stack className="team-detail-page" gap="md">
+        <Anchor className="team-detail-back-link" href="/teams">
+          {"\u2190 Back to Teams"}
+        </Anchor>
+        <Alert color="red" title="Team not found">
+          {error ?? "Team not found."}
+        </Alert>
+      </Stack>
+    );
+  }
+
   return (
     <Stack className="team-detail-page" gap="md">
       <Group className="team-detail-actions" justify="space-between">
         <Anchor className="team-detail-back-link" href="/teams">
           {"\u2190 Back to Teams"}
         </Anchor>
-        <Button
-          className="manage-team-button"
-          component="a"
-          href={`/teams/${mockTeam.id}/manage`}
-          leftSection={<Pencil size={16} />}
-        >
-          Manage Team
-        </Button>
+        {team.archivedAt === null ? (
+          <Button
+            className="manage-team-button"
+            component="a"
+            href={`/teams/${team.slug}/manage`}
+            leftSection={<Pencil size={16} />}
+          >
+            Manage Team
+          </Button>
+        ) : null}
       </Group>
+
+      {team.archivedAt !== null ? (
+        <Alert color="yellow" title="Archived team">
+          <Text>This team is archived. Historical stats remain available.</Text>
+        </Alert>
+      ) : null}
 
       <Box className="team-detail-hero">
         <TeamProfileSummary
-          description={mockTeam.description}
-          division={mockTeam.division}
-          name={mockTeam.name}
-          overallRating={mockTeam.overallRating}
-          points={mockTeam.points}
+          description={team.description ?? ""}
+          division={team.divisionName ?? "No Division"}
+          logoUrl={team.logoUrl ?? undefined}
+          name={team.name}
+          overallRating={team.overallRating ?? 0}
+          points={team.totalPoints}
         />
-        <TeamRadarCard attributes={mockRadarAttributes} />
+        <TeamRadarCard attributes={mapRadar(team)} />
       </Box>
 
-      <TeamSummaryCard stats={mockSummaryStats} />
+      <TeamSummaryCard stats={mapSummary(team)} />
 
-      <RosterTable players={mockPlayers} />
+      <RosterTable players={mapPlayers(team)} />
     </Stack>
   );
 }

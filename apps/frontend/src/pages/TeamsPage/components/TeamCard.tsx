@@ -16,7 +16,7 @@ function getInitials(name: string) {
 }
 
 function getStars(rating: number) {
-  const roundedRating = Math.max(0, Math.min(5, Math.round(rating)));
+  const roundedRating = Math.max(0, Math.min(5, Math.round(rating / 2)));
   return `${"\u2605".repeat(roundedRating)}${"\u2606".repeat(5 - roundedRating)}`;
 }
 
@@ -34,7 +34,8 @@ function TeamLogo({ team }: { team: Team }) {
 }
 
 export function TeamCard({ team }: TeamCardProps) {
-  const teamDetailPath = `/teams/${team.id}`;
+  const teamDetailPath = `/teams/${team.slug}`;
+  const rating = team.overallRating ?? 0;
 
   return (
     <Box className="team-card">
@@ -50,9 +51,9 @@ export function TeamCard({ team }: TeamCardProps) {
           <Text className="team-name">{team.name}</Text>
         </Anchor>
         <Group gap="xs" justify="space-between" wrap="nowrap">
-          <Text className="team-points">{team.points.toLocaleString()} pts</Text>
-          <Text aria-label={`${team.overallRating} out of 5 rating`} className="team-rating">
-            {getStars(team.overallRating)}
+          <Text className="team-points">{team.totalPoints.toLocaleString()} pts</Text>
+          <Text aria-label={`${rating} out of 10 rating`} className="team-rating">
+            {getStars(rating)}
           </Text>
         </Group>
       </Box>

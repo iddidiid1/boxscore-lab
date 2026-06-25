@@ -145,7 +145,13 @@ export function RosterTable({ players }: RosterTableProps) {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {sortedPlayers.map((player) => (
+            {sortedPlayers.length === 0 ? (
+              <Table.Tr>
+                <Table.Td colSpan={columns.length}>
+                  <Text className="roster-value">No active players.</Text>
+                </Table.Td>
+              </Table.Tr>
+            ) : sortedPlayers.map((player) => (
               <Table.Tr key={player.id}>
                 {columns.map((column) => (
                   <Table.Td className={column.className} key={column.key}>

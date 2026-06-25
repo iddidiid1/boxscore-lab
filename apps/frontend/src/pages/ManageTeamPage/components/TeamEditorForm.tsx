@@ -11,31 +11,26 @@ import {
   Title
 } from "@mantine/core";
 import { Shield } from "lucide-react";
-import { useState } from "react";
-
-export type ProfileRatings = {
-  defense: number;
-  offense: number;
-  consistency: number;
-  cohesion: number;
-  depth: number;
-};
+import type { Division, ProfileRating } from "../../../features/teams";
 
 export type TeamEditorValues = {
   name: string;
-  division: string;
+  divisionId: number | null;
   logoUrl: string;
   primaryColor: string;
   overallRating: number;
   description: string;
-  profileRatings: ProfileRatings;
+  profileRating: ProfileRating;
 };
 
 type TeamEditorFormProps = {
-  initialValues: TeamEditorValues;
+  value: TeamEditorValues;
+  onChange: (value: TeamEditorValues) => void;
+  divisions: Division[];
+  errors?: Record<string, string>;
+  disabled?: boolean;
 };
 
-const divisionOptions = ["Division A", "Division B", "Division C", "Division D"];
 const hexColorPattern = /^#([A-Fa-f0-9]{6})$/;
 
 const profileRatingFields = [
@@ -60,29 +55,35 @@ function getInitials(name: string) {
 }
 
 function getStars(rating: number) {
-  const roundedRating = Math.max(0, Math.min(5, Math.round(rating)));
+  const roundedRating = Math.max(0, Math.min(5, Math.round(rating / 2)));
   return `${"\u2605".repeat(roundedRating)}${"\u2606".repeat(5 - roundedRating)}`;
 }
 
-export function TeamEditorForm({ initialValues }: TeamEditorFormProps) {
-  const [teamName, setTeamName] = useState(initialValues.name);
-  const [division, setDivision] = useState<string | null>(initialValues.division);
-  const [logoUrl, setLogoUrl] = useState(initialValues.logoUrl);
-  const [primaryColor, setPrimaryColor] = useState(initialValues.primaryColor);
-  const [overallRating, setOverallRating] = useState(initialValues.overallRating);
-  const [teamDescription, setTeamDescription] = useState(initialValues.description);
-  const [profileRatings, setProfileRatings] = useState<Record<ProfileRatingKey, number>>(
-    initialValues.profileRatings
-  );
+export function TeamEditorForm({
+  value,
+  onChange,
+  divisions,
+  errors = {},
+  disabled = false
+}: TeamEditorFormProps) {
+  const previewName = value.name.trim() || "New Team";
+  const isPrimaryColorValid = value.primaryColor.trim().length === 0 || hexColorPattern.test(value.primaryColor);
+  const divisionOptions = divisions.map((division) => ({
+    value: String(division.id),
+    label: division.name
+  }));
 
-  const previewName = teamName.trim() || "New Team";
-  const isPrimaryColorValid = hexColorPattern.test(primaryColor);
+  function update(partial: Partial<TeamEditorValues>) {
+    onChange({ ...value, ...partial });
+  }
 
-  function updateProfileRating(key: ProfileRatingKey, value: number) {
-    setProfileRatings((currentRatings) => ({
-      ...currentRatings,
-      [key]: value
-    }));
+  function updateProfileRating(key: ProfileRatingKey, nextValue: number) {
+    update({
+      profileRating: {
+        ...value.profileRating,
+        [key]: nextValue
+      }
+    });
   }
 
   return (
@@ -94,49 +95,52 @@ export function TeamEditorForm({ initialValues }: TeamEditorFormProps) {
           <Stack gap="md">
             <TextInput
               classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+              disabled={disabled}
+              error={errors.name}
               label="Team Name"
-              onChange={(event) => setTeamName(event.currentTarget.value)}
+              onChange={(event) => update({ name: event.currentTarget.value })}
               placeholder="New Team"
-              value={teamName}
+              value={value.name}
             />
 
             <Select
               classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
               data={divisionOptions}
+              disabled={disabled}
+              error={errors.divisionId}
               label="Division"
-              onChange={setDivision}
-              value={division}
+              onChange={(nextValue) => update({ divisionId: nextValue ? Number(nextValue) : null })}
+              value={value.divisionId === null ? null : String(value.divisionId)}
             />
 
             <TextInput
               classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
-              label="Logo Path"
-              onChange={(event) => setLogoUrl(event.currentTarget.value)}
-              placeholder="/logos/falcon-united.svg"
-              value={logoUrl}
+              disabled={disabled}
+              error={errors.logoUrl}
+              label="Logo URL"
+              onChange={(event) => update({ logoUrl: event.currentTarget.value })}
+              placeholder="https://example.com/logo.png"
+              value={value.logoUrl}
             />
 
             <Box>
               <TextInput
                 classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
-                error={
-                  isPrimaryColorValid
-                    ? undefined
-                    : "Enter a valid hex color, e.g. #3B82F6"
-                }
-                label="Primary Color *"
-                onChange={(event) => setPrimaryColor(event.currentTarget.value)}
+                disabled={disabled}
+                error={errors.primaryColor ?? (isPrimaryColorValid ? undefined : "Enter a valid hex color, e.g. #3B82F6")}
+                label="Primary Color"
+                onChange={(event) => update({ primaryColor: event.currentTarget.value })}
                 placeholder="#3B82F6"
-                value={primaryColor}
+                value={value.primaryColor}
               />
               <Group className="primary-color-preview-row" gap="sm">
                 <Box
                   aria-label="Primary color preview"
                   className="primary-color-swatch"
-                  style={{ backgroundColor: isPrimaryColorValid ? primaryColor : undefined }}
+                  style={{ backgroundColor: isPrimaryColorValid && value.primaryColor ? value.primaryColor : undefined }}
                 />
                 <Text className="primary-color-preview-text">
-                  {isPrimaryColorValid ? primaryColor.toUpperCase() : "Neutral preview"}
+                  {isPrimaryColorValid && value.primaryColor ? value.primaryColor.toUpperCase() : "Neutral preview"}
                 </Text>
               </Group>
             </Box>
@@ -146,33 +150,37 @@ export function TeamEditorForm({ initialValues }: TeamEditorFormProps) {
               classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
               clampBehavior="strict"
               decimalScale={1}
+              disabled={disabled}
+              error={errors.overallRating}
               label="Overall Rating"
-              max={5}
+              max={10}
               min={0}
-              onChange={(value) => {
-                setOverallRating(typeof value === "number" ? value : Number(value) || 0);
+              onChange={(nextValue) => {
+                update({ overallRating: typeof nextValue === "number" ? nextValue : Number(nextValue) || 0 });
               }}
               step={0.5}
-              value={overallRating}
+              value={value.overallRating}
             />
 
             <Textarea
               autosize
               classNames={{ input: "manage-team-textarea", label: "manage-team-input-label" }}
+              disabled={disabled}
+              error={errors.description}
               label="Team Description"
               maxRows={5}
               minRows={4}
-              onChange={(event) => setTeamDescription(event.currentTarget.value)}
+              onChange={(event) => update({ description: event.currentTarget.value })}
               placeholder="A fast-paced squad built around transition scoring and disciplined half-court spacing."
-              value={teamDescription}
+              value={value.description}
             />
           </Stack>
 
           <Stack className="team-basic-info-preview" gap="lg">
             <Box>
               <Text className="data-label">Logo Preview</Text>
-              {logoUrl ? (
-                <img alt="" className="manage-team-logo-preview" src={logoUrl} />
+              {value.logoUrl ? (
+                <img alt="" className="manage-team-logo-preview" src={value.logoUrl} />
               ) : (
                 <Box aria-hidden="true" className="manage-team-logo-preview manage-team-logo-fallback">
                   <Shield size={30} />
@@ -188,12 +196,14 @@ export function TeamEditorForm({ initialValues }: TeamEditorFormProps) {
 
             <Box>
               <Text className="data-label">Rating Preview</Text>
-              <Text className="manage-team-rating-preview">{getStars(overallRating)}</Text>
+              <Text className="manage-team-rating-preview">{getStars(value.overallRating)}</Text>
             </Box>
 
             <Box>
               <Text className="data-label">Selected Division</Text>
-              <Text className="manage-team-preview-value">{division}</Text>
+              <Text className="manage-team-preview-value">
+                {divisions.find((division) => division.id === value.divisionId)?.name ?? "None"}
+              </Text>
             </Box>
           </Stack>
         </Box>
@@ -213,15 +223,16 @@ export function TeamEditorForm({ initialValues }: TeamEditorFormProps) {
                   thumb: "profile-rating-slider-thumb",
                   track: "profile-rating-slider-track"
                 }}
-                label={(value) => value.toFixed(1)}
+                disabled={disabled}
+                label={(nextValue) => nextValue.toFixed(1)}
                 max={10}
                 min={1}
-                onChange={(value) => updateProfileRating(field.key, value)}
+                onChange={(nextValue) => updateProfileRating(field.key, nextValue)}
                 step={0.5}
-                value={profileRatings[field.key]}
+                value={value.profileRating[field.key]}
               />
               <Text className="profile-rating-value">
-                {profileRatings[field.key].toFixed(1)}
+                {value.profileRating[field.key].toFixed(1)}
               </Text>
             </Box>
           ))}

@@ -9,7 +9,11 @@
     "dev:backend": "pnpm --filter @fantasy-league-stats/backend dev",
     "db:migrate": "prisma migrate dev --schema prisma/schema.prisma",
     "db:generate": "prisma generate --schema prisma/schema.prisma",
+    "db:seed": "node prisma/seed.cjs",
     "db:studio": "prisma studio --schema prisma/schema.prisma"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.cjs"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3"
