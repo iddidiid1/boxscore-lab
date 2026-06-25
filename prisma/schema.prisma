@@ -126,7 +126,7 @@ model Player {
   @@index([teamId])
   @@index([position])
   @@index([isActive])
-  @@unique([teamId, number])
+  @@index([teamId, number, isActive])
 }
 
 model Event {
