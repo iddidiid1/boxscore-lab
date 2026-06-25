@@ -1,139 +1,40 @@
-import { Box, Group, Stack, Text, Title } from "@mantine/core";
+import { Alert, Box, Button, Group, Skeleton, Stack, Text, Title } from "@mantine/core";
+import { useEffect, useState } from "react";
+import { fetchTeams } from "../../features/teams";
 import { CreateTeamButton } from "./components/CreateTeamButton";
 import { DivisionCard } from "./components/DivisionCard";
 import type { Division, Team } from "./types";
 import "./TeamsPage.css";
 
-const divisions: Division[] = ["A", "B", "C", "D"];
-
-const mockTeams: Team[] = [
-  {
-    id: "falcon-united",
-    name: "Falcon United",
-    division: "A",
-    points: 1280,
-    overallRating: 4
-  },
-  {
-    id: "harbor-kings",
-    name: "Harbor Kings",
-    division: "A",
-    points: 1215,
-    overallRating: 5
-  },
-  {
-    id: "metro-rangers",
-    name: "Metro Rangers",
-    division: "A",
-    points: 1090,
-    overallRating: 3
-  },
-  {
-    id: "valley-strikers",
-    name: "Valley Strikers",
-    division: "A",
-    points: 980,
-    overallRating: 3
-  },
-  {
-    id: "summit-athletic",
-    name: "Summit Athletic",
-    division: "B",
-    points: 1335,
-    overallRating: 5
-  },
-  {
-    id: "northside-crew",
-    name: "Northside Crew",
-    division: "B",
-    points: 1170,
-    overallRating: 4
-  },
-  {
-    id: "cedar-city",
-    name: "Cedar City",
-    division: "B",
-    points: 1045,
-    overallRating: 3
-  },
-  {
-    id: "ironbridge-fc",
-    name: "Ironbridge FC",
-    division: "B",
-    points: 1010,
-    overallRating: 4
-  },
-  {
-    id: "coastal-wolves",
-    name: "Coastal Wolves",
-    division: "C",
-    points: 1255,
-    overallRating: 4
-  },
-  {
-    id: "redwood-town",
-    name: "Redwood Town",
-    division: "C",
-    points: 1188,
-    overallRating: 4
-  },
-  {
-    id: "prairie-fc",
-    name: "Prairie FC",
-    division: "C",
-    points: 1124,
-    overallRating: 3
-  },
-  {
-    id: "lakeside-rovers",
-    name: "Lakeside Rovers",
-    division: "C",
-    points: 955,
-    overallRating: 2
-  },
-  {
-    id: "capital-guard",
-    name: "Capital Guard",
-    division: "D",
-    points: 1302,
-    overallRating: 5
-  },
-  {
-    id: "eastbank-club",
-    name: "Eastbank Club",
-    division: "D",
-    points: 1162,
-    overallRating: 4
-  },
-  {
-    id: "orchard-park",
-    name: "Orchard Park",
-    division: "D",
-    points: 1078,
-    overallRating: 3
-  },
-  {
-    id: "silverline",
-    name: "Silverline",
-    division: "D",
-    points: 990,
-    overallRating: 2
-  }
-];
-
-function getFirstLetter(name: string) {
-  return name.trim().charAt(0).toLocaleUpperCase();
-}
-
-function getTeamsByDivision(division: Division) {
-  return mockTeams
-    .filter((team) => team.division === division)
-    .sort((firstTeam, secondTeam) =>
-      getFirstLetter(firstTeam.name).localeCompare(getFirstLetter(secondTeam.name))
-    );
-}
-
 export function TeamsPage() {
+  const [divisions, setDivisions] = useState<Array<Division & { teams: Team[] }>>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  async function loadTeams(signal?: AbortSignal) {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetchTeams(signal);
+      setDivisions(response.divisions);
+    } catch (loadError) {
+      if (signal?.aborted) {
+        return;
+      }
+      setError(loadError instanceof Error ? loadError.message : "Unable to load teams.");
+    } finally {
+      if (!signal?.aborted) {
+        setIsLoading(false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    const controller = new AbortController();
+    void loadTeams(controller.signal);
+    return () => controller.abort();
+  }, []);
+
   return (
     <Stack className="teams-page" gap="xl">
       <Group align="flex-start" className="teams-header" justify="space-between">
@@ -151,11 +52,35 @@ export function TeamsPage() {
         <CreateTeamButton />
       </Group>
 
-      <Box className="division-board">
-        {divisions.map((division) => (
-          <DivisionCard division={division} key={division} teams={getTeamsByDivision(division)} />
-        ))}
-      </Box>
+      {error ? (
+        <Alert color="red" title="Unable to load teams">
+          <Stack gap="sm">
+            <Text>{error}</Text>
+            <Button onClick={() => void loadTeams()} variant="light">Retry</Button>
+          </Stack>
+        </Alert>
+      ) : null}
+
+      {isLoading ? (
+        <Box className="division-board">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <Skeleton height={220} key={index} radius={6} />
+          ))}
+        </Box>
+      ) : divisions.length === 0 && !error ? (
+        <Box className="division-section">
+          <Title order={3}>No teams yet</Title>
+          <Text className="page-summary" mt="xs">
+            Create the first team to start building the league board.
+          </Text>
+        </Box>
+      ) : (
+        <Box className="division-board">
+          {divisions.map((division) => (
+            <DivisionCard division={division} key={division.divisionId} teams={division.teams} />
+          ))}
+        </Box>
+      )}
     </Stack>
   );
 }

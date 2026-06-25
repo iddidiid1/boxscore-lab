@@ -11,14 +11,16 @@ import {
   Title
 } from "@mantine/core";
 import { useState } from "react";
+import type { PlayerPosition } from "../../../features/teams";
 
-type PlayerPosition = "PG" | "SG" | "G" | "F" | "SF" | "PF" | "C";
-
-type Player = {
-  id: string;
+export type EditablePlayer = {
+  id?: number;
+  localId: string;
   number: number;
   position: PlayerPosition;
   name: string;
+  isActive: boolean;
+  pendingRemoval?: boolean;
 };
 
 type PlayerFormValues = {
@@ -27,22 +29,15 @@ type PlayerFormValues = {
   name: string;
 };
 
-const positionOptions: PlayerPosition[] = ["PG", "SG", "G", "F", "SF", "PF", "C"];
+type PlayerManagementSectionProps = {
+  value: EditablePlayer[];
+  onChange: (value: EditablePlayer[]) => void;
+  errors?: Record<string, string>;
+  disabled?: boolean;
+  rosterError?: string | null;
+};
 
-const mockPlayers: Player[] = [
-  {
-    id: "mason-cole",
-    number: 7,
-    position: "G",
-    name: "Mason Cole"
-  },
-  {
-    id: "eli-brooks",
-    number: 12,
-    position: "F",
-    name: "Eli Brooks"
-  }
-];
+const positionOptions: PlayerPosition[] = ["PG", "SG", "G", "F", "SF", "PF", "C"];
 
 const emptyPlayerForm: PlayerFormValues = {
   number: "",
@@ -50,7 +45,7 @@ const emptyPlayerForm: PlayerFormValues = {
   name: ""
 };
 
-function getPlayerFormValues(player: Player): PlayerFormValues {
+function getPlayerFormValues(player: EditablePlayer): PlayerFormValues {
   return {
     number: player.number,
     position: player.position,
@@ -58,34 +53,40 @@ function getPlayerFormValues(player: Player): PlayerFormValues {
   };
 }
 
-export function PlayerManagementSection() {
-  const [players, setPlayers] = useState<Player[]>(mockPlayers);
-  const [editingPlayerId, setEditingPlayerId] = useState<string | null>(null);
+export function PlayerManagementSection({
+  value,
+  onChange,
+  errors = {},
+  disabled = false,
+  rosterError = null
+}: PlayerManagementSectionProps) {
+  const [editingPlayerLocalId, setEditingPlayerLocalId] = useState<string | null>(null);
   const [formValues, setFormValues] = useState<PlayerFormValues>(emptyPlayerForm);
   const [showPlayerForm, setShowPlayerForm] = useState(false);
   const [showValidation, setShowValidation] = useState(false);
 
-  const isEditing = editingPlayerId !== null;
+  const visiblePlayers = value.filter((player) => !player.pendingRemoval);
+  const isEditing = editingPlayerLocalId !== null;
   const isNumberInvalid = formValues.number === "";
   const isPositionInvalid = formValues.position === "";
   const isNameInvalid = formValues.name.trim().length === 0;
 
   function handleAddPlayer() {
-    setEditingPlayerId(null);
+    setEditingPlayerLocalId(null);
     setFormValues(emptyPlayerForm);
     setShowValidation(false);
     setShowPlayerForm(true);
   }
 
-  function handleEditPlayer(player: Player) {
-    setEditingPlayerId(player.id);
+  function handleEditPlayer(player: EditablePlayer) {
+    setEditingPlayerLocalId(player.localId);
     setFormValues(getPlayerFormValues(player));
     setShowValidation(false);
     setShowPlayerForm(true);
   }
 
   function handleCancelPlayerForm() {
-    setEditingPlayerId(null);
+    setEditingPlayerLocalId(null);
     setFormValues(emptyPlayerForm);
     setShowValidation(false);
     setShowPlayerForm(false);
@@ -98,32 +99,46 @@ export function PlayerManagementSection() {
       return;
     }
 
-    const playerPayload: Player = {
-      id: editingPlayerId ?? `player-${Date.now()}`,
+    const playerPayload: EditablePlayer = {
+      localId: editingPlayerLocalId ?? `new-${Date.now()}`,
       number: Number(formValues.number),
       position: formValues.position,
-      name: formValues.name.trim()
+      name: formValues.name.trim(),
+      isActive: true
     };
 
-    setPlayers((currentPlayers) => {
-      if (editingPlayerId) {
-        return currentPlayers.map((player) =>
-          player.id === editingPlayerId ? playerPayload : player
-        );
-      }
-
-      return [...currentPlayers, playerPayload];
-    });
+    onChange(
+      editingPlayerLocalId
+        ? value.map((player) =>
+            player.localId === editingPlayerLocalId
+              ? { ...player, ...playerPayload, id: player.id }
+              : player
+          )
+        : [...value, playerPayload]
+    );
 
     handleCancelPlayerForm();
   }
 
-  function handleRemovePlayer(playerId: string) {
-    setPlayers((currentPlayers) => currentPlayers.filter((player) => player.id !== playerId));
+  function handleRemovePlayer(player: EditablePlayer) {
+    onChange(
+      player.id === undefined
+        ? value.filter((currentPlayer) => currentPlayer.localId !== player.localId)
+        : value.map((currentPlayer) =>
+            currentPlayer.localId === player.localId
+              ? { ...currentPlayer, isActive: false, pendingRemoval: true }
+              : currentPlayer
+          )
+    );
 
-    if (editingPlayerId === playerId) {
+    if (editingPlayerLocalId === player.localId) {
       handleCancelPlayerForm();
     }
+  }
+
+  function fieldError(player: EditablePlayer, field: "number" | "name" | "position") {
+    const visibleIndex = visiblePlayers.findIndex((currentPlayer) => currentPlayer.localId === player.localId);
+    return visibleIndex >= 0 ? errors[`players[${visibleIndex}].${field}`] : undefined;
   }
 
   return (
@@ -132,9 +147,10 @@ export function PlayerManagementSection() {
         <Box>
           <Title order={2}>Player Management</Title>
           <Text className="module-copy">Manage players assigned to this team.</Text>
+          {rosterError ? <Text c="red.4">{rosterError}</Text> : null}
         </Box>
 
-        <Button className="player-add-button" onClick={handleAddPlayer}>
+        <Button className="player-add-button" disabled={disabled} onClick={handleAddPlayer}>
           + Add Player
         </Button>
       </Group>
@@ -146,13 +162,15 @@ export function PlayerManagementSection() {
             <NumberInput
               classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
               clampBehavior="strict"
+              disabled={disabled}
               error={showValidation && isNumberInvalid ? "Number is required" : undefined}
               label="Number"
+              max={99}
               min={0}
-              onChange={(value) => {
+              onChange={(nextValue) => {
                 setFormValues((currentValues) => ({
                   ...currentValues,
-                  number: typeof value === "number" ? value : ""
+                  number: typeof nextValue === "number" ? nextValue : ""
                 }));
               }}
               value={formValues.number}
@@ -161,12 +179,13 @@ export function PlayerManagementSection() {
             <Select
               classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
               data={positionOptions}
+              disabled={disabled}
               error={showValidation && isPositionInvalid ? "Position is required" : undefined}
               label="Position"
-              onChange={(value) => {
+              onChange={(nextValue) => {
                 setFormValues((currentValues) => ({
                   ...currentValues,
-                  position: (value ?? "") as PlayerPosition | ""
+                  position: (nextValue ?? "") as PlayerPosition | ""
                 }));
               }}
               value={formValues.position || null}
@@ -174,14 +193,14 @@ export function PlayerManagementSection() {
 
             <TextInput
               classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+              disabled={disabled}
               error={showValidation && isNameInvalid ? "Name is required" : undefined}
               label="Name"
               onChange={(event) => {
-                const name = event.currentTarget.value;
-
+                const nextName = event.currentTarget.value;
                 setFormValues((currentValues) => ({
                   ...currentValues,
-                  name
+                  name: nextName
                 }));
               }}
               value={formValues.name}
@@ -189,7 +208,7 @@ export function PlayerManagementSection() {
           </Box>
 
           <Group gap="sm" mt="md">
-            <Button className="player-save-button" onClick={handleSavePlayer}>
+            <Button className="player-save-button" disabled={disabled} onClick={handleSavePlayer}>
               Save Player
             </Button>
             <Button className="player-cancel-button" onClick={handleCancelPlayerForm} variant="outline">
@@ -210,15 +229,29 @@ export function PlayerManagementSection() {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {players.map((player) => (
-              <Table.Tr key={player.id}>
-                <Table.Td>{player.number}</Table.Td>
-                <Table.Td>{player.position}</Table.Td>
-                <Table.Td>{player.name}</Table.Td>
+            {visiblePlayers.length === 0 ? (
+              <Table.Tr>
+                <Table.Td colSpan={4}>No active players.</Table.Td>
+              </Table.Tr>
+            ) : visiblePlayers.map((player) => (
+              <Table.Tr key={player.localId}>
+                <Table.Td>
+                  {player.number}
+                  {fieldError(player, "number") ? <Text c="red.4">{fieldError(player, "number")}</Text> : null}
+                </Table.Td>
+                <Table.Td>
+                  {player.position}
+                  {fieldError(player, "position") ? <Text c="red.4">{fieldError(player, "position")}</Text> : null}
+                </Table.Td>
+                <Table.Td>
+                  {player.name}
+                  {fieldError(player, "name") ? <Text c="red.4">{fieldError(player, "name")}</Text> : null}
+                </Table.Td>
                 <Table.Td className="player-actions-cell">
                   <Group gap="xs" justify="flex-end">
                     <Button
                       className="player-table-action"
+                      disabled={disabled}
                       onClick={() => handleEditPlayer(player)}
                       size="xs"
                       variant="subtle"
@@ -227,7 +260,8 @@ export function PlayerManagementSection() {
                     </Button>
                     <Button
                       className="player-table-action danger"
-                      onClick={() => handleRemovePlayer(player.id)}
+                      disabled={disabled}
+                      onClick={() => handleRemovePlayer(player)}
                       size="xs"
                       variant="subtle"
                     >

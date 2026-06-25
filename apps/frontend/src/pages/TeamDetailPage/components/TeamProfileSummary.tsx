@@ -20,7 +20,7 @@ function getInitials(name: string) {
 }
 
 function getStars(rating: number) {
-  const roundedRating = Math.max(0, Math.min(5, Math.round(rating)));
+  const roundedRating = Math.max(0, Math.min(5, Math.round(rating / 2)));
   return `${"\u2605".repeat(roundedRating)}${"\u2606".repeat(5 - roundedRating)}`;
 }
 

@@ -1,4 +1,4 @@
-import { Box, Title } from "@mantine/core";
+import { Box, Text, Title } from "@mantine/core";
 
 export type TeamRadarAttribute = {
   label: string;
@@ -6,7 +6,7 @@ export type TeamRadarAttribute = {
 };
 
 type TeamRadarCardProps = {
-  attributes: TeamRadarAttribute[];
+  attributes: TeamRadarAttribute[] | null;
 };
 
 const center = 150;
@@ -74,6 +74,9 @@ export function TeamRadarCard({ attributes }: TeamRadarCardProps) {
       <Title className="team-radar-title" order={2}>
         Team Profile
       </Title>
+      {attributes === null ? (
+        <Text className="module-copy">No profile ratings recorded.</Text>
+      ) : (
       <Box className="team-radar-chart">
         <svg aria-label="Team radar profile chart" role="img" viewBox="0 0 300 300">
           <defs>
@@ -144,6 +147,7 @@ export function TeamRadarCard({ attributes }: TeamRadarCardProps) {
           })}
         </svg>
       </Box>
+      )}
     </Box>
   );
 }
