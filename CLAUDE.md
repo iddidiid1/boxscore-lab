@@ -69,6 +69,8 @@ All validation errors must be collected before responding — no short-circuit o
 5. `Event.rankingOrder` is auto-assigned by backend (`max + 1`) — frontend cannot set it
 6. Player management only through Team create/edit flows — no standalone player CRUD
 7. Eligibility for points: `Event.status = COMPLETED`, `countsForRanking = true`, `deletedAt = null`, `archivedAt = null`
+8. Different Events may use different competition formats. Represent final outcome categories with Event-specific `EventResultTag` records instead of hard-coded global placement rules.
+9. `EventResultTag.sortOrder` is the display order for outcome categories. Do not introduce specific per-team rank logic unless explicitly requested.
 
 ## Design System
 

@@ -40,3 +40,8 @@ Future / Not in MVP
 
 ## Current Design Constraints
 ```
+
+## Notes
+
+- `RankingDecay.md` - future ranking decay / recent-event weighting.
+- `AwardSelectionRules.md` - future award lineup composition rules.
