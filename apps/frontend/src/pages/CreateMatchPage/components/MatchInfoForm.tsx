@@ -50,12 +50,12 @@ export function MatchInfoForm({
   }));
 
   return (
-    <Box className="match-form-section">
+    <Box className="match-form-section app-panel">
       <Title order={2}>Match Information</Title>
       <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
         <Select
           allowDeselect
-          classNames={{ input: "match-form-input", label: "match-form-input-label" }}
+          classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }}
           data={eventSelectOptions}
           label="Event"
           onChange={onEventChange}
@@ -64,7 +64,7 @@ export function MatchInfoForm({
           value={eventId}
         />
         <MultiSelect
-          classNames={{ input: "match-form-input", label: "match-form-input-label" }}
+          classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }}
           data={tagOptions}
           disabled={!eventId}
           label="Tags"
@@ -73,7 +73,7 @@ export function MatchInfoForm({
           value={selectedTags}
         />
         <TextInput
-          classNames={{ input: "match-form-input", label: "match-form-input-label" }}
+          classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }}
           label="Match Date"
           onChange={(event) => {
             const value = event.currentTarget.value;
@@ -85,7 +85,7 @@ export function MatchInfoForm({
         />
         <Select
           allowDeselect
-          classNames={{ input: "match-form-input", label: "match-form-input-label" }}
+          classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }}
           data={homeTeamOptions}
           label="Home Team"
           onChange={onHomeTeamChange}
@@ -95,7 +95,7 @@ export function MatchInfoForm({
         />
         <Select
           allowDeselect
-          classNames={{ input: "match-form-input", label: "match-form-input-label" }}
+          classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }}
           data={awayTeamOptions}
           label="Away Team"
           onChange={onAwayTeamChange}

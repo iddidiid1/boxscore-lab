@@ -1,42 +1,42 @@
 .app-action-button {
-  border-radius: 4px;
+  border-radius: var(--radius-control);
   font-weight: 700;
 }
 
 .app-action-button--primary {
-  background: #2563eb;
-  color: #f8fafc;
+  background: var(--color-action-primary);
+  color: var(--color-text-on-accent);
 }
 
 .app-action-button--primary:hover {
-  background: #1d4ed8;
+  background: var(--color-action-primary-hover);
 }
 
 .app-action-button--secondary {
-  border-color: #334155;
-  color: #adc6ff;
+  border-color: var(--color-border);
+  color: var(--color-action-primary-soft);
 }
 
 .app-action-button--secondary:hover {
-  border-color: #475569;
-  background: rgba(59, 130, 246, 0.1);
+  border-color: var(--color-border-hover);
+  background: var(--color-action-primary-surface);
 }
 
 .app-action-button--danger {
-  border-color: rgba(248, 113, 113, 0.5);
-  color: #fca5a5;
+  border-color: var(--color-danger-border);
+  color: var(--color-danger);
 }
 
 .app-action-button--danger:hover {
-  border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.12);
+  border-color: var(--color-danger-strong);
+  background: var(--color-danger-surface);
 }
 
 .app-action-button--quiet {
-  color: #adc6ff;
+  color: var(--color-action-primary-soft);
 }
 
 .app-action-button--quiet:hover {
-  background: rgba(59, 130, 246, 0.12);
-  color: #dbe7ff;
+  background: var(--color-action-primary-surface-hover);
+  color: var(--color-action-primary-soft-hover);
 }

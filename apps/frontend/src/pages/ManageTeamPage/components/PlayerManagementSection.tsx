@@ -142,7 +142,7 @@ export function PlayerManagementSection({
   }
 
   return (
-    <Box className="manage-team-section">
+    <Box className="manage-team-section app-panel">
       <Group align="flex-start" className="player-management-header" justify="space-between">
         <Box>
           <Title order={2}>Player Management</Title>
@@ -150,17 +150,17 @@ export function PlayerManagementSection({
           {rosterError ? <Text c="red.4">{rosterError}</Text> : null}
         </Box>
 
-        <Button className="player-add-button" disabled={disabled} onClick={handleAddPlayer}>
+        <Button className="player-add-button app-action-button app-action-button--primary" disabled={disabled} onClick={handleAddPlayer}>
           + Add Player
         </Button>
       </Group>
 
       {showPlayerForm ? (
-        <Box className="player-inline-form">
+        <Box className="player-inline-form app-panel app-panel--inset">
           <Text className="data-label">{isEditing ? "Edit Player" : "Add Player"}</Text>
           <Box className="player-form-grid">
             <NumberInput
-              classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+              classNames={{ input: "manage-team-input app-control-input", label: "manage-team-input-label app-control-label" }}
               clampBehavior="strict"
               disabled={disabled}
               error={showValidation && isNumberInvalid ? "Number is required" : undefined}
@@ -177,7 +177,7 @@ export function PlayerManagementSection({
             />
 
             <Select
-              classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+              classNames={{ input: "manage-team-input app-control-input", label: "manage-team-input-label app-control-label" }}
               data={positionOptions}
               disabled={disabled}
               error={showValidation && isPositionInvalid ? "Position is required" : undefined}
@@ -192,7 +192,7 @@ export function PlayerManagementSection({
             />
 
             <TextInput
-              classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+              classNames={{ input: "manage-team-input app-control-input", label: "manage-team-input-label app-control-label" }}
               disabled={disabled}
               error={showValidation && isNameInvalid ? "Name is required" : undefined}
               label="Name"
@@ -208,10 +208,10 @@ export function PlayerManagementSection({
           </Box>
 
           <Group gap="sm" mt="md">
-            <Button className="player-save-button" disabled={disabled} onClick={handleSavePlayer}>
+            <Button className="player-save-button app-action-button app-action-button--primary" disabled={disabled} onClick={handleSavePlayer}>
               Save Player
             </Button>
-            <Button className="player-cancel-button" onClick={handleCancelPlayerForm} variant="outline">
+            <Button className="player-cancel-button app-action-button app-action-button--secondary" onClick={handleCancelPlayerForm} variant="outline">
               Cancel
             </Button>
           </Group>

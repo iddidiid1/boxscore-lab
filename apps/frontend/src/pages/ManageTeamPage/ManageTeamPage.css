@@ -8,28 +8,13 @@
 
 .manage-team-save-button {
   min-width: 132px;
-  border-radius: 4px;
-  background: #2563eb;
-  color: #f8fafc;
-  font-weight: 700;
-}
-
-.manage-team-save-button:hover {
-  background: #1d4ed8;
 }
 
 .manage-team-cancel-button {
   min-width: 96px;
-  border-color: #334155;
-  border-radius: 4px;
-  color: #adc6ff;
-  font-weight: 700;
 }
 
 .manage-team-section {
-  border: 1px solid #334155;
-  border-radius: 6px;
-  background: #121c2f;
   padding: 24px;
 }
 
@@ -45,27 +30,6 @@
   grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.65fr);
   gap: 24px;
   align-items: start;
-}
-
-.manage-team-input-label {
-  color: #cbd5e1;
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
-.manage-team-input,
-.manage-team-textarea {
-  border-color: #334155;
-  border-radius: 4px;
-  background: #0c1425;
-  color: #f8fafc;
-}
-
-.manage-team-input:focus,
-.manage-team-input:focus-within,
-.manage-team-textarea:focus,
-.manage-team-textarea:focus-within {
-  border-color: #3b82f6;
 }
 
 .team-basic-info-preview {
@@ -205,30 +169,7 @@
   margin-bottom: 6px;
 }
 
-.player-add-button,
-.player-save-button {
-  border-radius: 4px;
-  background: #2563eb;
-  color: #f8fafc;
-  font-weight: 700;
-}
-
-.player-add-button:hover,
-.player-save-button:hover {
-  background: #1d4ed8;
-}
-
-.player-cancel-button {
-  border-color: #334155;
-  border-radius: 4px;
-  color: #adc6ff;
-  font-weight: 700;
-}
-
 .player-inline-form {
-  border: 1px solid rgba(51, 65, 85, 0.78);
-  border-radius: 6px;
-  background: #0c1425;
   margin-bottom: 18px;
   padding: 16px;
 }

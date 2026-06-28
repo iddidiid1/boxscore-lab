@@ -8,28 +8,13 @@
 
 .match-form-save-button {
   min-width: 96px;
-  border-radius: 4px;
-  background: #2563eb;
-  color: #f8fafc;
-  font-weight: 700;
-}
-
-.match-form-save-button:hover {
-  background: #1d4ed8;
 }
 
 .match-form-cancel-button {
   min-width: 96px;
-  border-color: #334155;
-  border-radius: 4px;
-  color: #adc6ff;
-  font-weight: 700;
 }
 
 .match-form-section {
-  border: 1px solid #334155;
-  border-radius: 6px;
-  background: #121c2f;
   padding: 24px;
 }
 
@@ -40,23 +25,8 @@
   line-height: 1.2;
 }
 
-.match-form-input-label {
-  color: #cbd5e1;
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
 .match-form-input {
   min-height: 40px;
-  border-color: #334155;
-  border-radius: 4px;
-  background: #0c1425;
-  color: #f8fafc;
-}
-
-.match-form-input:focus,
-.match-form-input:focus-within {
-  border-color: #3b82f6;
 }
 
 .match-stats-section {
