@@ -6,6 +6,7 @@ dist/
 !.env.example
 *.log
 .logs/
+/note/
 prisma/dev.db
 prisma/dev.db-journal
 git status
