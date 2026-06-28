@@ -1,36 +1,41 @@
-import { Box, Button, Group, Stack, Text, Title } from "@mantine/core";
+import { Alert, Box, Button, Group, Loader, Stack, Text, Title } from "@mantine/core";
 import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { fetchEvents } from "../../features/events/api/events";
 import { EventsList } from "../../features/events/components/EventsList";
-import { mockEvents } from "../../features/events/data/mockEvents";
+import type { EventListItem } from "../../features/events/types";
+import { ListEmptyState } from "../../shared/components/ListEmptyState";
 import "./EventsPage.css";
 
 export function EventsPage() {
+  const [events, setEvents] = useState<EventListItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [retry, setRetry] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController();
+    setLoading(true); setError("");
+    fetchEvents(controller.signal).then((data) => setEvents(data.events)).catch((reason) => {
+      if (reason instanceof DOMException && reason.name === "AbortError") return;
+      setError(reason instanceof Error ? reason.message : "Unable to load events.");
+    }).finally(() => setLoading(false));
+    return () => controller.abort();
+  }, [retry]);
   return (
     <Stack className="events-page" gap="xl">
       <Group align="flex-start" className="events-header" justify="space-between">
-        <Box>
-          <Text className="eyebrow">Tournament archive</Text>
-          <Title className="page-title" order={1}>
-            Events
-          </Title>
-          <Text className="page-summary" maw={620} mt="xs">
-            Browse league events, tournament rules, and completed winners from the
-            current MVP event board.
-          </Text>
-        </Box>
-
-        <Button
-          className="create-event-button"
-          component="a"
-          href="/events/new"
-          leftSection={<Plus size={17} />}
-          size="sm"
-        >
-          Create Event
-        </Button>
+        <Box><Text className="eyebrow">Tournament archive</Text><Title className="page-title" order={1}>Events</Title><Text className="page-summary" maw={620} mt="xs">Manage event configuration, participants, results, and awards.</Text></Box>
+        <Button className="create-event-button app-action-button app-action-button--primary" component="a" href="/events/new" leftSection={<Plus size={17} />} size="sm">Create Event</Button>
       </Group>
-
-      <EventsList events={mockEvents} />
+      {loading ? <Loader size="sm" /> : null}
+      {error ? <Alert color="red" title="Unable to load events">{error}<Button mt="sm" onClick={() => setRetry((value) => value + 1)} size="xs">Retry</Button></Alert> : null}
+      {!loading && !error && events.length === 0 ? (
+        <ListEmptyState
+          description="Create the first event to begin building the competition board."
+          title="No events yet"
+        />
+      ) : null}
+      {!loading && !error ? <EventsList events={events} /> : null}
     </Stack>
   );
 }

@@ -14,6 +14,8 @@ The MVP focuses on manual data entry, team/player/event/match management, and co
 - Store raw entities and match records in the database.
 - Do not store averages or aggregate stats unless explicitly requested.
 - Compute averages, totals, standings, and leaderboards from saved records.
+- Different events may use different competition formats, so final event outcomes should be expressed through event-specific ResultTags rather than hard-coded global placement logic.
+- ResultTag order represents outcome category order for display; avoid adding specific per-team rank logic unless explicitly requested.
 
 ## UI Principles
 - Keep the admin UI clean, lightweight, and sports-console inspired.

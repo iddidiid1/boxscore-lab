@@ -1,16 +1,16 @@
 import { Box, Group, Stack, Text, Title } from "@mantine/core";
 import { UsersRound } from "lucide-react";
 import { EventTierBadge } from "./EventTierBadge";
-import type { EventStatus, EventSummary } from "../types";
+import type { EventDetail, EventStatus } from "../types";
 
 type EventDetailHeroProps = {
-  event: EventSummary;
+  event: EventDetail;
 };
 
 const statusLabels: Record<EventStatus, string> = {
-  preparing: "Preparing",
-  ongoing: "Ongoing",
-  completed: "Completed"
+  PREPARING: "Preparing",
+  ONGOING: "Ongoing",
+  COMPLETED: "Completed"
 };
 
 export function EventDetailHero({ event }: EventDetailHeroProps) {
@@ -29,7 +29,7 @@ export function EventDetailHero({ event }: EventDetailHeroProps) {
 
         <Group className="event-detail-meta" gap="xs" wrap="nowrap">
           <UsersRound size={17} />
-          <Text>{event.participatingTeamCount} participating teams</Text>
+          <Text>{event.participants.length} participating teams</Text>
         </Group>
       </Stack>
     </Box>

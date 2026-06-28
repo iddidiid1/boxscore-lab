@@ -1,0 +1,42 @@
+.app-action-button {
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.app-action-button--primary {
+  background: #2563eb;
+  color: #f8fafc;
+}
+
+.app-action-button--primary:hover {
+  background: #1d4ed8;
+}
+
+.app-action-button--secondary {
+  border-color: #334155;
+  color: #adc6ff;
+}
+
+.app-action-button--secondary:hover {
+  border-color: #475569;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.app-action-button--danger {
+  border-color: rgba(248, 113, 113, 0.5);
+  color: #fca5a5;
+}
+
+.app-action-button--danger:hover {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.app-action-button--quiet {
+  color: #adc6ff;
+}
+
+.app-action-button--quiet:hover {
+  background: rgba(59, 130, 246, 0.12);
+  color: #dbe7ff;
+}

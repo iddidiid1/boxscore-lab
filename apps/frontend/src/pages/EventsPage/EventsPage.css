@@ -8,14 +8,6 @@
 
 .create-event-button {
   min-width: 142px;
-  border-radius: 4px;
-  background: #2563eb;
-  color: #f8fafc;
-  font-weight: 700;
-}
-
-.create-event-button:hover {
-  background: #1d4ed8;
 }
 
 .events-list {

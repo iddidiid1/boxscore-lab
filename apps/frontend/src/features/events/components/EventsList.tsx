@@ -1,9 +1,9 @@
 import { Box } from "@mantine/core";
 import { EventSummaryCard } from "./EventSummaryCard";
-import type { EventSummary } from "../types";
+import type { EventListItem } from "../types";
 
 type EventsListProps = {
-  events: EventSummary[];
+  events: EventListItem[];
 };
 
 export function EventsList({ events }: EventsListProps) {

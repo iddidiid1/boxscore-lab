@@ -1,10 +1,10 @@
 import { Box, Group, Table, Text, Title } from "@mantine/core";
 import { Trophy } from "lucide-react";
-import type { EventResult, EventResultTag } from "../types";
+import type { EventResultTag, EventTeamResult } from "../types";
 
 type EventResultsTableProps = {
   resultTags: EventResultTag[];
-  results: EventResult[];
+  results: EventTeamResult[];
 };
 
 export function EventResultsTable({ resultTags, results }: EventResultsTableProps) {

@@ -21,7 +21,6 @@ enum EventStatus {
   PREPARING
   ONGOING
   COMPLETED
-  ARCHIVED
 }
 
 enum EventTier {
