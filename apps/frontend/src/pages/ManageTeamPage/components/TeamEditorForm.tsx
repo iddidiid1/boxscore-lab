@@ -88,13 +88,13 @@ export function TeamEditorForm({
 
   return (
     <>
-      <Box className="manage-team-section">
+      <Box className="manage-team-section app-panel">
         <Title order={2}>Team Basic Info</Title>
 
         <Box className="team-basic-info-layout">
           <Stack gap="md">
             <TextInput
-              classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+              classNames={{ input: "manage-team-input app-control-input", label: "manage-team-input-label app-control-label" }}
               disabled={disabled}
               error={errors.name}
               label="Team Name"
@@ -104,7 +104,7 @@ export function TeamEditorForm({
             />
 
             <Select
-              classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+              classNames={{ input: "manage-team-input app-control-input", label: "manage-team-input-label app-control-label" }}
               data={divisionOptions}
               disabled={disabled}
               error={errors.divisionId}
@@ -114,7 +114,7 @@ export function TeamEditorForm({
             />
 
             <TextInput
-              classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+              classNames={{ input: "manage-team-input app-control-input", label: "manage-team-input-label app-control-label" }}
               disabled={disabled}
               error={errors.logoUrl}
               label="Logo URL"
@@ -125,7 +125,7 @@ export function TeamEditorForm({
 
             <Box>
               <TextInput
-                classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+                classNames={{ input: "manage-team-input app-control-input", label: "manage-team-input-label app-control-label" }}
                 disabled={disabled}
                 error={errors.primaryColor ?? (isPrimaryColorValid ? undefined : "Enter a valid hex color, e.g. #3B82F6")}
                 label="Primary Color"
@@ -147,7 +147,7 @@ export function TeamEditorForm({
 
             <NumberInput
               allowDecimal
-              classNames={{ input: "manage-team-input", label: "manage-team-input-label" }}
+              classNames={{ input: "manage-team-input app-control-input", label: "manage-team-input-label app-control-label" }}
               clampBehavior="strict"
               decimalScale={1}
               disabled={disabled}
@@ -164,7 +164,7 @@ export function TeamEditorForm({
 
             <Textarea
               autosize
-              classNames={{ input: "manage-team-textarea", label: "manage-team-input-label" }}
+              classNames={{ input: "manage-team-textarea app-control-input", label: "manage-team-input-label app-control-label" }}
               disabled={disabled}
               error={errors.description}
               label="Team Description"
@@ -209,7 +209,7 @@ export function TeamEditorForm({
         </Box>
       </Box>
 
-      <Box className="manage-team-section">
+      <Box className="manage-team-section app-panel">
         <Title order={2}>Team Profile Ratings</Title>
         <Stack className="profile-rating-list" gap="md">
           {profileRatingFields.map((field) => (

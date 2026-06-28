@@ -193,7 +193,7 @@ export function ManageTeamPage() {
 
         <Group gap="sm">
           <Button
-            className="manage-team-save-button"
+            className="manage-team-save-button app-action-button app-action-button--primary"
             disabled={isArchived || team === null}
             loading={isSubmitting}
             onClick={() => void handleSave()}
@@ -201,7 +201,7 @@ export function ManageTeamPage() {
             Save Changes
           </Button>
           <Button
-            className="manage-team-cancel-button"
+            className="manage-team-cancel-button app-action-button app-action-button--secondary"
             component="a"
             href={`/teams/${slug}`}
             variant="outline"
@@ -238,7 +238,7 @@ export function ManageTeamPage() {
             value={players}
           />
 
-          <Box className="manage-team-section">
+          <Box className="manage-team-section app-panel">
             <Title order={2}>Archive Team</Title>
             <Text className="module-copy">
               Archiving is not reversible in this MVP. The team is removed from the default list and historical data is retained.

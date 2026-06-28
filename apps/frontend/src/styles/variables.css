@@ -1,9 +1,89 @@
 :root {
-  color: #dae2fd;
-  background: #0b1326;
-  font-family:
+  /* Typography */
+  --font-family-body:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
+  --font-family-heading:
+    "Hanken Grotesk", Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-data:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  /* Surfaces */
+  --color-canvas: #0b1326;
+  --color-app-shell: #111a2d;
+  --color-navigation: #070d1a;
+  --color-surface: #121c2f;
+  --color-surface-raised: #1e293b;
+  --color-surface-interactive: #101a2c;
+  --color-surface-control: #0c1425;
+  --color-surface-inset: #0f172a;
+  --color-surface-subtle: #17243a;
+
+  /* Text */
+  --color-text-strong: #f8fafc;
+  --color-text: #dae2fd;
+  --color-text-soft: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-disabled: rgba(148, 163, 184, 0.72);
+  --color-text-navigation: rgba(203, 213, 225, 0.82);
+  --color-text-on-accent: #f8fafc;
+
+  /* Borders and focus */
+  --color-border: #334155;
+  --color-border-subtle: rgba(51, 65, 85, 0.78);
+  --color-border-muted: rgba(71, 85, 105, 0.72);
+  --color-border-hover: #475569;
+  --color-border-navigation: rgba(100, 116, 139, 0.32);
+  --color-focus-ring: #82a6ff;
+  --color-icon-muted: rgba(148, 163, 184, 0.82);
+
+  /* Actions */
+  --color-action-primary: #2563eb;
+  --color-action-primary-hover: #1d4ed8;
+  --color-action-primary-soft: #adc6ff;
+  --color-action-primary-soft-hover: #dbe7ff;
+  --color-action-primary-emphasis: #3b82f6;
+  --color-action-primary-border: rgba(59, 130, 246, 0.55);
+  --color-action-primary-border-subtle: rgba(59, 130, 246, 0.22);
+  --color-action-primary-surface: rgba(59, 130, 246, 0.1);
+  --color-action-primary-surface-hover: rgba(59, 130, 246, 0.12);
+
+  /* Semantic states */
+  --color-success: #4edea3;
+  --color-success-strong: #10b981;
+  --color-warning: #fbbf24;
+  --color-warning-strong: #f59e0b;
+  --color-danger: #fca5a5;
+  --color-danger-strong: #ef4444;
+  --color-danger-border: rgba(248, 113, 113, 0.5);
+  --color-danger-surface: rgba(239, 68, 68, 0.12);
+  --color-neutral-status: #64748b;
+
+  /* Interaction surfaces */
+  --color-hover-surface: rgba(30, 41, 59, 0.48);
+  --color-active-surface: rgba(30, 41, 59, 0.86);
+
+  /* Shape and elevation */
+  --radius-sharp: 0;
+  --radius-chip: 2px;
+  --radius-focus-target: 3px;
+  --radius-control: 4px;
+  --radius-interactive-card: 5px;
+  --radius-panel: 6px;
+  --radius-large: 8px;
+  --radius-xl: 12px;
+  --radius-pill: 999px;
+  --shadow-surface: none;
+
+  /* Layout constants are not part of the visual theme. */
+  --layout-content-max-width: 1440px;
+  --layout-page-gutter: 32px;
+  --layout-page-gutter-mobile: 16px;
+
+  color: var(--color-text);
+  background: var(--color-canvas);
+  font-family: var(--font-family-body);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

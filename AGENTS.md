@@ -21,6 +21,15 @@ The MVP focuses on manual data entry, team/player/event/match management, and co
 - Keep the admin UI clean, lightweight, and sports-console inspired.
 - Use existing layout and visual patterns unless the task explicitly asks for redesign.
 - Do not randomly introduce new component libraries.
+- Treat `apps/frontend/src/styles/variables.css` as the canonical CSS design-token entry point.
+- Use semantic tokens named by purpose (for example, text, surface, border, action, and status roles), not palette names tied to the current visual design.
+- New or modified frontend code should not hard-code colors, font families, border radii, or repeated shadows when an appropriate token exists. Add or revise a semantic token when a genuinely shared role is missing.
+- Keep Mantine theme values and CSS tokens aligned. Do not create an independent second theme inside page or feature code.
+- Reuse shared styles or components for recurring buttons, form controls, cards/panels, tables, and status indicators. Do not recreate their complete visual treatment in page CSS.
+- Page and feature CSS should primarily own layout, spacing, responsive behavior, and genuinely local presentation. Shared visual identity belongs in tokens, the Mantine theme, or shared components.
+- Prefer incremental extraction based on repeated real usage; do not build speculative design-system abstractions for the MVP.
+- Preserve component placement, interaction logic, and responsive behavior during visual-token migrations unless the task explicitly includes those changes.
+- Follow `docs/UI_REDESIGN_READINESS_CHECKLIST.md` when migrating existing frontend styles or preparing a broad visual redesign.
 
 ## Workflow
 - Before major schema or architecture changes, propose a short plan first.

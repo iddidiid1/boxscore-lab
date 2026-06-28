@@ -82,7 +82,7 @@ export function MatchStatsInputTable({
   );
 
   return (
-    <Box className="match-form-section match-stats-section">
+    <Box className="match-form-section match-stats-section app-panel">
       <Title className="match-stats-title" order={2}>
         <span
           aria-hidden="true"
