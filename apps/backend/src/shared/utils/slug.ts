@@ -14,11 +14,16 @@ export function toSlugBase(value: string) {
   return normalized.length > 0 ? normalized : null;
 }
 
-type SlugModel = "team" | "player";
+type SlugModel = "team" | "player" | "event";
 
 async function slugExists(client: PrismaClient | TransactionClient, model: SlugModel, slug: string) {
   if (model === "team") {
     const existing = await client.team.findUnique({ where: { slug }, select: { id: true } });
+    return existing !== null;
+  }
+
+  if (model === "event") {
+    const existing = await client.event.findUnique({ where: { slug }, select: { id: true } });
     return existing !== null;
   }
 
