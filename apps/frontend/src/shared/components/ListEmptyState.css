@@ -1,0 +1,25 @@
+.list-empty-state {
+  min-width: 0;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #121c2f;
+  padding: 24px;
+}
+
+.list-empty-state h3 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+@media (max-width: 560px) {
+  .list-empty-state {
+    min-height: 150px;
+    padding: 18px;
+  }
+}

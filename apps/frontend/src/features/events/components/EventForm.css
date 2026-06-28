@@ -10,42 +10,6 @@
   flex: 0 0 auto;
 }
 
-.event-form-cancel-button {
-  border-radius: 4px;
-  color: #cbd5e1;
-  font-weight: 700;
-}
-
-.event-form-save-button,
-.event-form-secondary-button {
-  border-radius: 4px;
-  background: #2563eb;
-  color: #f8fafc;
-  font-weight: 700;
-}
-
-.event-form-save-button:hover,
-.event-form-secondary-button:hover {
-  background: #1d4ed8;
-}
-
-.event-form-secondary-button {
-  min-width: 112px;
-}
-
-.event-form-quiet-button {
-  height: 30px;
-  border-radius: 4px;
-  color: #adc6ff;
-  font-size: 0.76rem;
-  font-weight: 800;
-}
-
-.event-form-quiet-button:hover {
-  background: rgba(59, 130, 246, 0.12);
-  color: #dbe7ff;
-}
-
 .event-form-panel {
   border: 1px solid #334155;
   border-radius: 6px;
@@ -212,9 +176,7 @@
 
   .event-form-actions,
   .event-participants-actions,
-  .event-form-cancel-button,
-  .event-form-save-button,
-  .event-form-secondary-button {
+  .event-form-shell .app-action-button {
     width: 100%;
   }
 

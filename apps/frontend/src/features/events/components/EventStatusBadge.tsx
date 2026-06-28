@@ -6,9 +6,9 @@ type EventStatusBadgeProps = {
 };
 
 const statusLabels: Record<EventStatus, string> = {
-  preparing: "Preparing",
-  ongoing: "Ongoing",
-  completed: "Completed"
+  PREPARING: "Preparing",
+  ONGOING: "Ongoing",
+  COMPLETED: "Completed"
 };
 
 export function EventStatusBadge({ status }: EventStatusBadgeProps) {

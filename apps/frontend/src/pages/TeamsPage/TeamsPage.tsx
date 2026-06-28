@@ -4,6 +4,7 @@ import { fetchTeams } from "../../features/teams";
 import { CreateTeamButton } from "./components/CreateTeamButton";
 import { DivisionCard } from "./components/DivisionCard";
 import type { Division, Team } from "./types";
+import { ListEmptyState } from "../../shared/components/ListEmptyState";
 import "./TeamsPage.css";
 
 export function TeamsPage() {
@@ -68,12 +69,10 @@ export function TeamsPage() {
           ))}
         </Box>
       ) : divisions.length === 0 && !error ? (
-        <Box className="division-section">
-          <Title order={3}>No teams yet</Title>
-          <Text className="page-summary" mt="xs">
-            Create the first team to start building the league board.
-          </Text>
-        </Box>
+        <ListEmptyState
+          description="Create the first team to start building the league board."
+          title="No teams yet"
+        />
       ) : (
         <Box className="division-board">
           {divisions.map((division) => (

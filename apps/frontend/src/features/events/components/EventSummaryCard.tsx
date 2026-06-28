@@ -1,27 +1,27 @@
 import { Box, Group, Stack, Text, Title } from "@mantine/core";
 import { Crown, UsersRound } from "lucide-react";
 import { EventTierBadge } from "./EventTierBadge";
-import type { EventSummary } from "../types";
+import type { EventListItem } from "../types";
 
 type EventSummaryCardProps = {
-  event: EventSummary;
+  event: EventListItem;
 };
 
-const statusLabels: Record<EventSummary["status"], string> = {
-  preparing: "Preparing",
-  ongoing: "Ongoing",
-  completed: "Completed"
+const statusLabels: Record<EventListItem["status"], string> = {
+  PREPARING: "Preparing",
+  ONGOING: "Ongoing",
+  COMPLETED: "Completed"
 };
 
 export function EventSummaryCard({ event }: EventSummaryCardProps) {
-  const shouldShowWinner = event.status === "completed" && Boolean(event.winnerName);
+  const shouldShowWinner = Boolean(event.champion);
 
   return (
     <Box
       aria-label={`View ${event.name} event details`}
       className="event-summary-card"
       component="a"
-      href={`/events/${event.id}`}
+      href={`/events/${event.slug}`}
     >
       <EventTierBadge tier={event.tier} />
 
@@ -42,7 +42,7 @@ export function EventSummaryCard({ event }: EventSummaryCardProps) {
               </Box>
               <Box>
                 <Text className="event-winner-label">Champion</Text>
-                <Text className="event-winner-name">{event.winnerName}</Text>
+                <Text className="event-winner-name">{event.champion?.teamName}</Text>
               </Box>
             </Group>
           ) : null}

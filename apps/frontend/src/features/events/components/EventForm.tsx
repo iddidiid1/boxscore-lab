@@ -1,99 +1,33 @@
-import { Box, Button, Group, Stack, Text, Title } from "@mantine/core";
-import { Save } from "lucide-react";
-import type { FormEvent } from "react";
-import { useState } from "react";
-import { EventIdentityFields } from "./EventIdentityFields";
-import {
-  EventParticipantsSelector,
-  type EventParticipantTeam
-} from "./EventParticipantsSelector";
-import { EventResultTagsEditor } from "./EventResultTagsEditor";
-import { EventStageTagsEditor } from "./EventStageTagsEditor";
-import type { EventSummary } from "../types";
+import { ActionIcon, Alert, Box, Button, Checkbox, Group, NumberInput, Select, Stack, Table, Text, Textarea, TextInput, Title } from "@mantine/core";
+import { ArrowDown, ArrowUp, Plus, Save, Trash2 } from "lucide-react";
+import { useEffect, useState, type FormEvent } from "react";
+import type { EventConfigurationPayload, EventDetail, EventResultTag, EventStageTag, EventTier, TeamOption } from "../types";
 import "./EventForm.css";
 
-type EventFormProps = {
-  event: EventSummary;
-  mode: "create" | "edit";
-  onCancel: () => void;
+type Props = {
+  event: EventDetail | null; mode: "create" | "edit"; teams: TeamOption[]; readOnly?: boolean;
+  submitting: boolean; error: string; onCancel: () => void;
+  onSave: (payload: EventConfigurationPayload) => Promise<void>;
+  onStatusChange?: (status: "ONGOING" | "COMPLETED", payload: EventConfigurationPayload) => Promise<void>;
+  onArchive?: () => Promise<void>;
 };
 
-const mockParticipantTeams: EventParticipantTeam[] = [
-  { id: "falcon-united", name: "Falcon United" },
-  { id: "harbor-kings", name: "Harbor Kings" },
-  { id: "metro-rangers", name: "Metro Rangers" },
-  { id: "valley-strikers", name: "Valley Strikers" },
-  { id: "summit-athletic", name: "Summit Athletic" },
-  { id: "northside-crew", name: "Northside Crew" },
-  { id: "cedar-city", name: "Cedar City" },
-  { id: "ironbridge-fc", name: "Ironbridge FC" },
-  { id: "coastal-wolves", name: "Coastal Wolves" },
-  { id: "redwood-town", name: "Redwood Town" }
-];
-
-export function EventForm({ event, mode, onCancel }: EventFormProps) {
-  const [description, setDescription] = useState(event.description);
-  const [name, setName] = useState(event.name);
-  const [resultTags, setResultTags] = useState(event.resultTags);
-  const [stageTags, setStageTags] = useState(event.stageTags);
-  const [status, setStatus] = useState(event.status);
-  const [tier, setTier] = useState(event.tier);
-  const [selectedParticipantTeamIds, setSelectedParticipantTeamIds] = useState(
-    mockParticipantTeams.map((team) => team.id)
-  );
-  const [saveMessage, setSaveMessage] = useState("");
-
-  function handleSubmit(eventSubmit: FormEvent<HTMLFormElement>) {
-    eventSubmit.preventDefault();
-    setSaveMessage("UI-only save prepared. Backend persistence is not connected yet.");
-  }
-
-  return (
-    <Box className="event-form-shell" component="form" onSubmit={handleSubmit}>
-      <Stack gap="lg">
-        <Group align="flex-start" className="event-form-header" justify="space-between">
-          <Box>
-            <Text className="eyebrow">Tournament setup</Text>
-            <Title className="page-title" order={1}>
-              {mode === "create" ? "Create Event" : "Edit Event"}
-            </Title>
-            <Text className="page-summary" maw={640} mt="xs">
-              Configure event identity, match stage labels, and placement-based ranking points.
-            </Text>
-          </Box>
-
-          <Group className="event-form-actions" gap="sm">
-            <Button className="event-form-cancel-button" onClick={onCancel} type="button" variant="subtle">
-              Cancel
-            </Button>
-            <Button className="event-form-save-button" leftSection={<Save size={16} />} type="submit">
-              Save
-            </Button>
-          </Group>
-        </Group>
-
-        <EventIdentityFields
-          description={description}
-          name={name}
-          onDescriptionChange={setDescription}
-          onNameChange={setName}
-          onStatusChange={setStatus}
-          onTierChange={setTier}
-          status={status}
-          tier={tier}
-        />
-
-        <EventParticipantsSelector
-          onChange={setSelectedParticipantTeamIds}
-          selectedTeamIds={selectedParticipantTeamIds}
-          teams={mockParticipantTeams}
-        />
-
-        <EventStageTagsEditor onChange={setStageTags} tags={stageTags} />
-        <EventResultTagsEditor onChange={setResultTags} tags={resultTags} />
-
-        {saveMessage ? <Text className="event-form-save-message">{saveMessage}</Text> : null}
-      </Stack>
-    </Box>
-  );
+export function EventForm({ event, mode, teams, readOnly, submitting, error, onCancel, onSave, onStatusChange, onArchive }: Props) {
+  const [name, setName] = useState(""); const [tier, setTier] = useState<EventTier>("B");
+  const [description, setDescription] = useState(""); const [countsForRanking, setCountsForRanking] = useState(true);
+  const [participants, setParticipants] = useState<number[]>([]); const [stageTags, setStageTags] = useState<EventStageTag[]>([]); const [resultTags, setResultTags] = useState<EventResultTag[]>([]);
+  useEffect(() => { if (!event) return; setName(event.name); setTier(event.tier); setDescription(event.description ?? ""); setCountsForRanking(event.countsForRanking); setParticipants(event.participants.map((item) => item.teamId)); setStageTags(event.stageTags); setResultTags(event.resultTags); }, [event]);
+  function payload(): EventConfigurationPayload { return { name, tier, description: description || null, countsForRanking, participantTeamIds: participants, stageTags: stageTags.map(({ id, label, description: detail, sortOrder }) => ({ ...(id ? { id } : {}), label, description: detail ?? null, sortOrder })), resultTags: resultTags.map(({ id, label, isWinnerTag, rankingPoints, sortOrder }) => ({ ...(id ? { id } : {}), label, isWinnerTag, rankingPoints, sortOrder })) }; }
+  async function submit(formEvent: FormEvent) { formEvent.preventDefault(); await onSave(payload()); }
+  function moveResult(index: number, offset: number) { const next = [...resultTags]; const target = index + offset; if (target < 0 || target >= next.length) return; [next[index], next[target]] = [next[target], next[index]]; setResultTags(next.map((tag, sortOrder) => ({ ...tag, sortOrder }))); }
+  const availableIds = new Set(teams.filter((team) => team.isEligible || participants.includes(team.teamId)).map((team) => team.teamId));
+  return <Box className="event-form-shell" component="form" onSubmit={submit}><Stack gap="lg">
+    {readOnly ? <Alert color="yellow" title="Read-only event">This event cannot be edited.</Alert> : null}{error ? <Alert color="red">{error}</Alert> : null}
+    <Group align="flex-start" justify="space-between"><Box><Text className="eyebrow">Tournament setup</Text><Title className="page-title" order={1}>{mode === "create" ? "Create Event" : "Edit Event"}</Title></Box><Group><Button className="app-action-button app-action-button--secondary" onClick={onCancel} type="button" variant="outline">Cancel</Button>{!readOnly ? <Button className="app-action-button app-action-button--primary" loading={submitting} leftSection={<Save size={16}/>} type="submit">Save</Button> : null}</Group></Group>
+    <Box className="event-form-panel"><Stack><Title order={2} className="event-form-title">Event Identity</Title><Group grow><Select label="Tier" data={["S","A","B","C"]} value={tier} onChange={(value) => setTier((value ?? "B") as EventTier)} disabled={readOnly}/><TextInput label="Status" value={event?.status ?? "PREPARING"} disabled/></Group><TextInput label="Event Name" value={name} onChange={(e) => setName(e.currentTarget.value)} disabled={readOnly}/><Textarea label="Summary / Rules" value={description} onChange={(e) => setDescription(e.currentTarget.value)} disabled={readOnly} minRows={3}/><Checkbox label="Counts for ranking" checked={countsForRanking} onChange={(e) => setCountsForRanking(e.currentTarget.checked)} disabled={readOnly}/></Stack></Box>
+    <Box className="event-form-panel"><Title order={2} className="event-form-title">Participating Teams</Title><Group mt="md">{teams.map((team) => <Checkbox key={team.teamId} label={`${team.teamName}${team.isEligible ? "" : " (Unavailable)"}`} checked={participants.includes(team.teamId)} disabled={readOnly || (!team.isEligible && !participants.includes(team.teamId))} onChange={(e) => setParticipants(e.currentTarget.checked ? [...participants, team.teamId] : participants.filter((id) => id !== team.teamId))}/>)}</Group>{teams.length === 0 ? <Text c="dimmed" mt="sm">No active teams are available.</Text> : null}</Box>
+    <Box className="event-form-panel"><Group justify="space-between"><Title order={2} className="event-form-title">Match Stage Tags</Title>{!readOnly ? <Button className="app-action-button app-action-button--primary" leftSection={<Plus size={15}/>} onClick={() => setStageTags([...stageTags, { label:"", description:null, sortOrder:stageTags.length }])} type="button" size="xs">Add Stage</Button> : null}</Group><Stack mt="md">{stageTags.map((tag,index) => <Group key={tag.id ?? `new-stage-${index}`} grow><TextInput value={tag.label} disabled={readOnly} placeholder="Label" onChange={(e) => setStageTags(stageTags.map((item,i) => i === index ? {...item,label:e.currentTarget.value}:item))}/><TextInput value={tag.description ?? ""} disabled={readOnly} placeholder="Description" onChange={(e) => setStageTags(stageTags.map((item,i) => i === index ? {...item,description:e.currentTarget.value}:item))}/>{!readOnly ? <ActionIcon className="app-action-button app-action-button--danger" onClick={() => setStageTags(stageTags.filter((_,i) => i !== index))}><Trash2 size={15}/></ActionIcon> : null}</Group>)}</Stack></Box>
+    <Box className="event-form-panel"><Group justify="space-between"><Title order={2} className="event-form-title">Result Tags</Title>{!readOnly ? <Button className="app-action-button app-action-button--primary" leftSection={<Plus size={15}/>} onClick={() => setResultTags([...resultTags,{label:"",isWinnerTag:false,rankingPoints:0,sortOrder:resultTags.length}])} type="button" size="xs">Add Result</Button> : null}</Group><Table mt="md"><Table.Thead><Table.Tr><Table.Th>Label</Table.Th><Table.Th>Winner</Table.Th><Table.Th>Points</Table.Th><Table.Th/></Table.Tr></Table.Thead><Table.Tbody>{resultTags.map((tag,index) => <Table.Tr key={tag.id ?? `new-result-${index}`}><Table.Td><TextInput value={tag.label} disabled={readOnly} onChange={(e) => setResultTags(resultTags.map((item,i) => i === index ? {...item,label:e.currentTarget.value}:item))}/></Table.Td><Table.Td><Checkbox checked={tag.isWinnerTag} disabled={readOnly} onChange={(e) => setResultTags(resultTags.map((item,i) => ({...item,isWinnerTag:i === index ? e.currentTarget.checked : e.currentTarget.checked ? false : item.isWinnerTag})))}/></Table.Td><Table.Td><NumberInput value={tag.rankingPoints} min={0} max={100000} disabled={readOnly} onChange={(value) => setResultTags(resultTags.map((item,i) => i === index ? {...item,rankingPoints:Number(value)||0}:item))}/></Table.Td><Table.Td>{!readOnly ? <Group gap={4}><ActionIcon className="app-action-button app-action-button--quiet" onClick={() => moveResult(index,-1)}><ArrowUp size={14}/></ActionIcon><ActionIcon className="app-action-button app-action-button--quiet" onClick={() => moveResult(index,1)}><ArrowDown size={14}/></ActionIcon><ActionIcon className="app-action-button app-action-button--danger" onClick={() => setResultTags(resultTags.filter((_,i) => i !== index))}><Trash2 size={14}/></ActionIcon></Group> : null}</Table.Td></Table.Tr>)}</Table.Tbody></Table></Box>
+    {mode === "edit" && event && !event.archivedAt ? <Box className="event-form-panel"><Group justify="space-between"><Box><Title order={2} className="event-form-title">Event Status</Title><Text c="dimmed" size="sm">Status transitions are controlled and validated by the backend.</Text></Box><Group>{event.status === "PREPARING" ? <Button className="app-action-button app-action-button--primary" disabled={participants.filter((id) => availableIds.has(id)).length === 0} onClick={() => onStatusChange?.("ONGOING", payload())} type="button">Start Event</Button> : null}{event.status === "ONGOING" ? <Button className="app-action-button app-action-button--primary" onClick={() => onStatusChange?.("COMPLETED", payload())} type="button">Complete Event</Button> : null}{event.status === "COMPLETED" ? <Button className="app-action-button app-action-button--primary" onClick={() => onStatusChange?.("ONGOING", payload())} type="button">Reopen Event</Button> : null}{onArchive ? <Button className="app-action-button app-action-button--danger" variant="outline" onClick={() => onArchive()} type="button">Archive</Button> : null}</Group></Group></Box> : null}
+  </Stack></Box>;
 }

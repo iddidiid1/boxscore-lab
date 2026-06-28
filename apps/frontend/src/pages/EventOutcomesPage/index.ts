@@ -1,0 +1,1 @@
+export { EventOutcomesPage } from "./EventOutcomesPage";

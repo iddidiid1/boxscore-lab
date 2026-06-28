@@ -7,11 +7,13 @@ import { CreateTeamPage } from "../pages/CreateTeamPage";
 import { EditMatchPage } from "../pages/EditMatchPage";
 import { EventDetailPage } from "../pages/EventDetailPage";
 import { EventFormPage } from "../pages/EventFormPage";
+import { EventOutcomesPage } from "../pages/EventOutcomesPage";
 import { ManageTeamPage } from "../pages/ManageTeamPage";
 import { MatchDetailPage } from "../pages/MatchDetailPage";
 import { PlayerDetailPage } from "../pages/PlayerDetailPage";
 import { TeamDetailPage } from "../pages/TeamDetailPage";
 import { Sidebar } from "../shared/components/navigation";
+import "../shared/components/action-buttons.css";
 
 function getPageKeyFromPath(pathname: string): PageKey {
   const firstPathSegment = pathname.split("/").filter(Boolean)[0];
@@ -39,6 +41,7 @@ function AppContent() {
   const isCreateEventPage = pathname === "/events/new" || pathname === "/events/new/";
   const editMatchMatch = pathname.match(/^\/matches\/([^/]+)\/edit\/?$/);
   const editEventMatch = pathname.match(/^\/events\/([^/]+)\/edit\/?$/);
+  const eventOutcomesMatch = pathname.match(/^\/events\/([^/]+)\/outcomes\/?$/);
   const isManageTeamPage = /^\/teams\/[^/]+\/manage\/?$/.test(pathname);
   const isTeamDetailPage = pathname.startsWith("/teams/") && !isManageTeamPage && !isCreateTeamPage;
   const isPlayerDetailPage = /^\/players\/[^/]+\/?$/.test(pathname);
@@ -79,6 +82,8 @@ function AppContent() {
           <EventFormPage mode="create" />
         ) : editMatchMatch ? (
           <EditMatchPage matchId={editMatchMatch[1]} />
+        ) : eventOutcomesMatch ? (
+          <EventOutcomesPage eventId={eventOutcomesMatch[1]} />
         ) : editEventMatch ? (
           <EventFormPage eventId={editEventMatch[1]} mode="edit" />
         ) : isManageTeamPage ? (
