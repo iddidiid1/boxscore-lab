@@ -1,4 +1,0 @@
-interface:
-  display_name: "Fantasy Playground DB"
-  short_description: "Isolated SQLite playground DB setup."
-  default_prompt: "Use $fantasy-playground-db to create a temporary playground database and run smoke testing without touching the dev DB."

@@ -338,7 +338,7 @@ Player 统计：
 | `PLAYER_NOT_FOUND` | 404 | playerId 不存在 |
 | `EVENT_NOT_AVAILABLE_FOR_MATCH` | 422 | Event 为 PREPARING、已归档或已删除 |
 | `TEAM_NOT_EVENT_PARTICIPANT` | 422 | Team 不是 Event participant |
-| `TEAM_ARCHIVED` | 422 | 创建 Match 时 participant Team 已归档 |
+| `TEAM_ARCHIVED` | 422 | 创建 Match 时 participant Team 已归档，或编辑 archived Team 一侧时尝试新增 Player |
 | `STAGE_TAG_EVENT_MISMATCH` | 422 | StageTag 不属于 Match Event |
 | `PLAYER_TEAM_MISMATCH` | 422 | Player 不属于 payload 对应 Team |
 | `PLAYER_INACTIVE` | 422 | 创建或编辑时新增 inactive Player |

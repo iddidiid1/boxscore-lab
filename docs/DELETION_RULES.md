@@ -29,7 +29,7 @@ changed by administrative cleanup actions.
 | `EventParticipant` | Cascade when the parent Event is hard deleted. Restrict Team deletion while participant records exist. | Participation belongs to an Event, but Team history should be protected. |
 | `EventTeamResult` | Cascade when the parent Event is hard deleted. Restrict Team deletion and ResultTag deletion while results exist. | Results are the source for team ranking points. |
 | `EventPlayerAward` | Cascade when the parent Event is hard deleted. Restrict Player and Team deletion while awards exist. | Player honors are historical records and must preserve the awarded player and team context. |
-| `Match` | Cascade only when the parent Event is hard deleted. In normal workflows, keep matches by soft deleting or archiving the Event. | Matches are the source of player stats and team score calculations. |
+| `Match` | Normal Match workflows never hard delete. Void by setting `voidedAt`, retain all detail rows, and allow controlled restore by clearing `voidedAt`; cascade only when the parent Event is hard deleted through controlled maintenance. | Matches are the auditable source of player stats and team score calculations; voided matches must be excluded from all derived statistics. |
 | `MatchTeam` | Cascade when the parent Match is hard deleted. Restrict Team deletion while match team records exist. | Historical match participation should remain intact. |
 | `MatchPlayerStat` | Cascade when the parent Match is hard deleted. Restrict Player and Team deletion while stats exist. | Player stats are historical box score data. |
 | `MatchTeamOtherStat` | Cascade when the parent Match is hard deleted. Restrict Team deletion while other stats exist. | Other stats contribute to calculated team score. |
@@ -42,6 +42,7 @@ The v1 schema supports or expects these lifecycle fields:
 - `Player.isActive`
 - `Event.archivedAt`
 - `Event.deletedAt`
+- `Match.voidedAt`
 
 `Event.deletedAt` remains a schema-level soft-deletion field used by read filters and future or controlled data handling; the implemented MVP Event Management flow does not expose an operation that sets or clears it. Normal Event workflows use `archivedAt` only. Teams and Players continue to use their model-specific archive/deactivation behavior.
 

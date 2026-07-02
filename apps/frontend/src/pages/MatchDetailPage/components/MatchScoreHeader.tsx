@@ -1,47 +1,26 @@
 import { Badge, Box, Group, Text } from "@mantine/core";
-import type { MatchDetailRecord } from "../types";
+import type { MatchDetail } from "../../../features/matches";
 import { MatchTeamSummary } from "./MatchTeamSummary";
 
-type MatchScoreHeaderProps = {
-  match: MatchDetailRecord;
-};
-
-function formatMatchDate(date: string) {
-  return new Intl.DateTimeFormat("en-AU", {
-    dateStyle: "medium"
-  }).format(new Date(date));
-}
-
-export function MatchScoreHeader({ match }: MatchScoreHeaderProps) {
-  const isHomeWinner = match.homeTeam.score > match.awayTeam.score;
-  const isAwayWinner = match.awayTeam.score > match.homeTeam.score;
-
+export function MatchScoreHeader({ match }: { match: MatchDetail }) {
+  const home = match.teams.find((team) => team.role === "HOME")!;
+  const away = match.teams.find((team) => team.role === "AWAY")!;
+  const format = new Intl.DateTimeFormat("en-AU", { dateStyle: "medium", timeStyle: "short" }).format(new Date(match.playedAt));
   return (
     <Box className="match-detail-score-card">
       <Group className="match-detail-meta" gap="xs">
-        <Text className="match-detail-event">{match.eventName}</Text>
-        {match.tags.map((tag) => (
-          <Badge className="match-detail-tag" key={tag} variant="light">
-            {tag}
-          </Badge>
-        ))}
-        <Text className="match-detail-date">{formatMatchDate(match.date)}</Text>
+        <Text className="match-detail-event">{match.event.name}</Text>
+        {match.stageTag ? <Badge className="match-detail-tag" variant="light">{match.stageTag.label}</Badge> : null}
+        <Text className="match-detail-date">{format}</Text>
       </Group>
-
       <Box className="match-detail-scoreline">
-        <MatchTeamSummary isWinner={isHomeWinner} side="home" team={match.homeTeam} />
-
+        <MatchTeamSummary isWinner={home.score > away.score} side="home" team={home} />
         <Group className="match-detail-final-score" gap="sm" justify="center" wrap="nowrap">
-          <Text className="match-detail-score-number" data-winner={isHomeWinner || undefined}>
-            {match.homeTeam.score}
-          </Text>
+          <Text className="match-detail-score-number" data-winner={home.score > away.score || undefined}>{home.score}</Text>
           <Text className="match-detail-score-divider">-</Text>
-          <Text className="match-detail-score-number" data-winner={isAwayWinner || undefined}>
-            {match.awayTeam.score}
-          </Text>
+          <Text className="match-detail-score-number" data-winner={away.score > home.score || undefined}>{away.score}</Text>
         </Group>
-
-        <MatchTeamSummary isWinner={isAwayWinner} side="away" team={match.awayTeam} />
+        <MatchTeamSummary isWinner={away.score > home.score} side="away" team={away} />
       </Box>
     </Box>
   );

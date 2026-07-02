@@ -1,9 +1,9 @@
 import { Box } from "@mantine/core";
-import type { MatchRecord } from "../../types";
+import type { MatchListItem } from "../../../../features/matches";
 import { MatchRecordCard } from "./MatchRecordCard";
 
 type MatchHistoryListProps = {
-  matches: MatchRecord[];
+  matches: MatchListItem[];
 };
 
 export function MatchHistoryList({ matches }: MatchHistoryListProps) {

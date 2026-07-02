@@ -37,7 +37,7 @@ function AppContent() {
   );
   const ActivePage = page.Component;
   const isCreateTeamPage = pathname === "/teams/new" || pathname === "/teams/new/";
-  const isCreateMatchPage = pathname === "/matches/create" || pathname === "/matches/create/";
+  const isCreateMatchPage = pathname === "/matches/new" || pathname === "/matches/new/";
   const isCreateEventPage = pathname === "/events/new" || pathname === "/events/new/";
   const editMatchMatch = pathname.match(/^\/matches\/([^/]+)\/edit\/?$/);
   const editEventMatch = pathname.match(/^\/events\/([^/]+)\/edit\/?$/);
