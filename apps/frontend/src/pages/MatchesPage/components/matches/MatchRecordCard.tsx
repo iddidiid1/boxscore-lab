@@ -1,28 +1,19 @@
 import { Badge, Box, Group, Text } from "@mantine/core";
-import type { MatchRecord } from "../../types";
+import type { MatchListItem } from "../../../../features/matches";
 
 type MatchRecordCardProps = {
-  match: MatchRecord;
+  match: MatchListItem;
 };
 
 function formatMatchDateTime(startsAt: string) {
   return new Intl.DateTimeFormat("en-AU", {
-    dateStyle: "medium"
+    dateStyle: "medium", timeStyle: "short"
   }).format(new Date(startsAt));
 }
 
-function getWinner(match: MatchRecord) {
-  if (match.teamAScore === match.teamBScore) {
-    return null;
-  }
-
-  return match.teamAScore > match.teamBScore ? match.teamA.id : match.teamB.id;
-}
-
 export function MatchRecordCard({ match }: MatchRecordCardProps) {
-  const winnerId = getWinner(match);
-  const isTeamAWinner = winnerId === match.teamA.id;
-  const isTeamBWinner = winnerId === match.teamB.id;
+  const isTeamAWinner = match.homeTeam.score > match.awayTeam.score;
+  const isTeamBWinner = match.awayTeam.score > match.homeTeam.score;
 
   function handleMatchSelect() {
     const nextPath = `/matches/${match.id}`;
@@ -39,46 +30,42 @@ export function MatchRecordCard({ match }: MatchRecordCardProps) {
             <Box
               aria-hidden="true"
               className="match-team-bar"
-              style={{ backgroundColor: match.teamA.color }}
+              style={{ backgroundColor: match.homeTeam.primaryColor ?? "var(--color-border)" }}
             />
             <Text className="match-team-name" data-winner={isTeamAWinner || undefined}>
-              {match.teamA.name}
+              {match.homeTeam.name}
             </Text>
           </Box>
 
           <Group className="match-score" gap="xs" justify="center" wrap="nowrap">
             <Text className="match-score-number" data-winner={isTeamAWinner || undefined}>
-              {match.teamAScore}
+              {match.homeTeam.score}
             </Text>
             <Text className="match-score-separator">-</Text>
             <Text className="match-score-number" data-winner={isTeamBWinner || undefined}>
-              {match.teamBScore}
+              {match.awayTeam.score}
             </Text>
           </Group>
 
           <Box className="match-team match-team-away">
             <Text className="match-team-name" data-winner={isTeamBWinner || undefined}>
-              {match.teamB.name}
+              {match.awayTeam.name}
             </Text>
             <Box
               aria-hidden="true"
               className="match-team-bar"
-              style={{ backgroundColor: match.teamB.color }}
+              style={{ backgroundColor: match.awayTeam.primaryColor ?? "var(--color-border)" }}
             />
           </Box>
         </Box>
 
         <Group className="match-meta" gap="xs">
           <Text className="match-event-label">
-            {match.eventName}
+            {match.event.name}
           </Text>
           <Group className="match-meta-secondary" gap="xs" wrap="wrap">
-            {match.tags.map((tag) => (
-              <Badge className="match-tag-badge" key={tag} variant="light">
-                {tag}
-              </Badge>
-            ))}
-            <Text className="match-date">{formatMatchDateTime(match.startsAt)}</Text>
+            {match.stageTag ? <Badge className="match-tag-badge" variant="light">{match.stageTag.label}</Badge> : null}
+            <Text className="match-date">{formatMatchDateTime(match.playedAt)}</Text>
           </Group>
         </Group>
       </Box>

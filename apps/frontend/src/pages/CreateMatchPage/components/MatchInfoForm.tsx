@@ -1,109 +1,20 @@
-import { Box, MultiSelect, Select, SimpleGrid, TextInput, Title } from "@mantine/core";
-import type { MatchFormEvent, MatchFormTeam } from "../types";
+import { Box, Select, SimpleGrid, TextInput, Title } from "@mantine/core";
+import type { MatchFormEventOption } from "../../../features/matches";
+import type { MatchFormTeam } from "../types";
 
-type MatchInfoFormProps = {
-  awayTeamId: string | null;
-  eventId: string | null;
-  eventOptions: MatchFormEvent[];
-  homeTeamId: string | null;
-  matchDate: string;
-  selectedTags: string[];
-  tagOptions: string[];
-  teams: MatchFormTeam[];
-  onAwayTeamChange: (teamId: string | null) => void;
-  onEventChange: (eventId: string | null) => void;
-  onHomeTeamChange: (teamId: string | null) => void;
-  onMatchDateChange: (value: string) => void;
-  onTagsChange: (tags: string[]) => void;
+type Props = {
+  mode: "create" | "edit"; eventId: number | null; events: MatchFormEventOption[]; stageTagId: number | null; stageTags: Array<{ id: number; label: string }>;
+  playedAt: string; homeTeamId: number | null; awayTeamId: number | null; teams: MatchFormTeam[];
+  onEventChange: (id: number | null) => void; onStageChange: (id: number | null) => void; onPlayedAtChange: (value: string) => void; onHomeChange: (id: number | null) => void; onAwayChange: (id: number | null) => void;
 };
-
-export function MatchInfoForm({
-  awayTeamId,
-  eventId,
-  eventOptions,
-  homeTeamId,
-  matchDate,
-  selectedTags,
-  tagOptions,
-  teams,
-  onAwayTeamChange,
-  onEventChange,
-  onHomeTeamChange,
-  onMatchDateChange,
-  onTagsChange
-}: MatchInfoFormProps) {
-  const eventSelectOptions = eventOptions.map((event) => ({
-    label: event.name,
-    value: event.id
-  }));
-
-  const homeTeamOptions = teams.map((team) => ({
-    disabled: team.id === awayTeamId,
-    label: team.name,
-    value: team.id
-  }));
-
-  const awayTeamOptions = teams.map((team) => ({
-    disabled: team.id === homeTeamId,
-    label: team.name,
-    value: team.id
-  }));
-
-  return (
-    <Box className="match-form-section app-panel">
-      <Title order={2}>Match Information</Title>
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
-        <Select
-          allowDeselect
-          classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }}
-          data={eventSelectOptions}
-          label="Event"
-          onChange={onEventChange}
-          placeholder="Select event"
-          required
-          value={eventId}
-        />
-        <MultiSelect
-          classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }}
-          data={tagOptions}
-          disabled={!eventId}
-          label="Tags"
-          onChange={onTagsChange}
-          placeholder={eventId ? "Select tags" : "Select event first"}
-          value={selectedTags}
-        />
-        <TextInput
-          classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }}
-          label="Match Date"
-          onChange={(event) => {
-            const value = event.currentTarget.value;
-            onMatchDateChange(value);
-          }}
-          required
-          type="date"
-          value={matchDate}
-        />
-        <Select
-          allowDeselect
-          classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }}
-          data={homeTeamOptions}
-          label="Home Team"
-          onChange={onHomeTeamChange}
-          placeholder="Select home team"
-          required
-          value={homeTeamId}
-        />
-        <Select
-          allowDeselect
-          classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }}
-          data={awayTeamOptions}
-          label="Away Team"
-          onChange={onAwayTeamChange}
-          placeholder="Select away team"
-          required
-          value={awayTeamId}
-        />
-      </SimpleGrid>
-    </Box>
-  );
+const asId = (value: string | null) => value ? Number(value) : null;
+export function MatchInfoForm(props: Props) {
+  const data = props.teams.map((team) => ({ value: String(team.id), label: `${team.name}${team.archivedAt ? " (Archived)" : ""}` }));
+  return <Box className="match-form-section app-panel"><Title order={2}>Match Information</Title><SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
+    <Select classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }} data={props.events.map((event) => ({ value: String(event.id), label: event.name }))} disabled={props.mode === "edit"} label="Event" onChange={(value) => props.onEventChange(asId(value))} required value={props.eventId ? String(props.eventId) : null} />
+    <Select clearable classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }} data={props.stageTags.map((tag) => ({ value: String(tag.id), label: tag.label }))} label="Stage" onChange={(value) => props.onStageChange(asId(value))} value={props.stageTagId ? String(props.stageTagId) : null} />
+    <TextInput classNames={{ input: "match-form-input app-control-input", label: "match-form-input-label app-control-label" }} label="Match Date & Time" max={new Date().toISOString().slice(0, 16)} onChange={(event) => props.onPlayedAtChange(event.currentTarget.value)} required type="datetime-local" value={props.playedAt} />
+    <Select data={data.map((item) => ({ ...item, disabled: Number(item.value) === props.awayTeamId }))} disabled={props.mode === "edit"} label="Home Team" onChange={(value) => props.onHomeChange(asId(value))} required value={props.homeTeamId ? String(props.homeTeamId) : null} />
+    <Select data={data.map((item) => ({ ...item, disabled: Number(item.value) === props.homeTeamId }))} disabled={props.mode === "edit"} label="Away Team" onChange={(value) => props.onAwayChange(asId(value))} required value={props.awayTeamId ? String(props.awayTeamId) : null} />
+  </SimpleGrid></Box>;
 }

@@ -18,7 +18,7 @@ export function MatchesPageHeader() {
       <Button
         className="create-match-button"
         component="a"
-        href="/matches/create"
+        href="/matches/new"
         leftSection={<Plus size={17} />}
         size="sm"
       >

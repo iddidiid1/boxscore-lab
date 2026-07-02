@@ -1,56 +1,48 @@
-import { Anchor, Box, Button, Group, Stack, Text } from "@mantine/core";
+import { Alert, Anchor, Box, Button, Center, Group, Loader, Modal, Stack, Text } from "@mantine/core";
 import { Pencil } from "lucide-react";
+import { useEffect, useState } from "react";
+import { fetchMatch, restoreMatch, voidMatch, type MatchDetail } from "../../features/matches";
+import { ApiClientError } from "../../features/teams/api/teams";
 import { MatchBoxScoreTable, MatchScoreHeader } from "./components";
-import { mockMatchDetails } from "./mockMatchDetail";
 import "./MatchDetailPage.css";
 
-type MatchDetailPageProps = {
-  matchId: string;
-};
+export function MatchDetailPage({ matchId }: { matchId: string }) {
+  const id = Number(matchId);
+  const [match, setMatch] = useState<MatchDetail>();
+  const [error, setError] = useState<string>();
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [confirmAction, setConfirmAction] = useState<"void" | "restore" | null>(null);
+  const [reload, setReload] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController(); setLoading(true); setError(undefined);
+    fetchMatch(id, controller.signal).then(setMatch).catch((reason: unknown) => { if (!controller.signal.aborted) setError(reason instanceof ApiClientError && reason.response.statusCode === 404 ? "Match not found." : reason instanceof Error ? reason.message : "Unable to load match."); }).finally(() => { if (!controller.signal.aborted) setLoading(false); });
+    return () => controller.abort();
+  }, [id, reload]);
 
-export function MatchDetailPage({ matchId }: MatchDetailPageProps) {
-  const match = mockMatchDetails.find((matchDetail) => matchDetail.id === matchId) ?? mockMatchDetails[0];
-  const homePlayers = match.players.filter((player) => player.teamId === match.homeTeam.id);
-  const awayPlayers = match.players.filter((player) => player.teamId === match.awayTeam.id);
+  async function mutate(action: "void" | "restore") {
+    setConfirmAction(null);
+    setSubmitting(true); setError(undefined);
+    try { if (action === "void") await voidMatch(id); else await restoreMatch(id); setReload((value) => value + 1); }
+    catch (reason) { setError(reason instanceof ApiClientError ? [reason.response.message, ...reason.response.details.map((detail) => detail.message)].join(" ") : "Action failed."); }
+    finally { setSubmitting(false); }
+  }
 
-  return (
-    <Stack className="match-detail-page" gap="md">
-      <Group className="match-detail-actions" justify="space-between">
-        <Anchor className="match-detail-back-link" href="/matches">
-          {"\u2190 Back to Matches"}
-        </Anchor>
-        <Button
-          className="edit-match-button"
-          component="a"
-          href={`/matches/${match.id}/edit`}
-          leftSection={<Pencil size={16} />}
-        >
-          Edit Match
-        </Button>
-      </Group>
-
-      <MatchScoreHeader match={match} />
-
-      <Box className="match-box-score-grid">
-        <MatchBoxScoreTable
-          otherStats={match.otherStats[match.homeTeam.id]}
-          players={homePlayers}
-          teamColor={match.homeTeam.color}
-          title={match.homeTeam.name}
-        />
-        <MatchBoxScoreTable
-          otherStats={match.otherStats[match.awayTeam.id]}
-          players={awayPlayers}
-          teamColor={match.awayTeam.color}
-          title={match.awayTeam.name}
-        />
-      </Box>
-
-      {match.id !== matchId ? (
-        <Text className="match-detail-fallback-note">
-          Showing mock match data until this match record is connected.
-        </Text>
-      ) : null}
-    </Stack>
-  );
+  if (loading) return <Center py="xl"><Loader aria-label="Loading match" /></Center>;
+  if (!match) return <Alert color="red" title={error ?? "Unable to load match"}><Button onClick={() => setReload((value) => value + 1)} size="xs">Retry</Button></Alert>;
+  const eventUnavailable = match.event.archivedAt !== null || match.event.deletedAt !== null || !["ONGOING", "COMPLETED"].includes(match.event.status);
+  const home = match.teams.find((team) => team.role === "HOME")!;
+  const away = match.teams.find((team) => team.role === "AWAY")!;
+  return <Stack className="match-detail-page" gap="md">
+    <Group className="match-detail-actions" justify="space-between"><Anchor className="match-detail-back-link" href="/matches">← Back to Matches</Anchor><Group>
+      {!match.voidedAt && !eventUnavailable ? <><Button className="edit-match-button" component="a" href={`/matches/${match.id}/edit`} leftSection={<Pencil size={16} />}>Edit Match</Button><Button color="red" disabled={submitting} onClick={() => setConfirmAction("void")} variant="outline">Void</Button></> : null}
+      {match.voidedAt && !eventUnavailable ? <Button disabled={submitting} onClick={() => setConfirmAction("restore")}>Restore</Button> : null}
+    </Group></Group>
+    {match.voidedAt ? <Alert color="orange" title="Voided match">Voided at {new Date(match.voidedAt).toLocaleString()}.</Alert> : null}
+    {eventUnavailable ? <Alert color="gray" title="Historical match">The Event is archived, deleted, or otherwise unavailable. This record is read-only.</Alert> : null}
+    {error ? <Alert color="red">{error}</Alert> : null}
+    <MatchScoreHeader match={match} />
+    <Box className="match-box-score-grid"><MatchBoxScoreTable otherStats={home.otherStats} players={home.playerStats} teamColor={home.team.primaryColor} title={home.team.name} /><MatchBoxScoreTable otherStats={away.otherStats} players={away.playerStats} teamColor={away.team.primaryColor} title={away.team.name} /></Box>
+    <Modal centered onClose={() => setConfirmAction(null)} opened={confirmAction !== null} title={confirmAction === "void" ? "Void Match" : "Restore Match"}><Text mb="md">{confirmAction === "void" ? "This Match will be excluded from all statistics." : "This Match will return to lists and statistics."}</Text><Group justify="flex-end"><Button onClick={() => setConfirmAction(null)} variant="default">Cancel</Button><Button color={confirmAction === "void" ? "red" : "blue"} loading={submitting} onClick={() => confirmAction && mutate(confirmAction)}>Confirm</Button></Group></Modal>
+  </Stack>;
 }

@@ -254,6 +254,7 @@ model Match {
   eventId     Int
   stageTagId  Int?
   playedAt    DateTime
+  voidedAt    DateTime?
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -267,6 +268,7 @@ model Match {
   @@index([eventId])
   @@index([stageTagId])
   @@index([playedAt])
+  @@index([voidedAt])
 }
 
 model MatchTeam {
@@ -296,7 +298,7 @@ model MatchPlayerStat {
   threePointersMade      Int      @default(0)
   threePointersAttempted Int      @default(0)
   minutes                Int      @default(0)
-  rating                 Float?
+  rating                 Float    @default(0)
 
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt

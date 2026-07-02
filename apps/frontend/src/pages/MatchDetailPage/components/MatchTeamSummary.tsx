@@ -1,5 +1,5 @@
 import { Box, Text } from "@mantine/core";
-import type { MatchDetailTeam } from "../types";
+import type { MatchDetailTeam } from "../../../features/matches";
 
 type MatchTeamSummaryProps = {
   isWinner: boolean;
@@ -21,14 +21,14 @@ export function MatchTeamSummary({ isWinner, side, team }: MatchTeamSummaryProps
     <Box className={`match-detail-team match-detail-team-${side}`}>
       <Box
         className="match-detail-team-logo"
-        style={{ borderColor: team.color }}
+        style={{ borderColor: team.team.primaryColor ?? undefined }}
       >
-        {getInitials(team.name)}
+        {getInitials(team.team.name)}
       </Box>
       <Box className="match-detail-team-copy">
         <Text className="match-detail-team-side">{side === "home" ? "Home" : "Away"}</Text>
         <Text className="match-detail-team-name" data-winner={isWinner || undefined}>
-          {team.name}
+          {team.team.name}
         </Text>
       </Box>
     </Box>

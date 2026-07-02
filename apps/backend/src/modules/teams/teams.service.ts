@@ -437,6 +437,7 @@ async function getTeamStats(teamId: number) {
     where: {
       teamId,
       match: {
+        voidedAt: null,
         event: {
           status: EventStatus.COMPLETED,
           deletedAt: null,
@@ -464,6 +465,7 @@ async function getPlayerStats(playerId: number, teamId: number) {
       playerId,
       teamId,
       match: {
+        voidedAt: null,
         event: {
           status: EventStatus.COMPLETED,
           deletedAt: null,

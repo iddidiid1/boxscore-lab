@@ -1,36 +1,11 @@
-import type { PlayerPosition } from "../../shared/utils/playerSorting";
+import type { MatchRole, OtherStatPayload, PlayerStatPayload } from "../../features/matches";
+import type { PlayerPosition } from "../../features/teams/types";
 
-export const MATCH_OTHER_PLAYER_ID = "__match_other__";
+export type PlayerStatInput = Omit<PlayerStatPayload, "playerId">;
+export type MatchFormPlayer = { id: number; name: string; number: number; position: PlayerPosition; isActive: boolean };
+export type MatchFormTeam = { id: number; name: string; color: string | null; archivedAt: string | null; players: MatchFormPlayer[] };
+export type PlayerEntry = { appeared: boolean; stats: PlayerStatInput };
+export type TeamFormState = { role: MatchRole; team?: MatchFormTeam; entries: Record<number, PlayerEntry>; otherStats: OtherStatPayload };
 
-export type MatchFormEvent = {
-  id: string;
-  name: string;
-  tags: string[];
-};
-
-export type MatchFormPlayer = {
-  id: string;
-  position: PlayerPosition;
-  name: string;
-};
-
-export type MatchFormTeam = {
-  id: string;
-  name: string;
-  color: string;
-  players: MatchFormPlayer[];
-};
-
-export type PlayerStatInput = {
-  points: number;
-  rebounds: number;
-  assists: number;
-  fieldGoalsMade: number;
-  fieldGoalsAttempted: number;
-  threePointersMade: number;
-  threePointersAttempted: number;
-  minutes: number;
-  rating: number;
-};
-
-export type PlayerStatsById = Record<string, PlayerStatInput>;
+export const emptyPlayerStats = (): PlayerStatInput => ({ points: 0, rebounds: 0, assists: 0, fieldGoalsMade: 0, fieldGoalsAttempted: 0, threePointersMade: 0, threePointersAttempted: 0, minutes: 0, rating: 0 });
+export const emptyOtherStats = (): OtherStatPayload => ({ points: 0, rebounds: 0, assists: 0, fieldGoalsMade: 0, fieldGoalsAttempted: 0, threePointersMade: 0, threePointersAttempted: 0 });

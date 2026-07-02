@@ -7,7 +7,9 @@ changed by administrative cleanup actions.
 ## Guiding Principles
 
 - Prefer soft deletion for core historical entities.
-- Hard delete only configuration data that is not referenced by historical data.
+- In normal application workflows, hard delete only configuration data that is not referenced by historical data.
+- The MVP Event Management API and UI only archive Events by setting `Event.archivedAt`; they do not expose Event hard delete, soft delete, unarchive, or restore operations.
+- References below to cascading from a hard-deleted parent Event describe existing database referential behavior for controlled maintenance only, not an application workflow or product capability.
 - Ranking calculations must remain stable after deletion or archiving.
 - Event ordering must never be renumbered after deletion.
 - Match, result, and award records should remain auditable because they are the
@@ -21,28 +23,30 @@ changed by administrative cleanup actions.
 | `Division` | Use `onDelete: SetNull` from `Team.divisionId` to `Division.id`. | Teams should survive division restructuring. Application logic should still require a division when creating or editing a team. |
 | `Team` | Prefer soft deletion or archiving. Avoid hard deletion once referenced by players, events, matches, or awards. | Team identity is needed for historical results, match records, rankings, player history, and award context. |
 | `Player` | Prefer soft deletion through `isActive = false`. Restrict deletion while match stats or awards exist. | A player leaving a team or becoming inactive should not remove past box score data or honors. |
-| `Event` | Prefer soft deletion or archiving. Do not hard delete for normal user workflows. | `rankingOrder` is historical ordering. Deleting an event must not cause ordering reuse or recalculation. |
+| `Event` | Archive by setting `archivedAt` in the MVP application. Do not expose hard delete, soft delete, unarchive, or restore through normal API/UI workflows. | `rankingOrder` and historical Event data must remain stable and auditable. |
 | `EventStageTag` | Use `onDelete: SetNull` from `Match.stageTagId` to `EventStageTag.id`. | Stage labels are event configuration, but matches should not be deleted when a stage tag changes. |
 | `EventResultTag` | Restrict deletion when referenced by `EventTeamResult`. | Result tags define ranking points; deleting them would break historical point calculation. |
 | `EventParticipant` | Cascade when the parent Event is hard deleted. Restrict Team deletion while participant records exist. | Participation belongs to an Event, but Team history should be protected. |
 | `EventTeamResult` | Cascade when the parent Event is hard deleted. Restrict Team deletion and ResultTag deletion while results exist. | Results are the source for team ranking points. |
 | `EventPlayerAward` | Cascade when the parent Event is hard deleted. Restrict Player and Team deletion while awards exist. | Player honors are historical records and must preserve the awarded player and team context. |
-| `Match` | Cascade only when the parent Event is hard deleted. In normal workflows, keep matches by soft deleting or archiving the Event. | Matches are the source of player stats and team score calculations. |
+| `Match` | Normal Match workflows never hard delete. Void by setting `voidedAt`, retain all detail rows, and allow controlled restore by clearing `voidedAt`; cascade only when the parent Event is hard deleted through controlled maintenance. | Matches are the auditable source of player stats and team score calculations; voided matches must be excluded from all derived statistics. |
 | `MatchTeam` | Cascade when the parent Match is hard deleted. Restrict Team deletion while match team records exist. | Historical match participation should remain intact. |
 | `MatchPlayerStat` | Cascade when the parent Match is hard deleted. Restrict Player and Team deletion while stats exist. | Player stats are historical box score data. |
 | `MatchTeamOtherStat` | Cascade when the parent Match is hard deleted. Restrict Team deletion while other stats exist. | Other stats contribute to calculated team score. |
 
 ## Soft Deletion Fields
 
-The v1 schema supports or expects these soft deletion fields:
+The v1 schema supports or expects these lifecycle fields:
 
 - `Team.archivedAt`
 - `Player.isActive`
 - `Event.archivedAt`
 - `Event.deletedAt`
+- `Match.voidedAt`
 
-For MVP, normal user workflows should archive or deactivate records instead of
-hard deleting them when historical data exists.
+`Event.deletedAt` remains a schema-level soft-deletion field used by read filters and future or controlled data handling; the implemented MVP Event Management flow does not expose an operation that sets or clears it. Normal Event workflows use `archivedAt` only. Teams and Players continue to use their model-specific archive/deactivation behavior.
+
+Normal application workflows must not hard delete historical records. If a parent Event is hard-deleted through a controlled database maintenance operation outside the MVP API/UI, the existing foreign-key cascades listed above apply to its Event-owned records. Such maintenance must be treated as destructive and is outside normal product behavior.
 
 ## Event Ranking Order
 

@@ -46,10 +46,11 @@ See `docs/TEAM_POINTS_RULES.md` and `docs/TEAM_RANKING_CONFIG.md`.
 
 See `docs/DELETION_RULES.md` for full rules. Key points:
 
-- Teams and Events: prefer **soft delete / archive** (`archivedAt`)
+- Teams: prefer **soft delete / archive** (`archivedAt`)
+- Events: the MVP application only supports archive through `archivedAt`; it exposes no Event hard-delete or restore API/UI
 - Players: prefer `isActive = false`
 - `Event.rankingOrder` is monotonic — never reused, renumbered, or set by frontend
-- Historical match/award/stat records must never be destroyed
+- Historical match/award/stat records must never be destroyed by normal application workflows. Existing database cascades from a parent Event apply only if a controlled maintenance operation hard-deletes that Event; hard deletion is not a product capability.
 
 ### Error Response Shape
 
