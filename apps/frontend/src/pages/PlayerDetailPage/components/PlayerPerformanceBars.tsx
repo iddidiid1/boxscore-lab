@@ -18,7 +18,7 @@ export function PlayerPerformanceBars({ dimensions }: PlayerPerformanceBarsProps
     <Box className="player-performance-card">
       <Title order={2}>Performance Profile</Title>
       <Text className="player-performance-helper">
-        Placeholder performance profile using fixed mock values.
+        Relative to the leader in the current statistics scope.
       </Text>
 
       <Box className="player-performance-bars">
@@ -31,7 +31,7 @@ export function PlayerPerformanceBars({ dimensions }: PlayerPerformanceBarsProps
                 <Text className="data-label">{dimension.label}</Text>
                 <Text className="player-performance-score">{value}</Text>
               </Box>
-              <Box className="player-performance-track">
+              <Box aria-label={`${dimension.label}: ${value} percent of current scope leader`} className="player-performance-track" role="img">
                 <Box className="player-performance-fill" style={{ width: `${value}%` }} />
               </Box>
             </Box>

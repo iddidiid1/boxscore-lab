@@ -1,232 +1,32 @@
-import { Anchor, Box, Select, Stack, Text } from "@mantine/core";
-import { useEffect, useMemo, useState } from "react";
+import { Alert, Anchor, Box, Button, Loader, Select, Stack, Text, Title } from "@mantine/core";
+import { useEffect, useRef, useState } from "react";
+import { fetchPlayer, type PlayerDetailResponse } from "../../features/players";
+import { ApiClientError } from "../../features/teams/api/teams";
 import { TurnPageControls } from "../PlayersPage/components";
-import {
-  mockEventOptions,
-  mockPlayerEventStats,
-  mockPlayerRankings
-} from "../PlayersPage/mockPlayers";
-import type { PlayerRanking, PlayerRankingEventId } from "../PlayersPage/types";
-import {
-  PlayerMatchHistory,
-  PlayerPerformanceBars,
-  PlayerProfileHeader,
-  PlayerStatSummary,
-  type PlayerMatchRecord,
-  type PlayerPerformanceDimension,
-  type PlayerSummaryStat
-} from "./components";
+import { PlayerMatchHistory, PlayerPerformanceBars, PlayerProfileHeader, PlayerStatSummary } from "./components";
 import "./PlayerDetailPage.css";
-
-const matchesPerPage = 10;
-
-const mockPerformanceDimensions: PlayerPerformanceDimension[] = [
-  { label: "Points", value: 86 },
-  { label: "Rebounds", value: 68 },
-  { label: "Assists", value: 74 }
-];
-
-const mockMatchHistory: PlayerMatchRecord[] = [
-  {
-    id: "match-01",
-    event: "City Classic",
-    eventId: "city-classic",
-    match: "vs Harbor Kings",
-    date: "2026-05-14",
-    points: 28,
-    rebounds: 5,
-    assists: 8,
-    fieldGoalPercentage: 52.4,
-    threePointPercentage: 41.7,
-    rating: 9.2
-  },
-  {
-    id: "match-02",
-    event: "Regional Finals",
-    eventId: "regional-finals",
-    match: "vs Capital Guard",
-    date: "2026-05-07",
-    points: 24,
-    rebounds: 4,
-    assists: 10,
-    fieldGoalPercentage: 48.6,
-    threePointPercentage: 38.5,
-    rating: 8.8
-  },
-  {
-    id: "match-03",
-    event: "City Classic",
-    eventId: "city-classic",
-    match: "vs Coastal Wolves",
-    date: "2026-04-30",
-    points: 31,
-    rebounds: 6,
-    assists: 7,
-    fieldGoalPercentage: 55.1,
-    threePointPercentage: 44.0,
-    rating: 9.6
-  },
-  {
-    id: "match-04",
-    event: "Regional Finals",
-    eventId: "regional-finals",
-    match: "vs Northside Crew",
-    date: "2026-04-23",
-    points: 22,
-    rebounds: 3,
-    assists: 9,
-    fieldGoalPercentage: 46.9,
-    threePointPercentage: 36.4,
-    rating: 8.1
-  },
-  {
-    id: "match-05",
-    event: "City Classic",
-    eventId: "city-classic",
-    match: "vs Redwood Town",
-    date: "2026-04-16",
-    points: 27,
-    rebounds: 5,
-    assists: 6,
-    fieldGoalPercentage: 50.0,
-    threePointPercentage: 40.9,
-    rating: 8.7
-  },
-  {
-    id: "match-06",
-    event: "Regional Finals",
-    eventId: "regional-finals",
-    match: "vs Ironbridge FC",
-    date: "2026-04-09",
-    points: 19,
-    rebounds: 4,
-    assists: 11,
-    fieldGoalPercentage: 43.8,
-    threePointPercentage: 35.3,
-    rating: 7.9
-  },
-  {
-    id: "match-07",
-    event: "City Classic",
-    eventId: "city-classic",
-    match: "vs Prairie FC",
-    date: "2026-04-02",
-    points: 30,
-    rebounds: 7,
-    assists: 8,
-    fieldGoalPercentage: 54.2,
-    threePointPercentage: 42.9,
-    rating: 9.4
-  }
-];
-
-function getPlayerIdFromPath() {
-  return window.location.pathname.split("/").filter(Boolean)[1] ?? "";
-}
-
-function getSummaryStats(player: PlayerRanking): PlayerSummaryStat[] {
-  return [
-    { label: "PTS", value: player.points.toFixed(1) },
-    { label: "REB", value: player.rebounds.toFixed(1) },
-    { label: "AST", value: player.assists.toFixed(1) },
-    { label: "FG%", value: `${player.fieldGoalPercentage.toFixed(1)}%` },
-    { label: "3PT%", value: `${player.threePointPercentage.toFixed(1)}%` },
-    { label: "RATING", value: player.rating.toFixed(1) }
-  ];
-}
-
+const pageSize = 10;
+function slug() { return location.pathname.split("/").filter(Boolean)[1] ?? ""; }
+function read() { const q = new URLSearchParams(location.search); return { eventId: /^\d+$/.test(q.get("eventId") ?? "") ? Number(q.get("eventId")) : undefined, page: /^\d+$/.test(q.get("page") ?? "") ? Number(q.get("page")) : 1 }; }
+function write(state: { eventId?: number; page: number }, replace = false) { const q = new URLSearchParams(); if (state.eventId) q.set("eventId", String(state.eventId)); if (state.page !== 1) q.set("page", String(state.page)); history[replace ? "replaceState" : "pushState"]({}, "", `${location.pathname}${q.size ? `?${q}` : ""}`); }
+const pct = (value: number | null) => value === null ? "—" : `${value.toFixed(1)}%`;
 export function PlayerDetailPage() {
-  const [activeMatchPage, setActiveMatchPage] = useState(1);
-  const [eventValue, setEventValue] = useState<PlayerRankingEventId>("season-total");
-  const playerId = getPlayerIdFromPath();
-  const player = mockPlayerRankings.find((item) => item.id === playerId);
-  const eventScopedPlayer = useMemo(() => {
-    if (!player) {
-      return undefined;
-    }
-
-    return {
-      ...player,
-      ...(mockPlayerEventStats[eventValue][player.id] ?? {})
-    };
-  }, [eventValue, player]);
-  const filteredMatches = useMemo(() => {
-    if (eventValue === "season-total") {
-      return mockMatchHistory;
-    }
-
-    return mockMatchHistory.filter((match) => match.eventId === eventValue);
-  }, [eventValue]);
-  const visibleMatches = useMemo(() => {
-    const startIndex = (activeMatchPage - 1) * matchesPerPage;
-
-    return filteredMatches.slice(startIndex, startIndex + matchesPerPage);
-  }, [activeMatchPage, filteredMatches]);
-
-  useEffect(() => {
-    setActiveMatchPage(1);
-  }, [eventValue]);
-
-  if (!player) {
-    return (
-      <Stack className="player-detail-page" gap="md">
-        <Anchor className="player-detail-back-link" href="/players">
-          {"\u2190 Back to Players"}
-        </Anchor>
-        <Box className="player-detail-empty-state">
-          <Text className="data-label">Player profile</Text>
-          <Text className="player-detail-empty-title">Player not found</Text>
-          <Text className="page-summary">
-            This mock profile does not exist in the current local player dataset.
-          </Text>
-        </Box>
-      </Stack>
-    );
-  }
-
-  return (
-    <Stack className="player-detail-page" gap="md">
-      <Anchor className="player-detail-back-link" href="/players">
-        {"\u2190 Back to Players"}
-      </Anchor>
-
-      <Box className="player-detail-hero">
-        <PlayerProfileHeader
-          name={player.name}
-          position={player.position}
-          team={player.team}
-          teamColor={player.teamColor}
-        />
-        <PlayerPerformanceBars dimensions={mockPerformanceDimensions} />
-      </Box>
-
-      <Box className="player-detail-event-filter">
-        <Select
-          allowDeselect={false}
-          aria-label="Event filter"
-          classNames={{ input: "player-detail-filter-input", label: "player-detail-filter-label" }}
-          data={mockEventOptions}
-          label="Event"
-          onChange={(value) => {
-            if (value) {
-              setEventValue(value as PlayerRankingEventId);
-            }
-          }}
-          value={eventValue}
-        />
-      </Box>
-
-      <PlayerStatSummary stats={getSummaryStats(eventScopedPlayer ?? player)} />
-
-      <Box className="player-match-history-section">
-        <PlayerMatchHistory matches={visibleMatches} />
-        <TurnPageControls
-          activePage={activeMatchPage}
-          onPageChange={setActiveMatchPage}
-          pageSize={matchesPerPage}
-          totalItems={filteredMatches.length}
-        />
-      </Box>
-    </Stack>
-  );
+  const [query, setQuery] = useState(read); const [data, setData] = useState<PlayerDetailResponse>(); const [error, setError] = useState<string>(); const [notFound, setNotFound] = useState(false); const [loading, setLoading] = useState(true); const requestId = useRef(0);
+  useEffect(() => { const pop = () => setQuery(read()); addEventListener("popstate", pop); return () => removeEventListener("popstate", pop); }, []);
+  useEffect(() => { const controller = new AbortController(), id = ++requestId.current; setLoading(true); setError(undefined); fetchPlayer(slug(), { ...query, pageSize }, controller.signal).then((response) => { if (id !== requestId.current) return; setData(response); setNotFound(false); if (response.matches.pagination.page !== query.page) { const next = { ...query, page: response.matches.pagination.page }; write(next, true); setQuery(next); } }).catch((reason) => { if (id !== requestId.current || reason?.name === "AbortError") return; if (reason instanceof ApiClientError && reason.response.error === "PLAYER_NOT_FOUND") setNotFound(true); else setError(reason instanceof Error ? reason.message : "Unable to load player."); }).finally(() => { if (id === requestId.current) setLoading(false); }); return () => controller.abort(); }, [query]);
+  const update = (next: typeof query) => { write(next); setQuery(next); };
+  if (!data && loading) return <Stack align="center"><Loader /><Text>Loading player profile…</Text></Stack>;
+  if (notFound) return <Alert title="Player not found">No player exists for this address.</Alert>;
+  if (!data) return <Alert title="Unable to load player"><Text>{error}</Text><Button mt="sm" onClick={() => setQuery({ ...query })}>Retry</Button></Alert>;
+  const stats = data.stats;
+  return <Stack className="player-detail-page" gap="md" aria-busy={loading}>
+    <Anchor className="player-detail-back-link" href="/players">← Back to Players</Anchor>
+    {error && <Alert title="Refresh failed">{error}</Alert>}
+    <Box className="player-detail-hero"><PlayerProfileHeader name={data.player.name} number={data.player.number} position={data.player.position} team={data.player.team.name} teamColor={data.player.team.primaryColor ?? "transparent"} isActive={data.player.isActive} teamArchived={data.player.team.archivedAt !== null} /><PlayerPerformanceBars dimensions={data.performanceBars} /></Box>
+    <Box className="player-detail-event-filter"><Select allowDeselect={false} aria-label="Event filter" classNames={{ input: "player-detail-filter-input", label: "player-detail-filter-label" }} data={[{ label: "Overall", value: "overall" }, ...data.eventOptions.map((event) => ({ label: event.name, value: String(event.id) }))]} label="Event" value={query.eventId ? String(query.eventId) : "overall"} onChange={(value) => update({ eventId: value === "overall" ? undefined : Number(value), page: 1 })} /></Box>
+    {!data.scope.available && <Alert title="Statistics unavailable">Statistics are unavailable for this event.</Alert>}
+    <PlayerStatSummary stats={[{ label: "GP", value: String(stats.gamesPlayed) }, { label: "PTS", value: stats.points.toFixed(1) }, { label: "REB", value: stats.rebounds.toFixed(1) }, { label: "AST", value: stats.assists.toFixed(1) }, { label: "FG%", value: pct(stats.fieldGoalPercentage) }, { label: "3PT%", value: pct(stats.threePointPercentage) }, { label: "MIN", value: stats.minutes.toFixed(1) }, { label: "RATING", value: stats.rating.toFixed(1) }]} />
+    <Box className="player-summary-card"><Title order={2}>Awards</Title>{data.awards.length ? data.awards.map((award) => <Box key={award.id}><Text>{award.awardType.replace(/_/g, " ")} · {award.event.name} · {award.team.name}</Text>{award.notes && <Text className="page-summary">{award.notes}</Text>}</Box>) : <Text className="page-summary">No awards in this scope.</Text>}</Box>
+    <Box className="player-match-history-section"><PlayerMatchHistory matches={data.matches.items} /><TurnPageControls activePage={data.matches.pagination.page} pageSize={pageSize} totalItems={data.matches.pagination.totalItems} onPageChange={(page) => update({ ...query, page })} /></Box>
+  </Stack>;
 }

@@ -1,15 +1,13 @@
 import { Group, Select } from "@mantine/core";
-import type { PlayerRankingEventId, PlayerRankingEventOption } from "../types";
-
 type PlayerRankingFiltersProps = {
-  eventOptions: PlayerRankingEventOption[];
-  eventValue: PlayerRankingEventId;
-  onEventChange: (value: PlayerRankingEventId) => void;
+  eventOptions: Array<{ label: string; value: string }>;
+  eventValue: string;
+  onEventChange: (value: string) => void;
   onPositionChange: (value: string) => void;
   onTeamChange: (value: string) => void;
-  positionOptions: string[];
+  positionOptions: Array<string | { label: string; value: string }>;
   positionValue: string;
-  teamOptions: string[];
+  teamOptions: Array<string | { label: string; value: string }>;
   teamValue: string;
 };
 
@@ -34,7 +32,7 @@ export function PlayerRankingFilters({
         label="Event"
         onChange={(value) => {
           if (value) {
-            onEventChange(value as PlayerRankingEventId);
+            onEventChange(value);
           }
         }}
         value={eventValue}
