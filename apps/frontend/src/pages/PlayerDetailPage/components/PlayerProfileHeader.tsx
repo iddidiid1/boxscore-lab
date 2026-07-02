@@ -5,13 +5,19 @@ type PlayerProfileHeaderProps = {
   position: string;
   team: string;
   teamColor: string;
+  number: number;
+  isActive: boolean;
+  teamArchived: boolean;
 };
 
 export function PlayerProfileHeader({
   name,
   position,
   team,
-  teamColor
+  teamColor,
+  number,
+  isActive,
+  teamArchived
 }: PlayerProfileHeaderProps) {
   return (
     <Stack className="player-profile-header" gap="md">
@@ -25,8 +31,10 @@ export function PlayerProfileHeader({
         <Stack className="player-profile-content" gap={6}>
           <Title order={1}>{name}</Title>
           <Text className="player-profile-secondary">
-            {team} {"\u00b7"} {position}
+            #{number} {"\u00b7"} {team} {"\u00b7"} {position}
           </Text>
+          {!isActive && <Text className="player-profile-secondary">Inactive player</Text>}
+          {teamArchived && <Text className="player-profile-secondary">Archived team</Text>}
         </Stack>
       </Group>
     </Stack>

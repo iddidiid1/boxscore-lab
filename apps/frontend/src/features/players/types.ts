@@ -1,1 +1,11 @@
-
+import type { PlayerPosition, ApiErrorResponse } from "../teams/types";
+export type { ApiErrorResponse, PlayerPosition };
+export type PlayerStats = { gamesPlayed: number; points: number; rebounds: number; assists: number; fieldGoalPercentage: number | null; threePointPercentage: number | null; minutes: number; rating: number };
+export type PlayerTeam = { id: number; slug: string; name: string; primaryColor: string | null };
+export type PlayerListItem = { rank: number; id: number; slug: string; name: string; number: number; position: PlayerPosition; team: PlayerTeam; stats: PlayerStats };
+export type PlayerLeader = { stat: "points" | "rebounds" | "assists" | "rating"; label: string; value: number; player: { id: number; slug: string; name: string } | null; team: { id: number; name: string } | null };
+export type Pagination = { page: number; pageSize: number; totalItems: number; totalPages: number };
+export type PlayerListResponse = { items: PlayerListItem[]; leaders: PlayerLeader[]; pagination: Pagination; filterOptions: { events: Array<{ id: number; name: string; status: string }>; teams: Array<{ id: number; name: string }>; positions: PlayerPosition[] } };
+export type PlayerSortField = "points" | "rebounds" | "assists" | "fieldGoalPercentage" | "threePointPercentage" | "rating";
+export type PlayerListParams = { page: number; pageSize: number; eventId?: number; teamId?: number; position?: PlayerPosition; sortBy: PlayerSortField; sortDirection: "asc" | "desc" };
+export type PlayerDetailResponse = { scope: { eventId: number | null; available: boolean }; player: { id: number; slug: string; name: string; number: number; position: PlayerPosition; isActive: boolean; team: PlayerTeam & { archivedAt: string | null } }; stats: PlayerStats; performanceBars: Array<{ stat: string; label: string; value: number }>; eventOptions: Array<{ id: number; name: string; status: string }>; awards: Array<{ id: number; awardType: string; notes: string | null; event: { id: number; slug: string; name: string }; team: { id: number; slug: string; name: string } }>; matches: { items: Array<{ id: number; playedAt: string; event: { id: number; slug: string; name: string }; stageTag: { id: number; slug: string; label: string } | null; team: PlayerTeam; opponent: PlayerTeam | null; stats: Omit<PlayerStats, "gamesPlayed"> }>; pagination: Pagination } };

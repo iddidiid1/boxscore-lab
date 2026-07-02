@@ -1,73 +1,7 @@
-import { Box, Table, Text, Title } from "@mantine/core";
-
-export type PlayerMatchRecord = {
-  id: string;
-  event: string;
-  eventId: string;
-  match: string;
-  date: string;
-  points: number;
-  rebounds: number;
-  assists: number;
-  fieldGoalPercentage: number;
-  threePointPercentage: number;
-  rating: number;
-};
-
-type PlayerMatchHistoryProps = {
-  matches: PlayerMatchRecord[];
-};
-
-const columns: Array<{
-  key: keyof PlayerMatchRecord;
-  label: string;
-  render: (match: PlayerMatchRecord) => string;
-}> = [
-  { key: "match", label: "Match / Opponent", render: (match) => match.match },
-  { key: "date", label: "Date", render: (match) => match.date },
-  { key: "event", label: "Event", render: (match) => match.event },
-  { key: "points", label: "Points", render: (match) => match.points.toFixed(1) },
-  { key: "rebounds", label: "Rebounds", render: (match) => match.rebounds.toFixed(1) },
-  { key: "assists", label: "Assists", render: (match) => match.assists.toFixed(1) },
-  {
-    key: "fieldGoalPercentage",
-    label: "FG%",
-    render: (match) => `${match.fieldGoalPercentage.toFixed(1)}%`
-  },
-  {
-    key: "threePointPercentage",
-    label: "3PT%",
-    render: (match) => `${match.threePointPercentage.toFixed(1)}%`
-  },
-  { key: "rating", label: "Rating", render: (match) => match.rating.toFixed(1) }
-];
-
-export function PlayerMatchHistory({ matches }: PlayerMatchHistoryProps) {
-  return (
-    <Box className="player-match-card">
-      <Title order={2}>Match History</Title>
-      <Box className="player-match-table-scroll">
-        <Table className="player-match-table">
-          <Table.Thead>
-            <Table.Tr>
-              {columns.map((column) => (
-                <Table.Th key={column.key}>{column.label}</Table.Th>
-              ))}
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {matches.map((match) => (
-              <Table.Tr key={match.id}>
-                {columns.map((column) => (
-                  <Table.Td key={column.key}>
-                    <Text className="player-match-value">{column.render(match)}</Text>
-                  </Table.Td>
-                ))}
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
-      </Box>
-    </Box>
-  );
+import { Anchor, Box, Table, Text, Title } from "@mantine/core";
+import type { PlayerDetailResponse } from "../../../features/players";
+export type PlayerMatchRecord = PlayerDetailResponse["matches"]["items"][number];
+const pct = (value: number | null) => value === null ? "—" : `${value.toFixed(1)}%`;
+export function PlayerMatchHistory({ matches }: { matches: PlayerMatchRecord[] }) {
+  return <Box className="player-match-card"><Title order={2}>Match History</Title>{!matches.length ? <Text className="page-summary">No eligible matches in this scope.</Text> : <Box className="player-match-table-scroll"><Table className="player-match-table"><Table.Thead><Table.Tr>{["Match / Opponent", "Date", "Event", "Points", "Rebounds", "Assists", "FG%", "3PT%", "MIN", "Rating"].map((label) => <Table.Th key={label}>{label}</Table.Th>)}</Table.Tr></Table.Thead><Table.Tbody>{matches.map((match) => <Table.Tr key={match.id}><Table.Td><Anchor href={`/matches/${match.id}`}>{match.opponent ? `vs ${match.opponent.name}` : "—"}</Anchor><Text className="player-match-value">For {match.team.name}</Text></Table.Td><Table.Td>{new Date(match.playedAt).toLocaleString()}</Table.Td><Table.Td>{match.event.name}</Table.Td><Table.Td>{match.stats.points.toFixed(1)}</Table.Td><Table.Td>{match.stats.rebounds.toFixed(1)}</Table.Td><Table.Td>{match.stats.assists.toFixed(1)}</Table.Td><Table.Td>{pct(match.stats.fieldGoalPercentage)}</Table.Td><Table.Td>{pct(match.stats.threePointPercentage)}</Table.Td><Table.Td>{match.stats.minutes.toFixed(1)}</Table.Td><Table.Td>{match.stats.rating.toFixed(1)}</Table.Td></Table.Tr>)}</Table.Tbody></Table></Box>}</Box>;
 }
