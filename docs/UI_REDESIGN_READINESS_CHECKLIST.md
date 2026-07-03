@@ -67,26 +67,52 @@ This is an incremental maintainability task, not a request to redesign the curre
 ## Phase 4 - Migrate existing styles incrementally
 
 - [x] Replace literal colors, font stacks, radii, and repeated shadows in `styles/global.css` with tokens.
-- [ ] Migrate `ManageTeamPage.css` first because it contains extensive control and button duplication.
-- [ ] Migrate `PlayersPage.css` and its statistic accent handling.
-- [ ] Migrate `MatchDetailPage.css`.
-- [ ] Migrate `MatchesPage.css`.
-- [ ] Migrate `TeamDetailPage.css`.
-- [ ] Migrate `PlayerDetailPage.css`.
-- [ ] Migrate event page and event component styles.
-- [ ] Migrate `CreateMatchPage.css`.
-- [ ] Migrate `TeamsPage.css`.
-- [ ] Migrate shared component styles.
+- [ ] Batch 1 - Team Editor (`/teams/new` and `/teams/:slug/manage`).
+  - [x] Replace `ManageTeamPage.css` visual literals with semantic tokens.
+  - [x] Reuse shared panel, form-control, table, error-text, and action-button styles.
+  - [x] Migrate Create/Save/Cancel/Add/Edit/Remove actions and loading skeletons across both routes.
+  - [x] Run frontend type checking and build.
+  - [x] Confirm both routes' default visual state through user review.
+  - [ ] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
+- [ ] Batch 2 - Player Statistics (`PlayersPage` and `PlayerDetailPage`).
+  - [x] Replace page-level visual literals with semantic and statistical tokens.
+  - [x] Reuse shared panel, form-control, and table styles across list and detail routes.
+  - [x] Preserve dynamic team colors and promote repeated statistic/ranking accents to explicit tokens.
+  - [x] Run frontend type checking, build, and residual literal scan.
+  - [x] Confirm the list/detail routes' default visual state through user review.
+  - [ ] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
+- [ ] Batch 3 - Match History and Entry (`MatchesPage`, `CreateMatchPage`, `EditMatchPage`, and `MatchDetailPage`).
+  - [x] Replace page-level visual literals with semantic tokens across all four routes.
+  - [x] Reuse shared action-button, panel, form-control, and table styles where the existing structure supports them.
+  - [x] Preserve dynamic team colors, score hierarchy, dense table overflow, and void/restore semantics.
+  - [x] Run frontend type checking, build, residual literal scan, and diff checks.
+  - [x] Confirm the routes' default visual state through user review.
+  - [ ] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
+- [ ] Batch 4 - Team Browsing (`TeamsPage` and `TeamDetailPage`).
+  - [x] Replace page-level visual literals with semantic and radar visualization tokens.
+  - [x] Reuse shared action-button, panel, and table styles across list and detail routes.
+  - [x] Preserve dynamic team colors, team-card interactions, radar data, and roster overflow behavior.
+  - [x] Run frontend type checking, build, residual literal scan, and diff checks.
+  - [x] Confirm the routes' default visual state through user review.
+  - [ ] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
+- [ ] Batch 5 - Event Workflow (event list, form, detail, outcomes, and direct components).
+  - [x] Migrate shared event panels, controls, tables, actions, and ordinary text styles to semantic tokens.
+  - [x] Preserve Event summary/winner gradients and Tier crest gradients as intentional visualization effects.
+  - [x] Document Tier-specific gradient literals as a future regression-check allowlist case.
+  - [x] Run frontend type checking, build, and diff checks.
+  - [x] Confirm the routes' default visual state through user review.
+  - [ ] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
+- [x] Batch 6 - Shared Cleanup and Regression Guard.
 - [ ] During each migration, preserve layout, responsive breakpoints, DOM structure, and behavior unless separately requested.
 - [ ] Remove obsolete selectors after each page is migrated.
 
 ## Phase 5 - Prevent regression
 
-- [ ] Add a lint or CI check that flags new literal hex/rgb/hsl colors in frontend source outside approved token/theme files.
-- [ ] Add a check for new direct `font-family` and `border-radius` declarations outside approved token or shared-style files.
-- [ ] Maintain a short allowlist for genuinely dynamic values, data visualization colors, and third-party integration requirements.
+- [x] Add a lint or CI check that flags new literal hex/rgb/hsl colors in frontend source outside approved token/theme files.
+- [x] Add a check for new direct `font-family` and `border-radius` declarations outside approved token or shared-style files.
+- [x] Maintain a short allowlist for genuinely dynamic values, data visualization colors, and third-party integration requirements.
 - [ ] Require new shared visual patterns to reuse an existing primitive or explain why a new variant is needed.
-- [ ] Confirm new component libraries are not introduced solely to solve theming or styling consistency.
+- [x] Confirm new component libraries are not introduced solely to solve theming or styling consistency.
 
 ## Verification for each migration batch
 
