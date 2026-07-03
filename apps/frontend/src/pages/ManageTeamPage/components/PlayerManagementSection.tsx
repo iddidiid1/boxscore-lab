@@ -10,6 +10,7 @@ import {
   TextInput,
   Title
 } from "@mantine/core";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import type { PlayerPosition } from "../../../features/teams";
 
@@ -150,8 +151,8 @@ export function PlayerManagementSection({
           {rosterError ? <Text className="app-field-error">{rosterError}</Text> : null}
         </Box>
 
-        <Button className="player-add-button app-action-button app-action-button--primary" disabled={disabled} onClick={handleAddPlayer}>
-          + Add Player
+        <Button className="player-add-button app-action-button app-action-button--primary" disabled={disabled} leftSection={<Plus size={16} />} onClick={handleAddPlayer}>
+          Add Player
         </Button>
       </Group>
 

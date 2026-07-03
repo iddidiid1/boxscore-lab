@@ -35,14 +35,14 @@ export function MatchDetailPage({ matchId }: { matchId: string }) {
   const away = match.teams.find((team) => team.role === "AWAY")!;
   return <Stack className="match-detail-page" gap="md">
     <Group className="match-detail-actions" justify="space-between"><Anchor className="match-detail-back-link" href="/matches">← Back to Matches</Anchor><Group>
-      {!match.voidedAt && !eventUnavailable ? <><Button className="edit-match-button app-action-button app-action-button--primary" component="a" href={`/matches/${match.id}/edit`} leftSection={<Pencil size={16} />}>Edit Match</Button><Button className="app-action-button app-action-button--danger" disabled={submitting} onClick={() => setConfirmAction("void")} variant="outline">Void</Button></> : null}
-      {match.voidedAt && !eventUnavailable ? <Button className="app-action-button app-action-button--primary" disabled={submitting} onClick={() => setConfirmAction("restore")}>Restore</Button> : null}
+      {!match.voidedAt && !eventUnavailable ? <><Button className="edit-match-button app-action-button app-action-button--primary" component="a" href={`/matches/${match.id}/edit`} leftSection={<Pencil size={16} />}>Edit Match</Button><Button className="app-action-button app-action-button--danger" disabled={submitting} onClick={() => setConfirmAction("void")} variant="outline">Void Match</Button></> : null}
+      {match.voidedAt && !eventUnavailable ? <Button className="app-action-button app-action-button--primary" disabled={submitting} onClick={() => setConfirmAction("restore")}>Restore Match</Button> : null}
     </Group></Group>
     {match.voidedAt ? <Alert color="orange" title="Voided match">Voided at {new Date(match.voidedAt).toLocaleString()}.</Alert> : null}
     {eventUnavailable ? <Alert color="gray" title="Historical match">The Event is archived, deleted, or otherwise unavailable. This record is read-only.</Alert> : null}
     {error ? <Alert color="red">{error}</Alert> : null}
     <MatchScoreHeader match={match} />
     <Box className="match-box-score-grid"><MatchBoxScoreTable otherStats={home.otherStats} players={home.playerStats} teamColor={home.team.primaryColor} title={home.team.name} /><MatchBoxScoreTable otherStats={away.otherStats} players={away.playerStats} teamColor={away.team.primaryColor} title={away.team.name} /></Box>
-    <Modal centered onClose={() => setConfirmAction(null)} opened={confirmAction !== null} title={confirmAction === "void" ? "Void Match" : "Restore Match"}><Text mb="md">{confirmAction === "void" ? "This Match will be excluded from all statistics." : "This Match will return to lists and statistics."}</Text><Group justify="flex-end"><Button onClick={() => setConfirmAction(null)} variant="default">Cancel</Button><Button color={confirmAction === "void" ? "red" : "blue"} loading={submitting} onClick={() => confirmAction && mutate(confirmAction)}>Confirm</Button></Group></Modal>
+    <Modal centered onClose={() => setConfirmAction(null)} opened={confirmAction !== null} title={confirmAction === "void" ? "Void Match" : "Restore Match"}><Text mb="md">{confirmAction === "void" ? "This Match will be excluded from all statistics." : "This Match will return to lists and statistics."}</Text><Group justify="flex-end"><Button onClick={() => setConfirmAction(null)} variant="default">Cancel</Button><Button color={confirmAction === "void" ? "red" : "blue"} loading={submitting} onClick={() => confirmAction && mutate(confirmAction)}>{confirmAction === "void" ? "Void Match" : "Restore Match"}</Button></Group></Modal>
   </Stack>;
 }

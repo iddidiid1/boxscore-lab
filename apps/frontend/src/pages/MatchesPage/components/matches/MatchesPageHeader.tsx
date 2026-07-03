@@ -19,7 +19,7 @@ export function MatchesPageHeader() {
         className="create-match-button app-action-button app-action-button--primary"
         component="a"
         href="/matches/new"
-        leftSection={<Plus size={17} />}
+        leftSection={<Plus size={16} />}
         size="sm"
       >
         Create Match

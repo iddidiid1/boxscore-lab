@@ -84,11 +84,24 @@ Dark analytics theme — "Elite, Analytical, Tactical." Details in `docs/DESIGN.
 - Do not introduce new component libraries without explicit request
 - Do not redesign existing layout patterns unless explicitly asked
 
+### CSS Token Rules
+
+- `apps/frontend/src/styles/variables.css` is the **canonical CSS design-token entry point**
+- Use semantic tokens named by purpose (e.g., `text`, `surface`, `border`, `action`, `status` roles) — not palette names tied to the current visual design
+- New or modified frontend code must not hard-code colors, font families, border radii, or repeated shadows when an appropriate token exists. Add or revise a semantic token when a genuinely shared role is missing
+- Keep Mantine theme values and CSS tokens aligned — do not create an independent second theme inside page or feature code
+- Reuse shared styles or components for recurring buttons, form controls, cards/panels, tables, and status indicators — do not recreate their complete visual treatment in page CSS
+- Page and feature CSS should primarily own layout, spacing, responsive behavior, and genuinely local presentation. Shared visual identity belongs in tokens, the Mantine theme, or shared components
+- Prefer incremental extraction based on repeated real usage — do not build speculative design-system abstractions for the MVP
+- Preserve component placement, interaction logic, and responsive behavior during visual-token migrations unless the task explicitly includes those changes
+- Follow `docs/UI_REDESIGN_READINESS_CHECKLIST.md` when migrating existing frontend styles or preparing a broad visual redesign
+
 ## Reference Documents
 
 | File | Contains |
 |------|----------|
 | `AGENTS.md` | Development principles and project goal |
+| `docs/UI_REDESIGN_READINESS_CHECKLIST.md` | Checklist for migrating frontend styles or preparing a broad visual redesign |
 | `docs/DESIGN.md` | Full design system tokens and component specs |
 | `docs/DELETION_RULES.md` | Deletion and archival behavior for each model |
 | `docs/TEAM_POINTS_RULES.md` | Points calculation rules and ranking order rules |
@@ -129,3 +142,5 @@ Full process is defined in `docs/WORKFLOW.md`. Summary:
 - When uncertain about design or data model decisions: ask before implementing
 - Avoid changing unrelated files — stay focused on the task
 - For MVP: keep it simple, avoid over-engineering, do not implement unrequested features
+- Prefer readable, maintainable code over clever abstractions
+- After each task: summarize changed files and important decisions made
