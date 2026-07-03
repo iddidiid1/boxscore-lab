@@ -11,7 +11,7 @@ type PlayerStatSummaryProps = {
 
 export function PlayerStatSummary({ stats }: PlayerStatSummaryProps) {
   return (
-    <Box className="player-summary-card">
+    <Box className="player-summary-card app-panel">
       <Title order={2}>Stat Summary</Title>
       <Box className="player-summary-stats">
         {stats.map((stat) => (

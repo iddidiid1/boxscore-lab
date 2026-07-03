@@ -4,9 +4,9 @@
 
 .event-detail-hero,
 .event-detail-panel {
-  border: 1px solid #334155;
-  border-radius: 6px;
-  background: #121c2f;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
 }
 
 .event-detail-hero {
@@ -29,32 +29,32 @@
 }
 
 .event-detail-back-link {
-  color: #adc6ff;
+  color: var(--color-action-primary-soft);
   font-size: 0.86rem;
   font-weight: 700;
   text-decoration: none;
 }
 
 .event-detail-back-link:hover {
-  color: #dbe7ff;
+  color: var(--color-action-primary-soft-hover);
 }
 
 .edit-event-button {
   min-width: 126px;
-  border-radius: 4px;
-  background: #2563eb;
-  color: #f8fafc;
+  border-radius: var(--radius-control);
+  background: var(--color-action-primary);
+  color: var(--color-text-on-accent);
   font-weight: 700;
 }
 
 .edit-event-button:hover {
-  background: #1d4ed8;
+  background: var(--color-action-primary-hover);
 }
 
 .event-detail-status,
 .event-panel-kicker {
-  color: #cbd5e1;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-soft);
+  font-family: var(--font-family-data);
   font-size: 0.72rem;
   font-weight: 850;
   letter-spacing: 0.06em;
@@ -62,14 +62,14 @@
 }
 
 .event-detail-title {
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 2.1rem;
   line-height: 1.12;
 }
 
 .event-detail-description {
   max-width: 920px;
-  color: #a7b4c8;
+  color: var(--color-text-muted);
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.72;
@@ -77,18 +77,18 @@
 
 .event-detail-meta {
   width: fit-content;
-  border: 1px solid rgba(71, 85, 105, 0.74);
-  border-radius: 4px;
-  background: rgba(12, 20, 37, 0.72);
-  color: #dae2fd;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-control);
+  color: var(--color-text);
+  font-family: var(--font-family-data);
   font-size: 0.78rem;
   font-weight: 750;
   padding: 9px 11px;
 }
 
 .event-detail-meta svg {
-  color: #adc6ff;
+  color: var(--color-action-primary-soft);
 }
 
 .event-detail-panel {
@@ -96,7 +96,7 @@
 }
 
 .event-panel-title {
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 1.2rem;
   line-height: 1.25;
 }
@@ -110,11 +110,11 @@
   display: inline-flex;
   align-items: center;
   min-height: 32px;
-  border: 1px solid rgba(71, 85, 105, 0.78);
-  border-radius: 4px;
-  background: rgba(12, 20, 37, 0.62);
-  color: #cbd5e1;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-control);
+  color: var(--color-text-soft);
+  font-family: var(--font-family-data);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.02em;
@@ -124,18 +124,18 @@
 }
 
 .event-stage-chip {
-  border-color: rgba(96, 165, 250, 0.32);
-  color: #adc6ff;
+  border-color: var(--color-event-stage-border);
+  color: var(--color-action-primary-soft);
 }
 
 .event-result-chip {
-  color: #cbd5e1;
+  color: var(--color-text-soft);
 }
 
 .event-result-chip[data-winner] {
-  border-color: rgba(251, 191, 36, 0.48);
-  background: rgba(251, 191, 36, 0.1);
-  color: #fbbf24;
+  border-color: var(--color-event-winner-border);
+  background: var(--color-event-winner-surface);
+  color: var(--color-warning);
 }
 
 .event-results-panel {
@@ -152,8 +152,8 @@
 }
 
 .event-results-table th {
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.05em;
@@ -161,19 +161,19 @@
 }
 
 .event-results-table td {
-  border-color: rgba(51, 65, 85, 0.72);
-  color: #dae2fd;
+  border-color: var(--color-border-subtle);
+  color: var(--color-text);
   font-size: 0.88rem;
 }
 
 .event-results-table tr[data-winner] td {
-  background: rgba(251, 191, 36, 0.08);
+  background: var(--color-event-winner-row);
 }
 
 .event-result-rank,
 .event-result-score,
 .event-result-tag {
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-family-data);
   font-weight: 800;
 }
 
@@ -185,17 +185,17 @@
 }
 
 .event-result-team {
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-weight: 800;
 }
 
 .event-result-trophy,
 .event-result-tag[data-winner] {
-  color: #fbbf24;
+  color: var(--color-warning);
 }
 
 .event-detail-fallback-note {
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 0.86rem;
 }
 

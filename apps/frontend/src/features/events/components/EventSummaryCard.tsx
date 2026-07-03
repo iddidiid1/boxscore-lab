@@ -19,7 +19,7 @@ export function EventSummaryCard({ event }: EventSummaryCardProps) {
   return (
     <Box
       aria-label={`View ${event.name} event details`}
-      className="event-summary-card"
+      className="event-summary-card app-panel"
       component="a"
       href={`/events/${event.slug}`}
     >

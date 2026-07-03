@@ -140,10 +140,19 @@ export function CreateTeamPage() {
         </Box>
 
         <Group gap="sm">
-          <Button className="manage-team-save-button" loading={isSubmitting} onClick={() => void handleSubmit()}>
+          <Button
+            className="manage-team-save-button app-action-button app-action-button--primary"
+            loading={isSubmitting}
+            onClick={() => void handleSubmit()}
+          >
             Create Team
           </Button>
-          <Button className="manage-team-cancel-button" component="a" href="/teams" variant="outline">
+          <Button
+            className="manage-team-cancel-button app-action-button app-action-button--secondary"
+            component="a"
+            href="/teams"
+            variant="outline"
+          >
             Cancel
           </Button>
         </Group>
@@ -152,7 +161,7 @@ export function CreateTeamPage() {
       {pageError ? <Alert color="red">{pageError}</Alert> : null}
 
       {isLoading ? (
-        <Skeleton height={360} radius={6} />
+        <Skeleton className="manage-team-loading-skeleton" height={360} />
       ) : (
         <>
           <TeamEditorForm

@@ -70,7 +70,7 @@ function getLabelPoint(index: number, total: number) {
 
 export function TeamRadarCard({ attributes }: TeamRadarCardProps) {
   return (
-    <Box className="team-radar-card">
+    <Box className="team-radar-card app-panel">
       <Title className="team-radar-title" order={2}>
         Team Profile
       </Title>

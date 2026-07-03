@@ -17,7 +17,7 @@ export function EventResultsTable({ resultTags, results }: EventResultsTableProp
   });
 
   return (
-    <Box className="event-detail-panel event-results-panel">
+    <Box className="event-detail-panel event-results-panel app-panel">
       <Box>
         <Text className="event-panel-kicker">Final team results</Text>
         <Title className="event-panel-title" order={2}>
@@ -25,8 +25,8 @@ export function EventResultsTable({ resultTags, results }: EventResultsTableProp
         </Title>
       </Box>
 
-      <Box className="event-results-table-wrap">
-        <Table className="event-results-table" verticalSpacing="md">
+      <Box className="event-results-table-wrap app-table-wrap">
+        <Table className="event-results-table app-data-table" verticalSpacing="md">
           <Table.Thead>
             <Table.Tr>
               <Table.Th className="event-result-rank-heading">Rank</Table.Th>

@@ -4,14 +4,14 @@
 
 .team-detail-back-link {
   width: fit-content;
-  color: #adc6ff;
+  color: var(--color-action-primary-soft);
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
 }
 
 .team-detail-back-link:hover {
-  color: #f8fafc;
+  color: var(--color-text-strong);
   text-decoration: none;
 }
 
@@ -21,14 +21,14 @@
 
 .manage-team-button {
   min-width: 128px;
-  border-radius: 4px;
-  background: #2563eb;
-  color: #f8fafc;
+  border-radius: var(--radius-control);
+  background: var(--color-action-primary);
+  color: var(--color-text-on-accent);
   font-weight: 700;
 }
 
 .manage-team-button:hover {
-  background: #1d4ed8;
+  background: var(--color-action-primary-hover);
 }
 
 .team-detail-hero {
@@ -42,7 +42,7 @@
   width: 100%;
   min-height: 330px;
   border: 0;
-  border-radius: 6px;
+  border-radius: var(--radius-panel);
   background: transparent;
   padding: 24px;
 }
@@ -53,22 +53,22 @@
   place-items: center;
   width: 104px;
   height: 104px;
-  border: 1px solid rgba(100, 116, 139, 0.74);
-  border-radius: 6px;
+  border: 1px solid var(--color-border-preview);
+  border-radius: var(--radius-panel);
   object-fit: cover;
 }
 
 .team-profile-logo-fallback {
-  background: #17243a;
-  color: #cbd5e1;
+  background: var(--color-surface-subtle);
+  color: var(--color-text-soft);
 }
 
 .team-profile-logo-fallback svg {
-  color: #4edea3;
+  color: var(--color-success);
 }
 
 .team-profile-logo-fallback span {
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-family-data);
   font-size: 0.9rem;
   font-weight: 800;
   line-height: 1;
@@ -80,33 +80,33 @@
 
 .team-profile-content h1 {
   margin: 0;
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 2rem;
   line-height: 1.15;
 }
 
 .team-profile-division {
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 0.95rem;
   font-weight: 650;
 }
 
 .team-profile-points {
-  color: #dae2fd;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text);
+  font-family: var(--font-family-data);
   font-size: 0.86rem;
   font-weight: 800;
 }
 
 .team-profile-rating {
-  color: #fbbf24;
+  color: var(--color-warning);
   font-size: 1rem;
   line-height: 1;
   white-space: nowrap;
 }
 
 .team-profile-description {
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 0.92rem;
   line-height: 1.55;
 }
@@ -114,9 +114,9 @@
 .team-radar-card,
 .team-summary-card,
 .roster-table-card {
-  border: 1px solid #334155;
-  border-radius: 6px;
-  background: #121c2f;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
 }
 
 .team-radar-card {
@@ -136,7 +136,7 @@
 .team-summary-card h2,
 .roster-table-card h2 {
   margin: 0 0 14px;
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 1.12rem;
   line-height: 1.2;
 }
@@ -157,32 +157,32 @@
 
 .radar-guide {
   fill: transparent;
-  stroke: rgba(148, 163, 184, 0.2);
+  stroke: var(--color-radar-guide);
   stroke-width: 1;
 }
 
 .radar-axis {
-  stroke: rgba(148, 163, 184, 0.14);
+  stroke: var(--color-radar-axis);
   stroke-width: 1;
 }
 
 .radar-value {
   filter: url("#radarGlow");
-  fill: rgba(78, 222, 163, 0.3);
-  stroke: #4edea3;
+  fill: var(--color-radar-fill);
+  stroke: var(--color-success);
   stroke-width: 2.5;
 }
 
 .radar-label {
-  fill: #cbd5e1;
+  fill: var(--color-text-soft);
   font-size: 0.78rem;
   font-weight: 700;
 }
 
 .radar-label-value {
-  color: #dae2fd;
-  fill: #dae2fd;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text);
+  fill: var(--color-text);
+  font-family: var(--font-family-data);
   font-weight: 800;
 }
 
@@ -202,17 +202,17 @@
   padding: 18px 20px;
   background: transparent;
   border: 0;
-  border-radius: 0;
+  border-radius: var(--radius-sharp);
   box-shadow: none;
 }
 
 .team-summary-stat + .team-summary-stat {
-  border-left: 1px solid rgba(51, 65, 85, 0.78);
+  border-left: 1px solid var(--color-border-subtle);
 }
 
 .team-summary-value {
-  color: #f8fafc;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-strong);
+  font-family: var(--font-family-data);
   font-size: 1.45rem;
   font-weight: 800;
   line-height: 1.2;
@@ -229,12 +229,12 @@
 }
 
 .roster-table th {
-  border-color: #334155;
+  border-color: var(--color-border);
   padding: 8px 10px;
 }
 
 .roster-table td {
-  border-color: rgba(51, 65, 85, 0.76);
+  border-color: var(--color-border-table-cell);
   padding: 9px 10px;
 }
 
@@ -251,7 +251,7 @@
 }
 
 .roster-table tbody tr:hover td {
-  background: rgba(30, 41, 59, 0.48);
+  background: var(--color-hover-surface);
 }
 
 .roster-sort-button {
@@ -263,9 +263,9 @@
   min-height: 24px;
   border: 0;
   background: transparent;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   cursor: pointer;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -275,22 +275,22 @@
 }
 
 .roster-sort-button:hover {
-  color: #f8fafc;
+  color: var(--color-text-strong);
 }
 
 .roster-sort-button:focus-visible {
-  outline: 2px solid #82a6ff;
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
 .roster-sort-indicator {
   display: inline-block;
   min-width: 8px;
-  color: #adc6ff;
+  color: var(--color-action-primary-soft);
 }
 
 .roster-value {
-  color: #dae2fd;
+  color: var(--color-text);
   font-size: 0.82rem;
   line-height: 1.25;
 }
@@ -335,7 +335,7 @@
   }
 
   .team-summary-stat {
-    border-top: 1px solid rgba(51, 65, 85, 0.78);
+    border-top: 1px solid var(--color-border-subtle);
   }
 
   .team-summary-stat:nth-child(-n + 2) {
@@ -343,6 +343,6 @@
   }
 
   .team-summary-stat:nth-child(odd) {
-    border-right: 1px solid rgba(51, 65, 85, 0.78);
+    border-right: 1px solid var(--color-border-subtle);
   }
 }

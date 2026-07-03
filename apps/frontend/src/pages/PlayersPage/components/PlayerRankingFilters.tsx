@@ -23,11 +23,11 @@ export function PlayerRankingFilters({
   teamValue
 }: PlayerRankingFiltersProps) {
   return (
-    <Group className="player-ranking-filters" gap="sm">
+    <Group className="player-ranking-filters app-panel" gap="sm">
       <Select
         allowDeselect={false}
         aria-label="Event filter"
-        classNames={{ input: "player-filter-input", label: "player-filter-label" }}
+        classNames={{ input: "player-filter-input app-control-input", label: "player-filter-label app-control-label" }}
         data={eventOptions}
         label="Event"
         onChange={(value) => {
@@ -40,7 +40,7 @@ export function PlayerRankingFilters({
       <Select
         allowDeselect={false}
         aria-label="Team filter"
-        classNames={{ input: "player-filter-input", label: "player-filter-label" }}
+        classNames={{ input: "player-filter-input app-control-input", label: "player-filter-label app-control-label" }}
         data={teamOptions}
         label="Team"
         onChange={(value) => onTeamChange(value ?? "All teams")}
@@ -49,7 +49,7 @@ export function PlayerRankingFilters({
       <Select
         allowDeselect={false}
         aria-label="Position filter"
-        classNames={{ input: "player-filter-input", label: "player-filter-label" }}
+        classNames={{ input: "player-filter-input app-control-input", label: "player-filter-label app-control-label" }}
         data={positionOptions}
         label="Position"
         onChange={(value) => onPositionChange(value ?? "All positions")}

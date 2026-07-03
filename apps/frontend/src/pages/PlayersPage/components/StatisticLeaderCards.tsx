@@ -10,7 +10,7 @@ export function StatisticLeaderCards({ leaders }: StatisticLeaderCardsProps) {
   return (
     <Box className="stat-leader-grid">
       {leaders.map((leader) => (
-        <Box className={`stat-leader-card stat-leader-card-${leader.accent}`} key={leader.id}>
+        <Box className={`stat-leader-card stat-leader-card-${leader.accent} app-panel`} key={leader.id}>
           <Box className="stat-leader-label-row">
             <Crown aria-hidden="true" className="stat-leader-crown" />
             <Text className="stat-leader-label">{leader.label}</Text>

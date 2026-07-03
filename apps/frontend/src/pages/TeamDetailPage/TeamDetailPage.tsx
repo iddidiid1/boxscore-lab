@@ -128,7 +128,7 @@ export function TeamDetailPage() {
         </Anchor>
         {team.archivedAt === null ? (
           <Button
-            className="manage-team-button"
+            className="manage-team-button app-action-button app-action-button--primary"
             component="a"
             href={`/teams/${team.slug}/manage`}
             leftSection={<Pencil size={16} />}

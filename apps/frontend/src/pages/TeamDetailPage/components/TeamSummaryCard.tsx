@@ -11,7 +11,7 @@ type TeamSummaryCardProps = {
 
 export function TeamSummaryCard({ stats }: TeamSummaryCardProps) {
   return (
-    <Box className="team-summary-card">
+    <Box className="team-summary-card app-panel">
       <Title order={2}>Team Summary</Title>
       <Box className="team-summary-stats">
         {stats.map((stat) => (

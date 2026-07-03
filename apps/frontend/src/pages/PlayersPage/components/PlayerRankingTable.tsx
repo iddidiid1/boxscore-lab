@@ -110,10 +110,10 @@ export function PlayerRankingTable({
   sortField
 }: PlayerRankingTableProps) {
   return (
-    <Box className="player-ranking-card">
+    <Box className="player-ranking-card app-panel">
       <Title order={2}>Player Rankings</Title>
-      <Box className="player-ranking-table-scroll">
-        <Table className="player-ranking-table">
+      <Box className="player-ranking-table-scroll app-table-wrap">
+        <Table className="player-ranking-table app-data-table">
           <Table.Thead>
             <Table.Tr>
               {columns.map((column) => {

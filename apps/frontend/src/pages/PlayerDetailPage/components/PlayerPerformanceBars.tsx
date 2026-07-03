@@ -15,7 +15,7 @@ function clampValue(value: number) {
 
 export function PlayerPerformanceBars({ dimensions }: PlayerPerformanceBarsProps) {
   return (
-    <Box className="player-performance-card">
+    <Box className="player-performance-card app-panel">
       <Title order={2}>Performance Profile</Title>
       <Text className="player-performance-helper">
         Relative to the leader in the current statistics scope.
