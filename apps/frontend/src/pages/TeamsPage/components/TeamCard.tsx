@@ -38,7 +38,7 @@ export function TeamCard({ team }: TeamCardProps) {
   const rating = team.overallRating ?? 0;
 
   return (
-    <Box className="team-card">
+      <Box className="team-card app-panel">
       <Anchor
         aria-label={`View ${team.name} details`}
         className="team-logo-link"

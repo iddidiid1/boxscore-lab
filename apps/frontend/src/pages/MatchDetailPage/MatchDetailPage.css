@@ -4,14 +4,14 @@
 
 .match-detail-back-link {
   width: fit-content;
-  color: #adc6ff;
+  color: var(--color-action-primary-soft);
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
 }
 
 .match-detail-back-link:hover {
-  color: #f8fafc;
+  color: var(--color-text-strong);
   text-decoration: none;
 }
 
@@ -21,21 +21,6 @@
 
 .edit-match-button {
   min-width: 112px;
-  border-radius: 4px;
-  background: #2563eb;
-  color: #f8fafc;
-  font-weight: 700;
-}
-
-.edit-match-button:hover {
-  background: #1d4ed8;
-}
-
-.match-detail-score-card,
-.match-box-score-card {
-  border: 1px solid #334155;
-  border-radius: 6px;
-  background: #121c2f;
 }
 
 .match-detail-score-card {
@@ -45,13 +30,13 @@
 .match-detail-meta {
   min-width: 0;
   padding-bottom: 14px;
-  border-bottom: 1px solid rgba(51, 65, 85, 0.62);
+  border-bottom: 1px solid var(--color-border-divider);
 }
 
 .match-detail-event {
   overflow: hidden;
-  color: #adc6ff;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-action-primary-soft);
+  font-family: var(--font-family-data);
   font-size: 0.72rem;
   font-weight: 850;
   letter-spacing: 0.04em;
@@ -61,11 +46,11 @@
 }
 
 .match-detail-tag {
-  border: 1px solid rgba(71, 85, 105, 0.68);
-  border-radius: 3px;
-  background: rgba(15, 23, 42, 0.62);
-  color: #cbd5e1;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  border: 1px solid var(--color-border-tag);
+  border-radius: var(--radius-focus-target);
+  background: var(--color-surface-tag);
+  color: var(--color-text-soft);
+  font-family: var(--font-family-data);
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -74,8 +59,8 @@
 
 .match-detail-date {
   margin-left: auto;
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.76rem;
   font-weight: 700;
 }
@@ -106,11 +91,11 @@
   place-items: center;
   width: 64px;
   height: 64px;
-  border: 1px solid rgba(100, 116, 139, 0.74);
-  border-radius: 6px;
-  background: #17243a;
-  color: #cbd5e1;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  border: 1px solid var(--color-border-preview);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface-subtle);
+  color: var(--color-text-soft);
+  font-family: var(--font-family-data);
   font-size: 0.86rem;
   font-weight: 850;
 }
@@ -120,8 +105,8 @@
 }
 
 .match-detail-team-side {
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -130,7 +115,7 @@
 
 .match-detail-team-name {
   overflow: hidden;
-  color: #dae2fd;
+  color: var(--color-text);
   font-size: 1.16rem;
   font-weight: 700;
   line-height: 1.25;
@@ -140,18 +125,18 @@
 
 .match-detail-team-name[data-winner],
 .match-detail-score-number[data-winner] {
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-weight: 900;
 }
 
 .match-detail-final-score {
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
 }
 
 .match-detail-score-number {
   min-width: 58px;
-  color: #7f8da3;
+  color: var(--color-text-score-muted);
   font-size: 3rem;
   font-weight: 850;
   line-height: 1;
@@ -159,7 +144,7 @@
 }
 
 .match-detail-score-divider {
-  color: #526179;
+  color: var(--color-text-score-divider);
   font-size: 1.35rem;
   font-weight: 700;
 }
@@ -178,7 +163,7 @@
   align-items: center;
   gap: 10px;
   margin: 0 0 14px;
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 1.12rem;
   line-height: 1.2;
 }
@@ -187,7 +172,7 @@
   flex: 0 0 auto;
   width: 4px;
   height: 22px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .match-box-score-scroll {
@@ -200,10 +185,10 @@
 }
 
 .match-box-score-table th {
-  border-color: #334155;
+  border-color: var(--color-border);
   padding: 8px 10px;
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -211,7 +196,7 @@
 }
 
 .match-box-score-table td {
-  border-color: rgba(51, 65, 85, 0.76);
+  border-color: var(--color-border-table-cell);
   padding: 9px 10px;
 }
 
@@ -220,25 +205,25 @@
 }
 
 .match-box-score-table tbody tr:hover td {
-  background: rgba(30, 41, 59, 0.48);
+  background: var(--color-hover-surface);
 }
 
 .match-box-score-other-row td {
-  background: rgba(15, 23, 42, 0.34);
+  background: var(--color-surface-row-muted);
 }
 
 .match-box-score-other-row .match-box-score-value {
-  color: #a8b4cc;
+  color: var(--color-text-row-muted);
   font-style: italic;
 }
 
 .match-box-score-total-row td {
-  border-top: 1px solid rgba(130, 166, 255, 0.42);
-  background: rgba(30, 41, 59, 0.58);
+  border-top: 1px solid var(--color-border-total);
+  background: var(--color-table-row-hover);
 }
 
 .match-box-score-total-row .match-box-score-value {
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-weight: 850;
 }
 
@@ -251,9 +236,9 @@
   min-height: 24px;
   border: 0;
   background: transparent;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   cursor: pointer;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -263,28 +248,28 @@
 }
 
 .match-box-score-sort-button:hover {
-  color: #f8fafc;
+  color: var(--color-text-strong);
 }
 
 .match-box-score-sort-button:focus-visible {
-  outline: 2px solid #82a6ff;
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
 .match-box-score-sort-indicator {
   display: inline-block;
   min-width: 8px;
-  color: #adc6ff;
+  color: var(--color-action-primary-soft);
 }
 
 .match-box-score-value {
-  color: #dae2fd;
+  color: var(--color-text);
   font-size: 0.82rem;
   line-height: 1.25;
 }
 
 .match-detail-fallback-note {
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 0.84rem;
 }
 

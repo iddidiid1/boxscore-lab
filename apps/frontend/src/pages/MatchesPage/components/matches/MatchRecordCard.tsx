@@ -23,7 +23,7 @@ export function MatchRecordCard({ match }: MatchRecordCardProps) {
   }
 
   return (
-    <Box className="match-card" component="button" onClick={handleMatchSelect} type="button">
+    <Box className="match-card app-panel" component="button" onClick={handleMatchSelect} type="button">
       <Box className="match-main">
         <Box className="match-scoreline">
           <Box className="match-team match-team-home">

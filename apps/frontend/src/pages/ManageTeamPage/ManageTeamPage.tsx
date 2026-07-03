@@ -219,7 +219,7 @@ export function ManageTeamPage() {
       ) : null}
 
       {isLoading || team === null ? (
-        <Skeleton height={380} radius={6} />
+        <Skeleton className="manage-team-loading-skeleton" height={380} />
       ) : (
         <>
           <TeamEditorForm
@@ -245,15 +245,25 @@ export function ManageTeamPage() {
             </Text>
             {showArchiveConfirm ? (
               <Group gap="sm" mt="md">
-                <Button color="red" loading={isSubmitting} onClick={() => void handleArchive()}>
+                <Button
+                  className="app-action-button"
+                  color="red"
+                  loading={isSubmitting}
+                  onClick={() => void handleArchive()}
+                >
                   Confirm Archive
                 </Button>
-                <Button onClick={() => setShowArchiveConfirm(false)} variant="outline">
+                <Button
+                  className="app-action-button app-action-button--secondary"
+                  onClick={() => setShowArchiveConfirm(false)}
+                  variant="outline"
+                >
                   Cancel
                 </Button>
               </Group>
             ) : (
               <Button
+                className="app-action-button"
                 color="red"
                 disabled={isArchived}
                 mt="md"

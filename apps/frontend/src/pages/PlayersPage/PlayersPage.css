@@ -11,15 +11,6 @@
   gap: 14px;
 }
 
-.player-ranking-filters,
-.player-ranking-card,
-.stat-leader-card,
-.turn-page-controls {
-  border: 1px solid #334155;
-  border-radius: 6px;
-  background: #121c2f;
-}
-
 .player-ranking-filters {
   align-items: flex-end;
   padding: 16px;
@@ -32,8 +23,8 @@
 
 .player-filter-label {
   margin-bottom: 6px;
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -42,16 +33,16 @@
 
 .player-filter-input {
   min-height: 40px;
-  border-color: rgba(71, 85, 105, 0.82);
-  border-radius: 4px;
-  background: #0c1425;
-  color: #dae2fd;
+  border-color: var(--color-border-control);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-control);
+  color: var(--color-text);
   font-size: 0.88rem;
   font-weight: 650;
 }
 
 .player-filter-input:hover {
-  border-color: rgba(59, 130, 246, 0.62);
+  border-color: var(--color-border-control-hover);
 }
 
 .stat-leader-grid {
@@ -61,35 +52,46 @@
 }
 
 .stat-leader-card {
-  --stat-accent: #dae2fd;
-  --stat-accent-soft: rgba(218, 226, 253, 0.1);
+  --stat-accent: var(--color-text);
+  --stat-accent-soft: var(--color-stat-neutral-surface);
   position: relative;
   min-width: 0;
   overflow: hidden;
   padding: 18px 18px 16px;
-  background:
-    linear-gradient(135deg, var(--stat-accent-soft), transparent 48%),
-    #121c2f;
+}
+
+.stat-leader-card::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--stat-accent-soft), transparent 48%);
+  content: "";
+  pointer-events: none;
+}
+
+.stat-leader-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .stat-leader-card-points {
-  --stat-accent: #a855f7;
-  --stat-accent-soft: rgba(168, 85, 247, 0.13);
+  --stat-accent: var(--color-stat-points);
+  --stat-accent-soft: var(--color-stat-points-surface);
 }
 
 .stat-leader-card-assists {
-  --stat-accent: #3b82f6;
-  --stat-accent-soft: rgba(59, 130, 246, 0.13);
+  --stat-accent: var(--color-action-primary-emphasis);
+  --stat-accent-soft: var(--color-stat-assists-surface);
 }
 
 .stat-leader-card-rebounds {
-  --stat-accent: #4edea3;
-  --stat-accent-soft: rgba(78, 222, 163, 0.12);
+  --stat-accent: var(--color-success);
+  --stat-accent-soft: var(--color-stat-rebounds-surface);
 }
 
 .stat-leader-card-rating {
-  --stat-accent: #fbbf24;
-  --stat-accent-soft: rgba(251, 191, 36, 0.13);
+  --stat-accent: var(--color-warning);
+  --stat-accent-soft: var(--color-stat-rating-surface);
 }
 
 .stat-leader-label-row {
@@ -110,8 +112,8 @@
 
 .stat-leader-label {
   min-width: 0;
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -122,7 +124,7 @@
 .stat-leader-value {
   margin-top: 7px;
   color: var(--stat-accent);
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-family-data);
   font-size: 2rem;
   font-weight: 900;
   line-height: 1.05;
@@ -134,7 +136,7 @@
 
 .stat-leader-name {
   overflow: hidden;
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 0.92rem;
   font-weight: 750;
   line-height: 1.25;
@@ -144,7 +146,7 @@
 
 .stat-leader-team {
   overflow: hidden;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 0.8rem;
   font-weight: 650;
   line-height: 1.35;
@@ -158,8 +160,8 @@
 }
 
 .turn-page-summary {
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.76rem;
   font-weight: 700;
 }
@@ -167,24 +169,24 @@
 .turn-page-button {
   min-width: 34px;
   height: 34px;
-  border-color: rgba(71, 85, 105, 0.82);
-  border-radius: 4px;
-  background: #0c1425;
-  color: #dae2fd;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  border-color: var(--color-border-control);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-control);
+  color: var(--color-text);
+  font-family: var(--font-family-data);
   font-weight: 800;
 }
 
 .turn-page-button:hover {
-  border-color: rgba(59, 130, 246, 0.7);
-  background: #101a2c;
-  color: #f8fafc;
+  border-color: var(--color-border-interactive-hover);
+  background: var(--color-surface-interactive);
+  color: var(--color-text-strong);
 }
 
 .turn-page-button[data-active] {
-  border-color: rgba(78, 222, 163, 0.62);
-  background: rgba(78, 222, 163, 0.14);
-  color: #4edea3;
+  border-color: var(--color-success-border);
+  background: var(--color-success-surface);
+  color: var(--color-success);
 }
 
 .player-ranking-card {
@@ -193,7 +195,7 @@
 
 .player-ranking-card h2 {
   margin: 0 0 14px;
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 1.12rem;
   line-height: 1.2;
 }
@@ -208,10 +210,10 @@
 }
 
 .player-ranking-table th {
-  border-color: rgba(51, 65, 85, 0.78);
+  border-color: var(--color-border-subtle);
   padding: 9px 10px;
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -219,7 +221,7 @@
 }
 
 .player-ranking-table td {
-  border-color: rgba(51, 65, 85, 0.42);
+  border-color: var(--color-border-table-subtle);
   padding: 11px 10px;
 }
 
@@ -230,7 +232,7 @@
 }
 
 .player-ranking-table tbody tr:hover td {
-  background: rgba(30, 41, 59, 0.58);
+  background: var(--color-table-row-hover);
 }
 
 .player-sort-button {
@@ -242,9 +244,9 @@
   min-height: 24px;
   border: 0;
   background: transparent;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   cursor: pointer;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -254,18 +256,18 @@
 }
 
 .player-sort-button:hover {
-  color: #f8fafc;
+  color: var(--color-text-strong);
 }
 
 .player-sort-button:focus-visible {
-  outline: 2px solid #82a6ff;
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
 .player-sort-indicator {
   display: inline-block;
   min-width: 8px;
-  color: #adc6ff;
+  color: var(--color-action-primary-soft);
 }
 
 .player-rank-column {
@@ -287,13 +289,13 @@
 .player-team-color-bar {
   width: 4px;
   height: 28px;
-  border-radius: 2px;
+  border-radius: var(--radius-chip);
   box-shadow: 0 0 18px color-mix(in srgb, currentColor 16%, transparent);
 }
 
 .player-name-value {
   overflow: hidden;
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 0.92rem;
   font-weight: 750;
   line-height: 1.25;
@@ -306,7 +308,7 @@
   max-width: 100%;
   border: 0;
   background: transparent;
-  color: #f8fafc;
+  color: var(--color-text-strong);
   cursor: pointer;
   font: inherit;
   font-size: 0.92rem;
@@ -319,17 +321,17 @@
 }
 
 .player-name-button:hover {
-  color: #adc6ff;
+  color: var(--color-action-primary-soft);
 }
 
 .player-name-button:focus-visible {
-  border-radius: 3px;
-  outline: 2px solid #82a6ff;
+  border-radius: var(--radius-focus-target);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 3px;
 }
 
 .player-ranking-value {
-  color: #dae2fd;
+  color: var(--color-text);
   font-size: 0.82rem;
   line-height: 1.25;
 }
@@ -340,20 +342,20 @@
 }
 
 .player-ranking-value-rank-1 {
-  color: #fbbf24;
+  color: var(--color-warning);
 }
 
 .player-ranking-value-rank-2 {
-  color: #cbd5e1;
+  color: var(--color-text-soft);
 }
 
 .player-ranking-value-rank-3 {
-  color: #c08457;
+  color: var(--color-ranking-bronze);
 }
 
 .player-ranking-table td:nth-child(n + 5) .player-ranking-value,
 .player-rank-column .player-ranking-value {
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-family-data);
   font-weight: 750;
 }
 

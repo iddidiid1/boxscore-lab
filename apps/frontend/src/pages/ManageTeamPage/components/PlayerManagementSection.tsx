@@ -147,7 +147,7 @@ export function PlayerManagementSection({
         <Box>
           <Title order={2}>Player Management</Title>
           <Text className="module-copy">Manage players assigned to this team.</Text>
-          {rosterError ? <Text c="red.4">{rosterError}</Text> : null}
+          {rosterError ? <Text className="app-field-error">{rosterError}</Text> : null}
         </Box>
 
         <Button className="player-add-button app-action-button app-action-button--primary" disabled={disabled} onClick={handleAddPlayer}>
@@ -218,8 +218,8 @@ export function PlayerManagementSection({
         </Box>
       ) : null}
 
-      <Box className="player-table-wrap">
-        <Table className="player-management-table" highlightOnHover>
+      <Box className="player-table-wrap app-table-wrap">
+        <Table className="player-management-table app-data-table" highlightOnHover>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>#</Table.Th>
@@ -237,20 +237,20 @@ export function PlayerManagementSection({
               <Table.Tr key={player.localId}>
                 <Table.Td>
                   {player.number}
-                  {fieldError(player, "number") ? <Text c="red.4">{fieldError(player, "number")}</Text> : null}
+                  {fieldError(player, "number") ? <Text className="app-field-error">{fieldError(player, "number")}</Text> : null}
                 </Table.Td>
                 <Table.Td>
                   {player.position}
-                  {fieldError(player, "position") ? <Text c="red.4">{fieldError(player, "position")}</Text> : null}
+                  {fieldError(player, "position") ? <Text className="app-field-error">{fieldError(player, "position")}</Text> : null}
                 </Table.Td>
                 <Table.Td>
                   {player.name}
-                  {fieldError(player, "name") ? <Text c="red.4">{fieldError(player, "name")}</Text> : null}
+                  {fieldError(player, "name") ? <Text className="app-field-error">{fieldError(player, "name")}</Text> : null}
                 </Table.Td>
                 <Table.Td className="player-actions-cell">
                   <Group gap="xs" justify="flex-end">
                     <Button
-                      className="player-table-action"
+                      className="player-table-action app-action-button app-action-button--quiet"
                       disabled={disabled}
                       onClick={() => handleEditPlayer(player)}
                       size="xs"
@@ -259,7 +259,7 @@ export function PlayerManagementSection({
                       Edit
                     </Button>
                     <Button
-                      className="player-table-action danger"
+                      className="player-table-action app-action-button app-action-button--danger"
                       disabled={disabled}
                       onClick={() => handleRemovePlayer(player)}
                       size="xs"

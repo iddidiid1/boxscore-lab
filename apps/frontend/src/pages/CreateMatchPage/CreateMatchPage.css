@@ -20,7 +20,7 @@
 
 .match-form-section h2 {
   margin: 0 0 18px;
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 1.3rem;
   line-height: 1.2;
 }
@@ -41,8 +41,8 @@
 
 .match-stats-score {
   margin-left: auto;
-  color: #f8fafc;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-strong);
+  font-family: var(--font-family-data);
   font-size: 0.9rem;
   font-weight: 800;
 }
@@ -51,7 +51,7 @@
   flex: 0 0 auto;
   width: 4px;
   height: 22px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .match-stats-table-scroll {
@@ -64,9 +64,9 @@
 }
 
 .match-stats-input-table th {
-  border-color: #334155;
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -75,28 +75,28 @@
 }
 
 .match-stats-input-table td {
-  border-color: rgba(51, 65, 85, 0.76);
+  border-color: var(--color-border-table-cell);
   padding: 10px;
 }
 
 .match-stats-input-table tbody tr:hover td {
-  background: rgba(30, 41, 59, 0.36);
+  background: var(--color-table-row-hover-subtle);
 }
 
 .match-stats-other-row td {
-  background: rgba(15, 23, 42, 0.34);
+  background: var(--color-surface-row-muted);
 }
 
 .match-stats-other-row .match-stats-player-name,
 .match-stats-other-row .match-stats-readonly-value {
-  color: #a8b4cc;
+  color: var(--color-text-row-muted);
   font-style: italic;
 }
 
 .match-stats-readonly-value,
 .match-stats-player-name,
 .match-stats-calculated-value {
-  color: #dae2fd;
+  color: var(--color-text);
   font-size: 0.84rem;
   line-height: 1.25;
 }
@@ -107,26 +107,26 @@
 }
 
 .match-stats-calculated-value {
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-weight: 800;
 }
 
 .match-stats-input {
   width: 76px;
   min-height: 38px;
-  border-color: rgba(71, 85, 105, 0.82);
-  border-radius: 4px;
-  background: #0c1425;
-  color: #f8fafc;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  border-color: var(--color-border-control);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-control);
+  color: var(--color-text-strong);
+  font-family: var(--font-family-data);
   font-size: 0.82rem;
   font-weight: 750;
 }
 
 .match-stats-input:focus,
 .match-stats-input:focus-within {
-  border-color: #3b82f6;
+  border-color: var(--color-action-primary-emphasis);
 }
 
 @media (max-width: 760px) {

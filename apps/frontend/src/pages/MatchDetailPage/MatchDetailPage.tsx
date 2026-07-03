@@ -35,8 +35,8 @@ export function MatchDetailPage({ matchId }: { matchId: string }) {
   const away = match.teams.find((team) => team.role === "AWAY")!;
   return <Stack className="match-detail-page" gap="md">
     <Group className="match-detail-actions" justify="space-between"><Anchor className="match-detail-back-link" href="/matches">← Back to Matches</Anchor><Group>
-      {!match.voidedAt && !eventUnavailable ? <><Button className="edit-match-button" component="a" href={`/matches/${match.id}/edit`} leftSection={<Pencil size={16} />}>Edit Match</Button><Button color="red" disabled={submitting} onClick={() => setConfirmAction("void")} variant="outline">Void</Button></> : null}
-      {match.voidedAt && !eventUnavailable ? <Button disabled={submitting} onClick={() => setConfirmAction("restore")}>Restore</Button> : null}
+      {!match.voidedAt && !eventUnavailable ? <><Button className="edit-match-button app-action-button app-action-button--primary" component="a" href={`/matches/${match.id}/edit`} leftSection={<Pencil size={16} />}>Edit Match</Button><Button className="app-action-button app-action-button--danger" disabled={submitting} onClick={() => setConfirmAction("void")} variant="outline">Void</Button></> : null}
+      {match.voidedAt && !eventUnavailable ? <Button className="app-action-button app-action-button--primary" disabled={submitting} onClick={() => setConfirmAction("restore")}>Restore</Button> : null}
     </Group></Group>
     {match.voidedAt ? <Alert color="orange" title="Voided match">Voided at {new Date(match.voidedAt).toLocaleString()}.</Alert> : null}
     {eventUnavailable ? <Alert color="gray" title="Historical match">The Event is archived, deleted, or otherwise unavailable. This record is read-only.</Alert> : null}

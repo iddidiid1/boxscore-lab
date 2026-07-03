@@ -4,14 +4,14 @@
 
 .player-detail-back-link {
   width: fit-content;
-  color: #adc6ff;
+  color: var(--color-action-primary-soft);
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
 }
 
 .player-detail-back-link:hover {
-  color: #f8fafc;
+  color: var(--color-text-strong);
   text-decoration: none;
 }
 
@@ -24,7 +24,7 @@
 
 .player-profile-header {
   min-height: 300px;
-  border-radius: 6px;
+  border-radius: var(--radius-panel);
   background: transparent;
   padding: 24px;
 }
@@ -33,7 +33,7 @@
   flex: 0 0 auto;
   width: 6px;
   height: 112px;
-  border-radius: 3px;
+  border-radius: var(--radius-focus-target);
 }
 
 .player-profile-content {
@@ -42,26 +42,16 @@
 
 .player-profile-content h1 {
   margin: 0;
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 2.55rem;
   line-height: 1.15;
 }
 
 .player-profile-secondary {
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 1rem;
   font-weight: 650;
   line-height: 1.35;
-}
-
-.player-performance-card,
-.player-summary-card,
-.player-match-card,
-.player-detail-event-filter,
-.player-detail-empty-state {
-  border: 1px solid #334155;
-  border-radius: 6px;
-  background: #121c2f;
 }
 
 .player-performance-card,
@@ -84,8 +74,8 @@
 
 .player-detail-filter-label {
   margin-bottom: 6px;
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -94,29 +84,29 @@
 
 .player-detail-filter-input {
   min-height: 40px;
-  border-color: rgba(71, 85, 105, 0.82);
-  border-radius: 4px;
-  background: #0c1425;
-  color: #dae2fd;
+  border-color: var(--color-border-control);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-control);
+  color: var(--color-text);
   font-size: 0.88rem;
   font-weight: 650;
 }
 
 .player-detail-filter-input:hover {
-  border-color: rgba(59, 130, 246, 0.62);
+  border-color: var(--color-border-control-hover);
 }
 
 .player-performance-card h2,
 .player-summary-card h2,
 .player-match-card h2 {
   margin: 0 0 14px;
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 1.12rem;
   line-height: 1.2;
 }
 
 .player-performance-helper {
-  color: #94a3b8;
+  color: var(--color-text-muted);
   font-size: 0.86rem;
   line-height: 1.45;
 }
@@ -140,8 +130,8 @@
 }
 
 .player-performance-score {
-  color: #dae2fd;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text);
+  font-family: var(--font-family-data);
   font-size: 0.78rem;
   font-weight: 800;
 }
@@ -149,15 +139,15 @@
 .player-performance-track {
   height: 8px;
   overflow: hidden;
-  border-radius: 4px;
-  background: #0c1425;
+  border-radius: var(--radius-control);
+  background: var(--color-surface-control);
 }
 
 .player-performance-fill {
   height: 100%;
   border-radius: inherit;
-  background: #4edea3;
-  box-shadow: 0 0 18px rgba(78, 222, 163, 0.22);
+  background: var(--color-success);
+  box-shadow: 0 0 18px var(--color-success-glow);
 }
 
 .player-summary-stats {
@@ -171,18 +161,18 @@
   padding: 18px 20px;
   background: transparent;
   border: 0;
-  border-radius: 0;
+  border-radius: var(--radius-sharp);
   box-shadow: none;
 }
 
 .player-summary-stat + .player-summary-stat {
-  border-left: 1px solid rgba(51, 65, 85, 0.78);
+  border-left: 1px solid var(--color-border-subtle);
 }
 
 .player-summary-value {
   margin-top: 6px;
-  color: #f8fafc;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-strong);
+  font-family: var(--font-family-data);
   font-size: 1.45rem;
   font-weight: 800;
   line-height: 1.2;
@@ -203,10 +193,10 @@
 }
 
 .player-match-table th {
-  border-color: rgba(51, 65, 85, 0.78);
+  border-color: var(--color-border-subtle);
   padding: 9px 10px;
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -214,22 +204,22 @@
 }
 
 .player-match-table td {
-  border-color: rgba(51, 65, 85, 0.42);
+  border-color: var(--color-border-table-subtle);
   padding: 11px 10px;
 }
 
 .player-match-table tbody tr:hover td {
-  background: rgba(30, 41, 59, 0.58);
+  background: var(--color-table-row-hover);
 }
 
 .player-match-value {
-  color: #dae2fd;
+  color: var(--color-text);
   font-size: 0.82rem;
   line-height: 1.25;
 }
 
 .player-match-table td:nth-child(n + 4) .player-match-value {
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-family: var(--font-family-data);
   font-weight: 750;
 }
 
@@ -241,7 +231,7 @@
 }
 
 .player-detail-empty-title {
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 1.2rem;
   font-weight: 800;
 }
@@ -260,7 +250,7 @@
   }
 
   .player-summary-stat {
-    border-top: 1px solid rgba(51, 65, 85, 0.78);
+    border-top: 1px solid var(--color-border-subtle);
   }
 
   .player-summary-stat:nth-child(-n + 3) {
@@ -292,7 +282,7 @@
   }
 
   .player-summary-stat:nth-child(-n + 3) {
-    border-top: 1px solid rgba(51, 65, 85, 0.78);
+    border-top: 1px solid var(--color-border-subtle);
   }
 
   .player-summary-stat:nth-child(-n + 2) {

@@ -18,7 +18,7 @@ export function TurnPageControls({
   const endItem = Math.min(activePage * pageSize, totalItems);
 
   return (
-    <Group className="turn-page-controls" justify="space-between">
+    <Group className="turn-page-controls app-panel" justify="space-between">
       <Text className="turn-page-summary">
         Showing {startItem}-{endItem} of {totalItems}
       </Text>

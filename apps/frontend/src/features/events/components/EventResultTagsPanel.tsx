@@ -8,7 +8,7 @@ type EventResultTagsPanelProps = {
 
 export function EventResultTagsPanel({ tags }: EventResultTagsPanelProps) {
   return (
-    <Box className="event-detail-panel">
+    <Box className="event-detail-panel app-panel">
       <Stack gap="md">
         <Box>
           <Title className="event-panel-title" order={2}>

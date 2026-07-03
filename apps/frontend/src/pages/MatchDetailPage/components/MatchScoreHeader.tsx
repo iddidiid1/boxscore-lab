@@ -7,7 +7,7 @@ export function MatchScoreHeader({ match }: { match: MatchDetail }) {
   const away = match.teams.find((team) => team.role === "AWAY")!;
   const format = new Intl.DateTimeFormat("en-AU", { dateStyle: "medium", timeStyle: "short" }).format(new Date(match.playedAt));
   return (
-    <Box className="match-detail-score-card">
+    <Box className="match-detail-score-card app-panel">
       <Group className="match-detail-meta" gap="xs">
         <Text className="match-detail-event">{match.event.name}</Text>
         {match.stageTag ? <Badge className="match-detail-tag" variant="light">{match.stageTag.label}</Badge> : null}

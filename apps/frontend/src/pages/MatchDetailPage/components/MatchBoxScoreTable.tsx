@@ -6,10 +6,10 @@ const percent = (value: number | null) => value === null ? "—" : `${value.toFi
 
 export function MatchBoxScoreTable({ otherStats, players, teamColor, title }: Props) {
   return (
-    <Box className="match-box-score-card">
+    <Box className="match-box-score-card app-panel">
       <Title className="match-box-score-title" order={2}><span aria-hidden="true" className="match-box-score-title-bar" style={{ backgroundColor: teamColor ?? undefined }} /><span>{title}</span></Title>
-      <Box className="match-box-score-scroll">
-        <Table className="match-box-score-table" highlightOnHover>
+      <Box className="match-box-score-scroll app-table-wrap">
+        <Table className="match-box-score-table app-data-table" highlightOnHover>
           <Table.Thead><Table.Tr>{["POS","Player","PTS","REB","AST","FGM","FGA","FG%","3PM","3PA","3P%","MIN","RATING"].map((label) => <Table.Th key={label}>{label}</Table.Th>)}</Table.Tr></Table.Thead>
           <Table.Tbody>
             {players.map((player) => <Table.Tr key={player.playerId}>

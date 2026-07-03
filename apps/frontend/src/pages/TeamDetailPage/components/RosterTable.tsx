@@ -107,10 +107,10 @@ export function RosterTable({ players }: RosterTableProps) {
   }
 
   return (
-    <Box className="roster-table-card">
+    <Box className="roster-table-card app-panel">
       <Title order={2}>Roster</Title>
-      <Box className="roster-table-scroll">
-        <Table className="roster-table" highlightOnHover>
+      <Box className="roster-table-scroll app-table-wrap">
+        <Table className="roster-table app-data-table" highlightOnHover>
           <Table.Thead>
             <Table.Tr>
               {columns.map((column) => {

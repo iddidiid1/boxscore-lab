@@ -11,17 +11,17 @@
 }
 
 .event-form-panel {
-  border: 1px solid #334155;
-  border-radius: 6px;
-  background: #121c2f;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface);
   padding: 18px;
 }
 
 .event-form-kicker,
 .event-form-label,
 .event-result-tags-editor-table th {
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.05em;
@@ -29,7 +29,7 @@
 }
 
 .event-form-title {
-  color: #f8fafc;
+  color: var(--color-text-strong);
   font-size: 1.14rem;
   font-weight: 800;
   line-height: 1.25;
@@ -37,10 +37,10 @@
 
 .event-form-input,
 .event-form-textarea {
-  border-color: rgba(71, 85, 105, 0.82);
-  border-radius: 4px;
-  background: #0c1425;
-  color: #dae2fd;
+  border-color: var(--color-border-control);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-control);
+  color: var(--color-text);
   font-size: 0.9rem;
   font-weight: 650;
 }
@@ -51,7 +51,7 @@
 
 .event-form-input:hover,
 .event-form-textarea:hover {
-  border-color: rgba(59, 130, 246, 0.62);
+  border-color: var(--color-border-control-hover);
 }
 
 .event-form-row {
@@ -67,8 +67,8 @@
 }
 
 .event-participants-count {
-  color: #94a3b8;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
   font-size: 0.72rem;
   font-weight: 800;
 }
@@ -83,10 +83,10 @@
   gap: 5px;
   min-height: 30px;
   max-width: 180px;
-  border: 1px solid rgba(71, 85, 105, 0.78);
-  border-radius: 4px;
-  background: rgba(12, 20, 37, 0.62);
-  color: #94a3b8;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-control);
+  color: var(--color-text-muted);
   cursor: pointer;
   font: inherit;
   font-size: 0.78rem;
@@ -102,28 +102,28 @@
 }
 
 .event-participant-chip:hover {
-  border-color: rgba(96, 165, 250, 0.52);
-  color: #cbd5e1;
+  border-color: var(--color-event-stage-border-hover);
+  color: var(--color-text-soft);
 }
 
 .event-participant-chip[data-selected] {
-  border-color: rgba(78, 222, 163, 0.58);
-  background: rgba(78, 222, 163, 0.1);
-  color: #dae2fd;
+  border-color: var(--color-event-selected-border);
+  background: var(--color-event-selected-surface);
+  color: var(--color-text);
 }
 
 .event-participant-chip[data-selected] svg {
   flex: 0 0 auto;
-  color: #4edea3;
+  color: var(--color-success);
 }
 
 .event-form-delete-button {
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
 .event-form-delete-button:hover {
-  background: rgba(239, 68, 68, 0.12);
-  color: #fca5a5;
+  background: var(--color-danger-surface);
+  color: var(--color-danger);
 }
 
 .event-result-tags-editor-wrap {
@@ -135,7 +135,7 @@
 }
 
 .event-result-tags-editor-table td {
-  border-color: rgba(51, 65, 85, 0.72);
+  border-color: var(--color-border-subtle);
 }
 
 .event-result-tags-editor-table th:nth-child(2),
@@ -156,13 +156,13 @@
 }
 
 .event-form-checkbox {
-  border-color: rgba(71, 85, 105, 0.82);
-  background: #0c1425;
+  border-color: var(--color-border-control);
+  background: var(--color-surface-control);
 }
 
 .event-form-save-message {
-  color: #4edea3;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: var(--color-success);
+  font-family: var(--font-family-data);
   font-size: 0.76rem;
   font-weight: 800;
 }
