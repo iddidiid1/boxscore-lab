@@ -251,7 +251,7 @@ export function ManageTeamPage() {
                   loading={isSubmitting}
                   onClick={() => void handleArchive()}
                 >
-                  Confirm Archive
+                  Archive Team
                 </Button>
                 <Button
                   className="app-action-button app-action-button--secondary"
