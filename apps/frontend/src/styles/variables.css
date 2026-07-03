@@ -35,8 +35,18 @@
   --color-border-muted: rgba(71, 85, 105, 0.72);
   --color-border-hover: #475569;
   --color-border-navigation: rgba(100, 116, 139, 0.32);
+  --color-border-preview: rgba(100, 116, 139, 0.74);
+  --color-border-divider: rgba(51, 65, 85, 0.62);
+  --color-border-control-strong: rgba(51, 65, 85, 0.86);
+  --color-border-table-cell: rgba(51, 65, 85, 0.76);
+  --color-border-control-mark: rgba(148, 163, 184, 0.5);
+  --color-border-control: rgba(71, 85, 105, 0.82);
+  --color-border-control-hover: rgba(59, 130, 246, 0.62);
+  --color-border-interactive-hover: rgba(59, 130, 246, 0.7);
+  --color-border-table-subtle: rgba(51, 65, 85, 0.42);
   --color-focus-ring: #82a6ff;
   --color-icon-muted: rgba(148, 163, 184, 0.82);
+  --color-preview-pattern: rgba(148, 163, 184, 0.35);
 
   /* Actions */
   --color-action-primary: #2563eb;
@@ -63,6 +73,39 @@
   /* Interaction surfaces */
   --color-hover-surface: rgba(30, 41, 59, 0.48);
   --color-active-surface: rgba(30, 41, 59, 0.86);
+  --color-table-row-hover: rgba(30, 41, 59, 0.58);
+
+  /* Statistical and ranking accents */
+  --color-stat-points: #a855f7;
+  --color-stat-points-surface: rgba(168, 85, 247, 0.13);
+  --color-stat-assists-surface: rgba(59, 130, 246, 0.13);
+  --color-stat-rebounds-surface: rgba(78, 222, 163, 0.12);
+  --color-stat-rating-surface: rgba(251, 191, 36, 0.13);
+  --color-stat-neutral-surface: rgba(218, 226, 253, 0.1);
+  --color-success-border: rgba(78, 222, 163, 0.62);
+  --color-success-surface: rgba(78, 222, 163, 0.14);
+  --color-success-glow: rgba(78, 222, 163, 0.22);
+  --color-ranking-bronze: #c08457;
+  --color-text-score-muted: #7f8da3;
+  --color-text-score-divider: #526179;
+  --color-text-row-muted: #a8b4cc;
+  --color-border-tag: rgba(71, 85, 105, 0.68);
+  --color-border-meta: rgba(51, 65, 85, 0.52);
+  --color-border-total: rgba(130, 166, 255, 0.42);
+  --color-surface-tag: rgba(15, 23, 42, 0.62);
+  --color-surface-row-muted: rgba(15, 23, 42, 0.34);
+  --color-table-row-hover-subtle: rgba(30, 41, 59, 0.36);
+  --color-action-primary-border-strong: rgba(59, 130, 246, 0.92);
+  --color-radar-guide: rgba(148, 163, 184, 0.2);
+  --color-radar-axis: rgba(148, 163, 184, 0.14);
+  --color-radar-fill: rgba(78, 222, 163, 0.3);
+  --color-event-stage-border: rgba(96, 165, 250, 0.32);
+  --color-event-stage-border-hover: rgba(96, 165, 250, 0.52);
+  --color-event-selected-border: rgba(78, 222, 163, 0.58);
+  --color-event-selected-surface: rgba(78, 222, 163, 0.1);
+  --color-event-winner-border: rgba(251, 191, 36, 0.48);
+  --color-event-winner-surface: rgba(251, 191, 36, 0.1);
+  --color-event-winner-row: rgba(251, 191, 36, 0.08);
 
   /* Shape and elevation */
   --radius-sharp: 0;

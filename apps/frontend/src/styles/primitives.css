@@ -27,3 +27,30 @@
 .app-control-input:focus-within {
   border-color: var(--color-action-primary-emphasis);
 }
+
+.app-field-error {
+  color: var(--color-danger);
+}
+
+.app-table-wrap {
+  overflow-x: auto;
+}
+
+.app-data-table th {
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.app-data-table td {
+  border-color: var(--color-border-table-cell);
+  color: var(--color-text);
+  font-size: 0.84rem;
+}
+
+.app-data-table tbody tr:hover td {
+  background: var(--color-hover-surface);
+}

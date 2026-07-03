@@ -124,7 +124,7 @@ a {
   bottom: 8px;
   left: 0;
   width: 3px;
-  border-radius: 0 var(--radius-chip) var(--radius-chip) 0;
+  border-radius: var(--radius-sharp) var(--radius-chip) var(--radius-chip) var(--radius-sharp);
   background: transparent;
   content: "";
 }
