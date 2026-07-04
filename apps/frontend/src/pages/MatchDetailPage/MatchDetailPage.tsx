@@ -1,8 +1,9 @@
-import { Alert, Anchor, Box, Button, Center, Group, Loader, Modal, Stack, Text } from "@mantine/core";
+import { Alert, Anchor, Box, Button, Center, Group, Loader, Stack } from "@mantine/core";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchMatch, restoreMatch, voidMatch, type MatchDetail } from "../../features/matches";
 import { ApiClientError } from "../../features/teams/api/teams";
+import { ConfirmModal } from "../../shared/components/ConfirmModal";
 import { MatchBoxScoreTable, MatchScoreHeader } from "./components";
 import "./MatchDetailPage.css";
 
@@ -43,6 +44,16 @@ export function MatchDetailPage({ matchId }: { matchId: string }) {
     {error ? <Alert color="red">{error}</Alert> : null}
     <MatchScoreHeader match={match} />
     <Box className="match-box-score-grid"><MatchBoxScoreTable otherStats={home.otherStats} players={home.playerStats} teamColor={home.team.primaryColor} title={home.team.name} /><MatchBoxScoreTable otherStats={away.otherStats} players={away.playerStats} teamColor={away.team.primaryColor} title={away.team.name} /></Box>
-    <Modal centered onClose={() => setConfirmAction(null)} opened={confirmAction !== null} title={confirmAction === "void" ? "Void Match" : "Restore Match"}><Text mb="md">{confirmAction === "void" ? "This Match will be excluded from all statistics." : "This Match will return to lists and statistics."}</Text><Group justify="flex-end"><Button onClick={() => setConfirmAction(null)} variant="default">Cancel</Button><Button color={confirmAction === "void" ? "red" : "blue"} loading={submitting} onClick={() => confirmAction && mutate(confirmAction)}>{confirmAction === "void" ? "Void Match" : "Restore Match"}</Button></Group></Modal>
+    <ConfirmModal
+      confirmLabel={confirmAction === "void" ? "Void Match" : "Restore Match"}
+      danger={confirmAction === "void"}
+      loading={submitting}
+      onCancel={() => setConfirmAction(null)}
+      onConfirm={() => confirmAction && mutate(confirmAction)}
+      opened={confirmAction !== null}
+      title={confirmAction === "void" ? "Void Match" : "Restore Match"}
+    >
+      {confirmAction === "void" ? "This Match will be excluded from all statistics." : "This Match will return to lists and statistics."}
+    </ConfirmModal>
   </Stack>;
 }

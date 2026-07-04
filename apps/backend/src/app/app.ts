@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import { config } from "../config/index.js";
 import { registerRoutes } from "./routes.js";
+import { registerSpa } from "./static-spa.js";
 
 export function createApp() {
   const app = express();
@@ -10,6 +11,7 @@ export function createApp() {
   app.use(express.json());
 
   registerRoutes(app);
+  registerSpa(app);
 
   return app;
 }

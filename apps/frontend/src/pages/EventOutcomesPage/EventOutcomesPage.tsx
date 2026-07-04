@@ -2,6 +2,8 @@ import { Alert, Anchor, Badge, Box, Button, Checkbox, Group, Loader, Select, Sta
 import { useEffect, useMemo, useState } from "react";
 import { fetchEvent, updateEventOutcomes } from "../../features/events/api/events";
 import type { EventDetail, EventPlayerAward, EventTeamResult, PlayerAwardType } from "../../features/events/types";
+import { useIsDirty } from "../../shared/hooks/useIsDirty";
+import { useUnsavedChangesWarning } from "../../shared/hooks/useUnsavedChangesWarning";
 import "../../features/events/components/EventForm.css";
 import "./EventOutcomesPage.css";
 
@@ -18,6 +20,8 @@ export function EventOutcomesPage({ eventId }: { eventId: string }) {
   useEffect(() => { const controller = new AbortController(); fetchEvent(eventId, controller.signal).then((data) => { setEvent(data); setResults(data.participants.map((participant) => ({ teamId: participant.teamId, teamName: participant.teamName, ...data.teamResults.find((result) => result.teamId === participant.teamId) }))); setAwards(data.playerAwards); }).catch((reason) => { if (!(reason instanceof DOMException && reason.name === "AbortError")) setError(reason instanceof Error ? reason.message : "Unable to load outcomes."); }).finally(() => setLoading(false)); return () => controller.abort(); }, [eventId]);
   const readOnly = Boolean(event?.archivedAt) || event?.status === "COMPLETED";
   const candidates = useMemo(() => event?.awardCandidatePlayers.filter((player) => !filterTeam || String(player.teamId) === filterTeam) ?? [], [event, filterTeam]);
+  const dirty = useIsDirty(JSON.stringify({ results, awards }), !loading && !readOnly);
+  useUnsavedChangesWarning(dirty);
   function selected(type: PlayerAwardType, playerId: number) { return awards.some((award) => award.awardType === type && award.playerId === playerId); }
   function toggle(type: PlayerAwardType, playerId: number) { if (!event) return; const existing = awards.find((award) => award.awardType === type && award.playerId === playerId); if (existing) { setAwards(awards.filter((award) => award !== existing)); return; } const config = AWARDS.find((item) => item.type === type)!; if (awards.filter((award) => award.awardType === type).length >= config.limit) return; const player = event.awardCandidatePlayers.find((item) => item.playerId === playerId)!; setAwards([...awards, { id: -Date.now(), awardType: type, playerId, playerSlug: player.playerSlug, playerName: player.playerName, playerPosition: player.position, playerIsActive: true, teamId: player.teamId, teamSlug: player.teamSlug, teamName: player.teamName, notes: null }]); }
   async function save() { if (!event) return; setSaving(true); setError(""); setSaveMessage(""); try { const updated = await updateEventOutcomes(event.slug, { teamResults: results.filter((result) => result.resultTagId).map((result) => ({ teamId: result.teamId, resultTagId: result.resultTagId!, notes: result.notes ?? null })), playerAwards: awards.map((award) => ({ awardType: award.awardType, playerId: award.playerId, teamId: award.teamId, notes: award.notes })) }); setEvent(updated); setAwards(updated.playerAwards); setResults(updated.participants.map((participant) => ({ teamId: participant.teamId, teamName: participant.teamName, ...updated.teamResults.find((result) => result.teamId === participant.teamId) }))); setSaveMessage("Results and awards saved successfully."); } catch (reason) { setError(reason instanceof Error ? reason.message : "Unable to save outcomes."); } finally { setSaving(false); } }

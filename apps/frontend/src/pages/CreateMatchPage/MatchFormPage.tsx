@@ -13,6 +13,8 @@ import {
   type OtherStatPayload
 } from "../../features/matches";
 import { ApiClientError } from "../../features/teams/api/teams";
+import { useIsDirty } from "../../shared/hooks/useIsDirty";
+import { useUnsavedChangesWarning } from "../../shared/hooks/useUnsavedChangesWarning";
 import { MatchFormActions, MatchInfoForm, MatchStatsInputTable } from "./components";
 import { emptyOtherStats, emptyPlayerStats, type MatchFormPlayer, type MatchFormTeam, type PlayerStatInput, type TeamFormState } from "./types";
 import "./CreateMatchPage.css";
@@ -95,6 +97,9 @@ export function MatchFormPage({ mode, matchId, cancelHref = "/matches", descript
     } catch (reason) { setError(reason instanceof ApiClientError ? [reason.response.message, ...reason.response.details.map((detail) => `${detail.field}: ${detail.message}`)].join(" ") : "Unable to save match."); }
     finally { setSubmitting(false); }
   }
+
+  const dirty = useIsDirty(JSON.stringify({ eventId, stageTagId, playedAt, home, away }), !loading && !unavailable);
+  useUnsavedChangesWarning(dirty);
 
   if (loading) return <Center py="xl"><Loader aria-label="Loading match form" /></Center>;
   if (unavailable) return <Alert color="orange" title="Match cannot be edited">This Match is voided or its Event is unavailable. <a href={cancelHref}>Return to detail.</a></Alert>;
