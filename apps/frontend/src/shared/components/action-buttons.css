@@ -1,6 +1,6 @@
 .app-action-button {
-  border-radius: var(--radius-control);
-  font-weight: 700;
+  border-radius: var(--radius-xl);
+  font-weight: 600;
 }
 
 .app-action-button--primary {
@@ -13,13 +13,14 @@
 }
 
 .app-action-button--secondary {
-  border-color: var(--color-border);
-  color: var(--color-action-primary-soft);
+  border-color: var(--color-border-control-strong);
+  color: var(--color-text-soft);
 }
 
 .app-action-button--secondary:hover {
   border-color: var(--color-border-hover);
-  background: var(--color-action-primary-surface);
+  background: var(--color-hover-surface);
+  color: var(--color-text-strong);
 }
 
 .app-action-button--danger {
@@ -33,10 +34,10 @@
 }
 
 .app-action-button--quiet {
-  color: var(--color-action-primary-soft);
+  color: var(--color-text-muted);
 }
 
 .app-action-button--quiet:hover {
-  background: var(--color-action-primary-surface-hover);
-  color: var(--color-action-primary-soft-hover);
+  background: var(--color-hover-surface);
+  color: var(--color-text-strong);
 }

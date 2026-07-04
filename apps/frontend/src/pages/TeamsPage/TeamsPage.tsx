@@ -63,22 +63,29 @@ export function TeamsPage() {
       ) : null}
 
       {isLoading ? (
-        <Box className="division-board">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <Skeleton height={220} key={index} radius={6} />
+        <Stack gap="xl">
+          {Array.from({ length: 2 }).map((_, index) => (
+            <Stack key={index} gap="sm">
+              <Skeleton height={16} width={120} radius={4} />
+              <Box className="team-grid">
+                {Array.from({ length: 4 }).map((_, j) => (
+                  <Skeleton height={76} key={j} radius={16} />
+                ))}
+              </Box>
+            </Stack>
           ))}
-        </Box>
+        </Stack>
       ) : divisions.length === 0 && !error ? (
         <ListEmptyState
           description="Create the first team to start building the league board."
           title="No teams yet"
         />
       ) : (
-        <Box className="division-board">
+        <Stack gap="xl">
           {divisions.map((division) => (
             <DivisionCard division={division} key={division.divisionId} teams={division.teams} />
           ))}
-        </Box>
+        </Stack>
       )}
     </Stack>
   );

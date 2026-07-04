@@ -222,6 +222,14 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
   - `EVENT_NOT_FOUND`: not-found 状态，提供返回 `/events`
   - Error: 页面级错误和 retry
 
+#### Player Awards presentation
+
+- Event Detail 按 `docs/PLAYER_AWARDS_COMPONENT_DESIGN.md` 渲染 Player Awards；该文档是组件级视觉 SOT。
+- MVP、First Team 和可选 Second Team 都展示 API 返回的 `playerPosition`。
+- Position 只用于展示；前端不得根据数组顺序、award type 或阵容格位置推导球员位置。
+- First Team 与 Second Team 直接使用后端稳定顺序；位置顺序为 `PG`、`SG`、`G`、`SF`、`PF`、`F`、`C`，前端不再次排序。
+- Jelly Mint 是组件的主要结构强调色；金色仅用于 Trophy 图标和紧凑 `MVP` 标记。
+
 ### 5.3 EventFormPage `/events/new` 与 `/events/:slug/edit`
 
 - **Create mode**:
@@ -259,7 +267,9 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
 - **Entry**: 从 Event 详情页进入。
 - **Routing implementation**: 需要在 `App.tsx` 中新增 `/events/:slug/outcomes` matcher；本项目当前不是完整 React Router route table。
 - **Layout**:
-  - 顶部显示 Event name、status、返回详情页入口
+  - 顶部使用项目标准 workspace eyebrow、page title 和 summary 结构，标题为 `Results & Awards`，Event name 放在 summary 中。
+  - 可编辑状态使用标准 `Save Changes` primary action 与 `Cancel` secondary action；`Cancel` 返回 Event 详情页。
+  - 保存使用表单 submit 语义。成功后必须显示明确的保存成功反馈，失败时保留当前输入并显示错误。
   - Results section 使用紧凑表格
   - Awards section 使用按奖项类型分组的选择控件
 - **Team results controls**:
@@ -275,6 +285,7 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
   - Player options 来自 `awardCandidatePlayers`，只包含 active players
   - 既有 `playerAwards` 中的 inactive player 作为带 `Inactive` 标记的保留项展示，不进入正常候选项；其奖项只能原样保留或移除
   - First Team 与 Second Team 互斥选择；MVP 可与 First Team 或 Second Team 重叠
+  - 奖项计数 badge 使用主强调色背景和 on-accent 黑色文字，必须满足可读性要求。
 - **Rules**:
   - 不创建或编辑 ResultTag；需要变更标签时引导去 Edit Event。
   - 不显示 StageTag 编辑控件。
@@ -304,6 +315,8 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
 
 ## 6. 与 Backend PRD 的接口约定
 
+- `GET /api/events/:slug` 返回使用既有 `PlayerPosition` 值的 `playerAwards[].playerPosition`。
+- Event Detail 直接消费该字段显示奖项球员位置，不持久化或推导 award-specific position。
 - 前端不得发送 `slug`、`rankingOrder`。
 - 前端 Event API/domain 类型、状态比较和请求 payload 统一使用 `PREPARING | ONGOING | COMPLETED`；展示文本通过集中 label 映射生成，不维护小写 domain 类型。
 - Event slug 由后端创建时生成且不可变；前端编辑 Event name 后仍使用原 slug 跳转和调用 API。

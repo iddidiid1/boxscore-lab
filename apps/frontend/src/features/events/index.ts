@@ -1,5 +1,6 @@
 export { EventDetailHero } from "./components/EventDetailHero";
 export { EventForm } from "./components/EventForm";
+export { EventPlayerAwardsPanel } from "./components/EventPlayerAwardsPanel";
 export {
   EventParticipantsSelector,
   type EventParticipantTeam

@@ -25,7 +25,7 @@ export function EventsPage() {
     <Stack className="events-page" gap="xl">
       <Group align="flex-start" className="events-header" justify="space-between">
         <Box><Text className="eyebrow">Tournament archive</Text><Title className="page-title" order={1}>Events</Title><Text className="page-summary" maw={620} mt="xs">Manage event configuration, participants, results, and awards.</Text></Box>
-        <Button className="create-event-button app-action-button app-action-button--primary" component="a" href="/events/new" leftSection={<Plus size={16} />} size="sm">Create Event</Button>
+        <Button className="create-event-button app-action-button app-action-button--primary" component="a" href="/events/new" leftSection={<Plus size={16} />}>Create Event</Button>
       </Group>
       {loading ? <Loader size="sm" /> : null}
       {error ? <Alert color="red" title="Unable to load events">{error}<Button mt="sm" onClick={() => setRetry((value) => value + 1)} size="xs">Retry</Button></Alert> : null}

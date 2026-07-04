@@ -296,6 +296,7 @@
         "playerId": 5,
         "playerSlug": "james-lee",
         "playerName": "James Lee",
+        "playerPosition": "SF",
         "playerIsActive": true,
         "teamId": 1,
         "teamSlug": "red-eagles",
@@ -307,6 +308,10 @@
     "updatedAt": "2026-06-26T00:00:00.000Z"
   }
   ```
+- **Player award response fields**:
+  - `playerAwards[].playerPosition` is the related Player's current persisted `position` and uses the existing `PlayerPosition` enum.
+  - The field is presentation data for Event detail consumers. It is not stored on `EventPlayerAward` and requires no schema migration.
+  - Clients must not infer a player's position from award order or award type.
 - **Errors**: `EVENT_NOT_FOUND`
 - **说明**:
   - `awardCandidatePlayers` 只包含当前 Event 参与球队中的 active players。
@@ -318,7 +323,7 @@
   - `stageTags` 按 `sortOrder ASC`、`id ASC` 稳定排序。
   - `resultTags` 按 `sortOrder ASC`、`id ASC` 稳定排序。
   - `teamResults` 按 `resultTag.sortOrder ASC`、`resultTag.rankingPoints DESC`、`teamName ASC`、`teamId ASC` 稳定排序。
-  - `playerAwards` 先按固定奖项顺序 `EVENT_MVP`、`ALL_EVENT_FIRST_TEAM`、`ALL_EVENT_SECOND_TEAM` 排序；同一奖项内再按 `teamName ASC`、`player.number ASC`、`playerName ASC`、`playerId ASC` 稳定排序。
+  - `playerAwards` 先按固定奖项顺序 `EVENT_MVP`、`ALL_EVENT_FIRST_TEAM`、`ALL_EVENT_SECOND_TEAM` 排序；同一奖项内再按项目位置顺序 `PG`、`SG`、`G`、`SF`、`PF`、`F`、`C` 排序，同位置按 `teamName ASC`、`player.number ASC`、`playerName ASC`、`playerId ASC` 稳定排序。
   - 详情查询必须排除 `deletedAt != null` 的 Event；软删除 Event 按 `EVENT_NOT_FOUND` 处理。
   - 所有日期时间字段使用 ISO 8601 UTC 字符串。
 

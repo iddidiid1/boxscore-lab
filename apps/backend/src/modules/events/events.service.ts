@@ -1,5 +1,6 @@
 import { EventStatus, PlayerAwardType, Prisma } from "@prisma/client";
 import { prisma } from "../../shared/db/prisma.js";
+import { PLAYER_POSITION_RANK } from "../../shared/constants/player-positions.js";
 import { ApiError, type ErrorDetail } from "../../shared/errors/api-error.js";
 import { generateUniqueSlug, toSlugBase } from "../../shared/utils/slug.js";
 import {
@@ -117,6 +118,7 @@ async function serializeEvent(event: EventDetailRecord) {
         playerId: award.playerId,
         playerSlug: award.player.slug,
         playerName: award.player.name,
+        playerPosition: award.player.position,
         playerIsActive: award.player.isActive,
         playerNumber: award.player.number,
         teamId: award.teamId,
@@ -124,7 +126,7 @@ async function serializeEvent(event: EventDetailRecord) {
         teamName: award.team.name,
         notes: award.notes
       }))
-      .sort((a, b) => awardOrder(a.awardType) - awardOrder(b.awardType) || compareText(a.teamName, b.teamName) || a.playerNumber - b.playerNumber || compareText(a.playerName, b.playerName) || a.playerId - b.playerId)
+      .sort((a, b) => awardOrder(a.awardType) - awardOrder(b.awardType) || (PLAYER_POSITION_RANK.get(a.playerPosition) ?? Number.MAX_SAFE_INTEGER) - (PLAYER_POSITION_RANK.get(b.playerPosition) ?? Number.MAX_SAFE_INTEGER) || compareText(a.teamName, b.teamName) || a.playerNumber - b.playerNumber || compareText(a.playerName, b.playerName) || a.playerId - b.playerId)
       .map(({ playerNumber: _playerNumber, ...award }) => award),
     createdAt: event.createdAt.toISOString(),
     updatedAt: event.updatedAt.toISOString()

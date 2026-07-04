@@ -1,34 +1,19 @@
-import { Badge, Box, Card, Group, Text } from "@mantine/core";
 import { useApiHealth } from "../../hooks/useApiHealth";
+
+const STATUS_TEXT = {
+  connected: "Online",
+  checking: "Checking",
+  offline: "Offline"
+} as const;
 
 export function ApiHealthCheckBox() {
   const { apiStatus } = useApiHealth();
 
   return (
-    <Card className="status-card" padding="md">
-      <Group justify="space-between" align="flex-start">
-        <Box>
-          <Text className="data-label">SYSTEM MONITOR</Text>
-          <Text className="status-title">API connection</Text>
-        </Box>
-        <Badge
-          className="status-chip"
-          color={
-            apiStatus === "connected"
-              ? "green"
-              : apiStatus === "offline"
-                ? "red"
-                : "orange"
-          }
-          variant="light"
-        >
-          {apiStatus === "connected"
-            ? "ONLINE"
-            : apiStatus === "checking"
-              ? "DEGRADED"
-              : "OFFLINE"}
-        </Badge>
-      </Group>
-    </Card>
+    <div className="api-health-footer">
+      <span className={`api-status-dot api-status-dot--${apiStatus}`} />
+      <span className="api-health-label">API</span>
+      <span className="api-health-status">{STATUS_TEXT[apiStatus]}</span>
+    </div>
   );
 }

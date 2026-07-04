@@ -25,7 +25,7 @@ export function NavigationTab({
       justify="flex-start"
       leftSection={<Icon className="nav-icon" aria-hidden="true" />}
       onClick={onClick}
-      radius="sm"
+      radius={0}
       variant="subtle"
     >
       {label}

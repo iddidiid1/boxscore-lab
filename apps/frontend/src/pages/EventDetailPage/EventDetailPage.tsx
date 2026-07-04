@@ -2,7 +2,7 @@ import { Alert, Anchor, Badge, Box, Button, Group, Loader, SimpleGrid, Stack, Te
 import { Pencil, Trophy } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchEvent } from "../../features/events/api/events";
-import { EventDetailHero, EventResultsTable, EventResultTagsPanel, EventStageTagsPanel } from "../../features/events";
+import { EventDetailHero, EventPlayerAwardsPanel, EventResultsTable, EventResultTagsPanel, EventStageTagsPanel } from "../../features/events";
 import type { EventDetail } from "../../features/events/types";
 import "./EventDetailPage.css";
 
@@ -17,11 +17,11 @@ export function EventDetailPage({ eventId }: { eventId: string }) {
   return (
     <Stack className="event-detail-page" gap="lg">
       {event.archivedAt ? <Alert color="yellow" title="Archived event">Historical data is read-only.</Alert> : null}
-      <Group className="event-detail-actions" justify="space-between"><Anchor className="event-detail-back-link" href="/events">← Back to Events</Anchor><Group>{!event.archivedAt ? <Button className="app-action-button app-action-button--primary" component="a" href={`/events/${event.slug}/edit`} leftSection={<Pencil size={16} />} size="sm">Edit Event</Button> : null}<Button component="a" href={`/events/${event.slug}/outcomes`} leftSection={<Trophy size={16} />} size="sm" variant="outline">{readOnly ? "View Results & Awards" : "Manage Results & Awards"}</Button></Group></Group>
+      <Group className="event-detail-actions" justify="space-between"><Anchor className="event-detail-back-link" href="/events">← Back to Events</Anchor><Group>{!event.archivedAt ? <Button className="edit-event-button app-action-button app-action-button--primary" component="a" href={`/events/${event.slug}/edit`} leftSection={<Pencil size={16} />}>Edit Event</Button> : null}<Button className="event-outcomes-entry-button app-action-button app-action-button--secondary" component="a" href={`/events/${event.slug}/outcomes`} leftSection={<Trophy size={16} />} variant="outline">{readOnly ? "View Results & Awards" : "Manage Results & Awards"}</Button></Group></Group>
       <EventDetailHero event={event} />
       <Box className="event-detail-panel"><Title order={2} className="event-panel-title">Participants</Title><SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} mt="md">{event.participants.map((participant) => <Group key={participant.teamId}><Text>{participant.teamName}</Text>{!participant.isEligible ? <Badge color="yellow">Unavailable</Badge> : null}</Group>)}</SimpleGrid>{event.participants.length === 0 ? <Text c="dimmed">No participating teams.</Text> : null}</Box>
       <EventStageTagsPanel tags={event.stageTags} /><EventResultTagsPanel tags={event.resultTags} /><EventResultsTable resultTags={event.resultTags} results={event.teamResults} />
-      <Box className="event-detail-panel"><Title order={2} className="event-panel-title">Player Awards</Title><Stack mt="md" gap="xs">{event.playerAwards.map((award) => <Group key={award.id}><Badge>{award.awardType.replace(/_/g, " ")}</Badge><Text>{award.playerName} · {award.teamName}</Text>{!award.playerIsActive ? <Badge color="yellow">Inactive</Badge> : null}</Group>)}{event.playerAwards.length === 0 ? <Text c="dimmed">No player awards recorded.</Text> : null}</Stack></Box>
+      <EventPlayerAwardsPanel awards={event.playerAwards} />
     </Stack>
   );
 }

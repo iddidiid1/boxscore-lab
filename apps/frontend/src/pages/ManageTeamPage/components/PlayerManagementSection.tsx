@@ -151,7 +151,7 @@ export function PlayerManagementSection({
           {rosterError ? <Text className="app-field-error">{rosterError}</Text> : null}
         </Box>
 
-        <Button className="player-add-button app-action-button app-action-button--primary" disabled={disabled} leftSection={<Plus size={16} />} onClick={handleAddPlayer}>
+        <Button className="player-add-button app-action-button app-action-button--primary" disabled={disabled} leftSection={<Plus size={16} />} onClick={handleAddPlayer} size="sm">
           Add Player
         </Button>
       </Group>

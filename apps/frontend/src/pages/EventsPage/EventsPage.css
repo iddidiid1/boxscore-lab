@@ -1,4 +1,4 @@
-.events-page {
+﻿.events-page {
   width: 100%;
 }
 
@@ -83,8 +83,8 @@
   border: 1px solid rgba(251, 191, 36, 0.38);
   border-radius: var(--radius-interactive-card);
   background:
-    linear-gradient(90deg, rgba(251, 191, 36, 0.14), rgba(15, 23, 42, 0.18)),
-    rgba(12, 20, 37, 0.72);
+    linear-gradient(90deg, rgba(251, 191, 36, 0.14), transparent 72%),
+    var(--color-surface);
   padding: 10px 12px;
 }
 
@@ -136,7 +136,7 @@
 }
 
 .event-card-stat svg {
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
 }
 
 .event-footer-status {
