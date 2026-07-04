@@ -8,6 +8,8 @@ import {
   type TeamMutationPayload,
   type TeamPlayerPayload
 } from "../../features/teams";
+import { useIsDirty } from "../../shared/hooks/useIsDirty";
+import { useUnsavedChangesWarning } from "../../shared/hooks/useUnsavedChangesWarning";
 import { PlayerManagementSection, type EditablePlayer } from "../ManageTeamPage/components/PlayerManagementSection";
 import {
   TeamEditorForm,
@@ -125,6 +127,9 @@ export function CreateTeamPage() {
       setIsSubmitting(false);
     }
   }
+
+  const dirty = useIsDirty(JSON.stringify({ team, players }), !isLoading);
+  useUnsavedChangesWarning(dirty);
 
   return (
     <Stack className="manage-team-page" gap="lg">

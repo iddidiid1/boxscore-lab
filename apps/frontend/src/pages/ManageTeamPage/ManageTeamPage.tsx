@@ -11,6 +11,9 @@ import {
   type TeamMutationPayload,
   type TeamPlayerPayload
 } from "../../features/teams";
+import { ConfirmModal } from "../../shared/components/ConfirmModal";
+import { useIsDirty } from "../../shared/hooks/useIsDirty";
+import { useUnsavedChangesWarning } from "../../shared/hooks/useUnsavedChangesWarning";
 import { PlayerManagementSection, type EditablePlayer } from "./components/PlayerManagementSection";
 import { TeamEditorForm, type TeamEditorValues } from "./components/TeamEditorForm";
 import "./ManageTeamPage.css";
@@ -177,6 +180,8 @@ export function ManageTeamPage() {
   }
 
   const isArchived = loadedTeam?.archivedAt !== null && loadedTeam?.archivedAt !== undefined;
+  const dirty = useIsDirty(JSON.stringify({ team, players }), !isLoading && team !== null && !isArchived);
+  useUnsavedChangesWarning(dirty);
 
   return (
     <Stack className="manage-team-page" gap="lg">
@@ -243,39 +248,30 @@ export function ManageTeamPage() {
             <Text className="module-copy">
               Archiving is not reversible in this MVP. The team is removed from the default list and historical data is retained.
             </Text>
-            {showArchiveConfirm ? (
-              <Group gap="sm" mt="md">
-                <Button
-                  className="app-action-button"
-                  color="red"
-                  loading={isSubmitting}
-                  onClick={() => void handleArchive()}
-                >
-                  Archive Team
-                </Button>
-                <Button
-                  className="app-action-button app-action-button--secondary"
-                  onClick={() => setShowArchiveConfirm(false)}
-                  variant="outline"
-                >
-                  Cancel
-                </Button>
-              </Group>
-            ) : (
-              <Button
-                className="app-action-button"
-                color="red"
-                disabled={isArchived}
-                mt="md"
-                onClick={() => setShowArchiveConfirm(true)}
-                variant="light"
-              >
-                Archive Team
-              </Button>
-            )}
+            <Button
+              className="app-action-button app-action-button--danger"
+              disabled={isArchived}
+              mt="md"
+              onClick={() => setShowArchiveConfirm(true)}
+              variant="outline"
+            >
+              Archive Team
+            </Button>
           </Box>
         </>
       )}
+
+      <ConfirmModal
+        confirmLabel="Archive Team"
+        danger
+        loading={isSubmitting}
+        onCancel={() => setShowArchiveConfirm(false)}
+        onConfirm={() => void handleArchive()}
+        opened={showArchiveConfirm}
+        title="Archive Team"
+      >
+        Archiving is not reversible in this MVP. This team will be removed from the default list; its historical stats remain available.
+      </ConfirmModal>
     </Stack>
   );
 }

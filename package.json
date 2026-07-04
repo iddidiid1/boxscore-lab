@@ -7,10 +7,16 @@
     "dev": "concurrently \"pnpm dev:backend\" \"pnpm dev:frontend\"",
     "dev:frontend": "pnpm --filter @fantasy-league-stats/frontend dev",
     "dev:backend": "pnpm --filter @fantasy-league-stats/backend dev",
-    "db:migrate": "prisma migrate dev --schema prisma/schema.prisma",
+    "app:init": "node scripts/app-init.cjs",
+    "build": "pnpm --filter @fantasy-league-stats/frontend build && pnpm --filter @fantasy-league-stats/backend build",
+    "start": "node scripts/start.cjs",
+    "db:migrate": "node scripts/db-backup.cjs && prisma migrate dev --schema prisma/schema.prisma",
     "db:generate": "prisma generate --schema prisma/schema.prisma",
     "db:seed": "node prisma/seed.cjs",
-    "db:studio": "prisma studio --schema prisma/schema.prisma"
+    "db:studio": "prisma studio --schema prisma/schema.prisma",
+    "db:backup": "node scripts/db-backup.cjs",
+    "db:restore": "node scripts/db-restore.cjs",
+    "db:validate": "node scripts/db-validate.cjs"
   },
   "prisma": {
     "seed": "node prisma/seed.cjs"

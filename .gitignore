@@ -9,10 +9,15 @@ dist/
 .codex/skills/
 /note/
 docs/prd/MatchManagementPRDReviewChecklist.md
+prisma/boxscore.db
+prisma/boxscore.db-journal
+prisma/boxscore.db-shm
+prisma/boxscore.db-wal
 prisma/dev.db
 prisma/dev.db-journal
 prisma/playground-*.db
 prisma/playground-*.db-journal
 prisma/playground-*.db-shm
 prisma/playground-*.db-wal
+backups/
 git status
