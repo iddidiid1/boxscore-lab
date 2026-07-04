@@ -116,14 +116,20 @@
 .match-detail-team-name {
   overflow: hidden;
   color: var(--color-text);
-  font-size: 1.16rem;
-  font-weight: 700;
-  line-height: 1.25;
+  font-family: var(--font-family-display);
+  font-size: 2.25rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 1;
   text-overflow: ellipsis;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
-.match-detail-team-name[data-winner],
+.match-detail-team-name[data-winner] {
+  color: var(--color-text-strong);
+}
+
 .match-detail-score-number[data-winner] {
   color: var(--color-text-strong);
   font-weight: 900;
@@ -181,7 +187,28 @@
 
 .match-box-score-table {
   width: 100%;
-  min-width: 760px;
+  min-width: 1070px;
+  table-layout: fixed;
+}
+
+.match-box-score-table th:first-child,
+.match-box-score-table td:first-child {
+  width: 66px;
+}
+
+.match-box-score-table th:nth-child(2),
+.match-box-score-table td:nth-child(2) {
+  width: 220px;
+}
+
+.match-box-score-table th:nth-child(n + 3),
+.match-box-score-table td:nth-child(n + 3) {
+  width: 70px;
+}
+
+.match-box-score-table th:last-child,
+.match-box-score-table td:last-child {
+  width: 84px;
 }
 
 .match-box-score-table th {
@@ -189,7 +216,7 @@
   padding: 8px 10px;
   color: var(--color-text-muted);
   font-family: var(--font-family-data);
-  font-size: 0.68rem;
+  font-size: 0.86rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -197,11 +224,8 @@
 
 .match-box-score-table td {
   border-color: var(--color-border-table-cell);
+  font-size: 1.05rem;
   padding: 9px 10px;
-}
-
-.match-box-score-table .box-score-column-position {
-  width: 66px;
 }
 
 .match-box-score-table tbody tr:hover td {

@@ -60,7 +60,28 @@
 
 .match-stats-input-table {
   width: 100%;
-  min-width: 1080px;
+  min-width: 1144px;
+  table-layout: fixed;
+}
+
+.match-stats-input-table th:first-child,
+.match-stats-input-table td:first-child {
+  width: 68px;
+}
+
+.match-stats-input-table th:nth-child(2),
+.match-stats-input-table td:nth-child(2) {
+  width: 52px;
+}
+
+.match-stats-input-table th:nth-child(3),
+.match-stats-input-table td:nth-child(3) {
+  width: 160px;
+}
+
+.match-stats-input-table th:nth-child(n + 4),
+.match-stats-input-table td:nth-child(n + 4) {
+  width: 96px;
 }
 
 .match-stats-input-table th {
@@ -112,8 +133,12 @@
   font-weight: 800;
 }
 
+.match-stats-input-table .mantine-NumberInput-root {
+  width: 100%;
+}
+
 .match-stats-input {
-  width: 76px;
+  width: 100%;
   min-height: 38px;
   border-color: var(--color-border-control);
   border-radius: var(--radius-control);
