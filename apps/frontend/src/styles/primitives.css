@@ -54,3 +54,16 @@
 .app-data-table tbody tr:hover td {
   background: var(--color-hover-surface);
 }
+
+/* NumberInput controls must match the input container's border-radius */
+.mantine-NumberInput-control {
+  border-radius: 0;
+}
+
+.mantine-NumberInput-control:first-child {
+  border-top-right-radius: var(--radius-control);
+}
+
+.mantine-NumberInput-control:last-child {
+  border-bottom-right-radius: var(--radius-control);
+}

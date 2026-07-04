@@ -1,4 +1,3 @@
-import { Paper, Stack } from "@mantine/core";
 import type { LucideIcon } from "lucide-react";
 import { ApiHealthCheckBox } from "./ApiHealthCheckBox";
 import { NavigationTab } from "./NavigationTab";
@@ -22,12 +21,14 @@ export function Sidebar<Key extends string>({
   onNavigate
 }: SidebarProps<Key>) {
   return (
-    <Paper className="sidebar" component="aside">
-      <Stack className="sidebar-layout" gap="xl">
-        <Stack gap="xl">
+    <aside className="sidebar">
+      <div className="sidebar-layout" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <div>
           <SidebarHeader />
 
-          <Stack component="nav" gap={6} aria-label="Primary navigation">
+          <div className="nav-section-label">League</div>
+
+          <nav aria-label="Primary navigation">
             {items.map((item) => (
               <NavigationTab
                 active={item.key === activeKey}
@@ -38,11 +39,11 @@ export function Sidebar<Key extends string>({
                 path={item.key}
               />
             ))}
-          </Stack>
-        </Stack>
+          </nav>
+        </div>
 
         <ApiHealthCheckBox />
-      </Stack>
-    </Paper>
+      </div>
+    </aside>
   );
 }

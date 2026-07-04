@@ -1,160 +1,345 @@
 ---
-name: Pro-Density Analytics
+name: Verge Dark — Sports Editorial
 colors:
-  surface: '#0b1326'
-  surface-dim: '#0b1326'
-  surface-bright: '#31394d'
-  surface-container-lowest: '#060e20'
-  surface-container-low: '#131b2e'
-  surface-container: '#171f33'
-  surface-container-high: '#222a3d'
-  surface-container-highest: '#2d3449'
-  on-surface: '#dae2fd'
-  on-surface-variant: '#c2c6d6'
-  inverse-surface: '#dae2fd'
-  inverse-on-surface: '#283044'
-  outline: '#8c909f'
-  outline-variant: '#424754'
-  surface-tint: '#adc6ff'
-  primary: '#adc6ff'
-  on-primary: '#002e6a'
-  primary-container: '#4d8eff'
-  on-primary-container: '#00285d'
-  inverse-primary: '#005ac2'
-  secondary: '#4edea3'
-  on-secondary: '#003824'
-  secondary-container: '#00a572'
-  on-secondary-container: '#00311f'
-  tertiary: '#ffb95f'
-  on-tertiary: '#472a00'
-  tertiary-container: '#ca8100'
-  on-tertiary-container: '#3e2400'
-  error: '#ffb4ab'
-  on-error: '#690005'
-  error-container: '#93000a'
-  on-error-container: '#ffdad6'
-  primary-fixed: '#d8e2ff'
-  primary-fixed-dim: '#adc6ff'
-  on-primary-fixed: '#001a42'
-  on-primary-fixed-variant: '#004395'
-  secondary-fixed: '#6ffbbe'
-  secondary-fixed-dim: '#4edea3'
-  on-secondary-fixed: '#002113'
-  on-secondary-fixed-variant: '#005236'
-  tertiary-fixed: '#ffddb8'
-  tertiary-fixed-dim: '#ffb95f'
-  on-tertiary-fixed: '#2a1700'
-  on-tertiary-fixed-variant: '#653e00'
-  background: '#0b1326'
-  on-background: '#dae2fd'
-  surface-variant: '#2d3449'
+  canvas: '#131313'
+  surface: '#1a1a1a'
+  surface-raised: '#232323'
+  surface-high: '#2d2d2d'
+  nav-bg: '#0d0d0d'
+  text: '#ffffff'
+  text-soft: '#c8c8c8'
+  text-muted: '#949494'
+  text-dim: '#555555'
+  text-on-mint: '#000000'
+  mint: '#3cffd0'
+  mint-dim: '#2ccfaa'
+  mint-soft: 'rgba(60,255,208,0.10)'
+  uv: '#5200ff'
+  uv-soft: 'rgba(82,0,255,0.12)'
+  border: 'rgba(255,255,255,0.10)'
+  border-strong: 'rgba(255,255,255,0.18)'
+  border-mint: 'rgba(60,255,208,0.45)'
+  success: '#3cffd0'
+  warning: '#ffb95f'
+  danger: '#ff6b6b'
+
 typography:
-  headline-xl:
-    fontFamily: Hanken Grotesk
-    fontSize: 40px
+  display:
+    fontFamily: Anton
+    fontSize: 48px
+    fontWeight: '400'
+    lineHeight: '0.95'
+    letterSpacing: 1.5px
+  display-stat:
+    fontFamily: Anton
+    fontSize: 52px
+    fontWeight: '400'
+    lineHeight: '1.0'
+    letterSpacing: 1px
+  heading-lg:
+    fontFamily: Space Grotesk
+    fontSize: 24px
     fontWeight: '700'
     lineHeight: '1.2'
-    letterSpacing: -0.02em
-  headline-lg:
-    fontFamily: Hanken Grotesk
-    fontSize: 30px
+  body:
+    fontFamily: Space Grotesk
+    fontSize: 15px
+    fontWeight: '400'
+    lineHeight: '1.5'
+  body-strong:
+    fontFamily: Space Grotesk
+    fontSize: 15px
     fontWeight: '600'
-    lineHeight: '1.2'
-  headline-md:
-    fontFamily: Hanken Grotesk
-    fontSize: 20px
+    lineHeight: '1.5'
+  label:
+    fontFamily: JetBrains Mono
+    fontSize: 10px
     fontWeight: '600'
     lineHeight: '1.4'
-  body-base:
-    fontFamily: Inter
-    fontSize: 16px
-    fontWeight: '400'
-    lineHeight: '1.5'
-  body-sm:
-    fontFamily: Inter
-    fontSize: 14px
-    fontWeight: '400'
-    lineHeight: '1.5'
-  data-label:
+    letterSpacing: 2px
+    textTransform: uppercase
+  data:
     fontFamily: JetBrains Mono
-    fontSize: 14px
+    fontSize: 13px
     fontWeight: '500'
     lineHeight: '1'
-    letterSpacing: 0.05em
-  data-point:
+  data-lg:
     fontFamily: JetBrains Mono
-    fontSize: 12px
-    fontWeight: '400'
+    fontSize: 22px
+    fontWeight: '700'
     lineHeight: '1'
+  data-display:
+    fontFamily: JetBrains Mono
+    fontSize: 40px
+    fontWeight: '700'
+    lineHeight: '1'
+
 rounded:
-  sm: 0.125rem
-  DEFAULT: 0.25rem
-  md: 0.375rem
-  lg: 0.5rem
-  xl: 0.75rem
-  full: 9999px
+  input: 4px
+  badge: 20px
+  card: 16px
+  button: 24px
+  circle: 9999px
+
 spacing:
-  unit: 4px
-  gutter: 16px
-  margin-desktop: 32px
-  margin-mobile: 16px
-  max-width: 1440px
+  unit: 8px
+  card-padding: 14px 16px
+  card-padding-lg: 24px 28px
+  section-gap: 48px
+  content-padding: 32px
 ---
 
 ## Brand & Style
 
-This design system is engineered for the high-stakes world of fantasy sports analytics. The brand personality is **Elite, Analytical, and Tactical**. It avoids the flashy tropes of gaming interfaces in favor of the disciplined, information-rich aesthetic found in professional F1 telemetry and advanced football scouting software.
+**Verge Dark — Sports Editorial.** Near-black canvas with acid-mint as the sole hazard accent. The mood is editorial-dark: serious enough for data, loud enough to feel like a sports broadcast. Anton headlines at large scale create the editorial anchor; Space Grotesk handles all UI text; JetBrains Mono locks down every number.
 
-The target audience consists of serious enthusiasts and professionals who value speed of insight and data depth over visual fluff. The emotional response is one of **calculated confidence**—the UI feels like a high-performance tool rather than a toy. 
-
-The design style is **Corporate Modern with a Tactical edge**. It utilizes a dark, low-fatigue environment that allows bright data points to emerge with clarity. It prioritizes structure, utilizing thin borders and modular units to organize complex datasets into digestible streams of intelligence.
+The design avoids gradients, drop shadows, and decorative backgrounds. Depth comes entirely from 1px borders and tonal surface differences. Color is used sparingly — mint appears only on the most important interactive element per screen.
 
 ## Colors
 
-The palette is anchored in a high-contrast dark environment. 
-- **Base Surfaces:** Use `#0F172A` for the canvas and `#1E293B` for elevated cards and modules to create depth without relying on heavy shadows.
-- **Data Accents:** Electric Blue (`#3B82F6`) is reserved for primary actions and active states. Emerald Green (`#10B981`) signifies positive deltas, "on-track" performance, or confirmed selections. 
-- **Functional Warnings:** A muted Amber (`#F59E0B`) should be used sparingly for "at-risk" player statuses or pending changes.
-- **Borders:** Every modular element is defined by a thin, low-opacity border (`#334155`) to maintain structure in a dense layout.
+### Surfaces
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `canvas` | `#131313` | Page background — every view |
+| `nav-bg` | `#0d0d0d` | Sidebar / top nav — slightly deeper than canvas |
+| `surface` | `#1a1a1a` | Cards, panels, table backgrounds |
+| `surface-raised` | `#232323` | Table header, hover state |
+| `surface-high` | `#2d2d2d` | Secondary button fill, active surface |
+
+### Text
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `text` | `#ffffff` | Primary content |
+| `text-soft` | `#c8c8c8` | Emphasized secondary content |
+| `text-muted` | `#949494` | Metadata, inactive items, placeholders |
+| `text-dim` | `#555555` | Faint labels, timestamps, disabled |
+| `text-on-mint` | `#000000` | Text on any mint-fill surface |
+
+### Accents
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `mint` | `#3cffd0` | Primary CTA fill, active nav indicator, leading stat highlight |
+| `mint-dim` | `#2ccfaa` | Mint hover state |
+| `mint-soft` | `rgba(60,255,208,0.10)` | Active nav background tint, mint chip background |
+| `uv` | `#5200ff` | Annotation and design-review use only; reserve for future badge/accent if needed |
+| `uv-soft` | `rgba(82,0,255,0.12)` | UV chip background |
+
+### Borders
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `border` | `rgba(255,255,255,0.10)` | Default card and row divider |
+| `border-strong` | `rgba(255,255,255,0.18)` | Emphasized card border, input border |
+| `border-mint` | `rgba(60,255,208,0.45)` | Card hover, input focus |
+
+### Semantic
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `success` | `#3cffd0` | Unified with mint — positive delta, completed |
+| `warning` | `#ffb95f` | At-risk status, in-progress |
+| `danger` | `#ff6b6b` | Voided, error, destructive action |
 
 ## Typography
 
-This design system employs a tri-font strategy to separate intent and improve scanability:
-1. **Hanken Grotesk** is used for headlines and primary navigation, providing a contemporary, sharp professional look.
-2. **Inter** serves as the workhorse for body copy and general UI text, chosen for its exceptional legibility at small sizes.
-3. **JetBrains Mono** is critical for all statistical data points, coordinates, and labels. The monospaced nature ensures that columns of numbers align perfectly, allowing users to compare vertical lists of stats with zero visual drift.
+### Font Stack
 
-Text should rarely be pure white; use `#F8FAFC` for primary content and `#94A3B8` for secondary labels to reduce eye strain in the dark environment.
+- **Anton** — display / page titles / stat leader numbers. Google Fonts, open source. Used only at large sizes (≥ 24px). Never for UI labels or body text.
+- **Space Grotesk** — all UI text: navigation, buttons, card content, form fields, page descriptions. Weights 400 / 500 / 600 / 700.
+- **JetBrains Mono** — all numerical data, metadata labels, section dividers, timestamps, badge text. Always uppercase when used as a label.
+
+```
+font-family body:    'Space Grotesk', 'Hanken Grotesk', sans-serif
+font-family display: 'Anton', Impact, 'Arial Narrow', sans-serif
+font-family mono:    'JetBrains Mono', 'Space Mono', monospace
+```
+
+### Type Scale
+
+| Role | Font | Size | Weight | Notes |
+|------|------|------|--------|-------|
+| Page title | Anton | 48px | 400 | letter-spacing 1.5px, line-height 0.95 |
+| Stat display (leader card) | Anton | 52px | 400 | letter-spacing 1px |
+| Match detail team name | Anton | 24px | 400 | letter-spacing 1px |
+| UI body / card content | Space Grotesk | 15px | 400–700 | line-height 1.5 |
+| Section label / eyebrow | JetBrains Mono | 10px | 600 | UPPERCASE, 2px tracking |
+| Badge / chip text | JetBrains Mono | 9px | 600 | UPPERCASE, 1.3–1.8px tracking |
+| Numeric data (table) | JetBrains Mono | 13px | 500 | tabular figures |
+| Score (match list) | JetBrains Mono | 22px | 700 | |
+| Score (match detail) | JetBrains Mono | 40px | 700 | |
+| Small button | Space Grotesk | 13px | 600 | |
+| Form input | Space Grotesk | 15px | 400 | |
+
+**Rule:** never use Anton below 24px. Never use Space Grotesk for numerical columns. Never use lowercase JetBrains Mono for section labels or badges.
 
 ## Layout & Spacing
 
-The layout philosophy follows a **Modular Grid System** designed for high information density. 
-- **Grid:** A 12-column grid on desktop with a fixed 16px gutter. Modules should be sized in 3, 4, or 6-column spans.
-- **Rhythm:** An 8px linear scale (with 4px increments for tight data tables) governs all padding and margins. 
-- **Density:** Padding within cards should be restrained (12px-16px) to maximize the "above the fold" data visibility. 
-- **Responsive Behavior:** On mobile, the grid collapses to a single column, but "Data Strips" (horizontal scrolling tables) are utilized to keep statistical tables intact without forcing excessive vertical scrolling.
+- **Base unit**: 8px.
+- **Card internal padding**: `14px 16px` (standard), `24px 28px` (detail / form panels).
+- **Section gap**: 48px between major page sections.
+- **Content area padding**: 32px.
+- **Sidebar width**: 220px.
+- **Grid**: auto-fill column grid for team/player cards; `minmax(230px, 1fr)`. Match lists and tables are full-width single column.
 
 ## Elevation & Depth
 
-Depth is achieved through **Tonal Layering** rather than traditional drop shadows.
-- **Level 0 (Canvas):** `#0F172A` (Bottom-most layer).
-- **Level 1 (Card/Surface):** `#1E293B` with a 1px border of `#334155`.
-- **Level 2 (Popovers/Modals):** `#2D3748` with a very soft, 15% opacity black shadow (0px 10px 25px) to lift it above the modules.
+No drop shadows. Depth comes from tonal surface layering and 1px borders only.
 
-Avoid gradients on backgrounds. A very subtle linear gradient (from `#1E293B` to `#242F42`) may be applied to buttons or active headers to give them a "machined" metallic feel, but flat surfaces are generally preferred for clarity.
+| Level | Treatment | Use |
+|-------|-----------|-----|
+| 0 | `#131313`, no border | Canvas, background sections |
+| 1 | `#1a1a1a` + `1px border-strong` | Cards, panels, table body |
+| 2 | `#232323` | Table header, hover state |
+| 3 | `1px border-mint` | Card hover, focused input |
+| Active | `border-left: 2px mint` + `mint-soft` bg | Sidebar nav active item |
 
 ## Shapes
 
-The shape language is **Precision-Focused**. 
-- Standard components (Buttons, Inputs, Cards) use a **4px corner radius**. This provides a subtle "modern" touch while maintaining the sharp, professional aesthetic of a technical instrument.
-- Data markers and status pips use **0px (Sharp)** corners to reinforce the "grid-like" telemetry vibe.
-- Icons should use a consistent 1.5px stroke weight and sharp terminals to match the font geometry.
+| Token | Value | Use |
+|-------|-------|-----|
+| `r-input` | 4px | Text inputs, selects — tight, functional |
+| `r-badge` | 20px | Status pills, category badges |
+| `r-card` | 16px | All cards and panels |
+| `r-button` | 24px | All buttons — full pill |
+| `r-circle` | 50% | Icon circle buttons, avatars |
+
+The radius jump from 4px (inputs) → 16px (cards) → 24px (buttons) → 20px (badges) is intentional. Inputs stay tight; interactive containers are rounded; buttons are fully pill-shaped.
 
 ## Components
 
-- **Buttons:** Primary buttons use a solid `#3B82F6` fill with white text. Secondary buttons use a ghost style (border only) with the `#334155` border color.
-- **Data Cards:** These are the core atoms. They must include a `Card Header` with a monospaced label and a `Card Body` that often contains a condensed table or a sparkline chart.
-- **Sparklines:** Use the Primary Blue or Secondary Green with a 1.5px stroke and a very subtle area-fill (10% opacity) beneath the line.
-- **Inputs:** Dark backgrounds (`#0F172A`) with a subtle `#334155` border. On focus, the border shifts to the primary blue. Use JetBrains Mono for the input text.
-- **Status Chips:** Small, rectangular indicators with 2px rounding. Use background tints of the accent colors (e.g., 20% Emerald Green background with 100% Emerald Green text) for "Active" or "Healthy" statuses.
-- **Telemetry Tabs:** Horizontal navigation with a bottom-bar indicator. The active tab should be highlighted in the primary accent, while inactive tabs remain secondary gray.
+### Buttons
+
+**Primary — Mint Pill**
+- Background: `#3cffd0` (mint)
+- Text: `#000000`, Space Grotesk 15px / 600
+- Border radius: 24px
+- Padding: `10px 22px`
+- Hover: `#2ccfaa` (mint-dim)
+
+**Secondary — Dark Surface Pill**
+- Background: `#2d2d2d` (surface-high)
+- Text: `#ffffff`, Space Grotesk 15px / 600
+- Border radius: 24px
+- Padding: `10px 22px`
+- Hover: `#383838`
+
+**Ghost — Outlined**
+- Background: transparent
+- Text: `#949494` (text-muted)
+- Border: `1px solid border-strong`
+- Border radius: 24px
+- Hover: text → `#ffffff`, border slightly stronger
+
+**Mint Outline**
+- Background: transparent
+- Text: `#3cffd0`
+- Border: `1px solid border-mint`
+- Hover: fills to mint, text → black
+
+**Danger**
+- Background: transparent
+- Text: `#ff6b6b`
+- Border: `1px solid rgba(255,107,107,0.4)`
+- Hover: `rgba(255,107,107,0.08)` background tint
+
+**Small variants**: reduce padding to `6px 16px`, font-size to 13px.
+
+### Badges / Status Chips
+
+All badges use JetBrains Mono 9px / 600 / UPPERCASE / 1.3px tracking, border-radius 20px (pill).
+
+| Variant | Background | Text | Border | Use |
+|---------|-----------|------|--------|-----|
+| Active / mint | `mint-soft` | `mint` | `1px rgba(mint, 0.28)` | Active, Completed |
+| Warning | `rgba(255,185,95,0.10)` | `#ffb95f` | `1px rgba(warning, 0.28)` | In Progress |
+| Danger | `rgba(255,107,107,0.10)` | `danger` | `1px rgba(danger, 0.28)` | Voided, Error |
+| Neutral | `rgba(255,255,255,0.05)` | `text-muted` | `1px border` | Archived, Stage |
+| UV / accent | `uv-soft` | `#a07aff` | `1px rgba(uv, 0.30)` | Championship, Special |
+| Solid mint | `mint` | `#000` | none | Featured / primary |
+
+### Cards
+
+- Background: `surface` (`#1a1a1a`)
+- Border: `1px solid border-strong`
+- Border radius: `r-card` (16px)
+- Padding: `14px 16px`
+- Hover: border → `border-mint`, background → `surface-raised`
+- Transition: `border-color 150ms, background 150ms`
+
+Team logo inside cards: `42×42px`, `border-radius: 10px`.
+
+### Tables
+
+- Wrapper: `surface` background, `1px border-strong`, `r-card` (16px) radius, `overflow: hidden`
+- Header row: `surface-raised` background, JetBrains Mono 9px / 600 / UPPERCASE / 1.8px tracking, `text-muted`
+- Body row: Space Grotesk 15px / `text-muted`; numeric columns JetBrains Mono 13px / right-aligned
+- Row divider: `rgba(255,255,255,0.04)`
+- Row hover: `rgba(255,255,255,0.025)` tint, text → `text-soft`
+- Rank pip: 22px × 22px circle, mono 10px / 700; gold / silver / bronze tints for top 3
+
+### Inputs & Forms
+
+- Background: `#0d0d0d` (nav-bg)
+- Border: `1px solid border-strong`
+- Border radius: `r-input` (4px)
+- Text: `#ffffff`, Space Grotesk 15px / 400
+- Placeholder: `text-dim`
+- Focus: border → `border-mint`
+- Height: 40px
+
+Form panel background: `surface`, border `border-strong`, radius `r-card` (16px), padding 24px.
+Form section label (field-label): JetBrains Mono 9px / 600 / UPPERCASE / 1.5px tracking, `text-muted`.
+
+### Navigation (Sidebar)
+
+- Sidebar background: `nav-bg` (`#0d0d0d`), width 220px, `1px border-strong` right edge
+- Wordmark: Anton 26px, letter-spacing 1.5px
+- Nav section label: JetBrains Mono 9px / 600 / UPPERCASE / 2px tracking, `text-dim`
+- Nav item: Space Grotesk 15px / 500, `text-muted`; padding `10px 20px`; `border-left: 2px solid transparent`
+- Nav item hover: text → `text`, `rgba(255,255,255,0.03)` background
+- Nav item active: text → `mint`, `border-left-color: mint`, background → `mint-soft`
+
+### Stat Leader Cards
+
+- Four-column grid, `r-card` (16px), `surface` background, `border-strong` border
+- Stat label: JetBrains Mono 9px / 600 / UPPERCASE / 1.8px tracking
+- Stat value: Anton 52px / 400 / letter-spacing 1px — the visual centrepiece
+- Player name: Space Grotesk 15px / 700
+- Team name: JetBrains Mono 9px / UPPERCASE / 1.2px tracking, `text-muted`
+- Per-card gradient tint (subtle, pointer-events none): different hue per stat category
+
+### Match Score Display
+
+**List view (match card):**
+- Team name: Space Grotesk 15px / 600; winner → `text`, loser → `text-muted`
+- Score: JetBrains Mono 22px / 700; winner → `text`, loser → `text-muted`
+- Event / stage meta: JetBrains Mono 10px / 600 / UPPERCASE, `text-muted`
+- Color bar: 3px × 26px, `border-radius: 2px`, team color
+
+**Detail view:**
+- Team name: Anton 24px
+- Score: JetBrains Mono 40px / 700
+
+## Do's and Don'ts
+
+### Do
+- Use `#131313` as the canvas for every view — no light mode
+- Reserve mint for the single most important interactive element per screen
+- Use Anton only at ≥ 24px; never for labels or body copy
+- Use JetBrains Mono for all numerical columns, labels, and metadata — always UPPERCASE for labels
+- Apply 1.5–2px letter-spacing to every UPPERCASE mono label
+- Use 1px borders (`border-strong` or `border-mint`) as the only depth mechanism
+- Keep card padding tight: `14px 16px` for standard cards, not 24px+
+- Apply `border-left: 2px mint` for active sidebar items — not background alone
+
+### Don't
+- Don't add `box-shadow` for card elevation; use 1px borders only
+- Don't use Anton below 24px
+- Don't use Space Grotesk for numerical data columns; use JetBrains Mono
+- Don't use gradients on backgrounds or card fills
+- Don't let mint appear as a background wash — only as button fill, active indicator, or 1px border
+- Don't use `text-dim` (`#555555`) for any readable body content — only for decorative / disabled states
+- Don't add border radius below 4px (inputs) or above 24px (buttons) outside the defined scale

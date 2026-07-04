@@ -1,15 +1,10 @@
-import { Box, Group, Text, Title } from "@mantine/core";
-
 export function SidebarHeader() {
   return (
-    <Group className="brand-lockup" align="center" gap="md">
-      <Box className="brand-mark">FLS</Box>
-      <Box>
-        <Title order={1} className="brand-title">
-          Fantasy League Stats
-        </Title>
-        <Text className="muted-copy">Local MVP console</Text>
-      </Box>
-    </Group>
+    <div className="sidebar-header">
+      <div className="sidebar-wordmark">
+        FL<span className="sidebar-wordmark-accent">S</span>
+      </div>
+      <div className="sidebar-tagline">Fantasy League Stats</div>
+    </div>
   );
 }
