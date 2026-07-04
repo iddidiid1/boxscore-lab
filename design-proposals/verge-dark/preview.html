@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fantasy League Stats — Design Preview</title>
+
+  <!--
+    Font substitutions (free alternatives for proprietary Verge fonts):
+      Manuka (display hero) → Anton
+      PolySans (body/UI)    → Space Grotesk  (or keep Hanken Grotesk — very similar)
+      PolySans Mono (labels)→ JetBrains Mono (already in project — no change)
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       PROPOSED DESIGN TOKENS
+       Source: /DESIGN.md (root) — Verge-inspired adaptation
+       for a sports data app
+    ============================================================ */
+    :root {
+      /* Surfaces */
+      --canvas:          #131313;   /* was: #0b1326 (cool navy) */
+      --nav-bg:          #0d0d0d;
+      --surface:         #1a1a1a;   /* was: #121c2f */
+      --surface-raised:  #232323;   /* was: #1e293b */
+      --surface-high:    #2d2d2d;
+
+      /* Accents */
+      --mint:            #3cffd0;   /* was: #2563eb (blue) */
+      --mint-dim:        #2ccfaa;
+      --mint-soft:       rgba(60,255,208,0.10);
+      --uv:              #5200ff;
+      --uv-soft:         rgba(82,0,255,0.12);
+
+      /* Text */
+      --text:            #ffffff;   /* was: #dae2fd */
+      --text-soft:       #c8c8c8;   /* was: #cbd5e1 */
+      --text-muted:      #949494;   /* was: #94a3b8 */
+      --text-dim:        #555555;   /* was: rgba(148,163,184,0.72) */
+      --text-on-mint:    #000000;
+
+      /* Borders */
+      --border:          rgba(255,255,255,0.10); /* was: #334155 */
+      --border-strong:   rgba(255,255,255,0.18); /* was: #475569 */
+      --border-mint:     rgba(60,255,208,0.45);
+      --border-uv:       rgba(82,0,255,0.50);
+
+      /* Semantic states */
+      --success:         #3cffd0;   /* unified with mint */
+      --warning:         #ffb95f;   /* unchanged */
+      --danger:          #ff6b6b;   /* was: #fca5a5 */
+
+      /* Typography */
+      --font-display:    'Anton', Impact, 'Arial Narrow', sans-serif;
+      --font-body:       'Space Grotesk', 'Hanken Grotesk', sans-serif;
+      --font-mono:       'JetBrains Mono', 'Space Mono', monospace;
+
+      /* Shape */
+      --r-sharp:    0px;
+      --r-input:    4px;    /* unchanged — keeps forms tight/functional */
+      --r-badge:    20px;   /* was: 2px */
+      --r-card:     16px;   /* was: 6px */
+      --r-card-lg:  20px;
+      --r-button:   24px;   /* was: 4px — biggest visual shift */
+      --r-circle:   50%;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+    input, select { font: inherit; }
+
+    body {
+      background: var(--canvas);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ============================================================
+       PREVIEW META BAR (not part of the app UI)
+    ============================================================ */
+    .preview-bar {
+      background: #0a0a0a;
+      border-bottom: 1px solid var(--border-uv);
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .preview-bar-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #a07aff;
+    }
+    .preview-bar-desc {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .preview-bar-toc {
+      margin-left: auto;
+      display: flex;
+      gap: 16px;
+    }
+    .preview-bar-toc a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 150ms;
+    }
+    .preview-bar-toc a:hover { color: var(--mint); }
+
+    /* ============================================================
+       APP SHELL
+    ============================================================ */
+    .app-shell {
+      display: flex;
+      flex: 1;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 220px;
+      min-height: 100%;
+      background: var(--nav-bg);
+      border-right: 1px solid var(--border);
+      padding: 0;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-header {
+      padding: 20px 20px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-wordmark {
+      font-family: var(--font-display);
+      font-size: 26px;
+      color: var(--text);
+      letter-spacing: 1.5px;
+      line-height: 1;
+    }
+    .sidebar-wordmark em {
+      color: var(--mint);
+      font-style: normal;
+    }
+    .sidebar-tagline {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      margin-top: 5px;
+    }
+    .sidebar-nav {
+      padding: 16px 0;
+      flex: 1;
+    }
+    .nav-section {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      padding: 10px 20px 6px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      color: var(--text-muted);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 150ms, background 150ms;
+      border-left: 2px solid transparent;
+    }
+    .nav-item:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+    }
+    .nav-item.active {
+      color: var(--mint);
+      border-left-color: var(--mint);
+      background: var(--mint-soft);
+    }
+    .nav-item-icon { font-size: 14px; width: 18px; text-align: center; }
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+    }
+    .api-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .api-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--mint);
+    }
+
+    /* ── Main content ── */
+    .content {
+      flex: 1;
+      padding: 32px;
+      overflow: auto;
+    }
+
+    /* ============================================================
+       COMMON ATOMS
+    ============================================================ */
+
+    /* Section divider label */
+    .section { margin-bottom: 48px; }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Design-change annotation */
+    .note {
+      background: var(--uv-soft);
+      border: 1px solid var(--border-uv);
+      border-left: 3px solid #7c4dff;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #b09dff;
+      letter-spacing: 0.2px;
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+    .note strong {
+      color: #d0bcff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: inline-block;
+      margin-right: 4px;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      color: var(--text);
+      letter-spacing: 1.5px;
+      line-height: 0.95;
+    }
+    .page-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 22px;
+      border-radius: var(--r-button);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--mint);
+      color: var(--text-on-mint);
+    }
+    .btn-primary:hover { background: var(--mint-dim); }
+    .btn-secondary {
+      background: var(--surface-high);
+      color: var(--text);
+    }
+    .btn-secondary:hover { background: #383838; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-strong);
+    }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.35); }
+    .btn-outline-mint {
+      background: transparent;
+      color: var(--mint);
+      border: 1px solid var(--border-mint);
+    }
+    .btn-outline-mint:hover { background: var(--mint); color: var(--text-on-mint); }
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid rgba(255,107,107,0.4);
+    }
+    .btn-danger:hover { background: rgba(255,107,107,0.08); }
+    .btn-sm { padding: 6px 16px; font-size: 13px; }
+    .btn-xs { padding: 4px 12px; font-size: 12px; }
+    .btn-icon-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--r-circle);
+      border: 1px solid var(--border-strong);
+      color: var(--text-muted);
+      font-size: 13px;
+      transition: border-color 150ms, color 150ms;
+    }
+    .btn-icon-circle:hover { border-color: var(--mint); color: var(--mint); }
+
+    /* ── Badges / chips ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: var(--r-badge);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      white-space: nowrap;
+    }
+    .badge-active   { background:rgba(60,255,208,0.10); color:var(--mint);    border:1px solid rgba(60,255,208,0.28); }
+    .badge-warning  { background:rgba(255,185,95,0.10); color:#ffb95f;        border:1px solid rgba(255,185,95,0.28); }
+    .badge-danger   { background:rgba(255,107,107,0.10);color:var(--danger);  border:1px solid rgba(255,107,107,0.28); }
+    .badge-neutral  { background:rgba(255,255,255,0.05);color:var(--text-muted);border:1px solid var(--border); }
+    .badge-uv       { background:rgba(82,0,255,0.10);   color:#a07aff;        border:1px solid rgba(82,0,255,0.30); }
+    .badge-solid-mint { background:var(--mint); color:#000; }
+
+    /* ── Flex helpers ── */
+    .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .col { display: flex; flex-direction: column; gap: 8px; }
+    .spacer { height: 12px; }
+
+    /* ============================================================
+       TEAMS PAGE
+    ============================================================ */
+    .division-block { margin-bottom: 28px; }
+    .division-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .division-name {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .division-rule { flex: 1; height: 1px; background: var(--border); }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 10px;
+    }
+    .team-card {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--r-card);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: border-color 150ms, background 150ms;
+    }
+    .team-card:hover {
+      border-color: var(--border-mint);
+      background: var(--surface-raised);
+    }
+    .team-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 400;
+    }
+    .team-info { flex: 1; min-width: 0; }
+    .team-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .team-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+    .team-pts {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--mint);
+    }
+    .team-stars { font-size: 10px; letter-spacing: 1px; color: #ffb95f; }
+
+    /* ============================================================
+       MATCHES LIST
+    ============================================================ */
+    .match-list { display: flex; flex-direction: column; gap: 8px; }
+    .match-card {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--r-card);
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: border-color 150ms, background 150ms;
+    }
+    .match-card:hover {
+      border-color: var(--border-mint);
+      background: var(--surface-raised);
+    }
+    .match-scoreline {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 20px;
+    }
+    .match-team-a { display: flex; align-items: center; gap: 8px; }
+    .match-team-b { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+    .color-bar { width: 3px; height: 26px; border-radius: 2px; flex-shrink: 0; }
+    .match-team-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: color 150ms;
+    }
+    .match-team-name.w { color: var(--text); }
+    .score-block { display: flex; align-items: center; gap: 8px; }
+    .score-num {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-muted);
+      line-height: 1;
+    }
+    .score-num.w { color: var(--text); }
+    .score-sep {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+    .match-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .match-event {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+    }
+    .match-date {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+
+    /* ============================================================
+       STAT LEADER CARDS
+    ============================================================ */
+    .leader-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .leader-card {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--r-card);
+      padding: 18px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .leader-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    .leader-card.pts::before  { background: linear-gradient(135deg, rgba(82,0,255,0.15) 0%, transparent 55%); }
+    .leader-card.ast::before  { background: linear-gradient(135deg, rgba(60,255,208,0.12) 0%, transparent 55%); }
+    .leader-card.reb::before  { background: linear-gradient(135deg, rgba(60,255,208,0.07) 0%, transparent 55%); }
+    .leader-card.rtg::before  { background: linear-gradient(135deg, rgba(255,185,95,0.11) 0%, transparent 55%); }
+    .leader-top {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .leader-crown { font-size: 12px; }
+    .leader-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: var(--text-muted);
+    }
+    .leader-value {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    .leader-player-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .leader-team-name {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-top: 2px;
+    }
+
+    /* ============================================================
+       PLAYER RANKING TABLE
+    ============================================================ */
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--r-card);
+      overflow: hidden;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .data-table th {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: var(--text-muted);
+      padding: 10px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-raised);
+      white-space: nowrap;
+    }
+    .data-table th.r { text-align: right; }
+    .data-table td {
+      padding: 11px 16px;
+      font-size: 15px;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .data-table td.r {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      text-align: right;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.025); color: var(--text-soft); }
+    .rank-pip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .rank-1 { background:rgba(255,185,95,0.15); color:#ffb95f; }
+    .rank-2 { background:rgba(180,180,180,0.12); color:#aaaaaa; }
+    .rank-3 { background:rgba(192,132,87,0.15); color:#c08457; }
+    .rank-n { background:rgba(255,255,255,0.05); color:var(--text-dim); }
+    .player-name { font-weight: 700; color: var(--text) !important; }
+    .team-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .stat-lead { color: var(--mint) !important; font-weight: 700; }
+
+    /* ============================================================
+       FORMS
+    ============================================================ */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--r-card);
+      padding: 24px;
+    }
+    .panel-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: var(--text);
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+    .panel-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: var(--text-dim);
+      margin-bottom: 22px;
+    }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+    }
+    .field-input {
+      background: #0d0d0d;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--r-input);
+      padding: 10px 14px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 150ms;
+      width: 100%;
+    }
+    .field-input:focus { border-color: var(--mint); }
+    .field-input::placeholder { color: var(--text-dim); }
+    .field-input option { background: #1a1a1a; }
+    .form-fields { display: flex; flex-direction: column; gap: 14px; }
+
+    /* ============================================================
+       MATCH BOX SCORE (detail view)
+    ============================================================ */
+    .match-detail-header {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--r-card);
+      padding: 24px 28px;
+      margin-bottom: 20px;
+    }
+    .match-detail-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .match-detail-scoreline {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+    }
+    .detail-team-a { display: flex; align-items: center; gap: 12px; }
+    .detail-team-b { display: flex; align-items: center; gap: 12px; justify-content: flex-end; }
+    .detail-team-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .detail-team-name {
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+    .detail-team-name.w { color: var(--text); }
+    .detail-score-block { text-align: center; }
+    .detail-score {
+      font-family: var(--font-mono);
+      font-size: 40px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+    }
+    .detail-score-num { color: var(--text-muted); }
+    .detail-score-num.w { color: var(--text); }
+    .detail-score-sep { color: var(--text-dim); font-size: 24px; }
+
+    /* ============================================================
+       TOKEN COMPARISON TABLE
+    ============================================================ */
+    .comparison-table td:first-child { font-weight: 600; color: var(--text-soft); }
+    .val-old { font-family: var(--font-mono); font-size: 12px; color: #adc6ff; }
+    .val-new { font-family: var(--font-mono); font-size: 12px; color: var(--mint); }
+    .change-note { font-size: 13px; color: var(--text-muted); }
+
+    /* ============================================================
+       RESPONSIVE (preview only — simplified)
+    ============================================================ */
+    @media (max-width: 900px) {
+      .leader-grid { grid-template-columns: repeat(2, 1fr); }
+      .sidebar { display: none; }
+      .form-grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║  PREVIEW META BAR (not part of the app)                 ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+<div class="preview-bar">
+  <span class="preview-bar-label">Design Preview</span>
+  <span class="preview-bar-desc">Verge-inspired adaptation — for review only, nothing is implemented</span>
+  <nav class="preview-bar-toc">
+    <a href="#sec-buttons">Buttons</a>
+    <a href="#sec-teams">Teams</a>
+    <a href="#sec-matches">Matches</a>
+    <a href="#sec-players">Players</a>
+    <a href="#sec-form">Form</a>
+    <a href="#sec-tokens">Tokens</a>
+  </nav>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║  APP SHELL                                               ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+<div class="app-shell">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-wordmark">FL<em>S</em></div>
+      <div class="sidebar-tagline">Fantasy League Stats</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">League</div>
+      <div class="nav-item active">
+        <span class="nav-item-icon">⚡</span> Teams
+      </div>
+      <div class="nav-item">
+        <span class="nav-item-icon">👤</span> Players
+      </div>
+      <div class="nav-item">
+        <span class="nav-item-icon">📋</span> Matches
+      </div>
+      <div class="nav-item">
+        <span class="nav-item-icon">🏆</span> Events
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="api-status">
+        <div class="api-dot"></div>
+        API Connected
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main content ── -->
+  <main class="content">
+
+    <!-- Page header -->
+    <div class="page-header">
+      <div>
+        <div class="eyebrow">League Overview</div>
+        <div class="page-title">TEAMS</div>
+        <div class="page-desc">4 divisions · 12 teams · Season 2025</div>
+      </div>
+      <button class="btn btn-primary">＋ Create Team</button>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION: Buttons & Actions
+    ══════════════════════════════════════════ -->
+    <div class="section" id="sec-buttons">
+      <div class="section-head">
+        <span class="section-label">Action Buttons</span>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="note">
+        <strong>Biggest change:</strong> Border radius 4px → 24px pill shape.
+        Primary color: Electric Blue #2563eb → Jelly Mint #3cffd0.
+        All non-entry buttons drop their icons (per action-language rules already in place).
+      </div>
+
+      <div class="row" style="margin-bottom:12px;">
+        <button class="btn btn-primary">Create Team</button>
+        <button class="btn btn-secondary">Save Changes</button>
+        <button class="btn btn-ghost">Cancel</button>
+        <button class="btn btn-outline-mint">Archive Event</button>
+        <button class="btn btn-danger">Void Match</button>
+      </div>
+      <div class="row">
+        <button class="btn btn-primary btn-sm">＋ Add Player</button>
+        <button class="btn btn-secondary btn-sm">Edit Team</button>
+        <button class="btn btn-secondary btn-sm">Manage Team</button>
+        <button class="btn btn-danger btn-sm">Archive Team</button>
+        <button class="btn-icon-circle">✏</button>
+        <button class="btn-icon-circle">↑</button>
+        <button class="btn-icon-circle">🗑</button>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="note">
+        <strong>Status badges:</strong> Border radius 2px → 20px pill.
+        Font switches to JetBrains Mono UPPERCASE with 1.3px letter-spacing.
+        Color roles unchanged — just shape and font.
+      </div>
+      <div class="row">
+        <span class="badge badge-active">Active</span>
+        <span class="badge badge-active">Completed</span>
+        <span class="badge badge-warning">In Progress</span>
+        <span class="badge badge-danger">Voided</span>
+        <span class="badge badge-neutral">Archived</span>
+        <span class="badge badge-uv">Championship</span>
+        <span class="badge badge-solid-mint">Regular Season</span>
+        <span class="badge badge-neutral">Group Stage</span>
+        <span class="badge badge-warning">Finals</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION: Teams Page
+    ══════════════════════════════════════════ -->
+    <div class="section" id="sec-teams">
+      <div class="section-head">
+        <span class="section-label">Teams Page</span>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="note">
+        <strong>Changes:</strong> Card radius 6px → 16px. Border: #334155 → rgba white (slightly warmer).
+        Team logo corners: square → 10px. Points color: blue → mint.
+        Hover: border shifts to mint (same intent, different color).
+        Canvas: #0b1326 (navy) → #131313 (near-black — warmer, less blue cast).
+      </div>
+
+      <div class="division-block">
+        <div class="division-header">
+          <div class="division-name">East Division</div>
+          <div class="division-rule"></div>
+        </div>
+        <div class="team-grid">
+          <a class="team-card" href="#">
+            <div class="team-logo" style="background:#3cffd0;color:#000;">TH</div>
+            <div class="team-info">
+              <div class="team-name">Thunder Hawks</div>
+              <div class="team-footer">
+                <div class="team-pts">1,248 pts</div>
+                <div class="team-stars">★★★★☆</div>
+              </div>
+            </div>
+          </a>
+          <a class="team-card" href="#">
+            <div class="team-logo" style="background:#5200ff;color:#fff;">BL</div>
+            <div class="team-info">
+              <div class="team-name">Blue Lightning</div>
+              <div class="team-footer">
+                <div class="team-pts">1,192 pts</div>
+                <div class="team-stars">★★★☆☆</div>
+              </div>
+            </div>
+          </a>
+          <a class="team-card" href="#">
+            <div class="team-logo" style="background:#ff6b6b;color:#fff;">RF</div>
+            <div class="team-info">
+              <div class="team-name">Red Fury</div>
+              <div class="team-footer">
+                <div class="team-pts">1,155 pts</div>
+                <div class="team-stars">★★★☆☆</div>
+              </div>
+            </div>
+          </a>
+          <a class="team-card" href="#">
+            <div class="team-logo" style="background:#22c55e;color:#000;">IK</div>
+            <div class="team-info">
+              <div class="team-name">Iron Kings</div>
+              <div class="team-footer">
+                <div class="team-pts">1,040 pts</div>
+                <div class="team-stars">★★☆☆☆</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="division-block">
+        <div class="division-header">
+          <div class="division-name">West Division</div>
+          <div class="division-rule"></div>
+        </div>
+        <div class="team-grid">
+          <a class="team-card" href="#">
+            <div class="team-logo" style="background:#ffb95f;color:#000;">GW</div>
+            <div class="team-info">
+              <div class="team-name">Golden Wolves</div>
+              <div class="team-footer">
+                <div class="team-pts">1,310 pts</div>
+                <div class="team-stars">★★★★★</div>
+              </div>
+            </div>
+          </a>
+          <a class="team-card" href="#">
+            <div class="team-logo" style="background:#2d2d2d;color:#fff;">NS</div>
+            <div class="team-info">
+              <div class="team-name">Night Stalkers</div>
+              <div class="team-footer">
+                <div class="team-pts">1,089 pts</div>
+                <div class="team-stars">★★☆☆☆</div>
+              </div>
+            </div>
+          </a>
+          <a class="team-card" href="#">
+            <div class="team-logo" style="background:#a78bfa;color:#000;">CR</div>
+            <div class="team-info">
+              <div class="team-name">Crystal Rush</div>
+              <div class="team-footer">
+                <div class="team-pts">1,066 pts</div>
+                <div class="team-stars">★★☆☆☆</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION: Matches
+    ══════════════════════════════════════════ -->
+    <div class="section" id="sec-matches">
+      <div class="section-head">
+        <span class="section-label">Match History</span>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="note">
+        <strong>Changes:</strong> Card radius 6px → 16px. Score font: body → JetBrains Mono 22px/700.
+        Team/event labels: body → JetBrains Mono UPPERCASE with tracking.
+        Team color bars retained. Hover border: blue → mint.
+      </div>
+
+      <div class="match-list">
+        <!-- Match 1 — winner left -->
+        <div class="match-card">
+          <div class="match-scoreline">
+            <div class="match-team-a">
+              <div class="color-bar" style="background:#3cffd0;"></div>
+              <div class="match-team-name w">Thunder Hawks</div>
+            </div>
+            <div class="score-block">
+              <div class="score-num w">112</div>
+              <div class="score-sep">—</div>
+              <div class="score-num">98</div>
+            </div>
+            <div class="match-team-b">
+              <div class="match-team-name">Blue Lightning</div>
+              <div class="color-bar" style="background:#5200ff;"></div>
+            </div>
+          </div>
+          <div class="match-meta">
+            <div class="match-event">Summer Championship 2025</div>
+            <div class="match-date">· Group Stage · 12 Jul 2025, 8:00 pm</div>
+          </div>
+        </div>
+
+        <!-- Match 2 — voided badge -->
+        <div class="match-card">
+          <div class="match-scoreline">
+            <div class="match-team-a">
+              <div class="color-bar" style="background:#ffb95f;"></div>
+              <div class="match-team-name">Golden Wolves</div>
+            </div>
+            <div class="score-block">
+              <div class="score-num">105</div>
+              <div class="score-sep">—</div>
+              <div class="score-num">88</div>
+            </div>
+            <div class="match-team-b">
+              <div class="match-team-name">Red Fury</div>
+              <div class="color-bar" style="background:#ff6b6b;"></div>
+            </div>
+          </div>
+          <div class="match-meta">
+            <div class="match-event">Summer Championship 2025</div>
+            <div class="match-date">· Finals · 18 Jul 2025, 9:00 pm</div>
+            <span class="badge badge-danger" style="margin-left:auto;">Voided</span>
+          </div>
+        </div>
+
+        <!-- Match 3 — winner right -->
+        <div class="match-card">
+          <div class="match-scoreline">
+            <div class="match-team-a">
+              <div class="color-bar" style="background:#2d2d2d;"></div>
+              <div class="match-team-name">Night Stalkers</div>
+            </div>
+            <div class="score-block">
+              <div class="score-num">77</div>
+              <div class="score-sep">—</div>
+              <div class="score-num w">103</div>
+            </div>
+            <div class="match-team-b">
+              <div class="match-team-name w">Thunder Hawks</div>
+              <div class="color-bar" style="background:#3cffd0;"></div>
+            </div>
+          </div>
+          <div class="match-meta">
+            <div class="match-event">Regular Season 2025</div>
+            <div class="match-date">· Round 3 · 5 Jun 2025, 7:30 pm</div>
+            <span class="badge badge-neutral" style="margin-left:auto;">Round 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION: Match Detail Header (box score preview)
+    ══════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-head">
+        <span class="section-label">Match Detail — Score Header</span>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="note">
+        <strong>Changes:</strong> Team name font: body → Anton display.
+        Score: JetBrains Mono 40px. Event/round info: mono UPPERCASE.
+      </div>
+
+      <div class="match-detail-header">
+        <div class="match-detail-meta">
+          Summer Championship 2025 · Group Stage · 12 Jul 2025, 8:00 pm
+        </div>
+        <div class="match-detail-scoreline">
+          <div class="detail-team-a">
+            <div class="detail-team-logo" style="background:#3cffd0;color:#000;">TH</div>
+            <div class="detail-team-name w">THUNDER HAWKS</div>
+          </div>
+          <div class="detail-score-block">
+            <div class="detail-score">
+              <div class="detail-score-num w">112</div>
+              <div class="detail-score-sep">–</div>
+              <div class="detail-score-num">98</div>
+            </div>
+          </div>
+          <div class="detail-team-b">
+            <div class="detail-team-name">BLUE LIGHTNING</div>
+            <div class="detail-team-logo" style="background:#5200ff;color:#fff;">BL</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Box score table -->
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th class="r">MIN</th>
+              <th class="r">PTS</th>
+              <th class="r">REB</th>
+              <th class="r">AST</th>
+              <th class="r">STL</th>
+              <th class="r">BLK</th>
+              <th class="r">FG%</th>
+              <th class="r">3P%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="player-name">James Walker <span class="badge badge-neutral" style="font-size:8px;">PG</span></td>
+              <td class="r">36</td>
+              <td class="r stat-lead">31</td>
+              <td class="r">5</td>
+              <td class="r">9</td>
+              <td class="r">2</td>
+              <td class="r">0</td>
+              <td class="r">52.4</td>
+              <td class="r">44.0</td>
+            </tr>
+            <tr>
+              <td class="player-name">Derek Hill <span class="badge badge-neutral" style="font-size:8px;">SF</span></td>
+              <td class="r">34</td>
+              <td class="r">24</td>
+              <td class="r">8</td>
+              <td class="r">3</td>
+              <td class="r">1</td>
+              <td class="r">2</td>
+              <td class="r">48.1</td>
+              <td class="r">38.5</td>
+            </tr>
+            <tr>
+              <td class="player-name">Alex Chen <span class="badge badge-neutral" style="font-size:8px;">C</span></td>
+              <td class="r">30</td>
+              <td class="r">18</td>
+              <td class="r stat-lead">14</td>
+              <td class="r">2</td>
+              <td class="r">0</td>
+              <td class="r">3</td>
+              <td class="r">55.0</td>
+              <td class="r">—</td>
+            </tr>
+            <tr>
+              <td class="player-name">Sam Torres <span class="badge badge-neutral" style="font-size:8px;">SG</span></td>
+              <td class="r">28</td>
+              <td class="r">22</td>
+              <td class="r">3</td>
+              <td class="r">5</td>
+              <td class="r">3</td>
+              <td class="r">0</td>
+              <td class="r">46.7</td>
+              <td class="r">50.0</td>
+            </tr>
+            <tr>
+              <td class="player-name" style="color:var(--text-muted);font-weight:500;">Kyle Park <span class="badge badge-neutral" style="font-size:8px;">PF</span></td>
+              <td class="r">17</td>
+              <td class="r">17</td>
+              <td class="r">6</td>
+              <td class="r">1</td>
+              <td class="r">1</td>
+              <td class="r">1</td>
+              <td class="r">43.2</td>
+              <td class="r">33.3</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION: Players — Stat Leaders
+    ══════════════════════════════════════════ -->
+    <div class="section" id="sec-players">
+      <div class="section-head">
+        <span class="section-label">Players — Statistical Leaders</span>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="note">
+        <strong>Changes:</strong> Stat value font: Hanken Grotesk → Anton display at 52px (much larger, editorial impact).
+        Category label: body → JetBrains Mono UPPERCASE with letter-spacing.
+        Gradient overlays retained (per existing design decision).
+        Canvas: navy → near-black shifts the gradient tone slightly.
+      </div>
+
+      <div class="leader-grid">
+        <div class="leader-card pts">
+          <div class="leader-top">
+            <span class="leader-crown">♛</span>
+            <span class="leader-label">Points</span>
+          </div>
+          <div class="leader-value">28.4</div>
+          <div class="leader-player-name">James Walker</div>
+          <div class="leader-team-name">Thunder Hawks</div>
+        </div>
+        <div class="leader-card ast">
+          <div class="leader-top">
+            <span class="leader-crown">♛</span>
+            <span class="leader-label">Assists</span>
+          </div>
+          <div class="leader-value">11.2</div>
+          <div class="leader-player-name">Marcus Lee</div>
+          <div class="leader-team-name">Golden Wolves</div>
+        </div>
+        <div class="leader-card reb">
+          <div class="leader-top">
+            <span class="leader-crown">♛</span>
+            <span class="leader-label">Rebounds</span>
+          </div>
+          <div class="leader-value">13.8</div>
+          <div class="leader-player-name">Chris Davis</div>
+          <div class="leader-team-name">Red Fury</div>
+        </div>
+        <div class="leader-card rtg">
+          <div class="leader-top">
+            <span class="leader-crown">♛</span>
+            <span class="leader-label">Rating</span>
+          </div>
+          <div class="leader-value">9.1</div>
+          <div class="leader-player-name">James Walker</div>
+          <div class="leader-team-name">Thunder Hawks</div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th class="r">PTS</th>
+              <th class="r">AST</th>
+              <th class="r">REB</th>
+              <th class="r">STL</th>
+              <th class="r">BLK</th>
+              <th class="r">FG%</th>
+              <th class="r">Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="rank-pip rank-1">1</span></td>
+              <td>
+                <span class="player-name">James Walker</span>
+                <span class="team-tag" style="background:rgba(60,255,208,0.10);color:#3cffd0;">TH</span>
+              </td>
+              <td class="r stat-lead">28.4</td>
+              <td class="r">7.3</td>
+              <td class="r">6.1</td>
+              <td class="r">1.8</td>
+              <td class="r">0.9</td>
+              <td class="r">50.2</td>
+              <td class="r">9.1</td>
+            </tr>
+            <tr>
+              <td><span class="rank-pip rank-2">2</span></td>
+              <td>
+                <span class="player-name">Marcus Lee</span>
+                <span class="team-tag" style="background:rgba(255,185,95,0.10);color:#ffb95f;">GW</span>
+              </td>
+              <td class="r">24.6</td>
+              <td class="r stat-lead">11.2</td>
+              <td class="r">4.5</td>
+              <td class="r">2.1</td>
+              <td class="r">0.4</td>
+              <td class="r">47.8</td>
+              <td class="r">8.7</td>
+            </tr>
+            <tr>
+              <td><span class="rank-pip rank-3">3</span></td>
+              <td>
+                <span class="player-name">Chris Davis</span>
+                <span class="team-tag" style="background:rgba(255,107,107,0.10);color:#ff6b6b;">RF</span>
+              </td>
+              <td class="r">19.3</td>
+              <td class="r">3.8</td>
+              <td class="r stat-lead">13.8</td>
+              <td class="r">1.2</td>
+              <td class="r">2.1</td>
+              <td class="r">53.1</td>
+              <td class="r">8.2</td>
+            </tr>
+            <tr>
+              <td><span class="rank-pip rank-n">4</span></td>
+              <td>
+                <span class="player-name">Tony Park</span>
+                <span class="team-tag" style="background:rgba(82,0,255,0.10);color:#a07aff;">BL</span>
+              </td>
+              <td class="r">18.8</td>
+              <td class="r">5.4</td>
+              <td class="r">5.2</td>
+              <td class="r">1.5</td>
+              <td class="r">0.7</td>
+              <td class="r">44.6</td>
+              <td class="r">7.9</td>
+            </tr>
+            <tr>
+              <td><span class="rank-pip rank-n">5</span></td>
+              <td>
+                <span class="player-name">Devon Smith</span>
+                <span class="team-tag" style="background:rgba(255,255,255,0.05);color:#94a3b8;">NS</span>
+              </td>
+              <td class="r">16.2</td>
+              <td class="r">8.9</td>
+              <td class="r">3.7</td>
+              <td class="r">2.4</td>
+              <td class="r">0.2</td>
+              <td class="r">41.3</td>
+              <td class="r">7.4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION: Create Team Form
+    ══════════════════════════════════════════ -->
+    <div class="section" id="sec-form">
+      <div class="section-head">
+        <span class="section-label">Create Team Form</span>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="note">
+        <strong>Changes:</strong> Panel radius 6px → 16px. Panel title: body → Anton display.
+        Field labels: body → JetBrains Mono UPPERCASE.
+        Input focus border: blue → mint. Input background: slightly darker than panel.
+        Buttons: same pill shape as everywhere.
+      </div>
+
+      <div class="panel" style="max-width:560px;">
+        <div class="panel-title">CREATE TEAM</div>
+        <div class="panel-sub">New team registration</div>
+        <div class="form-fields">
+          <div class="form-grid-2">
+            <div class="field">
+              <label class="field-label">Team Name</label>
+              <input class="field-input" placeholder="e.g. Thunder Hawks" type="text">
+            </div>
+            <div class="field">
+              <label class="field-label">Division</label>
+              <select class="field-input">
+                <option>East Division</option>
+                <option>West Division</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Primary Color</label>
+            <input class="field-input" placeholder="#3cffd0" type="text">
+          </div>
+          <div class="row" style="margin-top:4px;">
+            <button class="btn btn-primary">Create Team</button>
+            <button class="btn btn-secondary">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION: Design Token Comparison
+    ══════════════════════════════════════════ -->
+    <div class="section" id="sec-tokens">
+      <div class="section-head">
+        <span class="section-label">Design Token Comparison</span>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table comparison-table">
+          <thead>
+            <tr>
+              <th>Token / Property</th>
+              <th>Current</th>
+              <th>Proposed</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Canvas background</td>
+              <td class="val-old">#0b1326</td>
+              <td class="val-new">#131313</td>
+              <td class="change-note">Warmer near-black vs cool navy. Less blue cast overall.</td>
+            </tr>
+            <tr>
+              <td>Card / panel surface</td>
+              <td class="val-old">#121c2f</td>
+              <td class="val-new">#1a1a1a</td>
+              <td class="change-note">Follows the canvas shift — neutral dark vs tinted dark.</td>
+            </tr>
+            <tr>
+              <td>Primary action color</td>
+              <td class="val-old">#2563eb (blue)</td>
+              <td class="val-new">#3cffd0 (mint)</td>
+              <td class="change-note"><strong>Biggest color change.</strong> All CTAs, active states, focus rings shift to mint.</td>
+            </tr>
+            <tr>
+              <td>Secondary accent</td>
+              <td class="val-old">—</td>
+              <td class="val-new">#5200ff (ultraviolet)</td>
+              <td class="change-note">New: used for alternative tags, badge variants, promotional elements.</td>
+            </tr>
+            <tr>
+              <td>Success / positive color</td>
+              <td class="val-old">#10b981 (emerald)</td>
+              <td class="val-new">#3cffd0 (mint, same as primary)</td>
+              <td class="change-note">Unifies success with the primary accent. Tradeoff: less differentiation.</td>
+            </tr>
+            <tr>
+              <td>Button border radius</td>
+              <td class="val-old">4px</td>
+              <td class="val-new">24px (pill)</td>
+              <td class="change-note"><strong>Most visible shape change.</strong> Full pill vs near-square.</td>
+            </tr>
+            <tr>
+              <td>Card border radius</td>
+              <td class="val-old">6px</td>
+              <td class="val-new">16px</td>
+              <td class="change-note">Softer, more modern. Maintains information density.</td>
+            </tr>
+            <tr>
+              <td>Badge border radius</td>
+              <td class="val-old">2px</td>
+              <td class="val-new">20px (pill)</td>
+              <td class="change-note">Follows card direction — rounder, less typewriter-stamp feel.</td>
+            </tr>
+            <tr>
+              <td>Input border radius</td>
+              <td class="val-old">4px</td>
+              <td class="val-new">4px (unchanged)</td>
+              <td class="change-note">Keeping forms tight/functional is intentional for data entry.</td>
+            </tr>
+            <tr>
+              <td>Display / hero font</td>
+              <td class="val-old">Hanken Grotesk</td>
+              <td class="val-new">Anton (Manuka substitute)</td>
+              <td class="change-note">Used for page titles, team names in detail views. More editorial presence.</td>
+            </tr>
+            <tr>
+              <td>Body / UI font</td>
+              <td class="val-old">Inter</td>
+              <td class="val-new">Space Grotesk</td>
+              <td class="change-note">Subtle shift — similar legibility, slightly wider letter forms. Could keep Inter.</td>
+            </tr>
+            <tr>
+              <td>Data / stats font</td>
+              <td class="val-old">JetBrains Mono</td>
+              <td class="val-new">JetBrains Mono (unchanged)</td>
+              <td class="change-note">Already correct. No change.</td>
+            </tr>
+            <tr>
+              <td>Label style</td>
+              <td class="val-old">Mixed case, body font</td>
+              <td class="val-new">ALL CAPS, JetBrains Mono, 1.5–2px tracking</td>
+              <td class="change-note">Section headers, table headers, form labels, eyebrows all shift.</td>
+            </tr>
+            <tr>
+              <td>Card border color</td>
+              <td class="val-old">#334155 (solid slate)</td>
+              <td class="val-new">rgba(255,255,255,0.18)</td>
+              <td class="change-note">Translucent white instead of tinted slate. Adapts better to any canvas color.</td>
+            </tr>
+            <tr>
+              <td>Elevation / depth</td>
+              <td class="val-old">Tonal layering (navy shades)</td>
+              <td class="val-new">1px borders + mint accent on hover</td>
+              <td class="change-note">Same flat philosophy, different execution. Mint hover border replaces blue.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
