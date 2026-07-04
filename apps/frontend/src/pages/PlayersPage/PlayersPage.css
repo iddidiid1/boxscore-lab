@@ -122,22 +122,22 @@
 }
 
 .stat-leader-value {
-  margin-top: 7px;
+  margin-top: 10px;
   color: var(--stat-accent);
   font-family: var(--font-family-data);
-  font-size: 2rem;
+  font-size: 2.4rem;
   font-weight: 900;
   line-height: 1.05;
 }
 
 .stat-leader-player {
-  margin-top: 14px;
+  margin-top: 9px;
 }
 
 .stat-leader-name {
   overflow: hidden;
   color: var(--color-text-strong);
-  font-size: 0.92rem;
+  font-size: 1.15rem;
   font-weight: 750;
   line-height: 1.25;
   text-overflow: ellipsis;
