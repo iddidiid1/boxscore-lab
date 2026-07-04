@@ -1,4 +1,4 @@
-.events-page {
+﻿.events-page {
   width: 100%;
 }
 
@@ -136,7 +136,7 @@
 }
 
 .event-card-stat svg {
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
 }
 
 .event-footer-status {

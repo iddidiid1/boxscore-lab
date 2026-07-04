@@ -20,7 +20,6 @@ export function MatchesPageHeader() {
         component="a"
         href="/matches/new"
         leftSection={<Plus size={16} />}
-        size="sm"
       >
         Create Match
       </Button>

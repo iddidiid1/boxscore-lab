@@ -1,4 +1,4 @@
-.players-page {
+﻿.players-page {
   width: 100%;
 }
 
@@ -267,7 +267,7 @@
 .player-sort-indicator {
   display: inline-block;
   min-width: 8px;
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
 }
 
 .player-rank-column {
@@ -321,7 +321,7 @@
 }
 
 .player-name-button:hover {
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
 }
 
 .player-name-button:focus-visible {

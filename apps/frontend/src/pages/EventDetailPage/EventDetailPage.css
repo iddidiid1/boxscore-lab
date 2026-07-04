@@ -1,4 +1,4 @@
-.event-detail-page {
+﻿.event-detail-page {
   width: 100%;
 }
 
@@ -29,14 +29,15 @@
 }
 
 .event-detail-back-link {
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
   font-size: 0.86rem;
   font-weight: 700;
   text-decoration: none;
 }
 
 .event-detail-back-link:hover {
-  color: var(--color-action-primary-soft-hover);
+  color: var(--color-text-strong);
+  text-decoration: none;
 }
 
 .edit-event-button {
@@ -88,7 +89,7 @@
 }
 
 .event-detail-meta svg {
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
 }
 
 .event-detail-panel {
@@ -125,7 +126,7 @@
 
 .event-stage-chip {
   border-color: var(--color-event-stage-border);
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
 }
 
 .event-result-chip {

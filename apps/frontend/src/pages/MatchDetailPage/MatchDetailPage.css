@@ -1,10 +1,10 @@
-.match-detail-page {
+﻿.match-detail-page {
   width: 100%;
 }
 
 .match-detail-back-link {
   width: fit-content;
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
@@ -35,7 +35,7 @@
 
 .match-detail-event {
   overflow: hidden;
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
   font-family: var(--font-family-data);
   font-size: 0.72rem;
   font-weight: 850;
@@ -259,7 +259,7 @@
 .match-box-score-sort-indicator {
   display: inline-block;
   min-width: 8px;
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
 }
 
 .match-box-score-value {

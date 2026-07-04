@@ -1,10 +1,10 @@
-.team-detail-page {
+﻿.team-detail-page {
   width: 100%;
 }
 
 .team-detail-back-link {
   width: fit-content;
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
@@ -286,7 +286,7 @@
 .roster-sort-indicator {
   display: inline-block;
   min-width: 8px;
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
 }
 
 .roster-value {

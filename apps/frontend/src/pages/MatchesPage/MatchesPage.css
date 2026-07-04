@@ -1,4 +1,4 @@
-.matches-page {
+﻿.matches-page {
   width: 100%;
 }
 
@@ -105,7 +105,7 @@
 .match-event-label {
   overflow: hidden;
   max-width: 100%;
-  color: var(--color-action-primary-soft);
+  color: var(--color-action-primary);
   font-family: var(--font-family-data);
   font-size: 0.7rem;
   font-weight: 850;
