@@ -74,7 +74,7 @@
 .team-logo {
   width: 42px;
   height: 42px;
-  border-radius: 10px;
+  border-radius: var(--radius-team-logo);
   object-fit: cover;
   flex-shrink: 0;
 }

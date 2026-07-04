@@ -57,7 +57,7 @@
 
 /* NumberInput controls must match the input container's border-radius */
 .mantine-NumberInput-control {
-  border-radius: 0;
+  border-radius: var(--radius-sharp);
 }
 
 .mantine-NumberInput-control:first-child {

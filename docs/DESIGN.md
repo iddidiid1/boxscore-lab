@@ -201,6 +201,7 @@ No drop shadows. Depth comes from tonal surface layering and 1px borders only.
 | Token | Value | Use |
 |-------|-------|-----|
 | `r-input` | 4px | Text inputs, selects — tight, functional |
+| `r-team-logo` | 10px | Team logos inside team cards |
 | `r-badge` | 20px | Status pills, category badges |
 | `r-card` | 16px | All cards and panels |
 | `r-button` | 24px | All buttons — full pill |
