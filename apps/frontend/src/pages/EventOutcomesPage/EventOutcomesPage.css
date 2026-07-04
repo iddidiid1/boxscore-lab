@@ -1,0 +1,21 @@
+.event-outcomes-page {
+  width: 100%;
+}
+
+.event-outcomes-header {
+  gap: 18px;
+}
+
+.event-outcomes-actions {
+  flex: 0 0 auto;
+}
+
+.event-outcomes-save-button,
+.event-outcomes-cancel-button {
+  min-width: 112px;
+}
+
+.event-outcomes-award-count {
+  background: var(--color-action-primary);
+  color: var(--color-text-on-accent);
+}

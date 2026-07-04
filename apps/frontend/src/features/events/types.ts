@@ -1,3 +1,5 @@
+import type { PlayerPosition } from "../teams/types";
+
 export type EventStatus = "PREPARING" | "ONGOING" | "COMPLETED";
 export type EventTier = "S" | "A" | "B" | "C";
 export type PlayerAwardType = "EVENT_MVP" | "ALL_EVENT_FIRST_TEAM" | "ALL_EVENT_SECOND_TEAM";
@@ -15,13 +17,13 @@ export type EventParticipant = {
   divisionId: number | null; divisionName: string | null; isEligible: boolean;
 };
 export type AwardCandidatePlayer = {
-  playerId: number; playerSlug: string; playerName: string; number: number; position: string;
+  playerId: number; playerSlug: string; playerName: string; number: number; position: PlayerPosition;
   teamId: number; teamSlug: string; teamName: string;
 };
 export type EventTeamResult = { id: number; teamId: number; teamSlug: string; teamName: string; resultTagId: number; resultTagLabel: string; notes: string | null };
 export type EventPlayerAward = {
   id: number; awardType: PlayerAwardType; playerId: number; playerSlug: string; playerName: string;
-  playerIsActive: boolean; teamId: number; teamSlug: string; teamName: string; notes: string | null;
+  playerPosition: PlayerPosition; playerIsActive: boolean; teamId: number; teamSlug: string; teamName: string; notes: string | null;
 };
 export type EventDetail = {
   id: number; slug: string; name: string; tier: EventTier; status: EventStatus; description: string | null;

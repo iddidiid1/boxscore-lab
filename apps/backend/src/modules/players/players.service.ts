@@ -1,10 +1,10 @@
 import { EventStatus, PlayerPosition, Prisma } from "@prisma/client";
 import { prisma } from "../../shared/db/prisma.js";
+import { PLAYER_POSITION_ORDER } from "../../shared/constants/player-positions.js";
 import { ApiError } from "../../shared/errors/api-error.js";
 import type { PlayerDetailQuery, PlayerListQuery, PlayerSortField } from "./players.validation.js";
 
 const visibleEvent = { status: { in: [EventStatus.ONGOING, EventStatus.COMPLETED] }, archivedAt: null, deletedAt: null };
-const positions: PlayerPosition[] = [PlayerPosition.PG, PlayerPosition.SG, PlayerPosition.G, PlayerPosition.SF, PlayerPosition.PF, PlayerPosition.F, PlayerPosition.C];
 const labels = { points: "Points Per Game", rebounds: "Rebounds Per Game", assists: "Assists Per Game", rating: "Player Rating" } as const;
 type Totals = { gamesPlayed: number; points: number; rebounds: number; assists: number; fieldGoalsMade: number; fieldGoalsAttempted: number; threePointersMade: number; threePointersAttempted: number; minutes: number; rating: number };
 const zeroTotals = (): Totals => ({ gamesPlayed: 0, points: 0, rebounds: 0, assists: 0, fieldGoalsMade: 0, fieldGoalsAttempted: 0, threePointersMade: 0, threePointersAttempted: 0, minutes: 0, rating: 0 });
@@ -68,7 +68,7 @@ export async function listPlayers(query: PlayerListQuery) {
   const events = await prisma.event.findMany({ where: visibleEvent, select: { id: true, name: true, status: true }, orderBy: [{ rankingOrder: "asc" }, { id: "asc" }] });
   const optionTeams = query.eventId ? await prisma.team.findMany({ where: { archivedAt: null, eventParticipants: { some: { eventId: query.eventId } } }, select: { id: true, name: true }, orderBy: [{ name: "asc" }, { id: "asc" }] }) : [...new Map(all.map((item) => [item.player.team.id, { id: item.player.team.id, name: item.player.team.name }])).values()].sort((a, b) => a.name.localeCompare(b.name) || a.id - b.id);
   const positionSource = all.filter((item) => (!query.teamId || item.player.team.id === query.teamId) && (!participantIds || participantIds.has(item.player.team.id)));
-  return { items, leaders, pagination: { page, pageSize: query.pageSize, totalItems, totalPages }, filterOptions: { events, teams: optionTeams, positions: positions.filter((position) => positionSource.some((item) => item.player.position === position)) } };
+  return { items, leaders, pagination: { page, pageSize: query.pageSize, totalItems, totalPages }, filterOptions: { events, teams: optionTeams, positions: PLAYER_POSITION_ORDER.filter((position) => positionSource.some((item) => item.player.position === position)) } };
 }
 
 export async function getPlayerDetail(slug: string, query: PlayerDetailQuery) {
