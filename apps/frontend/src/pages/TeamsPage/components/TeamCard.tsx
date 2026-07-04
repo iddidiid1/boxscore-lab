@@ -1,4 +1,3 @@
-import { Anchor, Box, Group, Text } from "@mantine/core";
 import { Shield } from "lucide-react";
 import type { Team } from "../types";
 
@@ -16,8 +15,8 @@ function getInitials(name: string) {
 }
 
 function getStars(rating: number) {
-  const roundedRating = Math.max(0, Math.min(5, Math.round(rating / 2)));
-  return `${"\u2605".repeat(roundedRating)}${"\u2606".repeat(5 - roundedRating)}`;
+  const rounded = Math.max(0, Math.min(5, Math.round(rating / 2)));
+  return `${"★".repeat(rounded)}${"☆".repeat(5 - rounded)}`;
 }
 
 function TeamLogo({ team }: { team: Team }) {
@@ -25,38 +24,45 @@ function TeamLogo({ team }: { team: Team }) {
     return <img alt="" className="team-logo" src={team.logoUrl} />;
   }
 
+  const bg = team.primaryColor ?? "#232323";
+  const isDark =
+    !team.primaryColor ||
+    parseInt(team.primaryColor.slice(1, 3), 16) * 0.299 +
+      parseInt(team.primaryColor.slice(3, 5), 16) * 0.587 +
+      parseInt(team.primaryColor.slice(5, 7), 16) * 0.114 <
+      128;
+
   return (
-    <Box aria-hidden="true" className="team-logo team-logo-fallback">
-      <Shield size={18} />
+    <div
+      aria-hidden="true"
+      className="team-logo team-logo-fallback"
+      style={{ background: bg, color: isDark ? "#ffffff" : "#000000" }}
+    >
+      <Shield size={17} />
       <span>{getInitials(team.name)}</span>
-    </Box>
+    </div>
   );
 }
 
 export function TeamCard({ team }: TeamCardProps) {
-  const teamDetailPath = `/teams/${team.slug}`;
   const rating = team.overallRating ?? 0;
 
   return (
-      <Box className="team-card app-panel">
-      <Anchor
-        aria-label={`View ${team.name} details`}
-        className="team-logo-link"
-        href={teamDetailPath}
-      >
-        <TeamLogo team={team} />
-      </Anchor>
-      <Box className="team-card-main">
-        <Anchor className="team-name-link" href={teamDetailPath}>
-          <Text className="team-name">{team.name}</Text>
-        </Anchor>
-        <Group gap="xs" justify="space-between" wrap="nowrap">
-          <Text className="team-points">{team.totalPoints.toLocaleString()} pts</Text>
-          <Text aria-label={`${rating} out of 10 rating`} className="team-rating">
+    <a
+      aria-label={`View ${team.name} details`}
+      className="team-card"
+      href={`/teams/${team.slug}`}
+    >
+      <TeamLogo team={team} />
+      <div className="team-info">
+        <div className="team-name">{team.name}</div>
+        <div className="team-footer">
+          <span className="team-pts">{team.totalPoints.toLocaleString()} pts</span>
+          <span aria-label={`${rating} out of 10 rating`} className="team-stars">
             {getStars(rating)}
-          </Text>
-        </Group>
-      </Box>
-    </Box>
+          </span>
+        </div>
+      </div>
+    </a>
   );
 }
