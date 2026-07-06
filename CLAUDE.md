@@ -106,6 +106,7 @@ Dark analytics theme — "Elite, Analytical, Tactical." Details in `docs/DESIGN.
 | `docs/DELETION_RULES.md` | Deletion and archival behavior for each model |
 | `docs/TEAM_POINTS_RULES.md` | Points calculation rules and ranking order rules |
 | `docs/TEAM_RANKING_CONFIG.md` | Constants: `BASE_TEAM_POINTS=1000`, `RANKING_DECAY_WINDOW=10` |
+| `docs/TEAM_LOGO_ASSETS.md` | Team logo storage, path/URL validation, and aspect-ratio display rules |
 | `docs/prd/TeamRosterManagementBackendPRD.md` | Team roster management backend spec (API, validation, error codes) |
 | `docs/prd/TeamRosterManagementFrontendPRD.md` | Team roster management frontend spec (pages, components, API calls, UI specs) |
 | `prisma/schema.prisma` | Database schema — single source of truth for models |

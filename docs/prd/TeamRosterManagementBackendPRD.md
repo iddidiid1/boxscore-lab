@@ -407,7 +407,7 @@
 |------|------|
 | `name` | 必填，trim 后 1–100 字符 |
 | `divisionId` | 若提供，必须为正整数；创建 Active Team 时缺省或为 `null` 按 §6.1 返回 `422 ACTIVE_TEAM_REQUIRES_DIVISION` |
-| `logoUrl` | 若提供，必须为合法 HTTP/HTTPS URL，最多 2,048 字符；可用 `null` 或空字符串清空 |
+| `logoUrl` | 若提供，必须为合法 HTTP/HTTPS URL **或**站内相对路径（如 `/logos/celtics.png`），最多 2,048 字符；可用 `null` 或空字符串清空。详见 `docs/TEAM_LOGO_ASSETS.md` |
 | `primaryColor` | 若提供，必须严格匹配 `^#[0-9A-Fa-f]{6}$`；可用 `null` 或空字符串清空 |
 | `overallRating` | 若提供，必须为 `0–10` 范围内的数值 |
 | `description` | 若提供，最多 2,000 字符；可用 `null` 或空字符串清空 |
