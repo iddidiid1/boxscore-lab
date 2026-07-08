@@ -5,8 +5,7 @@ import type {
   TeamDivisionGroup,
   TeamMutationPayload
 } from "../types";
-
-const API_BASE_URL = "http://localhost:4000/api";
+import { API_BASE_URL } from "../../../shared/api/base";
 
 export class ApiClientError extends Error {
   response: ApiErrorResponse;

@@ -7,8 +7,7 @@ import type {
   MatchListResponse,
   UpdateMatchPayload
 } from "../types";
-
-const API_BASE_URL = "http://localhost:4000/api";
+import { API_BASE_URL } from "../../../shared/api/base";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {

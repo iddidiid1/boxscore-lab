@@ -388,7 +388,7 @@
 - 请求体只能包含本 PRD 声明的字段；未知字段统一返回 `400 VALIDATION_ERROR`。
 - `slug` 不得出现在 POST/PATCH 请求体中；若出现，按未知字段处理并返回 `400 VALIDATION_ERROR`。
 - 字符串字段先执行 trim；可清空字段的空字符串按 §3.8 标准化为 `null`，不可清空字段的空字符串返回 `400 VALIDATION_ERROR`。
-- URL 字段只允许合法的 `http://` 或 `https://` URL。
+- URL 字段只允许合法的 `http://` 或 `https://` URL。**例外**：`logoUrl` 额外接受站内相对路径（以 `/` 开头，如 `/logos/celtics.png`），详见字段表与 `docs/TEAM_LOGO_ASSETS.md`。
 - 字符串长度限制：
   - `Team.name`：trim 后 1–100 字符
   - `Team.description`：最多 2,000 字符
@@ -407,7 +407,7 @@
 |------|------|
 | `name` | 必填，trim 后 1–100 字符 |
 | `divisionId` | 若提供，必须为正整数；创建 Active Team 时缺省或为 `null` 按 §6.1 返回 `422 ACTIVE_TEAM_REQUIRES_DIVISION` |
-| `logoUrl` | 若提供，必须为合法 HTTP/HTTPS URL，最多 2,048 字符；可用 `null` 或空字符串清空 |
+| `logoUrl` | 若提供，必须为合法 HTTP/HTTPS URL **或**站内相对路径（如 `/logos/celtics.png`），最多 2,048 字符；可用 `null` 或空字符串清空。详见 `docs/TEAM_LOGO_ASSETS.md` |
 | `primaryColor` | 若提供，必须严格匹配 `^#[0-9A-Fa-f]{6}$`；可用 `null` 或空字符串清空 |
 | `overallRating` | 若提供，必须为 `0–10` 范围内的数值 |
 | `description` | 若提供，最多 2,000 字符；可用 `null` 或空字符串清空 |

@@ -37,6 +37,7 @@ function teamSummary(team: MatchDetailRecord["teams"][number]["team"], includeAr
     id: team.id,
     slug: team.slug,
     name: team.name,
+    logoUrl: team.logoUrl,
     primaryColor: team.primaryColor,
     ...(includeArchived ? { archivedAt: iso(team.archivedAt) } : {})
   };

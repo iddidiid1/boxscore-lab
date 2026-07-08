@@ -9,6 +9,7 @@ export type MatchTeamSummary = {
   id: number;
   slug: string;
   name: string;
+  logoUrl: string | null;
   primaryColor: string | null;
   archivedAt?: string | null;
 };

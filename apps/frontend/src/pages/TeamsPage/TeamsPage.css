@@ -75,7 +75,7 @@
   width: 42px;
   height: 42px;
   border-radius: var(--radius-team-logo);
-  object-fit: cover;
+  object-fit: contain;
   flex-shrink: 0;
 }
 

@@ -119,7 +119,7 @@ export function TeamEditorForm({
               error={errors.logoUrl}
               label="Logo URL"
               onChange={(event) => update({ logoUrl: event.currentTarget.value })}
-              placeholder="https://example.com/logo.png"
+              placeholder="/logos/celtics.png"
               value={value.logoUrl}
             />
 
