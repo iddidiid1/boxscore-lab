@@ -168,7 +168,6 @@ export function TeamEditorForm({
               disabled={disabled}
               error={errors.description}
               label="Team Description"
-              maxRows={5}
               minRows={4}
               onChange={(event) => update({ description: event.currentTarget.value })}
               placeholder="A fast-paced squad built around transition scoring and disciplined half-court spacing."
