@@ -20,17 +20,21 @@ Points and other computed values are unaffected — this is purely a display ass
 
 ## Asset Location & Naming
 
-- Local logo files live in `apps/frontend/public/logos/`.
-- They are **committed to the repository** and served as static assets by Vite
-  (dev) and from the built `dist/` (production) — no upload endpoint or backend
-  file storage is involved.
-- Format: **PNG** (transparent background expected). Real NBA logos are a fixed,
-  known set, so bundling them as static assets is appropriate for the MVP.
+- Local logo files live in `apps/frontend/public/logos/` and are served as static
+  assets by Vite (dev) and from the built `dist/` (production) — no upload endpoint
+  or backend file storage is involved.
+- They are **user-provided and gitignored — NOT committed to the repository.** Real
+  NBA / trademarked logos are not redistributed through this public repo. Only
+  `.gitkeep` and `README.md` in that folder are tracked; every `*.png` is ignored.
+  Provide your own copies locally (see `apps/frontend/public/logos/README.md`).
+- Format: **PNG** (transparent background expected).
 - File names use **kebab-case**, short and stable, e.g. `celtics.png`, `lakers.png`.
   Avoid long auto-generated names — the path is entered/selected by hand.
 
-**Tradeoff**: Because assets are bundled at build time, adding or replacing a logo
-requires a frontend rebuild (`pnpm build`). Acceptable for a fixed logo set.
+**Tradeoff**: Because assets are gitignored and bundled at build time, a fresh
+clone or deploy must place the PNGs manually, and adding or replacing a logo
+requires a frontend rebuild (`pnpm build`). Acceptable for a personal, single-user
+app that must not ship trademarked assets.
 
 ## Accepted Values & Backend Validation
 
@@ -55,10 +59,18 @@ should be updated to reference this document.
 NBA logos are frequently **not 1:1** (they may be wide, tall, or contain internal
 padding). To avoid cropping or distortion:
 
-- Logo `<img>` elements use **`object-fit: contain`** (not `cover`), centered
-  within a square box with light padding, so any aspect ratio renders complete.
+- Logo `<img>` elements use **`object-fit: contain`** (not `cover`) inside a fixed
+  **square** box, with **no extra padding** on the box, so any aspect ratio renders
+  complete and as large as the box allows. The logo's longer edge fills the box and
+  the other axis is centered automatically:
+  - Wide logo (width > height): width fills the box, centered vertically.
+  - Tall logo (height > width): height fills the box, centered horizontally.
+  - `contain` does this per image — no width/height branching or JS measurement is
+    needed, and a very wide logo (e.g. Spurs) is legitimately short in a square box.
 - This applies wherever a team logo is shown: team cards, team detail, the team
-  editor preview, and match summaries.
+  editor preview, and the **match detail team summary** (`MatchTeamSummary`). The
+  match **list** (`MatchRecordCard`) intentionally shows only a color bar + team
+  name and displays **no logo**.
 - Sizing tokens (e.g. `42×42px`, `border-radius: 10px` inside team cards) are
   defined in `docs/DESIGN.md` and are unchanged by this document.
 

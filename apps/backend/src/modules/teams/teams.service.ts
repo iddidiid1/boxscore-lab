@@ -87,8 +87,8 @@ function nullableString(
     details.push({ field, message: `${field} must be at most ${maxLength} characters` });
   }
 
-  if (options.url && !/^https?:\/\/\S+$/i.test(value)) {
-    details.push({ field, message: `${field} must be a valid HTTP/HTTPS URL` });
+  if (options.url && !/^(https?:\/\/\S+|\/[^\s?#]+)$/i.test(value)) {
+    details.push({ field, message: `${field} must be a valid HTTP/HTTPS URL or site-relative path` });
   }
 
   if (options.color && !/^#[0-9A-Fa-f]{6}$/.test(value)) {

@@ -21,3 +21,8 @@ prisma/playground-*.db-shm
 prisma/playground-*.db-wal
 backups/
 git status
+
+# Team logo assets are user-provided; NBA/trademarked logos are not distributed in this repo.
+apps/frontend/public/logos/*
+!apps/frontend/public/logos/.gitkeep
+!apps/frontend/public/logos/README.md

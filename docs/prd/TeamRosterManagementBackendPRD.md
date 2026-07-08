@@ -388,7 +388,7 @@
 - 请求体只能包含本 PRD 声明的字段；未知字段统一返回 `400 VALIDATION_ERROR`。
 - `slug` 不得出现在 POST/PATCH 请求体中；若出现，按未知字段处理并返回 `400 VALIDATION_ERROR`。
 - 字符串字段先执行 trim；可清空字段的空字符串按 §3.8 标准化为 `null`，不可清空字段的空字符串返回 `400 VALIDATION_ERROR`。
-- URL 字段只允许合法的 `http://` 或 `https://` URL。
+- URL 字段只允许合法的 `http://` 或 `https://` URL。**例外**：`logoUrl` 额外接受站内相对路径（以 `/` 开头，如 `/logos/celtics.png`），详见字段表与 `docs/TEAM_LOGO_ASSETS.md`。
 - 字符串长度限制：
   - `Team.name`：trim 后 1–100 字符
   - `Team.description`：最多 2,000 字符
