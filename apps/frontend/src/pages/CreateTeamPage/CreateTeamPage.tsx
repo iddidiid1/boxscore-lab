@@ -111,6 +111,7 @@ export function CreateTeamPage() {
     setIsSubmitting(true);
     try {
       const createdTeam = await createTeam(buildPayload(team, players));
+      allowUnload();
       window.location.href = `/teams/${createdTeam.slug}`;
     } catch (error) {
       if (error instanceof ApiClientError) {
@@ -129,7 +130,7 @@ export function CreateTeamPage() {
   }
 
   const dirty = useIsDirty(JSON.stringify({ team, players }), !isLoading);
-  useUnsavedChangesWarning(dirty);
+  const allowUnload = useUnsavedChangesWarning(dirty);
 
   return (
     <Stack className="manage-team-page" gap="lg">

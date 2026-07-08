@@ -143,6 +143,7 @@ export function ManageTeamPage() {
     setIsSubmitting(true);
     try {
       const updatedTeam = await updateTeam(slug, buildPayload(team, players));
+      allowUnload();
       window.location.href = `/teams/${updatedTeam.slug}`;
     } catch (error) {
       if (error instanceof ApiClientError) {
@@ -167,6 +168,7 @@ export function ManageTeamPage() {
     setPageError(null);
     try {
       await archiveTeam(slug);
+      allowUnload();
       window.location.href = "/teams";
     } catch (error) {
       if (error instanceof ApiClientError) {
@@ -181,7 +183,7 @@ export function ManageTeamPage() {
 
   const isArchived = loadedTeam?.archivedAt !== null && loadedTeam?.archivedAt !== undefined;
   const dirty = useIsDirty(JSON.stringify({ team, players }), !isLoading && team !== null && !isArchived);
-  useUnsavedChangesWarning(dirty);
+  const allowUnload = useUnsavedChangesWarning(dirty);
 
   return (
     <Stack className="manage-team-page" gap="lg">
