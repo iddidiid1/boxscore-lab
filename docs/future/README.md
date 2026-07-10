@@ -46,3 +46,4 @@ Future / Not in MVP
 - `RankingDecay.md` - future ranking decay / recent-event weighting.
 - `AwardSelectionRules.md` - future award lineup composition rules.
 - `AwardCompleteness.md` - future exact-count award completeness enforced at Event completion.
+- `ScreenshotStatImport.md` - future assisted stat entry by extracting a draft from game stats screenshots (AI pre-fill + human confirm).
