@@ -432,14 +432,39 @@ function getTotalPoints(team: RankingSource) {
   return BASE_TEAM_POINTS + team.eventResults.reduce((sum, result) => sum + result.resultTag.rankingPoints, 0);
 }
 
+type MatchTotals = {
+  points: number;
+  rebounds: number;
+  assists: number;
+  fieldGoalsMade: number;
+  fieldGoalsAttempted: number;
+  threePointersMade: number;
+  threePointersAttempted: number;
+};
+
+function emptyMatchTotals(): MatchTotals {
+  return {
+    points: 0,
+    rebounds: 0,
+    assists: 0,
+    fieldGoalsMade: 0,
+    fieldGoalsAttempted: 0,
+    threePointersMade: 0,
+    threePointersAttempted: 0
+  };
+}
+
 async function getTeamStats(teamId: number) {
-  const rows = await prisma.matchTeamOtherStat.findMany({
+  // Team per-game averages sum this team's rostered player box-score lines per
+  // match, then average across matches. MatchTeamOtherStat is deliberately
+  // excluded: it is an exception bucket, not part of the team's real box score.
+  const rows = await prisma.matchPlayerStat.findMany({
     where: {
       teamId,
       match: {
         voidedAt: null,
         event: {
-          status: EventStatus.COMPLETED,
+          status: { in: [EventStatus.ONGOING, EventStatus.COMPLETED] },
           deletedAt: null,
           archivedAt: null
         }
@@ -447,15 +472,29 @@ async function getTeamStats(teamId: number) {
     }
   });
 
+  const perMatch = new Map<number, MatchTotals>();
+  for (const row of rows) {
+    const totals = perMatch.get(row.matchId) ?? emptyMatchTotals();
+    totals.points += row.points;
+    totals.rebounds += row.rebounds;
+    totals.assists += row.assists;
+    totals.fieldGoalsMade += row.fieldGoalsMade;
+    totals.fieldGoalsAttempted += row.fieldGoalsAttempted;
+    totals.threePointersMade += row.threePointersMade;
+    totals.threePointersAttempted += row.threePointersAttempted;
+    perMatch.set(row.matchId, totals);
+  }
+
+  const matchTotals = [...perMatch.values()];
   return {
-    gamesPlayed: new Set(rows.map((row) => row.matchId)).size,
-    avgPoints: average(rows.map((row) => row.points)),
-    avgRebounds: average(rows.map((row) => row.rebounds)),
-    avgAssists: average(rows.map((row) => row.assists)),
-    avgFieldGoalsMade: average(rows.map((row) => row.fieldGoalsMade)),
-    avgFieldGoalsAttempted: average(rows.map((row) => row.fieldGoalsAttempted)),
-    avgThreePointersMade: average(rows.map((row) => row.threePointersMade)),
-    avgThreePointersAttempted: average(rows.map((row) => row.threePointersAttempted))
+    gamesPlayed: perMatch.size,
+    avgPoints: average(matchTotals.map((match) => match.points)),
+    avgRebounds: average(matchTotals.map((match) => match.rebounds)),
+    avgAssists: average(matchTotals.map((match) => match.assists)),
+    avgFieldGoalsMade: average(matchTotals.map((match) => match.fieldGoalsMade)),
+    avgFieldGoalsAttempted: average(matchTotals.map((match) => match.fieldGoalsAttempted)),
+    avgThreePointersMade: average(matchTotals.map((match) => match.threePointersMade)),
+    avgThreePointersAttempted: average(matchTotals.map((match) => match.threePointersAttempted))
   };
 }
 
@@ -467,7 +506,7 @@ async function getPlayerStats(playerId: number, teamId: number) {
       match: {
         voidedAt: null,
         event: {
-          status: EventStatus.COMPLETED,
+          status: { in: [EventStatus.ONGOING, EventStatus.COMPLETED] },
           deletedAt: null,
           archivedAt: null
         }

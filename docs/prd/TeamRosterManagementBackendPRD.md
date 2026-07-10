@@ -255,7 +255,7 @@
   - `players` 仅返回 `isActive = true` 的球员
   - `profileRating` 正常情况下返回对象；仅当历史数据或异常数据缺失 TeamProfileRating 时返回 `null`
   - 无历史比赛记录时，`teamStats` 均值字段返回 `0`，`gamesPlayed` 返回 `0`；`players[n].stats` 同理
-  - `teamStats` 基于 `MatchTeamOtherStat` 计算；`players[n].stats` 基于 `MatchPlayerStat` 计算
+  - `teamStats` 基于该队全体 `MatchPlayerStat` 按场次汇总后求场均计算；`players[n].stats` 基于 `MatchPlayerStat` 计算。两者均不使用 `MatchTeamOtherStat`
 - **Errors**: `TEAM_NOT_FOUND`
 
 ---
@@ -582,18 +582,18 @@
 ### 8.1 Team 详情统计
 
 统计来源：
-- `MatchTeamOtherStat` — 球队场均数据（得分、篮板、助攻、投篮）
-- `MatchPlayerStat` — 球员场均数据
+- `MatchPlayerStat` — 球队场均与球员场均均以此为唯一来源。
+- `MatchTeamOtherStat` **不参与** Team 详情统计。该行是为应对游戏 bug / 未实现设想而预留的“例外数据”，不属于球队真实 box score，故不计入球队或球员场均。
 
 统计过滤条件：
-- 仅统计所属 `Event.status = COMPLETED` 的 Match。
-- 不统计所属 `Event.deletedAt != null` 或 `Event.archivedAt != null` 的 Match。
+- 统计所属 `Event.status ∈ { ONGOING, COMPLETED }` 的 Match；进行中赛事里已录入的比赛同样计入场均。
+- 不统计所属 `Event.deletedAt != null` 或 `Event.archivedAt != null` 的 Match，也不统计 `Match.voidedAt != null` 的比赛。
 - 统计逻辑不要求 `Event.countsForRanking = true`；该字段只影响积分，不影响历史比赛统计。
 
 Team 统计口径：
-- `teamStats.gamesPlayed` 为该 Team 对应的唯一 `MatchTeamOtherStat.matchId` 数量。
-- 缺少 `MatchTeamOtherStat` 的比赛不计入 `teamStats.gamesPlayed`，也不参与 Team 平均值计算。
-- Team 各平均字段以参与该字段计算的 `MatchTeamOtherStat` 记录数为分母。当前字段均来自同一记录集，因此通常等同于 `teamStats.gamesPlayed`。
+- Team 场均先对每场比赛内该 Team 的全部 `MatchPlayerStat`（得分、篮板、助攻、投篮命中/出手、三分命中/出手）求和，得到该场球队合计，再以“比赛场次”为分母对各合计求平均。
+- `teamStats.gamesPlayed` 为该 Team 至少有一条 `MatchPlayerStat` 的唯一 `matchId` 数量。
+- 某场比赛该 Team 无任何 `MatchPlayerStat` 时，不计入 `teamStats.gamesPlayed`，也不参与 Team 平均值计算。
 
 Player 统计口径：
 - `players` 数组仅返回当前 `isActive = true` 的 Player；inactive Player 的历史统计不在 Team Management 详情接口中展示。
