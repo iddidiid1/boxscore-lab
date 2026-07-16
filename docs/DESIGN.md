@@ -4,7 +4,6 @@ colors:
   canvas: '#131313'
   surface: '#1a1a1a'
   surface-raised: '#232323'
-  surface-high: '#2d2d2d'
   nav-bg: '#0d0d0d'
   text: '#ffffff'
   text-soft: '#c8c8c8'
@@ -15,7 +14,7 @@ colors:
   mint-dim: '#2ccfaa'
   mint-soft: 'rgba(60,255,208,0.10)'
   uv: '#5200ff'
-  uv-soft: 'rgba(82,0,255,0.12)'
+  uv-soft: 'rgba(82,0,255,0.15)'
   border: 'rgba(255,255,255,0.10)'
   border-strong: 'rgba(255,255,255,0.18)'
   border-mint: 'rgba(60,255,208,0.45)'
@@ -79,7 +78,7 @@ rounded:
   badge: 20px
   card: 16px
   button: 24px
-  circle: 9999px
+  circle: 999px
 
 spacing:
   unit: 8px
@@ -95,6 +94,8 @@ spacing:
 
 The design avoids gradients, drop shadows, and decorative backgrounds. Depth comes entirely from 1px borders and tonal surface differences. Color is used sparingly — mint appears only on the most important interactive element per screen.
 
+> **Token source of truth.** This document is the design *intent*; the canonical implementation values live in `apps/frontend/src/styles/variables.css`. The palette names below (`mint`, `surface-raised`, `border`, …) are the design language — each maps to a semantic `--color-*` token in that file (e.g. `mint` → `--color-action-primary`, `border-strong` → `--color-border-control-strong`). When the two disagree, `variables.css` wins; keep them in sync.
+
 ## Colors
 
 ### Surfaces
@@ -104,8 +105,7 @@ The design avoids gradients, drop shadows, and decorative backgrounds. Depth com
 | `canvas` | `#131313` | Page background — every view |
 | `nav-bg` | `#0d0d0d` | Sidebar / top nav — slightly deeper than canvas |
 | `surface` | `#1a1a1a` | Cards, panels, table backgrounds |
-| `surface-raised` | `#232323` | Table header, hover state |
-| `surface-high` | `#2d2d2d` | Secondary button fill, active surface |
+| `surface-raised` | `#232323` | Table header, nav panel, hover state |
 
 ### Text
 
@@ -125,15 +125,15 @@ The design avoids gradients, drop shadows, and decorative backgrounds. Depth com
 | `mint-dim` | `#2ccfaa` | Mint hover state |
 | `mint-soft` | `rgba(60,255,208,0.10)` | Active nav background tint, mint chip background |
 | `uv` | `#5200ff` | Annotation and design-review use only; reserve for future badge/accent if needed |
-| `uv-soft` | `rgba(82,0,255,0.12)` | UV chip background |
+| `uv-soft` | `rgba(82,0,255,0.15)` | UV chip background |
 
 ### Borders
 
 | Token | Value | Use |
 |-------|-------|-----|
-| `border` | `rgba(255,255,255,0.10)` | Default card and row divider |
-| `border-strong` | `rgba(255,255,255,0.18)` | Emphasized card border, input border |
-| `border-mint` | `rgba(60,255,208,0.45)` | Card hover, input focus |
+| `border` | `rgba(255,255,255,0.10)` | Default border — cards, panels, inputs, table header, row divider |
+| `border-strong` | `rgba(255,255,255,0.18)` | Outlined control border (secondary / ghost button) and hover states |
+| `border-mint` | `rgba(60,255,208,0.45)` | Card hover accent (input focus uses solid `mint`) |
 
 ### Semantic
 
@@ -154,7 +154,7 @@ The design avoids gradients, drop shadows, and decorative backgrounds. Depth com
 ```
 font-family body:    'Space Grotesk', 'Hanken Grotesk', sans-serif
 font-family display: 'Anton', Impact, 'Arial Narrow', sans-serif
-font-family mono:    'JetBrains Mono', 'Space Mono', monospace
+font-family mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace
 ```
 
 ### Type Scale
@@ -181,7 +181,7 @@ font-family mono:    'JetBrains Mono', 'Space Mono', monospace
 - **Card internal padding**: `14px 16px` (standard), `24px 28px` (detail / form panels).
 - **Section gap**: 48px between major page sections.
 - **Content area padding**: 32px.
-- **Sidebar width**: 220px.
+- **Sidebar width**: 260px.
 - **Grid**: auto-fill column grid for team/player cards; `minmax(230px, 1fr)`. Match lists and tables are full-width single column.
 
 ## Elevation & Depth
@@ -191,9 +191,9 @@ No drop shadows. Depth comes from tonal surface layering and 1px borders only.
 | Level | Treatment | Use |
 |-------|-----------|-----|
 | 0 | `#131313`, no border | Canvas, background sections |
-| 1 | `#1a1a1a` + `1px border-strong` | Cards, panels, table body |
+| 1 | `#1a1a1a` + `1px border` | Cards, panels, table body |
 | 2 | `#232323` | Table header, hover state |
-| 3 | `1px border-mint` | Card hover, focused input |
+| 3 | `1px border-mint` | Card hover |
 | Active | `border-left: 2px mint` + `mint-soft` bg | Sidebar nav active item |
 
 ## Shapes
@@ -205,7 +205,7 @@ No drop shadows. Depth comes from tonal surface layering and 1px borders only.
 | `r-badge` | 20px | Status pills, category badges |
 | `r-card` | 16px | All cards and panels |
 | `r-button` | 24px | All buttons — full pill |
-| `r-circle` | 50% | Icon circle buttons, avatars |
+| `r-circle` | 999px | Icon circle buttons, avatars, status dots (`--radius-pill`) |
 
 The radius jump from 4px (inputs) → 16px (cards) → 24px (buttons) → 20px (badges) is intentional. Inputs stay tight; interactive containers are rounded; buttons are fully pill-shaped.
 
@@ -220,12 +220,13 @@ The radius jump from 4px (inputs) → 16px (cards) → 24px (buttons) → 20px (
 - Padding: `10px 22px`
 - Hover: `#2ccfaa` (mint-dim)
 
-**Secondary — Dark Surface Pill**
-- Background: `#2d2d2d` (surface-high)
-- Text: `#ffffff`, Space Grotesk 15px / 600
+**Secondary — Outlined Pill**
+- Background: transparent
+- Text: `text-soft` (`#c8c8c8`), Space Grotesk 15px / 600
+- Border: `1px solid border-strong` (`--color-border-control-strong`)
 - Border radius: 24px
 - Padding: `10px 22px`
-- Hover: `#383838`
+- Hover: border → `border-hover`, background → `rgba(255,255,255,0.04)` (hover-surface), text → `#ffffff`
 
 **Ghost — Outlined**
 - Background: transparent
@@ -261,10 +262,25 @@ All badges use JetBrains Mono 9px / 600 / UPPERCASE / 1.3px tracking, border-rad
 | UV / accent | `uv-soft` | `#a07aff` | `1px rgba(uv, 0.30)` | Championship, Special |
 | Solid mint | `mint` | `#000` | none | Featured / primary |
 
+### Event Tier Crest — data-visualization exception
+
+The event tier crest (`EventTierBadge`) is **not** a flat status chip. It is a large (≥128px) gradient "crest" that visualizes an event's competitive tier (S / A / B / C). It is a **sanctioned exception** to the no-gradient / mint-only rules — the same class of intentional data-visualization effect as the Stat Leader Card tints, and the one place multiple accent hues are allowed.
+
+Each tier maps to a single accent, which drives the crest's letter color, 1px border, and a subtle gradient wash over a shared near-black base:
+
+| Tier | Meaning | Accent | Maps to |
+|------|---------|--------|---------|
+| `S` | Elite | amber `#ffb95f` | `warning` |
+| `A` | Premier | violet `#a07aff` | `uv` accent (stat-points) |
+| `B` | Challenger | mint `#3cffd0` | `success` |
+| `C` | Open | slate `#c8c8c8` | `text-soft` |
+
+Tokens live in `variables.css`: `--color-tier-{s,a,b,c}-accent` are space-separated RGB channels, so one accent derives both the solid color (`rgb(var(...))`) and its alpha washes (`rgba(var(...), α)`). The shared `--color-tier-crest-*` chrome (border, sheen, base, inner-shadow) plus the Event summary card (`--color-event-card-*`) and winner highlight (`--color-event-winner-*`) hold **legacy pre-mint literals kept as-is for visual fidelity**; the pending design-token redesign will re-value them.
+
 ### Cards
 
 - Background: `surface` (`#1a1a1a`)
-- Border: `1px solid border-strong`
+- Border: `1px solid border`
 - Border radius: `r-card` (16px)
 - Padding: `14px 16px`
 - Hover: border → `border-mint`, background → `surface-raised`
@@ -274,29 +290,29 @@ Team logo inside cards: `42×42px`, `border-radius: 10px`.
 
 ### Tables
 
-- Wrapper: `surface` background, `1px border-strong`, `r-card` (16px) radius, `overflow: hidden`
+- Wrapper: `surface` background, `1px border`, `r-card` (16px) radius, `overflow: hidden`
 - Header row: `surface-raised` background, JetBrains Mono 9px / 600 / UPPERCASE / 1.8px tracking, `text-muted`
 - Body row: Space Grotesk 15px / `text-muted`; numeric columns JetBrains Mono 13px / right-aligned
-- Row divider: `rgba(255,255,255,0.04)`
+- Row divider: `rgba(255,255,255,0.06)` (`--color-border-table-cell`)
 - Row hover: `rgba(255,255,255,0.025)` tint, text → `text-soft`
 - Rank pip: 22px × 22px circle, mono 10px / 700; gold / silver / bronze tints for top 3
 
 ### Inputs & Forms
 
-- Background: `#0d0d0d` (nav-bg)
-- Border: `1px solid border-strong`
+- Background: `#0d0d0d` (surface-control)
+- Border: `1px solid border`
 - Border radius: `r-input` (4px)
 - Text: `#ffffff`, Space Grotesk 15px / 400
 - Placeholder: `text-dim`
-- Focus: border → `border-mint`
+- Focus: border → `mint` (solid, `--color-action-primary-emphasis`)
 - Height: 40px
 
-Form panel background: `surface`, border `border-strong`, radius `r-card` (16px), padding 24px.
+Form panel background: `surface`, border `border`, radius `r-card` (16px), padding 24px.
 Form section label (field-label): JetBrains Mono 9px / 600 / UPPERCASE / 1.5px tracking, `text-muted`.
 
 ### Navigation (Sidebar)
 
-- Sidebar background: `nav-bg` (`#0d0d0d`), width 220px, `1px border-strong` right edge
+- Sidebar background: `nav-bg` (`#0d0d0d`), width 260px, `1px border` right edge
 - Wordmark: Anton 26px, letter-spacing 1.5px
 - Nav section label: JetBrains Mono 9px / 600 / UPPERCASE / 2px tracking, `text-dim`
 - Nav item: Space Grotesk 15px / 500, `text-muted`; padding `10px 20px`; `border-left: 2px solid transparent`
@@ -332,7 +348,7 @@ Form section label (field-label): JetBrains Mono 9px / 600 / UPPERCASE / 1.5px t
 - Use Anton only at ≥ 24px; never for labels or body copy
 - Use JetBrains Mono for all numerical columns, labels, and metadata — always UPPERCASE for labels
 - Apply 1.5–2px letter-spacing to every UPPERCASE mono label
-- Use 1px borders (`border-strong` or `border-mint`) as the only depth mechanism
+- Use 1px borders (`border` for containers, `border-mint` for accent/hover) as the only depth mechanism
 - Keep card padding tight: `14px 16px` for standard cards, not 24px+
 - Apply `border-left: 2px mint` for active sidebar items — not background alone
 

@@ -7,8 +7,10 @@ const definitionFiles = new Set([
   "styles/variables.css"
 ]);
 const visualizationAllowlist = new Set([
-  // Intentional Event tier crest data-visualization gradients.
-  // (EventsPage.css was tokenized — see UiRedesignReadinessFrontendPRD §7.2.)
+  // Intentional Event tier crest data-visualization gradients — now token-driven
+  // (--color-tier-*), but stays listed because it composes alpha via rgba(var(...)).
+  // Documented exception; see docs/DESIGN.md and UiRedesignReadinessFrontendPRD §7.4.
+  // (EventsPage.css was tokenized and removed — see §7.2.)
   "features/events/components/EventTierBadge.css"
 ]);
 const dynamicValueAllowlist = new Set([

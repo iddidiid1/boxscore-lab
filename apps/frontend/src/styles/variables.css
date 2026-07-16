@@ -111,6 +111,18 @@
   --color-event-card-gradient-top: rgba(15, 23, 42, 0.92);
   --color-event-card-gradient-bottom: rgba(18, 28, 47, 0.98);
   --color-event-card-divider: rgba(51, 65, 85, 0.52);
+  /* Event tier crest accent scale — space-separated RGB channels so one accent
+     drives both the solid color and its gradient/border alpha washes.
+     Documented data-visualization exception; see docs/DESIGN.md. */
+  --color-tier-s-accent: 255, 185, 95;   /* warning   #ffb95f */
+  --color-tier-a-accent: 160, 122, 255;  /* uv accent #a07aff */
+  --color-tier-b-accent: 60, 255, 208;   /* success   #3cffd0 */
+  --color-tier-c-accent: 200, 200, 200;  /* text-soft #c8c8c8 */
+  /* Shared tier crest chrome — legacy pre-mint literals kept for fidelity. */
+  --color-tier-crest-border: rgba(148, 163, 184, 0.38);
+  --color-tier-crest-sheen: rgba(248, 250, 252, 0.08);
+  --color-tier-crest-base: rgba(12, 20, 37, 0.92);
+  --color-tier-crest-shadow: rgba(15, 23, 42, 0.72);
 
   /* Shape and elevation */
   --radius-sharp: 0;

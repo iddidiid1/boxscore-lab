@@ -166,3 +166,16 @@
 - allowlist 保持窄化到文件与用途，不做全目录或全规则跳过。
 
 **范围影响**：属 Phase 5 防回归收敛。团队主色等业务数据动态值不强制 token 化，符合 §5.1；未来若这些默认值需跟随主题，另行进入需求确认流程。
+
+### 7.4 2026-07-16 - Event Tier Crest 文档化为可视化例外并 token 化
+
+**背景**：`EventTierBadge.css` 的四档（S/A/B/C）配色是半迁移状态：结构（圆角/字体）已 token 化，但每档的边框与渐变洗色仍为旧 slate/蓝主题的裸值，且与各档实色 token 不一致（S 字母用 `--color-warning` #ffb95f 却配 #FBBF24 洗色，B 字母用 `--color-success` #3cffd0 却配 #4EDEA3，A 档更是 `#60a5fa` 蓝——薄荷体系无对应 token 的化石色）。CLAUDE.md 新增「design-token 变更先改 DESIGN.md 再镜像 variables.css」的规则后，此改动须先在 DESIGN.md 立意图。同时 DESIGN.md 明确「避免渐变、mint 稀用」，而 tier crest 本质是多彩渐变纹章，需要一个合法身份。
+
+**决策**：
+- 在 `docs/DESIGN.md` 新增 “Event Tier Crest — data-visualization exception” 小节，将 tier crest 明文登记为**受认可的可视化例外**（与 Stat Leader Card 渐变同类），并定义 tier accent 色阶：S=`warning`、A=`uv`(#a07aff)、B=`success`、C=`text-soft`。
+- **A 档由旧电蓝 #60a5fa 改为 uv 紫 #a07aff**（用户决策），与 S 金/B 绿拉开区分，且不再引入薄荷体系外的离群蓝。
+- `variables.css` 镜像新增 `--color-tier-{s,a,b,c}-accent`（空格/逗号分隔 RGB 通道，使单一 accent 同时派生实色与 alpha 洗色）与共享 `--color-tier-crest-*` chrome token（保留旧 slate 值以维持视觉保真，留待重设计再定值）。
+- `EventTierBadge.css` 全部裸值改为 token 引用；各档实色与洗色统一到同一 accent，根除「一档两色」。S/B/C 视觉仅极轻微色相位移，A 档按决策改紫。
+- `EventTierBadge.css` **保留在** `check-style-literals.mjs` 的 `visualizationAllowlist`：它现已 token 驱动，但仍用 `rgba(var(--tier-accent), α)` 组合透明度渐变，属登记在案的可视化例外，非未迁移裸值。
+
+**范围影响**：本决策把 tier crest 从「Batch 5 allowlist 里的未说明字面量」升级为「DESIGN.md 登记的正式可视化例外」。执行顺序遵循 CLAUDE.md 新规则：DESIGN.md → variables.css → 组件 CSS。同时补记 §7.2 的 `--color-event-card-*` / `--color-event-winner-*` token 进 DESIGN.md，消除新规则下的文档-实现同步缺口。不改变布局、DOM、响应式或业务逻辑。
