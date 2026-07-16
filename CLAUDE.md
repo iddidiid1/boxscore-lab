@@ -87,6 +87,7 @@ Dark sports-editorial theme — "Verge Dark." Near-black canvas with acid-mint a
 ### CSS Token Rules
 
 - `apps/frontend/src/styles/variables.css` is the **canonical CSS design-token entry point**
+- **Design-token changes start in `docs/DESIGN.md`.** Before adding, removing, or re-valuing any token, update `docs/DESIGN.md` first (it is the source of design intent), then mirror the change into `variables.css`. Never change one without the other — the two must stay in sync
 - Use semantic tokens named by purpose (e.g., `text`, `surface`, `border`, `action`, `status` roles) — not palette names tied to the current visual design
 - New or modified frontend code must not hard-code colors, font families, border radii, or repeated shadows when an appropriate token exists. Add or revise a semantic token when a genuinely shared role is missing
 - Keep Mantine theme values and CSS tokens aligned — do not create an independent second theme inside page or feature code
