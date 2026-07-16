@@ -161,6 +161,7 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
 - 提供 Team 筛选；默认显示全部参与球队的 active players，选择某个 Team 后只显示该 Team 的 active players。
 - Team 筛选只影响新增候选项的可见性，不隐藏、取消或删除已选奖项；完整替换 payload 始终包含所有 Team 的当前奖项状态。
 - 表单提交调用 `updateEventOutcomes(slug, data)`。
+- 保存成功后跳转 `/events/:slug`，与 Create/Edit Event 流程一致，不停留在 outcomes 页展示成功提示；保存失败时保留表单状态并展示错误。
 - `teamResults` / `playerAwards` 作为各自区块的完整当前状态提交；显式空数组表示用户清空该区块，字段省略表示不修改该区块。
 - Event 详情尚未成功加载时禁止保存，不能把未加载数据误当成空数组提交。
 - 后端字段错误映射到对应 row/field。
