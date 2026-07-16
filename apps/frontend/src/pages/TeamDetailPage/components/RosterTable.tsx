@@ -86,8 +86,8 @@ function comparePlayers(firstPlayer: Player, secondPlayer: Player, sortKey: Sort
 }
 
 export function RosterTable({ players }: RosterTableProps) {
-  const [sortKey, setSortKey] = useState<SortKey>("number");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const [sortKey, setSortKey] = useState<SortKey>("points");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
   const sortedPlayers = useMemo(() => {
     return [...players].sort((firstPlayer, secondPlayer) => {

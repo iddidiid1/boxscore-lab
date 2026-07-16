@@ -183,7 +183,7 @@ API 来源：`GET /api/teams/:slug`
 - Team Summary：至少展示 PTS、REB、AST、FG、3P。FG 和 3P 可展示 made/attempted 或 percentage；若展示 percentage，前端根据 made/attempted 计算，仅作为展示派生值，不提交后端。
 - Roster：只展示后端返回的 active players。
 
-Roster table 默认按 jersey number 升序，可点击列头排序。
+Roster table 默认按 PTS（场均得分）降序，可点击列头排序。
 
 ### 5.3 CreateTeamPage `/teams/new`
 
