@@ -185,6 +185,8 @@ API 来源：`GET /api/teams/:slug`
 
 Roster table 默认按 PTS（场均得分）降序，可点击列头排序。
 
+Roster 中球员名以链接展示，点击跳转到对应球员详情页 `/players/{player.slug}`。
+
 ### 5.3 CreateTeamPage `/teams/new`
 
 职责：

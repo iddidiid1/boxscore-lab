@@ -1,4 +1,4 @@
-import { Box, Table, Text, Title } from "@mantine/core";
+import { Anchor, Box, Table, Text, Title } from "@mantine/core";
 import { useMemo, useState } from "react";
 import {
   comparePlayerPositions,
@@ -9,6 +9,7 @@ import {
 
 export type Player = {
   id: string;
+  slug: string;
   number: number;
   position: PlayerPosition;
   name: string;
@@ -155,9 +156,15 @@ export function RosterTable({ players }: RosterTableProps) {
               <Table.Tr key={player.id}>
                 {columns.map((column) => (
                   <Table.Td className={column.className} key={column.key}>
-                    <Text className="roster-value">
-                      {column.render(player)}
-                    </Text>
+                    {column.key === "name" ? (
+                      <Anchor className="roster-player-link" href={`/players/${player.slug}`}>
+                        {column.render(player)}
+                      </Anchor>
+                    ) : (
+                      <Text className="roster-value">
+                        {column.render(player)}
+                      </Text>
+                    )}
                   </Table.Td>
                 ))}
               </Table.Tr>
