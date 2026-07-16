@@ -14,8 +14,8 @@
 - `EditMatchPage`（`/matches/:id/edit`）：加载真实 Match；允许修改比赛时间、EventStageTag 和统计数据；所属 Event 与参赛球队只读；保留历史 inactive Player 数据。
 - EventStageTag 为可选项；Match 表单只允许为 `ONGOING` 或 `COMPLETED` Event 录入，已归档或已删除 Event 不允许编辑或恢复。
 - 选定双方 Team 后，统计表格自动陈列各队完整 active roster，并为每名 Player 提供“出场”勾选项，同时显示一个始终存在的 `Other` 行。
-- Player 默认未出场；未勾选时统计输入禁用并显示默认值 `0`，评分显示 `—`，提交时不包含该 Player。勾选出场后，各项基础统计及评分默认值均为 `0`，评分允许输入 `0–10` 且最多一位小数，不允许留空。
-- 编辑 Match 时，已有 `MatchPlayerStat` 的 Player 自动标记为已出场；未出场 Player 不要求提交统计记录。`Other` 行始终参与提交，各项默认值为 `0`。
+- Player 默认未出场；未勾选时统计输入禁用并显示为空，提交时不包含该 Player。勾选出场后各统计格初始为空、不预填 `0`，允许留空；评分允许输入 `0–10` 且最多一位小数，同样允许留空。留空的格子仅在构建提交 payload 时补 `0`，编辑期不自动填 `0`。
+- 编辑 Match 时，已有 `MatchPlayerStat` 的 Player 自动标记为已出场；未出场 Player 不要求提交统计记录。`Other` 行始终参与提交，编辑期各格可留空，留空在提交时按 `0` 处理。
 - Match 创建后如参赛 Team 被归档，编辑页仍允许修正历史记录，但 archived Team 一侧只显示详情中已有的 Player stats，并只允许保留、修改或移除这些行，不允许从 roster 新增 Player；Team 必须显示明确的 “Archived” 状态。
 - 作废 Match 不提供列表入口，但仍可通过 `/matches/:id` 直接访问；详情页明确显示作废状态且内容只读，并提供恢复操作。恢复后才允许进入编辑；恢复时保留原 Match 已引用的 inactive Player。
 - archived Team 不单独阻止 Match 恢复；只要该 Team 仍是 Event participant 且其他恢复条件满足即可恢复。
@@ -115,9 +115,9 @@
   - StageTag：可选，仅列所选 Event tags；
   - Home/Away Team：必选且不可相同，仅列 Event 中未归档 participant Teams；选队后自动显示完整 active roster。
 - **Roster table**:
-  - 每名 Player 默认“未出场”；统计单元格 disabled，基础统计显示 `0`，rating 显示 `—`；
-  - 勾选“出场”后启用 PTS、REB、AST、FGM、FGA、3PM、3PA、MIN、RTG，全部初始化为 `0`；
-  - 取消“出场”时从待提交 `playerStats` 中移除；再次勾选重新以全 `0` 初始化，避免隐藏旧值误提交；
+  - 每名 Player 默认“未出场”；统计单元格 disabled 且显示为空；
+  - 勾选“出场”后启用 PTS、REB、AST、FGM、FGA、3PM、3PA、MIN、RTG，各格初始为空、不预填 `0`；
+  - 取消“出场”时从待提交 `playerStats` 中移除；再次勾选重新以全空初始化，避免隐藏旧值误提交；
   - 每队至少勾选一名 Player；
   - Other 行始终启用并完整提交 PTS、REB、AST、FGM、FGA、3PM、3PA 七个必填整数；MIN、RTG 对 Other 始终不适用，不显示也不提交；Other 行不显示出场 checkbox；
   - PTS、REB、AST、FGM、FGA、3PM、3PA、MIN 只允许 `0–10000` 的整数，输入控件使用 `min=0`、`max=10000`、`step=1`；RTG 允许 `0–10` 且最多一位小数；
@@ -153,7 +153,7 @@
 
 1. 前端严格使用 Backend PRD §5 字段名，不发送 `slug`、比分、百分比、`voidedAt` 或其他派生/只读字段。
 2. Create payload 的 `teams` 始终是 HOME/AWAY 两项完整快照；Patch 发送既有 teamId/role 和完整统计快照，后端验证其不可变。
-3. 未勾选 Player 不出现在 `playerStats`；勾选 Player 的 `rating` 必须为数值（默认 `0`），不得发送 `null`。Other stats 必须完整发送 PTS、REB、AST、FGM、FGA、3PM、3PA 七个整数，不含 `minutes` 或 `rating`。
+3. 未勾选 Player 不出现在 `playerStats`；勾选 Player 的各项统计（含 `rating`）在提交时把留空补为 `0`，因此 `playerStats` 始终为数值，不得发送 `null`。Other stats 必须完整发送 PTS、REB、AST、FGM、FGA、3PM、3PA 七个整数（留空同样补 `0`），不含 `minutes` 或 `rating`。
    - `playerStats` 和 `otherStats` 均不发送独立 `teamId`；其 Team 归属由外层 `teams[n].teamId` 唯一确定。
 4. 前端 Team score = Player points 总和 + Other points，仅作即时预览；保存后的列表和详情以 API 重新计算结果为准。
 5. `stageTagId` 未选择时发送 `null`；`playedAt` 发送带时区 ISO 8601 字符串；所有实体 id 发送 number。

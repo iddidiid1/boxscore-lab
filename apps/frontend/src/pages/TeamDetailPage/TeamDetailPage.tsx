@@ -52,6 +52,7 @@ function mapSummary(team: TeamDetail): TeamSummaryStat[] {
 function mapPlayers(team: TeamDetail): Player[] {
   return team.players.map((player) => ({
     id: String(player.id),
+    slug: player.slug,
     number: player.number,
     position: player.position,
     name: player.name,
