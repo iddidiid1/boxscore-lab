@@ -16,7 +16,7 @@ import { ApiClientError } from "../../features/teams/api/teams";
 import { useIsDirty } from "../../shared/hooks/useIsDirty";
 import { useUnsavedChangesWarning } from "../../shared/hooks/useUnsavedChangesWarning";
 import { MatchFormActions, MatchInfoForm, MatchStatsInputTable } from "./components";
-import { emptyOtherStats, emptyPlayerStats, type MatchFormPlayer, type MatchFormTeam, type PlayerStatInput, type TeamFormState } from "./types";
+import { emptyOtherStats, emptyPlayerStats, toStatNumbers, type MatchFormPlayer, type MatchFormTeam, type TeamFormState } from "./types";
 import "./CreateMatchPage.css";
 
 type Props = { mode: "create" | "edit"; matchId?: number; cancelHref?: string; description: string; title: string };
@@ -82,9 +82,9 @@ export function MatchFormPage({ mode, matchId, cancelHref = "/matches", descript
   }, [away.team, home.team, options]);
   function selectTeam(side: "home" | "away", id: number | null) { const team = teams.find((item) => item.id === id); const next = team ? { role: side === "home" ? "HOME" as const : "AWAY" as const, team, entries: entriesFor(team), otherStats: emptyOtherStats() } : emptySide(side === "home" ? "HOME" : "AWAY"); if (side === "home") setHome(next); else setAway(next); }
   function setEntry(side: "home" | "away", playerId: number, update: (current: TeamFormState["entries"][number]) => TeamFormState["entries"][number]) { const setter = side === "home" ? setHome : setAway; setter((current) => ({ ...current, entries: { ...current.entries, [playerId]: update(current.entries[playerId]!) } })); }
-  const score = (side: TeamFormState) => Object.values(side.entries).filter((entry) => entry.appeared).reduce((sum, entry) => sum + entry.stats.points, side.otherStats.points);
+  const score = (side: TeamFormState) => Object.values(side.entries).filter((entry) => entry.appeared).reduce((sum, entry) => sum + (entry.stats.points ?? 0), side.otherStats.points ?? 0);
   const canSave = Boolean(eventId && playedAt && home.team && away.team && Object.values(home.entries).some((entry) => entry.appeared) && Object.values(away.entries).some((entry) => entry.appeared) && score(home) !== score(away));
-  const payloadTeam = (side: TeamFormState): MatchTeamPayload => ({ role: side.role, teamId: side.team!.id, playerStats: Object.entries(side.entries).filter(([, entry]) => entry.appeared).map(([playerId, entry]) => ({ playerId: Number(playerId), ...entry.stats })), otherStats: side.otherStats });
+  const payloadTeam = (side: TeamFormState): MatchTeamPayload => ({ role: side.role, teamId: side.team!.id, playerStats: Object.entries(side.entries).filter(([, entry]) => entry.appeared).map(([playerId, entry]) => ({ playerId: Number(playerId), ...toStatNumbers(entry.stats) })), otherStats: toStatNumbers(side.otherStats) });
 
   async function save() {
     if (!canSave || !eventId) { setError("Select both teams, at least one player per team, and enter a non-tied score."); return; }
