@@ -97,7 +97,7 @@ This is an incremental maintainability task, not a request to redesign the curre
   - [ ] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
 - [ ] Batch 5 - Event Workflow (event list, form, detail, outcomes, and direct components).
   - [x] Migrate shared event panels, controls, tables, actions, and ordinary text styles to semantic tokens.
-  - [x] Preserve Event summary/winner gradients and Tier crest gradients as intentional visualization effects.
+  - [x] Tokenize `EventsPage.css` Event summary/winner gradients (legacy pre-mint literals) — see PRD §7.2; only Tier crest gradients remain as intentional visualization effects.
   - [x] Document Tier-specific gradient literals as a future regression-check allowlist case.
   - [x] Run frontend type checking, build, and diff checks.
   - [x] Confirm the routes' default visual state through user review.

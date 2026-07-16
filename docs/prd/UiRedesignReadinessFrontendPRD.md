@@ -143,3 +143,26 @@
 - 未来整体调整 panel 底色、边框、圆角或 elevation 时，leader card 必须自动跟随；局部渐变仍保留，除非后续重设计明确要求移除。
 
 **范围影响**：该决策是 Batch 2 - Player Statistics 的视觉保真要求，不将渐变提升为所有 panel 的共享默认效果。
+
+### 7.2 2026-07-16 - Event 卡与获奖高亮改为 token 化，取代 Batch 5 的字面量保留决策
+
+**背景**：Batch 5 曾将 `EventsPage.css` 的 Event summary 渐变、获奖（winner）高亮与 `EventTierBadge.css` 的 tier crest 渐变一并记为“有意的数据可视化字面量”，并写入 `check-style-literals.mjs` 的 `visualizationAllowlist`。后续复核发现，`EventsPage.css` 中的获奖金色实为早期版本遗留：当主题切换到薄荷绿+近黑后，作者未同步调整 design token，而是硬编码了一个与全站 `--color-warning`（`#ffb95f`）不一致的旧金色（`#FBBF24` = `rgba(251,191,36,…)`），并混入旧 slate 残留（卡片渐变 `rgba(15,23,42,…)`、页脚分隔线 `rgba(51,65,85,…)`）。这些属于 token 化欠债，而非有意特效。
+
+**决策**：
+- `EventsPage.css` 全量去字面量：获奖金色接入既有专属 token 家族 `--color-event-winner-border` / `--color-event-winner-surface`（以 `#ffb95f` 为准，`#FBBF24` 弃用）；卡片渐变与页脚分隔线新增 `--color-event-card-gradient-top` / `--color-event-card-gradient-bottom` / `--color-event-card-divider`，**保留精确当前值**以维持视觉保真。
+- 渐变结构与布局完全不变，仅将颜色搬入 `variables.css`，使其可追溯、可在后续重设计中一处改值。
+- 将 `EventsPage.css` 从 `check-style-literals.mjs` 的 `visualizationAllowlist` 中移除；`EventTierBadge.css` 仍保留在 allowlist（tier crest 的 token 化另行决策，本次不动）。
+- 金色与薄荷绿的配色和谐问题**不在本次范围**，留待后续独立的 design token 重设计；本次仅统一到既有 token 值、消除硬编码欠债。
+
+**范围影响**：本决策取代 §7.1 之后 Batch 5 中“Event summary/winner 渐变作为字面量保留”的部分，仅限 `EventsPage.css`。`docs/UI_REDESIGN_READINESS_CHECKLIST.md` 的 Batch 5 相应条目同步更新。不改变任何页面布局、DOM、响应式断点或业务逻辑。
+
+### 7.3 2026-07-16 - `check-style-literals.mjs` 扩展至 `.tsx` 与动态值 allowlist
+
+**背景**：防回归脚本原先只扫描 `.css`，导致 `.tsx` 内联样式中的颜色字面量（如 `TeamCard.tsx` 的动态对比色、`primaryColor` 数据默认值）不受守护。
+
+**决策**：
+- 扫描范围扩展到 `.css` 与 `.tsx`。`.tsx` 的 `fontFamily` / `borderRadius` 为驼峰写法，不触发 font-family / border-radius 规则，故仅颜色规则实际生效，无误报风险。
+- 新增窄范围 `dynamicValueAllowlist`（按文件+用途注明）：`TeamCard.tsx`（运行时按团队主色计算的兜底/对比色）、`CreateTeamPage.tsx` 与 `ManageTeamPage.tsx`（团队主色数据默认值）、`TeamEditorForm.tsx`（仅在 placeholder/校验文案中作为示例文本出现的 hex）。
+- allowlist 保持窄化到文件与用途，不做全目录或全规则跳过。
+
+**范围影响**：属 Phase 5 防回归收敛。团队主色等业务数据动态值不强制 token 化，符合 §5.1；未来若这些默认值需跟随主题，另行进入需求确认流程。

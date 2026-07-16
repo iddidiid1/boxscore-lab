@@ -75,12 +75,12 @@ All validation errors must be collected before responding — no short-circuit o
 
 ## Design System
 
-Dark analytics theme — "Elite, Analytical, Tactical." Details in `docs/DESIGN.md`.
+Dark sports-editorial theme — "Verge Dark." Near-black canvas with acid-mint as the sole hazard accent. Details in `docs/DESIGN.md`; canonical token values in `apps/frontend/src/styles/variables.css`.
 
-- **Fonts**: Hanken Grotesk (headlines), Inter (body), JetBrains Mono (stats/data)
-- **Colors**: dark backgrounds (`#0F172A` canvas, `#1E293B` cards), electric blue (`#3B82F6`) primary, emerald green (`#10B981`) positive deltas
-- **Shape**: 4px border radius, 1px borders at `#334155`
-- **Density**: tight card padding (12–16px), information-dense layout
+- **Fonts**: Anton (display / large headlines ≥24px), Space Grotesk (body / all UI text), JetBrains Mono (stats/data/labels)
+- **Colors**: near-black backgrounds (`#131313` canvas, `#1a1a1a` surface), acid-mint (`#3cffd0`) primary + success, amber (`#ffb95f`) warning, coral (`#ff6b6b`) danger
+- **Shape**: role-based radius scale — 4px inputs, 16px cards/panels, 24px buttons, 20px badges; 1px borders (mostly white-alpha), no drop shadows
+- **Density**: tight card padding (14–16px), information-dense layout
 - Do not introduce new component libraries without explicit request
 - Do not redesign existing layout patterns unless explicitly asked
 

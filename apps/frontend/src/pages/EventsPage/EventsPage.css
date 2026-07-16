@@ -27,7 +27,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-panel);
   background:
-    linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(18, 28, 47, 0.98)),
+    linear-gradient(135deg, var(--color-event-card-gradient-top), var(--color-event-card-gradient-bottom)),
     var(--color-surface);
   overflow: hidden;
   padding: 18px;
@@ -80,10 +80,10 @@
 
 .event-winner-preview {
   min-width: 0;
-  border: 1px solid rgba(251, 191, 36, 0.38);
+  border: 1px solid var(--color-event-winner-border);
   border-radius: var(--radius-interactive-card);
   background:
-    linear-gradient(90deg, rgba(251, 191, 36, 0.14), transparent 72%),
+    linear-gradient(90deg, var(--color-event-winner-surface), transparent 72%),
     var(--color-surface);
   padding: 10px 12px;
 }
@@ -94,9 +94,9 @@
   place-items: center;
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(251, 191, 36, 0.42);
+  border: 1px solid var(--color-event-winner-border);
   border-radius: var(--radius-control);
-  background: rgba(251, 191, 36, 0.12);
+  background: var(--color-event-winner-surface);
   color: var(--color-warning);
 }
 
@@ -124,7 +124,7 @@
   margin-top: auto;
   min-height: 38px;
   padding-top: 14px;
-  border-top: 1px solid rgba(51, 65, 85, 0.52);
+  border-top: 1px solid var(--color-event-card-divider);
 }
 
 .event-card-stat,
