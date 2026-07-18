@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BoxScore Lab — Card UI Exploration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../apps/frontend/src/styles/variables.css" />
+
+    <style>
+      /*
+       * CARD UI EXPLORATION
+       * Source: design-proposals/editorial-scoreboard/DESIGN.md
+       *
+       * This is a proposal only. The experimental roles below intentionally
+       * live in this preview and do not change the application token set.
+       */
+      :root {
+        --proposal-card-surface: #171918;
+        --proposal-card-surface-hover: #1b201e;
+        --proposal-card-surface-deep: #101211;
+        --proposal-card-border: rgba(255, 255, 255, 0.075);
+        --proposal-card-border-strong: rgba(255, 255, 255, 0.13);
+        --proposal-card-border-accent: rgba(60, 255, 208, 0.28);
+        --proposal-card-radius: 10px;
+        --proposal-card-radius-compact: 8px;
+        --proposal-card-pad: 18px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        background:
+          linear-gradient(var(--color-border-table-subtle) 1px, transparent 1px),
+          linear-gradient(90deg, var(--color-border-table-subtle) 1px, transparent 1px),
+          var(--color-canvas);
+        background-size: 40px 40px;
+        color: var(--color-text);
+        font-family: var(--font-family-body);
+        font-size: 15px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button {
+        border: 0;
+        font: inherit;
+      }
+
+      .preview-bar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        min-height: 44px;
+        padding: 8px 24px;
+        border-bottom: 1px solid var(--proposal-card-border);
+        background: rgba(13, 13, 13, 0.94);
+        backdrop-filter: blur(16px);
+      }
+
+      .preview-kicker,
+      .preview-note,
+      .preview-nav a,
+      .eyebrow,
+      .section-label,
+      .micro-label,
+      .status,
+      .data-label,
+      .team-abbr,
+      .event-meta,
+      .match-meta,
+      .principle-index {
+        font-family: var(--font-family-data);
+        text-transform: uppercase;
+      }
+
+      .preview-kicker {
+        color: var(--color-action-primary);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.8px;
+        white-space: nowrap;
+      }
+
+      .preview-note {
+        color: var(--color-text-muted);
+        font-size: 9px;
+        letter-spacing: 0.7px;
+      }
+
+      .preview-nav {
+        display: flex;
+        gap: 16px;
+        margin-left: auto;
+      }
+
+      .preview-nav a {
+        color: var(--color-text-muted);
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-decoration: none;
+      }
+
+      .preview-nav a:hover {
+        color: var(--color-action-primary);
+      }
+
+      .page {
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 72px 0 96px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+        gap: 48px;
+        align-items: end;
+        margin-bottom: 64px;
+      }
+
+      .eyebrow,
+      .section-label {
+        color: var(--color-text-muted);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 2px;
+      }
+
+      .hero h1 {
+        max-width: 760px;
+        margin: 10px 0 16px;
+        font-family: var(--font-family-display);
+        font-size: clamp(52px, 8vw, 92px);
+        font-weight: 400;
+        letter-spacing: 1.5px;
+        line-height: 0.9;
+      }
+
+      .hero h1 span {
+        color: var(--color-action-primary);
+      }
+
+      .hero-copy {
+        max-width: 650px;
+        margin: 0;
+        color: var(--color-text-muted);
+        font-size: 16px;
+      }
+
+      .hero-summary {
+        border-top: 1px solid var(--proposal-card-border-strong);
+      }
+
+      .summary-row {
+        display: grid;
+        grid-template-columns: 92px 1fr;
+        gap: 16px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--proposal-card-border);
+      }
+
+      .summary-row b {
+        color: var(--color-text-muted);
+        font-family: var(--font-family-data);
+        font-size: 9px;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+      }
+
+      .summary-row span {
+        color: var(--color-text-soft);
+        font-size: 13px;
+      }
+
+      .principles {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        margin-bottom: 76px;
+        border-block: 1px solid var(--proposal-card-border);
+      }
+
+      .principle {
+        min-height: 132px;
+        padding: 18px;
+        border-right: 1px solid var(--proposal-card-border);
+      }
+
+      .principle:last-child {
+        border-right: 0;
+      }
+
+      .principle-index {
+        color: var(--color-action-primary);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1.3px;
+      }
+
+      .principle h2 {
+        margin: 24px 0 5px;
+        font-size: 15px;
+      }
+
+      .principle p {
+        margin: 0;
+        color: var(--color-text-muted);
+        font-size: 12px;
+      }
+
+      .section {
+        margin-top: 72px;
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 14px;
+        align-items: center;
+        margin-bottom: 22px;
+      }
+
+      .section-rule {
+        height: 1px;
+        background: var(--proposal-card-border);
+      }
+
+      .section-type {
+        color: var(--color-text-disabled);
+        font-family: var(--font-family-data);
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .identity-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .identity-card,
+      .match-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--proposal-card-border);
+        border-radius: var(--proposal-card-radius);
+        background: var(--proposal-card-surface);
+        transition:
+          border-color 150ms ease,
+          background 150ms ease;
+      }
+
+      .identity-card::after,
+      .match-card::after {
+        position: absolute;
+        right: 18px;
+        bottom: 0;
+        width: 42px;
+        height: 2px;
+        background: var(--card-accent, var(--color-action-primary));
+        content: "";
+        opacity: 0;
+        transform: scaleX(0.35);
+        transform-origin: right;
+        transition:
+          opacity 150ms ease,
+          transform 150ms ease;
+      }
+
+      .identity-card:hover,
+      .match-card:hover {
+        border-color: var(--proposal-card-border-accent);
+        background: var(--proposal-card-surface-hover);
+      }
+
+      .identity-card:hover::after,
+      .match-card:hover::after {
+        opacity: 1;
+        transform: scaleX(1);
+      }
+
+      .identity-card {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 16px;
+        padding: var(--proposal-card-pad);
+      }
+
+      .identity-mark {
+        display: grid;
+        width: 48px;
+        height: 48px;
+        place-items: center;
+        border: 1px solid color-mix(in srgb, var(--team-color) 45%, transparent);
+        border-radius: var(--proposal-card-radius-compact);
+        background: color-mix(in srgb, var(--team-color) 13%, transparent);
+        color: var(--team-color);
+        font-family: var(--font-family-display);
+        font-size: 19px;
+        letter-spacing: 0.7px;
+      }
+
+      .identity-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .team-abbr,
+      .micro-label,
+      .data-label {
+        color: var(--color-text-muted);
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 1.4px;
+      }
+
+      .team-name {
+        margin: 5px 0 13px;
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .identity-data {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        padding-top: 11px;
+        border-top: 1px solid var(--proposal-card-border);
+      }
+
+      .identity-record {
+        color: var(--color-text-soft);
+        font-family: var(--font-family-data);
+        font-size: 12px;
+      }
+
+      .identity-points {
+        color: var(--color-action-primary);
+        font-family: var(--font-family-data);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--color-text-muted);
+        font-size: 8px;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+
+      .status::before {
+        width: 5px;
+        height: 5px;
+        border-radius: var(--radius-pill);
+        background: currentColor;
+        content: "";
+      }
+
+      .status-active {
+        color: var(--color-action-primary);
+      }
+
+      .status-warning {
+        color: var(--color-warning);
+      }
+
+      .archive-list {
+        border-block: 1px solid var(--proposal-card-border);
+      }
+
+      .archive-row {
+        display: grid;
+        grid-template-columns: 70px minmax(220px, 1.4fr) minmax(180px, 0.8fr) 110px 24px;
+        gap: 22px;
+        align-items: center;
+        min-height: 92px;
+        padding: 14px 16px 14px 0;
+        border-bottom: 1px solid var(--proposal-card-border);
+        transition: background 150ms ease;
+      }
+
+      .archive-row:last-child {
+        border-bottom: 0;
+      }
+
+      .archive-row:hover {
+        background: linear-gradient(90deg, transparent, var(--color-action-primary-surface));
+      }
+
+      .archive-index {
+        color: var(--color-text-disabled);
+        font-family: var(--font-family-display);
+        font-size: 30px;
+        text-align: center;
+      }
+
+      .event-name {
+        margin-bottom: 5px;
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .event-meta,
+      .match-meta {
+        color: var(--color-text-muted);
+        font-size: 9px;
+        letter-spacing: 1.1px;
+      }
+
+      .archive-format {
+        color: var(--color-text-soft);
+        font-size: 13px;
+      }
+
+      .archive-arrow {
+        color: var(--color-text-disabled);
+        font-size: 19px;
+        transition:
+          color 150ms ease,
+          transform 150ms ease;
+      }
+
+      .archive-row:hover .archive-arrow {
+        color: var(--color-action-primary);
+        transform: translateX(3px);
+      }
+
+      .match-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .match-card {
+        padding: 18px;
+      }
+
+      .match-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--proposal-card-border);
+      }
+
+      .scoreline {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        gap: 18px;
+        align-items: center;
+        padding: 24px 0 18px;
+      }
+
+      .score-team:last-child {
+        text-align: right;
+      }
+
+      .score-team-name {
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .score-team-code {
+        margin-top: 3px;
+        color: var(--color-text-muted);
+        font-family: var(--font-family-data);
+        font-size: 9px;
+        letter-spacing: 1.2px;
+      }
+
+      .score {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-family-data);
+        font-size: 25px;
+        font-weight: 700;
+      }
+
+      .score .winner {
+        color: var(--color-action-primary);
+      }
+
+      .score-separator {
+        color: var(--color-text-disabled);
+        font-size: 13px;
+      }
+
+      .match-footer {
+        display: flex;
+        justify-content: space-between;
+        color: var(--color-text-muted);
+        font-size: 11px;
+      }
+
+      .data-panel {
+        display: grid;
+        grid-template-columns: minmax(250px, 0.9fr) minmax(0, 2.1fr);
+        overflow: hidden;
+        border: 1px solid var(--proposal-card-border);
+        border-radius: var(--proposal-card-radius);
+        background: var(--proposal-card-surface-deep);
+      }
+
+      .data-panel-lead {
+        padding: 24px;
+        border-right: 1px solid var(--proposal-card-border);
+        background: var(--proposal-card-surface);
+      }
+
+      .data-panel-lead h3 {
+        margin: 42px 0 6px;
+        font-family: var(--font-family-display);
+        font-size: 35px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        line-height: 1;
+      }
+
+      .data-panel-lead p {
+        margin: 0;
+        color: var(--color-text-muted);
+        font-size: 12px;
+      }
+
+      .data-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .data-cell {
+        min-height: 112px;
+        padding: 18px;
+        border-right: 1px solid var(--proposal-card-border);
+        border-bottom: 1px solid var(--proposal-card-border);
+      }
+
+      .data-cell:nth-child(3n) {
+        border-right: 0;
+      }
+
+      .data-cell:nth-last-child(-n + 3) {
+        border-bottom: 0;
+      }
+
+      .data-value {
+        margin-top: 24px;
+        font-family: var(--font-family-data);
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .data-value.accent {
+        color: var(--color-action-primary);
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 10px;
+      }
+
+      .leader-card {
+        position: relative;
+        min-height: 270px;
+        overflow: hidden;
+        padding: 24px;
+        border: 1px solid var(--proposal-card-border-strong);
+        border-radius: var(--proposal-card-radius);
+        background:
+          radial-gradient(circle at 85% 20%, var(--color-stat-points-surface), transparent 40%),
+          var(--proposal-card-surface);
+      }
+
+      .leader-card::after {
+        position: absolute;
+        right: -18px;
+        bottom: -60px;
+        color: var(--color-action-primary);
+        content: "28.4";
+        font-family: var(--font-family-display);
+        font-size: 150px;
+        line-height: 1;
+        opacity: 0.045;
+      }
+
+      .leader-rank {
+        color: var(--color-action-primary);
+        font-family: var(--font-family-data);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+      }
+
+      .leader-value {
+        margin-top: 46px;
+        font-family: var(--font-family-display);
+        font-size: 70px;
+        letter-spacing: 1px;
+        line-height: 0.9;
+      }
+
+      .leader-name {
+        margin-top: 13px;
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .leader-team {
+        color: var(--color-text-muted);
+        font-family: var(--font-family-data);
+        font-size: 9px;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+      }
+
+      .decision-card {
+        padding: 24px;
+        border: 1px dashed var(--proposal-card-border-strong);
+        border-radius: var(--proposal-card-radius);
+        background: rgba(13, 13, 13, 0.55);
+      }
+
+      .decision-card h3 {
+        margin: 14px 0 12px;
+        font-size: 21px;
+      }
+
+      .decision-list {
+        display: grid;
+        gap: 0;
+        margin-top: 22px;
+        border-top: 1px solid var(--proposal-card-border);
+      }
+
+      .decision-item {
+        display: grid;
+        grid-template-columns: 18px 1fr;
+        gap: 10px;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--proposal-card-border);
+        color: var(--color-text-muted);
+        font-size: 12px;
+      }
+
+      .decision-item span:first-child {
+        color: var(--color-action-primary);
+        font-family: var(--font-family-data);
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .data-panel,
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .principles,
+        .identity-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .principle:nth-child(2) {
+          border-right: 0;
+        }
+
+        .principle:nth-child(-n + 2) {
+          border-bottom: 1px solid var(--proposal-card-border);
+        }
+
+        .data-panel-lead {
+          border-right: 0;
+          border-bottom: 1px solid var(--proposal-card-border);
+        }
+
+        .archive-row {
+          grid-template-columns: 56px minmax(180px, 1fr) 100px 24px;
+        }
+
+        .archive-format {
+          display: none;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .preview-note,
+        .preview-nav {
+          display: none;
+        }
+
+        .page {
+          width: min(100% - 28px, 1180px);
+          padding-top: 48px;
+        }
+
+        .hero {
+          gap: 28px;
+        }
+
+        .principles,
+        .identity-grid,
+        .match-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .principle {
+          border-right: 0;
+          border-bottom: 1px solid var(--proposal-card-border);
+        }
+
+        .principle:last-child {
+          border-bottom: 0;
+        }
+
+        .archive-row {
+          grid-template-columns: 46px 1fr 22px;
+          gap: 12px;
+        }
+
+        .archive-row .status {
+          display: none;
+        }
+
+        .data-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .data-cell:nth-child(3n) {
+          border-right: 1px solid var(--proposal-card-border);
+        }
+
+        .data-cell:nth-child(2n) {
+          border-right: 0;
+        }
+
+        .data-cell:nth-last-child(-n + 3) {
+          border-bottom: 1px solid var(--proposal-card-border);
+        }
+
+        .data-cell:nth-last-child(-n + 2) {
+          border-bottom: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="preview-bar">
+      <span class="preview-kicker">Card UI / Proposal 01</span>
+      <span class="preview-note">Editorial Scoreboard × Swiss Data Grid · preview only</span>
+      <nav class="preview-nav" aria-label="Preview sections">
+        <a href="#identity">Identity</a>
+        <a href="#archive">Archive</a>
+        <a href="#matches">Scoreboard</a>
+        <a href="#data">Data Panel</a>
+        <a href="#feature">Feature</a>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">BoxScore Lab · Visual exploration</div>
+          <h1>CARDS WITHOUT THE <span>BOXINESS.</span></h1>
+          <p class="hero-copy">
+            Near-black editorial surfaces, restrained mint signals, and layouts shaped by the
+            information—not one universal rounded container.
+          </p>
+        </div>
+        <aside class="hero-summary">
+          <div class="summary-row"><b>Canvas</b><span>Near-black, quiet grid</span></div>
+          <div class="summary-row"><b>Surface</b><span>Only +1 tonal step</span></div>
+          <div class="summary-row"><b>Mint</b><span>One role per card</span></div>
+          <div class="summary-row"><b>Depth</b><span>Hairlines, not shadows</span></div>
+        </aside>
+      </section>
+
+      <section class="principles" aria-label="Design principles">
+        <article class="principle">
+          <span class="principle-index">01</span>
+          <h2>Quieter shells</h2>
+          <p>10px radius and softer borders reduce generic dashboard chrome.</p>
+        </article>
+        <article class="principle">
+          <span class="principle-index">02</span>
+          <h2>Mint as signal</h2>
+          <p>Key number, status dot, or short cutline—never all three at once.</p>
+        </article>
+        <article class="principle">
+          <span class="principle-index">03</span>
+          <h2>Structure by type</h2>
+          <p>Identity, archive, scoreboard, and data panels use different grammar.</p>
+        </article>
+        <article class="principle">
+          <span class="principle-index">04</span>
+          <h2>Keep exceptions</h2>
+          <p>Leader, radar, crest, and team colors retain purposeful visual character.</p>
+        </article>
+      </section>
+
+      <section class="section" id="identity">
+        <div class="section-heading">
+          <span class="section-label">Team identity cards</span>
+          <span class="section-rule"></span>
+          <span class="section-type">Compact · interactive</span>
+        </div>
+        <div class="identity-grid">
+          <article class="identity-card" style="--team-color: #3cffd0; --card-accent: #3cffd0">
+            <div class="identity-mark">TH</div>
+            <div>
+              <div class="identity-head">
+                <span class="team-abbr">East · TH</span>
+                <span class="status status-active">Active</span>
+              </div>
+              <div class="team-name">Thunder Hawks</div>
+              <div class="identity-data">
+                <span class="identity-record">8W — 2L</span>
+                <span class="identity-points">1,248 PTS</span>
+              </div>
+            </div>
+          </article>
+          <article class="identity-card" style="--team-color: #a07aff; --card-accent: #a07aff">
+            <div class="identity-mark">BL</div>
+            <div>
+              <div class="identity-head">
+                <span class="team-abbr">East · BL</span>
+                <span class="status status-active">Active</span>
+              </div>
+              <div class="team-name">Blue Lightning</div>
+              <div class="identity-data">
+                <span class="identity-record">7W — 3L</span>
+                <span class="identity-points">1,192 PTS</span>
+              </div>
+            </div>
+          </article>
+          <article class="identity-card" style="--team-color: #ffb95f; --card-accent: #ffb95f">
+            <div class="identity-mark">GW</div>
+            <div>
+              <div class="identity-head">
+                <span class="team-abbr">West · GW</span>
+                <span class="status status-warning">Review</span>
+              </div>
+              <div class="team-name">Golden Wolves</div>
+              <div class="identity-data">
+                <span class="identity-record">9W — 1L</span>
+                <span class="identity-points">1,310 PTS</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="archive">
+        <div class="section-heading">
+          <span class="section-label">Event archive rows</span>
+          <span class="section-rule"></span>
+          <span class="section-type">Calm · metadata-first</span>
+        </div>
+        <div class="archive-list">
+          <article class="archive-row">
+            <div class="archive-index">01</div>
+            <div>
+              <div class="event-name">Summer Championship</div>
+              <div class="event-meta">12 Jul — 28 Jul 2026 · Tier S</div>
+            </div>
+            <div class="archive-format">Group stage + knockout</div>
+            <span class="status status-active">Completed</span>
+            <span class="archive-arrow">→</span>
+          </article>
+          <article class="archive-row">
+            <div class="archive-index">02</div>
+            <div>
+              <div class="event-name">Winter Cup</div>
+              <div class="event-meta">08 Aug — 24 Aug 2026 · Tier A</div>
+            </div>
+            <div class="archive-format">Double elimination</div>
+            <span class="status status-warning">In progress</span>
+            <span class="archive-arrow">→</span>
+          </article>
+          <article class="archive-row">
+            <div class="archive-index">03</div>
+            <div>
+              <div class="event-name">Open Court Series</div>
+              <div class="event-meta">05 Sep — 19 Sep 2026 · Tier C</div>
+            </div>
+            <div class="archive-format">Round robin</div>
+            <span class="status">Preparing</span>
+            <span class="archive-arrow">→</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="matches">
+        <div class="section-heading">
+          <span class="section-label">Match scoreboard cards</span>
+          <span class="section-rule"></span>
+          <span class="section-type">Score-led · horizontal</span>
+        </div>
+        <div class="match-grid">
+          <article class="match-card">
+            <div class="match-top">
+              <span class="match-meta">Summer Championship · Final</span>
+              <span class="status status-active">Final</span>
+            </div>
+            <div class="scoreline">
+              <div class="score-team">
+                <div class="score-team-name">Thunder Hawks</div>
+                <div class="score-team-code">TH · Home</div>
+              </div>
+              <div class="score"><span class="winner">112</span><span class="score-separator">—</span><span>98</span></div>
+              <div class="score-team">
+                <div class="score-team-name">Blue Lightning</div>
+                <div class="score-team-code">BL · Away</div>
+              </div>
+            </div>
+            <div class="match-footer"><span>18 Jul 2026</span><span>Box score →</span></div>
+          </article>
+          <article class="match-card">
+            <div class="match-top">
+              <span class="match-meta">Winter Cup · Group A</span>
+              <span class="status status-warning">Scheduled</span>
+            </div>
+            <div class="scoreline">
+              <div class="score-team">
+                <div class="score-team-name">Golden Wolves</div>
+                <div class="score-team-code">GW · Home</div>
+              </div>
+              <div class="score"><span>—</span><span class="score-separator">:</span><span>—</span></div>
+              <div class="score-team">
+                <div class="score-team-name">Red Fury</div>
+                <div class="score-team-code">RF · Away</div>
+              </div>
+            </div>
+            <div class="match-footer"><span>02 Aug 2026</span><span>Match detail →</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="data">
+        <div class="section-heading">
+          <span class="section-label">Team summary panel</span>
+          <span class="section-rule"></span>
+          <span class="section-type">One shell · internal dividers</span>
+        </div>
+        <article class="data-panel">
+          <div class="data-panel-lead">
+            <span class="micro-label">Team performance</span>
+            <h3>THUNDER HAWKS</h3>
+            <p>East Division · Season 2026</p>
+          </div>
+          <div class="data-grid">
+            <div class="data-cell"><div class="data-label">League points</div><div class="data-value accent">1,248</div></div>
+            <div class="data-cell"><div class="data-label">Record</div><div class="data-value">8–2</div></div>
+            <div class="data-cell"><div class="data-label">Win rate</div><div class="data-value">80%</div></div>
+            <div class="data-cell"><div class="data-label">Points / game</div><div class="data-value">106.4</div></div>
+            <div class="data-cell"><div class="data-label">Opp. points</div><div class="data-value">97.2</div></div>
+            <div class="data-cell"><div class="data-label">Form</div><div class="data-value">WWLWW</div></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="feature">
+        <div class="section-heading">
+          <span class="section-label">Feature card exception</span>
+          <span class="section-rule"></span>
+          <span class="section-type">Expressive · intentionally rare</span>
+        </div>
+        <div class="feature-grid">
+          <article class="leader-card">
+            <div class="leader-rank">01 / Points leader</div>
+            <div class="leader-value">28.4</div>
+            <div class="leader-name">James Walker</div>
+            <div class="leader-team">Thunder Hawks · Per game</div>
+          </article>
+          <aside class="decision-card">
+            <span class="micro-label">What changes</span>
+            <h3>Less universal card chrome.</h3>
+            <div class="decision-list">
+              <div class="decision-item"><span>+</span><span>10px base card radius instead of 16px everywhere</span></div>
+              <div class="decision-item"><span>+</span><span>Near-canvas surfaces with quieter neutral borders</span></div>
+              <div class="decision-item"><span>+</span><span>Mint limited to one semantic signal per card</span></div>
+              <div class="decision-item"><span>+</span><span>Archive rows and data panels replace nested cards</span></div>
+              <div class="decision-item"><span>=</span><span>Leader, tier, radar, and team colors remain exceptions</span></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
