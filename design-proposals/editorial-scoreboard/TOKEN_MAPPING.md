@@ -112,6 +112,10 @@ row never uses warning, danger, selected, or winner roles.
 | `--control-height-small` | `28px` | add |
 | `--table-header-height` | `38px` | add |
 | `--table-row-height` | `46px` | add |
+| `--color-surface-edge-plate` | near-black Inset surface | add shared Badge/Tag material |
+| `--color-edge-plate-highlight-strong` | neutral white at approximately `8%` | add directional/top highlight |
+| `--color-edge-plate-highlight-soft` | neutral white at approximately `2.5%` | add directional fade |
+| `--color-edge-plate-highlight-end` | neutral white at approximately `2%` | add restrained trailing edge |
 
 The spacing scale supplies repeatable rhythm; page and component layout remain
 owned by their consuming CSS. `--radius-pill`, 20px chips, and 24px button

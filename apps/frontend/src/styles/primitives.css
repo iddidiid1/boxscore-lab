@@ -249,20 +249,30 @@
 }
 
 .app-edge-plate {
+  --app-edge-plate-tone: var(--color-text-muted);
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--color-border);
+  border: 0;
   border-radius: var(--radius-chip);
   background:
     linear-gradient(
-      135deg,
-      var(--color-background-ambient-upper),
-      transparent 52%
+      132deg,
+      var(--color-edge-plate-highlight-strong) 0%,
+      var(--color-edge-plate-highlight-soft) 34%,
+      transparent 68%
     ),
-    var(--color-surface-subtle);
+    var(--color-surface-edge-plate);
+  box-shadow:
+    inset 2px 0 0 var(--app-edge-plate-tone),
+    inset 0 1px 0 var(--color-edge-plate-highlight-strong),
+    inset -1px 0 0 var(--color-edge-plate-highlight-end);
   color: var(--color-text-soft);
   font-family: var(--font-family-data);
   font-weight: 600;
+}
+
+.app-edge-plate svg {
+  color: var(--app-edge-plate-tone);
 }
 
 .app-feedback {

@@ -23,6 +23,10 @@
   --color-surface-identity: rgba(53, 58, 55, 0.40);
   --color-surface-artwork-fallback: rgba(255, 255, 255, 0.055);
   --color-surface-overlay: rgba(35, 35, 35, 0.94);
+  --color-surface-edge-plate: #0d0d0d;
+  --color-edge-plate-highlight-strong: rgba(255, 255, 255, 0.08);
+  --color-edge-plate-highlight-soft: rgba(255, 255, 255, 0.025);
+  --color-edge-plate-highlight-end: rgba(255, 255, 255, 0.02);
   --color-background-ambient-upper: rgba(255, 255, 255, 0.06);
   --color-background-ambient-lower: rgba(255, 255, 255, 0.035);
   --color-background-brand-ambient-upper: rgba(67, 242, 200, 0.08);

@@ -19,7 +19,7 @@ export function EventResultTagsPanel({ tags }: EventResultTagsPanelProps) {
         <Group className="event-tag-chip-row" gap="xs">
           {tags.map((tag) => (
             <Group
-              className="event-result-chip"
+              className="event-result-chip app-edge-plate"
               gap={7}
               data-winner={tag.isWinnerTag || undefined}
               key={tag.id}

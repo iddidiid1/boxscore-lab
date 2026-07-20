@@ -46,7 +46,11 @@ export function MatchRecordCard({ match }: MatchRecordCardProps) {
           </Text>
           <Group className="match-meta-secondary" gap="xs" wrap="wrap">
             {match.stageTag ? (
-              <Badge className="match-tag-badge" variant="light">
+              <Badge
+                className="match-tag-badge app-edge-plate"
+                title={match.stageTag.label}
+                variant="light"
+              >
                 {match.stageTag.label}
               </Badge>
             ) : null}
