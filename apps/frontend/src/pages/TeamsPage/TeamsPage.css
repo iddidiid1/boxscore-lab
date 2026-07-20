@@ -57,8 +57,8 @@
   padding: 14px 16px;
   text-decoration: none;
   transition:
-    border-color 150ms ease,
-    background 150ms ease;
+    border-color var(--duration-standard) var(--easing-functional),
+    background var(--duration-standard) var(--easing-functional);
 }
 
 .team-card:hover {
@@ -67,8 +67,8 @@
 }
 
 .team-card:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .team-logo {

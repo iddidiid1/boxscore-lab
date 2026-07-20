@@ -33,10 +33,10 @@
   padding: 18px;
   text-decoration: none;
   transition:
-    border-color 140ms ease,
-    background-color 140ms ease,
-    box-shadow 140ms ease,
-    transform 140ms ease;
+    border-color var(--duration-standard) var(--easing-functional),
+    background-color var(--duration-standard) var(--easing-functional),
+    box-shadow var(--duration-standard) var(--easing-functional),
+    transform var(--duration-standard) var(--easing-functional);
 }
 
 .event-summary-card:hover {

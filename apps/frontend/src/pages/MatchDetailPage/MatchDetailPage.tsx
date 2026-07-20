@@ -1,9 +1,10 @@
-import { Alert, Anchor, Box, Button, Center, Group, Loader, Stack } from "@mantine/core";
+import { Alert, Anchor, Box, Button, Group, Stack } from "@mantine/core";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchMatch, restoreMatch, voidMatch, type MatchDetail } from "../../features/matches";
 import { ApiClientError } from "../../features/teams/api/teams";
 import { ConfirmModal } from "../../shared/components/ConfirmModal";
+import { LoadingState } from "../../shared/components/LoadingState";
 import { MatchBoxScoreTable, MatchScoreHeader } from "./components";
 import "./MatchDetailPage.css";
 
@@ -22,20 +23,19 @@ export function MatchDetailPage({ matchId }: { matchId: string }) {
   }, [id, reload]);
 
   async function mutate(action: "void" | "restore") {
-    setConfirmAction(null);
     setSubmitting(true); setError(undefined);
-    try { if (action === "void") await voidMatch(id); else await restoreMatch(id); setReload((value) => value + 1); }
+    try { if (action === "void") await voidMatch(id); else await restoreMatch(id); setConfirmAction(null); setReload((value) => value + 1); }
     catch (reason) { setError(reason instanceof ApiClientError ? [reason.response.message, ...reason.response.details.map((detail) => detail.message)].join(" ") : "Action failed."); }
     finally { setSubmitting(false); }
   }
 
-  if (loading) return <Center py="xl"><Loader aria-label="Loading match" /></Center>;
-  if (!match) return <Alert color="red" title={error ?? "Unable to load match"}><Button onClick={() => setReload((value) => value + 1)} size="xs">Retry</Button></Alert>;
+  if (loading) return <LoadingState label="Loading match…" />;
+  if (!match) return <Alert color="red" title={error ?? "Unable to load match"}><Button className="app-action-button app-action-button--context" onClick={() => setReload((value) => value + 1)} size="xs" variant="outline">Retry</Button></Alert>;
   const eventUnavailable = match.event.archivedAt !== null || match.event.deletedAt !== null || !["ONGOING", "COMPLETED"].includes(match.event.status);
   const home = match.teams.find((team) => team.role === "HOME")!;
   const away = match.teams.find((team) => team.role === "AWAY")!;
   return <Stack className="match-detail-page" gap="md">
-    <Group className="match-detail-actions" justify="space-between"><Anchor className="match-detail-back-link" href="/matches">← Back to Matches</Anchor><Group>
+    <Group className="match-detail-actions" justify="space-between"><Anchor className="match-detail-back-link app-detail-back-link" href="/matches">← Back to Matches</Anchor><Group>
       {!match.voidedAt && !eventUnavailable ? <><Button className="edit-match-button app-action-button app-action-button--primary" component="a" href={`/matches/${match.id}/edit`} leftSection={<Pencil size={16} />}>Edit Match</Button><Button className="app-action-button app-action-button--danger" disabled={submitting} onClick={() => setConfirmAction("void")} variant="outline">Void Match</Button></> : null}
       {match.voidedAt && !eventUnavailable ? <Button className="app-action-button app-action-button--primary" disabled={submitting} onClick={() => setConfirmAction("restore")}>Restore Match</Button> : null}
     </Group></Group>
@@ -47,6 +47,7 @@ export function MatchDetailPage({ matchId }: { matchId: string }) {
     <ConfirmModal
       confirmLabel={confirmAction === "void" ? "Void Match" : "Restore Match"}
       danger={confirmAction === "void"}
+      error={error}
       loading={submitting}
       onCancel={() => setConfirmAction(null)}
       onConfirm={() => confirmAction && mutate(confirmAction)}

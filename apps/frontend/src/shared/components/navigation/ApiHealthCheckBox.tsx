@@ -10,8 +10,14 @@ export function ApiHealthCheckBox() {
   const { apiStatus } = useApiHealth();
 
   return (
-    <div className="api-health-footer">
-      <span className={`api-status-dot api-status-dot--${apiStatus}`} />
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      className="api-health-footer"
+      data-status={apiStatus}
+      role="status"
+    >
+      <span aria-hidden="true" className={`api-status-dot api-status-dot--${apiStatus}`} />
       <span className="api-health-label">API</span>
       <span className="api-health-status">{STATUS_TEXT[apiStatus]}</span>
     </div>

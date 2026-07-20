@@ -106,6 +106,15 @@
   color: var(--color-text-soft);
 }
 
+.event-participant-chip:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.event-participant-chip:active {
+  background: var(--color-active-surface);
+}
+
 .event-participant-chip[data-selected] {
   border-color: var(--color-event-selected-border);
   background: var(--color-event-selected-surface);

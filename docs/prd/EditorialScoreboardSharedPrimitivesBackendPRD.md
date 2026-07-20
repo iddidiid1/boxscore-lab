@@ -31,10 +31,51 @@
 
 ## 3. 业务规则
 
+本批次不新增或修改业务规则。实施期间必须保持：
+
+- Team、Player、Event、Match 的创建、编辑、归档、作废、恢复和状态推进规则不变。
+- ResultTag、Match Stage Tag、Player Awards、参与队伍和技术统计的既有数据语义不变。
+- 排名、总计、平均值、榜单和其他派生统计继续由已保存的原始记录计算，不新增持久化聚合。
+- 前端的 `loading`、`disabled`、`selected`、`checking`、`error` 和 Reduced Motion
+  仅是现有状态的视觉表达，不形成新的服务端业务状态。
+- API Health 的 `Online`、`Checking`、`Offline` 继续由现有健康检查请求生命周期得出，
+  不在数据库中保存，也不改变健康检查频率或判定规则。
+
+若某个已批准视觉状态无法由现有前端状态或 API 响应可靠推导，不得通过猜测、
+新增后端字段或改变业务规则补齐；该项应从 M1 暂停并作为独立需求重新进入 Phase 1。
+
 ## 4. Schema 变更
+
+无。
+
+- 不修改 Prisma schema。
+- 不创建数据库 migration。
+- 不新增、删除、重命名字段、枚举、索引或关系。
+- 不进行数据回填。
 
 ## 5. API 规范
 
+无 API 变更。
+
+- endpoint、HTTP method、path parameter、query parameter 和 request body 不变。
+- response status、payload shape、字段可空性和序列化方式不变。
+- 请求触发时机、缓存/刷新行为和 API Health polling 行为不变。
+- 不为颜色、surface、motion、组件 variant 或用户视觉偏好新增 API。
+
 ## 6. 验证规则
 
+无后端验证变更。
+
+- 所有 DTO、schema、业务前置条件和授权规则保持现状。
+- 前端新增的可访问属性、CSS class 和视觉状态不参与服务端验证。
+- 表单错误只改变呈现方式，不改变错误何时产生或哪些输入被接受。
+
 ## 7. 错误码
+
+无错误码或错误结构变更。
+
+- 保持所有现有 HTTP status、业务错误码和错误 payload。
+- M1 不吞掉、改写或重新分类后端错误。
+- 视觉迁移后的 Alert、field validation、Error/Retry 和 Confirmation Dialog
+  只消费既有错误；刷新失败时是否保留已有成功内容也必须沿用当前数据流。
+- 若既有组件没有可恢复操作，不得仅为满足视觉稿而伪造 `Retry` 行为。

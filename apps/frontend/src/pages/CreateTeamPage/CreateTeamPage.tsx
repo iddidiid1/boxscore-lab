@@ -154,7 +154,7 @@ export function CreateTeamPage() {
             Create Team
           </Button>
           <Button
-            className="manage-team-cancel-button app-action-button app-action-button--secondary"
+            className="manage-team-cancel-button app-action-button app-action-button--cancel"
             component="a"
             href="/teams"
             variant="outline"

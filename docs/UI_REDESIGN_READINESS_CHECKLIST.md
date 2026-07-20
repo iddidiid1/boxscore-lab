@@ -8,9 +8,9 @@ This is an incremental maintainability task, not a request to redesign the curre
 
 ## Completion criteria
 
-- [ ] Global colors, typography, radii, borders, and elevation are defined through semantic design tokens.
+- [x] Global colors, typography, radii, borders, and elevation are defined through semantic design tokens.
 - [x] Mantine and project CSS consume the same design decisions instead of maintaining separate values.
-- [ ] Shared controls and surfaces own their visual styling.
+- [x] Shared controls and surfaces own their visual styling.
 - [ ] Page CSS mainly controls layout, spacing, responsive behavior, and page-specific exceptions.
 - [ ] A future visual redesign can be completed primarily by changing tokens and shared component styles.
 - [ ] No migration changes page behavior or business logic.
@@ -56,8 +56,8 @@ This is an incremental maintainability task, not a request to redesign the curre
 
 ## Phase 3 - Consolidate shared visual primitives
 
-- [ ] Make the existing action-button styles the single implementation for primary, secondary, quiet, and danger actions.
-- [ ] Remove page-specific button styles that duplicate shared button variants.
+- [x] Make the existing action-button styles the single implementation for the approved semantic action family.
+- [x] Remove page-specific button styles that duplicate shared button variants.
 - [x] Introduce a lightweight shared panel/card style for recurring border, background, and radius behavior.
 - [x] Introduce shared form-control styling for text inputs, selects, number inputs, and textareas where Mantine defaults are insufficient.
 - [ ] Introduce shared table styling for recurring header, cell, divider, hover, and scroll-container behavior.
@@ -103,7 +103,7 @@ This is an incremental maintainability task, not a request to redesign the curre
   - [x] Confirm the routes' default visual state through user review.
   - [ ] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
 - [x] Batch 6 - Shared Cleanup and Regression Guard.
-- [ ] During each migration, preserve layout, responsive breakpoints, DOM structure, and behavior unless separately requested.
+- [x] During each migration, preserve layout, responsive breakpoints, DOM structure, and behavior unless separately requested.
 - [ ] Remove obsolete selectors after each page is migrated.
 
 ## Phase 5 - Prevent regression
@@ -122,7 +122,7 @@ This is an incremental maintainability task, not a request to redesign the curre
 - [ ] Visually compare affected pages at desktop and mobile widths.
 - [ ] Check default, hover, focus-visible, active, disabled, loading, validation, and destructive states where applicable.
 - [ ] Check table overflow and dense statistical displays.
-- [ ] Check text contrast and visible keyboard focus.
+- [x] Check text contrast and visible keyboard focus.
 - [ ] Confirm no unrelated files or behaviors changed.
 
 ## Out of scope

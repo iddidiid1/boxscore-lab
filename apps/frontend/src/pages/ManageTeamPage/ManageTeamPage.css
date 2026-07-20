@@ -201,16 +201,6 @@
   text-align: right;
 }
 
-.player-table-action {
-  font-weight: 700;
-  padding-inline: 8px;
-}
-
-.player-table-action.app-action-button--danger,
-.player-table-action.app-action-button--danger:hover {
-  border-color: transparent;
-}
-
 @media (max-width: 900px) {
   .team-basic-info-layout {
     grid-template-columns: 1fr;

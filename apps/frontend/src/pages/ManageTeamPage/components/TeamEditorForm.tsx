@@ -88,7 +88,7 @@ export function TeamEditorForm({
 
   return (
     <>
-      <Box className="manage-team-section app-panel">
+      <Box className="manage-team-section app-surface app-surface--editor">
         <Title order={2}>Team Basic Info</Title>
 
         <Box className="team-basic-info-layout">
@@ -208,7 +208,7 @@ export function TeamEditorForm({
         </Box>
       </Box>
 
-      <Box className="manage-team-section app-panel">
+      <Box className="manage-team-section app-surface app-surface--editor">
         <Title order={2}>Team Profile Ratings</Title>
         <Stack className="profile-rating-list" gap="md">
           {profileRatingFields.map((field) => (

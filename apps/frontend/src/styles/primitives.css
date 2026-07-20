@@ -5,31 +5,292 @@
   box-shadow: var(--shadow-surface);
 }
 
-.app-panel--inset {
-  border-color: var(--color-border-subtle);
-  background: var(--color-surface-control);
+.app-surface {
+  min-width: 0;
 }
 
-.app-control-label {
+.app-surface.app-surface--editor {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface-control);
+  box-shadow: inset 0 1px 0 var(--color-border-subtle);
+}
+
+.app-surface.app-surface--data,
+.app-surface.app-surface--summary {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-panel);
+  background:
+    linear-gradient(
+      135deg,
+      var(--color-background-ambient-upper),
+      transparent 36%
+    ),
+    var(--color-surface-glass);
+  box-shadow:
+    inset 1px 0 0 var(--color-border-subtle),
+    inset 0 1px 0 var(--color-border);
+}
+
+.app-panel--inset,
+.app-surface.app-surface--inset {
+  border: 0;
+  border-radius: var(--radius-compact);
+  background: var(--color-surface-inset);
+  box-shadow: inset 0 1px 0 var(--color-border-subtle);
+}
+
+.app-surface.app-surface--overlay {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-overlay);
+  background:
+    linear-gradient(
+      145deg,
+      var(--color-background-ambient-upper),
+      transparent 42%
+    ),
+    var(--color-surface-overlay);
+}
+
+.app-surface.app-surface--identity {
+  border: 1px solid var(--color-border-preview);
+  border-radius: var(--radius-interactive);
+  background:
+    linear-gradient(
+      145deg,
+      var(--color-background-ambient-upper),
+      transparent 45%
+    ),
+    var(--color-surface-identity);
+  box-shadow: inset 0 1px 0 var(--color-border-hover);
+}
+
+.app-control-label,
+.mantine-InputWrapper-label {
   color: var(--color-text-soft);
+  font-family: var(--font-family-body);
   font-size: 0.82rem;
   font-weight: 700;
 }
 
-.app-control-input {
+.app-control-input,
+.mantine-Input-input {
+  min-height: var(--control-height-default);
   border-color: var(--color-border);
   border-radius: var(--radius-control);
   background: var(--color-surface-control);
   color: var(--color-text-strong);
+  transition:
+    background-color var(--duration-fast) var(--easing-functional),
+    border-color var(--duration-fast) var(--easing-functional);
+}
+
+.app-control-input:hover:not(:disabled, [data-disabled]),
+.mantine-Input-input:hover:not(:disabled, [data-disabled]) {
+  border-color: var(--color-border-control-hover);
 }
 
 .app-control-input:focus,
-.app-control-input:focus-within {
-  border-color: var(--color-action-primary-emphasis);
+.app-control-input:focus-visible,
+.app-control-input:focus-within,
+.mantine-Input-input:focus,
+.mantine-Input-input:focus-visible {
+  border-color: var(--color-border-control-strong);
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
+.app-control-input:disabled,
+.app-control-input[data-disabled],
+.mantine-Input-input:disabled,
+.mantine-Input-input[data-disabled] {
+  border-color: var(--color-border-subtle);
+  background: var(--color-surface-subtle);
+  color: var(--color-text-disabled);
+  opacity: 1;
+}
+
+.mantine-InputWrapper-description {
+  color: var(--color-text-muted);
+}
+
+.mantine-InputWrapper-error,
 .app-field-error {
   color: var(--color-danger);
+}
+
+.mantine-Input-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.app-control-input--dense,
+.match-stats-input {
+  min-height: var(--control-height-dense);
+  height: var(--control-height-dense);
+}
+
+.mantine-Checkbox-input {
+  width: 18px;
+  height: 18px;
+  border-color: var(--color-border-control-strong);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-control);
+}
+
+.mantine-Checkbox-input:checked {
+  border-color: var(--color-action-primary);
+  background: var(--color-action-primary);
+}
+
+.mantine-Checkbox-input:focus-visible,
+.mantine-Slider-thumb:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.mantine-Checkbox-icon {
+  color: var(--color-text-on-accent);
+}
+
+.mantine-Checkbox-label {
+  color: var(--color-text);
+}
+
+.mantine-Slider-root {
+  min-height: var(--control-height-dense);
+  display: flex;
+  align-items: center;
+}
+
+.mantine-Slider-track {
+  background: var(--color-surface-subtle);
+}
+
+.mantine-Slider-bar,
+.mantine-Slider-thumb {
+  background: var(--color-action-primary);
+}
+
+.mantine-Slider-thumb {
+  border-color: var(--color-action-primary);
+}
+
+.app-inline-link {
+  color: var(--color-action-primary);
+  text-decoration-color: var(--color-action-primary-border-subtle);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.app-inline-link:hover {
+  color: var(--color-text-strong);
+  text-decoration-color: var(--color-action-primary);
+}
+
+.app-inline-link:focus-visible,
+.app-detail-back-link:focus-visible {
+  border-radius: var(--radius-focus-target);
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.app-detail-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-soft);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.app-detail-back-link::first-letter {
+  color: var(--color-action-primary);
+}
+
+.app-detail-back-link:hover {
+  color: var(--color-text-strong);
+}
+
+.app-edge-plate,
+.status-chip {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-chip);
+  background:
+    linear-gradient(
+      135deg,
+      var(--color-background-ambient-upper),
+      transparent 52%
+    ),
+    var(--color-surface-subtle);
+  color: var(--color-text-soft);
+  font-family: var(--font-family-data);
+  font-weight: 600;
+}
+
+.app-feedback {
+  border: 0;
+  border-left: 3px solid var(--color-border-control-strong);
+  border-radius: var(--radius-compact);
+  background: var(--color-surface-subtle);
+  color: var(--color-text);
+}
+
+.app-feedback[data-variant="success"] {
+  border-left-color: var(--color-success);
+}
+
+.app-feedback[data-variant="warning"] {
+  border-left-color: var(--color-warning);
+}
+
+.app-feedback[data-variant="danger"] {
+  border-left-color: var(--color-danger);
+}
+
+.mantine-Alert-root {
+  border: 0;
+  border-left: 3px solid currentColor;
+  border-radius: var(--radius-compact);
+  background: var(--color-surface-subtle);
+}
+
+.mantine-Alert-title {
+  color: var(--color-text-strong);
+}
+
+.mantine-Alert-message {
+  color: var(--color-text-soft);
+}
+
+.mantine-Loader-root {
+  color: var(--color-action-primary);
+}
+
+.app-loading-state {
+  min-height: 160px;
+  padding: var(--space-6);
+}
+
+.app-loading-state[data-compact] {
+  min-height: 96px;
+  padding: var(--space-4);
+}
+
+.app-loading-state__label {
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
+  font-size: 0.75rem;
+}
+
+.mantine-Skeleton-root::before {
+  background: var(--color-surface-subtle);
+}
+
+.mantine-Skeleton-root::after {
+  background: var(--color-hover-surface);
 }
 
 .app-table-wrap {
@@ -55,7 +316,7 @@
   background: var(--color-hover-surface);
 }
 
-/* NumberInput controls must match the input container's border-radius */
+/* NumberInput controls must match the input container's border-radius. */
 .mantine-NumberInput-control {
   border-radius: var(--radius-sharp);
 }
@@ -66,4 +327,16 @@
 
 .mantine-NumberInput-control:last-child {
   border-bottom-right-radius: var(--radius-control);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-control-input,
+  .mantine-Input-input {
+    transition: none;
+  }
+
+  .mantine-Skeleton-root::after {
+    animation: none;
+    opacity: 0;
+  }
 }

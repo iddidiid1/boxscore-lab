@@ -279,8 +279,8 @@
 }
 
 .roster-sort-button:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .roster-sort-indicator {
@@ -309,8 +309,8 @@
 
 .roster-player-link:focus-visible {
   border-radius: var(--radius-focus-target);
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 @media (max-width: 980px) {

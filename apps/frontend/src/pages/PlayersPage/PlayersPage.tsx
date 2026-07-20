@@ -1,6 +1,7 @@
-import { Alert, Box, Button, Group, Loader, Stack, Text, Title } from "@mantine/core";
+import { Alert, Box, Button, Group, Stack, Text, Title } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { fetchPlayers, type PlayerListParams, type PlayerListResponse, type PlayerPosition } from "../../features/players";
+import { LoadingState } from "../../shared/components/LoadingState";
 import { PlayerRankingFilters, PlayerRankingTable, StatisticLeaderCards, TurnPageControls } from "./components";
 import type { PlayerRankingSortField } from "./types";
 import "./PlayersPage.css";
@@ -21,8 +22,8 @@ export function PlayersPage() {
   const update = (change: Partial<PlayerListParams>, replace = false) => { const next = { ...query, ...change }; writeQuery(next, replace); setQuery(next); };
   const eventValue = query.eventId ? String(query.eventId) : "overall", teamValue = query.teamId ? String(query.teamId) : "all", positionValue = query.position ?? "all";
   const leaders = (data?.leaders ?? []).map((leader) => ({ id: leader.stat, accent: leader.stat, label: leader.label, value: leader.value.toFixed(1), playerName: leader.player?.name ?? "No eligible players", teamName: leader.team?.name ?? "" }));
-  if (!data && loading) return <Stack className="players-page" align="center"><Loader /><Text>Loading player statistics…</Text></Stack>;
-  if (!data && error) return <Alert title="Unable to load players"><Text>{error}</Text><Button mt="sm" onClick={() => setQuery({ ...query })}>Retry</Button></Alert>;
+  if (!data && loading) return <LoadingState label="Loading player statistics…" />;
+  if (!data && error) return <Alert title="Unable to load players"><Text>{error}</Text><Button className="app-action-button app-action-button--context" mt="sm" onClick={() => setQuery({ ...query })} variant="outline">Retry</Button></Alert>;
   return <Stack className="players-page" gap="xl">
     <Group align="flex-start" className="players-header" justify="space-between"><Box><Text className="eyebrow">Performance source</Text><Title className="page-title" order={1}>Players</Title><Text className="page-summary" maw={600} mt="xs">Dynamic player rankings from eligible match records.</Text></Box></Group>
     {error && <Alert title="Refresh failed">{error}</Alert>}

@@ -29,7 +29,7 @@ export function EventParticipantsSelector({
   }
 
   return (
-    <Box className="event-form-panel">
+    <Box className="event-form-panel app-surface app-surface--editor">
       <Stack gap="md">
         <Group align="flex-start" justify="space-between">
           <Box>
@@ -44,7 +44,7 @@ export function EventParticipantsSelector({
               {selectedTeamIds.length} / {teams.length} selected
             </Text>
             <Button
-              className="event-form-quiet-button"
+              className="event-form-quiet-button app-action-button app-action-button--small-edit"
               onClick={() => onChange(teams.map((team) => team.id))}
               type="button"
               variant="subtle"
@@ -52,7 +52,7 @@ export function EventParticipantsSelector({
               Select All
             </Button>
             <Button
-              className="event-form-quiet-button"
+              className="event-form-quiet-button app-action-button app-action-button--small-edit"
               onClick={() => onChange([])}
               type="button"
               variant="subtle"

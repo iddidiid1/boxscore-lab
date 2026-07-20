@@ -227,8 +227,8 @@
 
 .player-ranking-table tbody tr {
   transition:
-    background-color 140ms ease,
-    transform 140ms ease;
+    background-color var(--duration-standard) var(--easing-functional),
+    transform var(--duration-standard) var(--easing-functional);
 }
 
 .player-ranking-table tbody tr:hover td {
@@ -260,8 +260,8 @@
 }
 
 .player-sort-button:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .player-sort-indicator {
@@ -326,8 +326,8 @@
 
 .player-name-button:focus-visible {
   border-radius: var(--radius-focus-target);
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .player-ranking-value {

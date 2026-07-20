@@ -139,7 +139,8 @@
 
 .match-stats-input {
   width: 100%;
-  min-height: 38px;
+  min-height: var(--control-height-dense);
+  height: var(--control-height-dense);
   border-color: var(--color-border-control);
   border-radius: var(--radius-control);
   background: var(--color-surface-control);
