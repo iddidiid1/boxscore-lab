@@ -1,12 +1,13 @@
 import { Box, Group, Stack, Text, Title } from "@mantine/core";
 import { Shield } from "lucide-react";
+import { FractionalStarRating } from "../../../shared/components/data-display";
 
 type TeamProfileSummaryProps = {
   name: string;
   logoUrl?: string;
   division: string;
   points: number;
-  overallRating: number;
+  overallRating: number | null;
   description: string;
 };
 
@@ -17,11 +18,6 @@ function getInitials(name: string) {
     .map((word) => word[0])
     .join("")
     .toUpperCase();
-}
-
-function getStars(rating: number) {
-  const roundedRating = Math.max(0, Math.min(5, Math.round(rating / 2)));
-  return `${"\u2605".repeat(roundedRating)}${"\u2606".repeat(5 - roundedRating)}`;
 }
 
 export function TeamProfileSummary({
@@ -48,9 +44,7 @@ export function TeamProfileSummary({
           <Title order={1}>{name}</Title>
           <Text className="team-profile-division">{division}</Text>
           <Text className="team-profile-points">{points.toLocaleString()} pts</Text>
-          <Text aria-label={`${overallRating} out of 5 rating`} className="team-profile-rating">
-            {getStars(overallRating)}
-          </Text>
+          <FractionalStarRating className="team-profile-rating" value={overallRating} />
         </Stack>
       </Group>
 

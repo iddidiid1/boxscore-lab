@@ -151,7 +151,7 @@ export function TeamDetailPage() {
           division={team.divisionName ?? "No Division"}
           logoUrl={team.logoUrl ?? undefined}
           name={team.name}
-          overallRating={team.overallRating ?? 0}
+          overallRating={team.overallRating}
           points={team.totalPoints}
         />
         <TeamRadarCard attributes={mapRadar(team)} />

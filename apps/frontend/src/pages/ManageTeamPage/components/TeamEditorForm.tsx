@@ -12,6 +12,7 @@ import {
 } from "@mantine/core";
 import { Shield } from "lucide-react";
 import type { Division, ProfileRating } from "../../../features/teams";
+import { FractionalStarRating } from "../../../shared/components/data-display";
 
 export type TeamEditorValues = {
   name: string;
@@ -52,11 +53,6 @@ function getInitials(name: string) {
     .toUpperCase();
 
   return initials || "NT";
-}
-
-function getStars(rating: number) {
-  const roundedRating = Math.max(0, Math.min(5, Math.round(rating / 2)));
-  return `${"\u2605".repeat(roundedRating)}${"\u2606".repeat(5 - roundedRating)}`;
 }
 
 export function TeamEditorForm({
@@ -195,7 +191,10 @@ export function TeamEditorForm({
 
             <Box>
               <Text className="data-label">Rating Preview</Text>
-              <Text className="manage-team-rating-preview">{getStars(value.overallRating)}</Text>
+              <FractionalStarRating
+                className="manage-team-rating-preview"
+                value={value.overallRating}
+              />
             </Box>
 
             <Box>

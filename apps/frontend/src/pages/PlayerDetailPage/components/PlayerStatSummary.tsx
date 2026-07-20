@@ -1,4 +1,4 @@
-import { Box, Text, Title } from "@mantine/core";
+import { StatSummaryPanel } from "../../../shared/components/data-display";
 
 export type PlayerSummaryStat = {
   label: string;
@@ -10,17 +10,5 @@ type PlayerStatSummaryProps = {
 };
 
 export function PlayerStatSummary({ stats }: PlayerStatSummaryProps) {
-  return (
-    <Box className="player-summary-card app-panel">
-      <Title order={2}>Stat Summary</Title>
-      <Box className="player-summary-stats">
-        {stats.map((stat) => (
-          <Box className="player-summary-stat" key={stat.label}>
-            <Text className="data-label">{stat.label}</Text>
-            <Text className="player-summary-value">{stat.value}</Text>
-          </Box>
-        ))}
-      </Box>
-    </Box>
-  );
+  return <StatSummaryPanel className="player-summary-card" stats={stats} title="Stat Summary" />;
 }

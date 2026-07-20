@@ -54,10 +54,6 @@
   border-radius: var(--radius-pill);
 }
 
-.match-stats-table-scroll {
-  overflow-x: auto;
-}
-
 .match-stats-input-table {
   width: 100%;
   min-width: 1144px;
@@ -85,31 +81,14 @@
 }
 
 .match-stats-input-table th {
-  border-color: var(--color-border);
-  color: var(--color-text-muted);
-  font-family: var(--font-family-data);
   font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  padding: 10px;
-  text-transform: uppercase;
 }
 
-.match-stats-input-table td {
-  border-color: var(--color-border-table-cell);
-  padding: 10px;
+.match-stats-input-table.app-data-table td {
+  padding: 2px 8px;
 }
 
-.match-stats-input-table tbody tr:hover td {
-  background: var(--color-table-row-hover-subtle);
-}
-
-.match-stats-other-row td {
-  background: var(--color-surface-row-muted);
-}
-
-.match-stats-other-row .match-stats-player-name,
-.match-stats-other-row .match-stats-readonly-value {
+.match-stats-other-row .match-stats-player-name {
   color: var(--color-text-row-muted);
   font-style: italic;
 }

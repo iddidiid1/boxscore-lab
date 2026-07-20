@@ -268,6 +268,7 @@ select:focus-visible,
 }
 
 .content {
+  min-width: 0;
   width: 100%;
   max-width: var(--layout-content-max-width);
   padding: 28px var(--layout-page-gutter);

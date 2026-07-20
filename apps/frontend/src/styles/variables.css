@@ -127,6 +127,9 @@
   --color-outcome-winner-surface: rgba(255, 185, 95, 0.08);
   --color-row-operational-surface: rgba(255, 255, 255, 0.045);
   --color-row-operational-border: rgba(255, 255, 255, 0.19);
+  --color-rating-fill: #ffb95f;
+  --color-rating-empty: rgba(255, 255, 255, 0.20);
+  --color-rating-unavailable: rgba(148, 148, 148, 0.36);
   /* Compatibility roles consumed until the Event patterns migrate in M4. */
   --color-event-card-gradient-top: rgba(26, 26, 26, 0.82);
   --color-event-card-gradient-bottom: rgba(19, 19, 19, 0.96);

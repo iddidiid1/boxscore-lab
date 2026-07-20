@@ -165,14 +165,14 @@
 }
 
 .match-box-score-card {
-  padding: 20px 22px;
+  padding: 0;
 }
 
 .match-box-score-title {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 0 0 14px;
+  margin: 0;
   color: var(--color-text-strong);
   font-size: 1.12rem;
   line-height: 1.2;
@@ -183,10 +183,6 @@
   width: 4px;
   height: 22px;
   border-radius: var(--radius-pill);
-}
-
-.match-box-score-scroll {
-  overflow-x: auto;
 }
 
 .match-box-score-table {
@@ -215,85 +211,13 @@
   width: 84px;
 }
 
-.match-box-score-table th {
-  border-color: var(--color-border);
-  padding: 8px 10px;
-  color: var(--color-text-muted);
-  font-family: var(--font-family-data);
-  font-size: 0.86rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
 .match-box-score-table td {
-  border-color: var(--color-border-table-cell);
-  font-size: 1.05rem;
-  padding: 9px 10px;
-}
-
-.match-box-score-table tbody tr:hover td {
-  background: var(--color-hover-surface);
+  font-size: 0.84rem;
 }
 
 .match-box-score-other-row td {
-  background: var(--color-surface-row-muted);
-}
-
-.match-box-score-other-row .match-box-score-value {
   color: var(--color-text-row-muted);
   font-style: italic;
-}
-
-.match-box-score-total-row td {
-  border-top: 1px solid var(--color-border-total);
-  background: var(--color-table-row-hover);
-}
-
-.match-box-score-total-row .match-box-score-value {
-  color: var(--color-text-strong);
-  font-weight: 850;
-}
-
-.match-box-score-sort-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 4px;
-  width: 100%;
-  min-height: 24px;
-  border: 0;
-  background: transparent;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  font-family: var(--font-family-data);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  padding: 0;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.match-box-score-sort-button:hover {
-  color: var(--color-text-strong);
-}
-
-.match-box-score-sort-button:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-focus-ring);
-  outline-offset: var(--focus-ring-offset);
-}
-
-.match-box-score-sort-indicator {
-  display: inline-block;
-  min-width: 8px;
-  color: var(--color-action-primary);
-}
-
-.match-box-score-value {
-  color: var(--color-text);
-  font-size: 0.82rem;
-  line-height: 1.25;
 }
 
 .match-detail-fallback-note {
@@ -320,10 +244,6 @@
 
 @media (max-width: 560px) {
   .match-detail-score-card,
-  .match-box-score-card {
-    padding: 16px;
-  }
-
   .match-detail-meta {
     align-items: flex-start;
     flex-direction: column;

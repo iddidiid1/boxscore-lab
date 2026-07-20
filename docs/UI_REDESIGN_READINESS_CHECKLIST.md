@@ -60,7 +60,7 @@ This is an incremental maintainability task, not a request to redesign the curre
 - [x] Remove page-specific button styles that duplicate shared button variants.
 - [x] Introduce a lightweight shared panel/card style for recurring border, background, and radius behavior.
 - [x] Introduce shared form-control styling for text inputs, selects, number inputs, and textareas where Mantine defaults are insufficient.
-- [ ] Introduce shared table styling for recurring header, cell, divider, hover, and scroll-container behavior.
+- [x] Introduce shared table styling for recurring header, cell, divider, hover, and scroll-container behavior.
 - [ ] Consolidate status badge/chip styling around semantic states rather than page-specific colors.
 - [ ] Keep shared primitives small; do not introduce a component abstraction for a pattern used only once.
 
@@ -106,6 +106,23 @@ This is an incremental maintainability task, not a request to redesign the curre
 - [x] During each migration, preserve layout, responsive breakpoints, DOM structure, and behavior unless separately requested.
 - [ ] Remove obsolete selectors after each page is migrated.
 
+### Editorial Scoreboard M2 - Data Display
+
+- [x] Consolidate the four read-only table scenarios around one Data Bay,
+  compact-row, sortable-header, hover, and local-overflow contract.
+- [x] Integrate Pagination into the owning Player Rankings and Match History
+  modules while preserving the Match list's existing ownership.
+- [x] Apply distinct Operational Neutral Other and Championship Gold Winner
+  row semantics without adding new business states.
+- [x] Consolidate Team and Player summaries into one responsive Ruled Grid.
+- [x] Replace rounded character stars with a five-slot fractional rating and
+  exact ten-point value; keep unavailable distinct from zero.
+- [x] Verify desktop plus 560/680/760/980px behavior, keyboard focus,
+  pagination boundaries, sort state, local table overflow, and no whole-page
+  horizontal overflow.
+- [x] Run frontend style literal checking, type checking, production build,
+  diff checking, and browser console-error inspection.
+
 ## Phase 5 - Prevent regression
 
 - [x] Add a lint or CI check that flags new literal hex/rgb/hsl colors in frontend source outside approved token/theme files.
@@ -119,9 +136,9 @@ This is an incremental maintainability task, not a request to redesign the curre
 - [x] Run frontend type checking.
 - [ ] Run frontend tests.
 - [x] Build the frontend.
-- [ ] Visually compare affected pages at desktop and mobile widths.
+- [x] Visually compare affected pages at desktop and mobile widths.
 - [ ] Check default, hover, focus-visible, active, disabled, loading, validation, and destructive states where applicable.
-- [ ] Check table overflow and dense statistical displays.
+- [x] Check table overflow and dense statistical displays.
 - [x] Check text contrast and visible keyboard focus.
 - [ ] Confirm no unrelated files or behaviors changed.
 

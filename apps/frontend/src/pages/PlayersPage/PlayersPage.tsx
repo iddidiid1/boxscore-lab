@@ -1,8 +1,9 @@
 import { Alert, Box, Button, Group, Stack, Text, Title } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { fetchPlayers, type PlayerListParams, type PlayerListResponse, type PlayerPosition } from "../../features/players";
+import { DataPagination } from "../../shared/components/data-display";
 import { LoadingState } from "../../shared/components/LoadingState";
-import { PlayerRankingFilters, PlayerRankingTable, StatisticLeaderCards, TurnPageControls } from "./components";
+import { PlayerRankingFilters, PlayerRankingTable, StatisticLeaderCards } from "./components";
 import type { PlayerRankingSortField } from "./types";
 import "./PlayersPage.css";
 
@@ -30,8 +31,7 @@ export function PlayersPage() {
     <Box className="players-board" aria-busy={loading}>
       <PlayerRankingFilters eventOptions={[{ label: "Overall", value: "overall" }, ...(data?.filterOptions.events ?? []).map((item) => ({ label: item.name, value: String(item.id) }))]} eventValue={eventValue} onEventChange={(value) => update({ eventId: value === "overall" ? undefined : Number(value), teamId: undefined, position: undefined, page: 1 })} teamOptions={[{ label: "All teams", value: "all" }, ...(data?.filterOptions.teams ?? []).map((item) => ({ label: item.name, value: String(item.id) }))] as never} teamValue={teamValue} onTeamChange={(value) => update({ teamId: value === "all" ? undefined : Number(value), position: undefined, page: 1 })} positionOptions={["all", ...(data?.filterOptions.positions ?? [])]} positionValue={positionValue} onPositionChange={(value) => update({ position: value === "all" ? undefined : value as PlayerPosition, page: 1 })} />
       <StatisticLeaderCards leaders={leaders} />
-      {!data?.items.length ? <Text className="page-summary">No eligible players match these filters.</Text> : <PlayerRankingTable players={data.items} sortField={query.sortBy} sortDirection={query.sortDirection} onSort={(field) => update({ sortBy: field, sortDirection: field === query.sortBy && query.sortDirection === "desc" ? "asc" : "desc", page: 1 })} onPlayerSelect={(slug) => { history.pushState({}, "", `/players/${slug}`); dispatchEvent(new PopStateEvent("popstate")); }} />}
-      {data && <TurnPageControls activePage={data.pagination.page} pageSize={pageSize} totalItems={data.pagination.totalItems} onPageChange={(page) => update({ page })} />}
+      {data && <PlayerRankingTable pagination={<DataPagination activePage={data.pagination.page} pageSize={pageSize} totalItems={data.pagination.totalItems} onPageChange={(page) => update({ page })} />} players={data.items} sortField={query.sortBy} sortDirection={query.sortDirection} onSort={(field) => update({ sortBy: field, sortDirection: field === query.sortBy && query.sortDirection === "desc" ? "asc" : "desc", page: 1 })} onPlayerSelect={(slug) => { history.pushState({}, "", `/players/${slug}`); dispatchEvent(new PopStateEvent("popstate")); }} />}
     </Box>
   </Stack>;
 }

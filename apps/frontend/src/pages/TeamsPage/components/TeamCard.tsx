@@ -1,4 +1,5 @@
 import { Shield } from "lucide-react";
+import { FractionalStarRating } from "../../../shared/components/data-display";
 import type { Team } from "../types";
 
 type TeamCardProps = {
@@ -12,11 +13,6 @@ function getInitials(name: string) {
     .map((word) => word[0])
     .join("")
     .toUpperCase();
-}
-
-function getStars(rating: number) {
-  const rounded = Math.max(0, Math.min(5, Math.round(rating / 2)));
-  return `${"★".repeat(rounded)}${"☆".repeat(5 - rounded)}`;
 }
 
 function TeamLogo({ team }: { team: Team }) {
@@ -45,8 +41,6 @@ function TeamLogo({ team }: { team: Team }) {
 }
 
 export function TeamCard({ team }: TeamCardProps) {
-  const rating = team.overallRating ?? 0;
-
   return (
     <a
       aria-label={`View ${team.name} details`}
@@ -58,9 +52,11 @@ export function TeamCard({ team }: TeamCardProps) {
         <div className="team-name">{team.name}</div>
         <div className="team-footer">
           <span className="team-pts">{team.totalPoints.toLocaleString()} pts</span>
-          <span aria-label={`${rating} out of 10 rating`} className="team-stars">
-            {getStars(rating)}
-          </span>
+          <FractionalStarRating
+            className="team-stars"
+            size="compact"
+            value={team.overallRating}
+          />
         </div>
       </div>
     </a>

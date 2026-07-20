@@ -9,15 +9,9 @@ type EventResultsTableProps = {
 
 export function EventResultsTable({ resultTags, results }: EventResultsTableProps) {
   const tagsById = new Map(resultTags.map((tag) => [tag.id, tag]));
-  const sortedResults = [...results].sort((firstResult, secondResult) => {
-    const firstPoints = tagsById.get(firstResult.resultTagId)?.rankingPoints ?? 0;
-    const secondPoints = tagsById.get(secondResult.resultTagId)?.rankingPoints ?? 0;
-
-    return secondPoints - firstPoints;
-  });
 
   return (
-    <Box className="event-detail-panel event-results-panel app-panel">
+    <Box className="event-results-panel app-data-bay">
       <Title className="event-panel-title" order={2}>Final team results</Title>
 
       <Box className="event-results-table-wrap app-table-wrap">
@@ -31,13 +25,17 @@ export function EventResultsTable({ resultTags, results }: EventResultsTableProp
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {sortedResults.map((result, index) => {
+            {results.map((result, index) => {
               const tag = tagsById.get(result.resultTagId);
               const isWinner = Boolean(tag?.isWinnerTag);
               const eventPoints = tag?.rankingPoints ?? 0;
 
               return (
-                <Table.Tr data-winner={isWinner || undefined} key={result.teamId}>
+                <Table.Tr
+                  className={isWinner ? "app-data-row--winner" : undefined}
+                  data-winner={isWinner || undefined}
+                  key={result.teamId}
+                >
                   <Table.Td className="event-result-rank">{index + 1}</Table.Td>
                   <Table.Td>
                     <Group gap="xs" wrap="nowrap">

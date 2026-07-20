@@ -2,8 +2,8 @@ import { Alert, Anchor, Box, Button, Select, Stack, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { fetchPlayer, type PlayerDetailResponse } from "../../features/players";
 import { ApiClientError } from "../../features/teams/api/teams";
+import { DataPagination } from "../../shared/components/data-display";
 import { LoadingState } from "../../shared/components/LoadingState";
-import { TurnPageControls } from "../PlayersPage/components";
 import { PlayerAwards, PlayerMatchHistory, PlayerPerformanceBars, PlayerProfileHeader, PlayerStatSummary } from "./components";
 import "./PlayerDetailPage.css";
 const pageSize = 10;
@@ -24,9 +24,9 @@ export function PlayerDetailPage() {
     <Anchor className="player-detail-back-link app-detail-back-link" href="/players">← Back to Players</Anchor>
     {error && <Alert title="Refresh failed">{error}</Alert>}
     <Box className="player-detail-hero"><Box className="player-profile-card app-panel"><PlayerProfileHeader name={data.player.name} number={data.player.number} position={data.player.position} team={data.player.team.name} teamColor={data.player.team.primaryColor ?? "transparent"} isActive={data.player.isActive} teamArchived={data.player.team.archivedAt !== null} /><PlayerAwards awards={data.awards} /></Box><PlayerPerformanceBars dimensions={data.performanceBars} /></Box>
-    <Box className="player-detail-event-filter app-panel"><Select allowDeselect={false} aria-label="Event filter" classNames={{ input: "player-detail-filter-input app-control-input", label: "player-detail-filter-label app-control-label" }} data={[{ label: "Overall", value: "overall" }, ...data.eventOptions.map((event) => ({ label: event.name, value: String(event.id) }))]} label="Event" value={query.eventId ? String(query.eventId) : "overall"} onChange={(value) => update({ eventId: value === "overall" ? undefined : Number(value), page: 1 })} /></Box>
+    <Box className="player-detail-event-filter app-filter-bar"><Select allowDeselect={false} aria-label="Event filter" classNames={{ input: "player-detail-filter-input app-control-input", label: "player-detail-filter-label app-control-label" }} data={[{ label: "Overall", value: "overall" }, ...data.eventOptions.map((event) => ({ label: event.name, value: String(event.id) }))]} label="Event" value={query.eventId ? String(query.eventId) : "overall"} onChange={(value) => update({ eventId: value === "overall" ? undefined : Number(value), page: 1 })} /></Box>
     {!data.scope.available && <Alert title="Statistics unavailable">Statistics are unavailable for this event.</Alert>}
     <PlayerStatSummary stats={[{ label: "PTS", value: stats.points.toFixed(1) }, { label: "REB", value: stats.rebounds.toFixed(1) }, { label: "AST", value: stats.assists.toFixed(1) }, { label: "FG%", value: pct(stats.fieldGoalPercentage) }, { label: "3PT%", value: pct(stats.threePointPercentage) }, { label: "RATING", value: stats.rating.toFixed(1) }]} />
-    <Box className="player-match-history-section"><PlayerMatchHistory matches={data.matches.items} /><TurnPageControls activePage={data.matches.pagination.page} pageSize={pageSize} totalItems={data.matches.pagination.totalItems} onPageChange={(page) => update({ ...query, page })} /></Box>
+    <PlayerMatchHistory matches={data.matches.items} pagination={<DataPagination activePage={data.matches.pagination.page} pageSize={pageSize} totalItems={data.matches.pagination.totalItems} onPageChange={(page) => update({ ...query, page })} />} />
   </Stack>;
 }

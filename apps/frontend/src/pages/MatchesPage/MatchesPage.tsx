@@ -1,8 +1,8 @@
 import { Alert, Button, Stack, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { fetchMatches, type MatchFilterOptions, type MatchListItem } from "../../features/matches";
+import { DataPagination } from "../../shared/components/data-display";
 import { LoadingState } from "../../shared/components/LoadingState";
-import { TurnPageControls } from "../PlayersPage/components";
 import { MatchFilters, MatchHistoryList, MatchesPageHeader } from "./components/matches";
 import "./MatchesPage.css";
 
@@ -63,7 +63,7 @@ export function MatchesPage() {
         {error ? <Alert color="red" title="Unable to load matches">{error}<Button className="app-action-button app-action-button--context" ml="md" onClick={() => setReloadKey((value) => value + 1)} size="xs" variant="outline">Retry</Button></Alert> : null}
         {!loading && !error && matches.length === 0 ? <Alert title="No matches found"><Text mb="sm">There are no matches for the selected filters.</Text><Button className="app-action-button app-action-button--context" onClick={() => { changeEvent(undefined); setTeamId(undefined); }} size="xs" variant="outline">Clear filters</Button></Alert> : null}
         {!loading && !error ? <MatchHistoryList matches={matches} /> : null}
-        {!loading && !error && totalItems > 0 ? <TurnPageControls activePage={page} onPageChange={setPage} pageSize={matchesPerPage} totalItems={totalItems} /> : null}
+        {!loading && !error && totalItems > 0 ? <DataPagination activePage={page} onPageChange={setPage} pageSize={matchesPerPage} totalItems={totalItems} /> : null}
       </Stack>
     </Stack>
   );

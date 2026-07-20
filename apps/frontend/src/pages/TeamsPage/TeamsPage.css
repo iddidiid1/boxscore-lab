@@ -114,6 +114,8 @@
 .team-footer {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 10px;
   justify-content: space-between;
   margin-top: 4px;
 }
@@ -126,9 +128,7 @@
 }
 
 .team-stars {
-  font-size: 0.625rem;
-  letter-spacing: 1px;
-  color: var(--color-warning);
+  flex: 0 0 auto;
 }
 
 @media (max-width: 560px) {

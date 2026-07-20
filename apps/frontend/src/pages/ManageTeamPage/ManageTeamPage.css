@@ -71,9 +71,6 @@
 }
 
 .manage-team-rating-preview {
-  color: var(--color-warning);
-  font-size: 1.1rem;
-  line-height: 1;
   margin-top: 10px;
 }
 
