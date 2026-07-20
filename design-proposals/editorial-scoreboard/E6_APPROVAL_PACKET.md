@@ -43,7 +43,7 @@ than additional inventory components.
 - edge-highlight Dark Glass for Data and Summary;
 - restricted 40% Deep Light Glass for Team identity;
 - one compact, outline-hierarchy action family with solid Mint Primary;
-- 40px fields, 34px dense number entry, 38px table rows;
+- 40px fields, 34px dense number entry, 38px table headers, and 46px body rows;
 - Neutral Gradient Edge Plate tags and separate Event/Match Stage scales;
 - Ruled Grid summaries and unified Data Bay tables;
 - restrained state feedback, explicit keyboard focus, and Reduced Motion;
@@ -58,8 +58,8 @@ separate functional-design PR.
 
 Pattern exceptions are limited to their named scopes: Team identity glass,
 Leader category Glow, Tournament Insignia, Black Metal Plaque, Team-color
-traces, Championship Gold outcomes, Operational Neutral Other rows, and
-Neutral Ambient.
+traces, Championship Gold outcomes, Semantic Bridge Event Results,
+Operational Neutral Other rows, and Neutral + Brand Ambient.
 
 ## Formalization after approval
 

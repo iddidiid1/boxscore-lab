@@ -3709,3 +3709,272 @@ Do not display Champion in the Event Detail hero.
 
 This decision supersedes only the optional Detail Champion fact described in
 UI-DEC-053. All other Event Detail composition decisions remain approved.
+
+## UI-DEC-061 — Add Restrained Brand Ambient to the Gray Canvas
+
+- Date: 2026-07-20
+- Inventory IDs: `FND-011`
+- Batch: M6 acceptance follow-up — Application Background
+- State: Approved
+- Approved by: User
+
+### Context
+
+Implementation-scale review exposed that the approved Neutral Ambient rendered
+behind `body` was fully masked by the opaque `#0d0d0d` `.app-shell`. The same
+review compared the existing gray Canvas with progressively blacker bases and
+Brand Mint lighting. The black bases produced an undesirable green-black cast,
+while the earlier gray Canvas with restrained `8%` Mint ambience remained more
+comfortable and visually coherent.
+
+### Decision
+
+Retain Canvas `#131313` and the approved neutral-white ambient fields at
+approximately `6%` upper-right and `3.5%` lower-left. Add Brand Mint ambient
+fields at approximately `8%` upper-right and `3%` lower-left.
+
+The Mint fields are localized environmental light, not a replacement Canvas
+color or a full-page green overlay. Keep the Main Content Shell transparent so
+the background remains visible; Navigation retains its opaque deep surface.
+
+### Token and implementation impact
+
+- add semantic upper and lower Brand Ambient background roles;
+- compose Brand Ambient, Neutral Ambient, and Canvas on `body`;
+- keep the composed background fixed behind scrolling content;
+- remove the opaque `.app-shell` fill that masked the Canvas;
+- preserve the flat `#131313` fallback when layered backgrounds are unavailable
+  or intentionally reduced.
+
+### Supersession boundary
+
+This decision supersedes UI-DEC-026 only where it prohibited Brand Mint from the
+application background. It preserves the approved Canvas, neutral ambient
+strength, Team Identity Surface, and prohibitions on grid, noise, full-canvas
+Mint tint, and pulsing decorative light.
+
+## UI-DEC-062 — Approve Mint Orbit for Statistic Leader Categories
+
+- Date: 2026-07-20
+- Inventory IDs: `PLY-PAT-001`, `PLY-CMP-001`
+- Batch: M6 acceptance follow-up — Leader Card color language
+- State: Approved
+- Approved by: User
+
+### Context
+
+The implemented Points, Rebounds, Assists, and Rating accents provided clear
+category distinction, but their orange, green, pink, and purple hues felt
+stylistically unrelated to Brand Mint. A focused comparison kept the approved
+Leader Card composition, Frosted Depth material, Strong Glow, and Hover behavior
+fixed while testing three palette grammars.
+
+### Decision
+
+Approve **A — Mint Orbit**, a narrow Brand-adjacent spectrum:
+
+- Points: `#43f2c8`;
+- Rebounds: `#78dda0`;
+- Assists: `#62cee5`;
+- Rating: `#b7dc78`.
+
+Use each accent consistently for its value, Crown, localized surface field, and
+Strong Glow. Preserve the visible category labels so color is never the only
+distinction.
+
+### Reasoning
+
+Mint Orbit makes the four cards feel native to the same technology/editorial
+language as the product brand while retaining enough hue separation to scan the
+categories. It avoids both the unrelated “rainbow quartet” effect of the former
+palette and the loss of distinction that a single-color treatment would cause.
+
+### Token and scope impact
+
+Replace only the four Statistic Leader base, surface, and Glow token families.
+The surface and Glow alpha levels remain `29%` and `62%`; component structure,
+layout, motion, and interaction do not change.
+
+These accents are category identities restricted to Statistic Leader Cards.
+They do not redefine Brand, success/online, Rating Star, status, or general
+chart-series roles even where a value is visually similar.
+
+## UI-DEC-063 — Approve Semantic Bridge for Event Tiers and Final Results Winner
+
+- Date: 2026-07-20
+- Inventory IDs: `EVT-CMP-001`, `TBL-CMP-006`
+- Batch: M6 acceptance follow-up — Event semantic color language
+- State: Approved
+- Approved by: User
+
+### Context
+
+After approving Mint Orbit for Statistic Leader Cards, the existing Tournament
+Tier palette and Championship Gold Final Results row appeared visually detached
+from the revised Brand-adjacent system. A focused comparison retained every
+non-color semantic signal while testing direct Mint Orbit reuse and a tuned
+Semantic Bridge.
+
+### Decision
+
+Approve **B — Semantic Bridge**.
+
+Tournament Tier mapping:
+
+- S: Prestige Lime-Gold `#d8cf70`;
+- A: Orbit Cyan `#62cee5`;
+- B: Brand Mint `#43f2c8`;
+- C: Muted Jade `#7e9e95`.
+
+Final Team Results Winner uses Prestige Lime-Gold `#d8cf70` for its Trophy,
+Champion text, directional row field, and leading trace.
+
+### Semantic guardrails
+
+- Tier keeps its S/A/B/C letter, ELITE/PREMIER/CHALLENGER/OPEN subtitle, fixed
+  hierarchy, and Event-only insignia anatomy.
+- Winner keeps first-row placement, Trophy, explicit Champion/result text, and
+  dedicated row treatment.
+- C is intentionally desaturated so the Tier family communicates hierarchy
+  rather than four equal categorical peers.
+- The Event Results Winner role is not an alias of Brand Mint, Rating, warning,
+  or the generic outcome Winner role.
+
+### Scope boundary
+
+This decision supersedes the color mappings in UI-DEC-030 and UI-DEC-041 only
+for Tournament Tier and the Event Detail Final Team Results Winner row.
+Championship Gold `#ffb95f` remains unchanged for MVP, Match winner signals,
+Completed Event status, Rating Stars, and other existing approved contexts.
+
+### Implementation impact
+
+Update the four Tier accent tokens. Add a dedicated Event Results Winner token
+family and migrate the shared Winner-row presentation plus its Event trophy/tag
+text to that family. Do not change component anatomy, row density, Hover
+geometry, API logic, or responsive behavior.
+
+## UI-DEC-064 — Replace the Global Championship Gold Palette Value
+
+- Date: 2026-07-20
+- Inventory IDs: `FND-001`, `DAT-CMP-003`, `TBL-CMP-006`, `EVT-CMP-001`
+- Batch: M6 acceptance follow-up — Global semantic color alignment
+- State: Approved
+- Approved by: User
+
+### Context
+
+UI-DEC-063 introduced Prestige Lime-Gold `#d8cf70` for S Tier and the Final
+Team Results Champion row while intentionally retaining the previous
+Championship Gold `#ffb95f` elsewhere. The user then chose to promote the new
+Champion color across the complete product, replacing the former Gold rather
+than maintaining two visually competing honor/warning families.
+
+### Decision
+
+Replace the global Championship Gold palette value `#ffb95f` with `#d8cf70`.
+Update every derived Gold alpha used by Warning, Checking, Event Winner,
+generic Outcome Winner, Rating Star, MVP trace, and Final Results Winner.
+
+The stronger Warning derivative becomes `#b9ad4f`.
+
+### Semantic model
+
+The palette value is shared; the semantic roles are not:
+
+- Warning and Checking still communicate operational attention;
+- Rating Fill still communicates the five-star rating;
+- Championship Gold and Outcome Winner still communicate victory or honors;
+- Event Results Winner retains its dedicated row role;
+- Tier S retains Prestige hierarchy within Semantic Bridge.
+
+Components must continue to use their purpose-specific tokens rather than
+aliasing every use to one generic `gold` token.
+
+### Supersession boundary
+
+This decision supersedes UI-DEC-063 only where that decision retained
+Championship Gold `#ffb95f` for non-Event-Results contexts. It does not change
+the approved Tier mapping, Trophy/text requirements, component anatomy,
+interaction states, business semantics, or responsive behavior.
+
+## UI-DEC-065 — Increase Body Rows to 46px and Make Semantic Gradients Row-Owned
+
+- Date: 2026-07-20
+- Inventory IDs: `TBL-CMP-001`, `TBL-CMP-004`, `TBL-CMP-005`, `TBL-CMP-006`
+- Batch: M6 acceptance follow-up — Data Bay density and semantic rows
+- State: Approved
+- Approved by: User
+
+### Context
+
+The approved `38px` Compact body-row baseline looked acceptable in the isolated
+experiment but rendered too tightly with the real project typography and
+centered content. Implementation also exposed that Other and Champion
+directional gradients were assigned to every `td`, causing the field to restart
+once per column instead of reading as one semantic row.
+
+### Decision
+
+- retain the quiet table-header height at `38px`;
+- set the shared body-row baseline to `46px`;
+- allow wrapped or accessible content to increase the row naturally;
+- assign Operational Neutral Other and Semantic Bridge Champion gradients to
+  the complete `tr`;
+- keep their cells transparent in Default and Hover states;
+- retain the leading rail on the first cell.
+
+### Reasoning
+
+The `46px` baseline restores comfortable scanning without making dense sports
+tables feel loose. Separating header and body density preserves the compact
+data-label rhythm. Row-owned painting creates one continuous directional field
+across all columns and prevents the visually fragmented per-cell gradient.
+
+### Supersession boundary
+
+This decision supersedes UI-DEC-029 and UI-DEC-030 only for the shared body-row
+height and semantic-gradient ownership. It preserves Data Bay material,
+typography, horizontal dividers, local overflow, Hover semantics, Other/Winner
+meaning, Trophy/text requirements, input focus behavior, and responsive layout.
+
+### Token and implementation impact
+
+Replace `--table-row-height-compact` with separate
+`--table-header-height: 38px` and `--table-row-height: 46px` roles. Update the
+shared Data Table primitive rather than applying page-level row-height
+overrides. No component markup, API, or business-logic change is required.
+
+## UI-DEC-066 — Remove Vertical Grain from the Player Awards Plaque
+
+- Date: 2026-07-20
+- Inventory IDs: `EVT-PAT-001`
+- Batch: M6 acceptance follow-up — Event Detail Player Awards
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Black Metal Plaque used a repeating vertical grain across its complete
+surface. In the implemented Event Detail component, the repeated narrow stripes
+read more like overalls fabric than a refined ceremonial metal treatment.
+
+### Decision
+
+Remove the vertical `repeating-linear-gradient` and its dedicated grain token.
+Retain every other approved Player Awards treatment:
+
+- solid near-black Plaque surface and restrained ambient highlight;
+- cut corners and edge highlights;
+- registration marks and engraved rules;
+- Championship Gold MVP trace;
+- Brand Mint structural accents;
+- existing content hierarchy, typography, responsive grid, and read-only
+  behavior.
+
+### Supersession boundary
+
+This decision supersedes UI-DEC-044 only where it required visible brushed
+grain. It does not change the Black Metal Plaque identity, component anatomy,
+award semantics, Player ordering, selection workflow, API behavior, or any
+other Event surface.

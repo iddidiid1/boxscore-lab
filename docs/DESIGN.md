@@ -38,7 +38,7 @@ must remain aligned with it.
 | Semantic role | Value | Use |
 |---|---:|---|
 | Canvas | `#131313` | Main content background |
-| Application shell | `#0d0d0d` | Outer shell and navigation |
+| Deep shell | `#0d0d0d` | Navigation and inset fallback surfaces |
 | Surface | `#1a1a1a` | Default dark material |
 | Raised surface | `#232323` | Overlays and stronger separation |
 | Dark Glass | `rgba(26,26,26,0.82)` | Data and Summary contexts |
@@ -48,9 +48,10 @@ must remain aligned with it.
 | Muted text | `#949494` | Metadata, labels, placeholders |
 | Brand | `#43f2c8` | Primary action and precise Brand signal |
 | Brand hover | `#2ccfaa` | Solid Brand hover |
-| Warning | `#ffb95f` | Warning and checking |
+| Warning | `#d8cf70` | Warning and checking |
 | Danger | `#ff6b6b` | Error, offline, and destructive action |
-| Championship Gold | `#ffb95f` | Winner and MVP outcome meaning |
+| Championship Gold | `#d8cf70` | Winner and MVP outcome meaning |
+| Event Results Winner | `#d8cf70` | Final Team Results Champion row |
 
 Brand Mint normally occupies one primary role in an ordinary component: primary
 action, selected state, short trace, active indicator, or key number. Do not
@@ -62,15 +63,19 @@ when they share a value. The meaning belongs to the token, not the palette.
 
 ### 2.2 Application background
 
-Use **Neutral Ambient** over the Canvas:
+Use **Neutral + Brand Ambient** over the Canvas:
 
 - broad neutral-white light at approximately 6% near the upper-right content
   edge;
 - a second neutral-white field at approximately 3.5% near the lower-left;
-- no global Brand Mint, grid, noise, or pulsing light.
+- a restrained Brand Mint field at 8% near the upper-right and 3% near the
+  lower-left;
+- no full-canvas Mint tint, grid, noise, or pulsing light.
 
-The ambient layers stay stable behind scrolling content. Fall back to the flat
-Canvas when layered backgrounds or transparency are reduced.
+The Brand fields are environmental accents, not a green Canvas fill. The
+ambient layers stay stable behind scrolling content and remain visible through
+the transparent Main Content Shell. Fall back to the flat Canvas when layered
+backgrounds or transparency are reduced.
 
 ### 2.3 Typography
 
@@ -95,7 +100,7 @@ Approved density anchors:
 - dense Number Input: 34px;
 - Medium section action: 30px;
 - Small/Icon action: 28px;
-- Compact table row: 38px.
+- Table header: 38px; body row baseline: 46px.
 
 ### 2.5 Shape
 
@@ -281,7 +286,7 @@ All major tables share:
 
 - edge-highlight Dark Glass outer shell;
 - quiet tonal header;
-- 38px compact body rows;
+- 38px quiet headers and 46px body rows;
 - horizontal dividers and no vertical grid;
 - restrained neutral full-row Hover;
 - stable sort-indicator slots;
@@ -292,8 +297,16 @@ The Match statistics **Other** row uses Operational Neutral: a quiet alternate
 fill and neutral leading rail. It never reuses warning, error, selected, or
 winner meaning.
 
-The Final Team Results winner row uses Championship Gold with a Trophy and
-outcome text. It never reuses Brand or the Other-row role.
+The Final Team Results winner row uses the Semantic Bridge Prestige Lime-Gold
+`#d8cf70` with a Trophy and outcome text. It remains a dedicated outcome role:
+its semantic token does not reuse Brand, Rating, warning, or the Other-row role,
+even though the approved global Championship Gold, Warning, and Rating tokens
+now share the same `#d8cf70` palette value. Championship Gold remains active
+for MVP and other existing outcome contexts.
+
+Both semantic-row gradients belong to the complete table row. Their cells stay
+transparent in Default and Hover states so the directional field crosses every
+column once instead of restarting inside each cell.
 
 Pagination forms the Data Bay final strip. Preserve `Showing x–y of z`; Current
 page is a persistent selection and Previous/Next disable at boundaries.
@@ -328,8 +341,10 @@ Neutral Frame initials, exact fractional rating, and data-driven Team colors.
 ### 8.2 Player
 
 - **Statistic Leader Cards:** four Frosted Depth cards with distinct category
-  color and stronger category Glow on Hover. They are not clickable and have no
-  Pressed state.
+  color and stronger category Glow on Hover. Their approved **Mint Orbit**
+  palette keeps every category adjacent to Brand Mint: Points `#43f2c8`,
+  Rebounds `#78dda0`, Assists `#62cee5`, and Rating `#b7dc78`. They are not
+  clickable and have no Pressed state.
 - **Number Masthead:** oversized bold Anton jersey number without a `Jersey`
   label, with restrained Team-color Outline Echo.
 - **Segmented Performance Profile:** ten intervals with partial final fill for
@@ -341,8 +356,9 @@ Neutral Frame initials, exact fractional rating, and data-driven Team colors.
 ### 8.3 Event
 
 - **Tournament Insignia:** shared Tier identity at compact list and larger
-  detail scales. S uses Championship Gold, A ultraviolet, B Brand, and C
-  neutral; color is paired with letter and subtitle.
+  detail scales. Its **Semantic Bridge** hierarchy uses S Prestige Lime-Gold
+  `#d8cf70`, A Orbit Cyan `#62cee5`, B Brand Mint `#43f2c8`, and C Muted Jade
+  `#7e9e95`; color is paired with letter and subtitle.
 - **Insignia Rail:** Event Summary Card with Tier rail, name/description/status,
   optional open Champion strip, and quiet footer.
 - **Event Detail:** realistic full-width Participants roster; Stage and Result
@@ -379,7 +395,7 @@ The following effects are allowed only in their named scope:
 | Team-color trace | Team/Match identity and Player Number Masthead |
 | Championship Gold | Winner, Champion, and MVP meaning |
 | Operational Neutral | Match-statistics Other row |
-| Neutral Ambient | Global content Canvas |
+| Neutral + Brand Ambient | Global content Canvas |
 | Open Section/Open Content | Approved hierarchy and feedback exceptions |
 
 Pattern-local effects do not graduate into global tokens without repeated real

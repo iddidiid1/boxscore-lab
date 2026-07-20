@@ -376,7 +376,7 @@
 }
 
 .app-data-table th {
-  height: var(--table-row-height-compact);
+  height: var(--table-header-height);
   border-color: var(--color-border);
   background: var(--color-surface-row-muted);
   color: var(--color-text-muted);
@@ -390,7 +390,7 @@
 }
 
 .app-data-table td {
-  height: var(--table-row-height-compact);
+  height: var(--table-row-height);
   border-color: var(--color-border-table-cell);
   color: var(--color-text);
   font-variant-numeric: tabular-nums;
@@ -435,7 +435,7 @@
   text-align: center;
 }
 
-.app-data-row--operational td {
+.app-data-row--operational {
   background:
     linear-gradient(
       90deg,
@@ -445,22 +445,30 @@
     var(--color-surface-row-muted);
 }
 
+.app-data-row--operational td {
+  background: transparent;
+}
+
 .app-data-row--operational td:first-child {
   box-shadow: inset 3px 0 0 var(--color-row-operational-border);
 }
 
-.app-data-row--winner td {
+.app-data-row--winner {
   background:
     linear-gradient(
       90deg,
-      var(--color-outcome-winner-surface),
+      var(--color-event-result-winner-surface),
       transparent 72%
     ),
     var(--color-surface-row-muted);
 }
 
+.app-data-row--winner td {
+  background: transparent;
+}
+
 .app-data-row--winner td:first-child {
-  box-shadow: inset 3px 0 0 var(--color-outcome-winner-border);
+  box-shadow: inset 3px 0 0 var(--color-event-result-winner-border);
 }
 
 .app-data-pagination {
@@ -652,7 +660,7 @@
     color: var(--color-text-strong);
   }
 
-  .app-data-row--operational:hover td {
+  .app-data-row--operational:hover {
     background:
       linear-gradient(
         90deg,
@@ -662,14 +670,22 @@
       var(--color-table-row-hover);
   }
 
-  .app-data-row--winner:hover td {
+  .app-data-table tbody .app-data-row--operational:hover td {
+    background: transparent;
+  }
+
+  .app-data-row--winner:hover {
     background:
       linear-gradient(
         90deg,
-        var(--color-event-winner-row),
+        var(--color-event-result-winner-hover),
         transparent 72%
       ),
       var(--color-table-row-hover);
+  }
+
+  .app-data-table tbody .app-data-row--winner:hover td {
+    background: transparent;
   }
 
   .app-data-pagination__control:hover:not([data-disabled], [data-active]) {

@@ -18,14 +18,14 @@ The following are deliberate exceptions to the quiet shared surface language:
 | Exception | Allowed scope | Guardrail |
 |---|---|---|
 | Deep Light Glass | Team identity/card surfaces | 40% bright neutral glass; never a generic panel |
-| Feature Gradient and category Glow | Four Statistic Leader cards | Category-specific, stronger on hover, no click behavior |
-| Tournament Insignia | Event Tier identity | S/A/B/C color is paired with letter and subtitle |
+| Feature Gradient and category Glow | Four Statistic Leader cards | Mint Orbit category spectrum, stronger on hover, no click behavior |
+| Tournament Insignia | Event Tier identity | Semantic Bridge S/A/B/C color is paired with letter and subtitle |
 | Black Metal Plaque | Event Detail Player Awards presentation | Read-only; material does not graduate to generic Card |
 | Team-color trace | Team/Match identity and Player number echo | Never recolor supplied logos; always preserve text hierarchy |
-| Championship Gold | Winner/result and MVP meaning | Pair with Trophy/text; do not substitute Brand Mint |
+| Championship Gold | Warning/checking, Rating, Match outcome, MVP, and winner palette | Global `#d8cf70`; preserve separate semantic token names and pair outcomes with Trophy/text |
 | Operational Neutral | Match-statistics Other row | Never reuse warning, danger, selected, or winner roles |
 | Open Section/Open Content | Approved hierarchy or state exceptions | No invented nested container |
-| Neutral Ambient | Global content canvas | No global Mint, grid, noise, or pulse |
+| Neutral + Brand Ambient | Global content canvas | Mint is limited to 8%/3% edge fields; no full-canvas tint, grid, noise, or pulse |
 
 Loaded Team logos use Open Artwork with `object-fit: contain`; the brighter
 parent identity surface supplies contrast. Missing or failed artwork uses
@@ -88,7 +88,7 @@ Motion, and compact/narrow viewport specimens.
 ### M2 — Data display — completed 2026-07-20
 
 - Data Bay table shell, sortable headers, row hover, local overflow;
-- Operational Neutral Other row and Championship Gold Winner row;
+- Operational Neutral Other row and Semantic Bridge Final Results Winner row;
 - integrated Pagination;
 - Ruled Grid summaries, label-first facts, and fractional Star Rating;
 - Filter Bar structural grouping.

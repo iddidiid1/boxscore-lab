@@ -135,19 +135,21 @@ These are approved **candidate-system values**, not approved application tokens.
 
 #### Approved Application Background System
 
-Use **Neutral Ambient** above the approved Canvas base `#131313`. The background
-adds two broad, low-contrast neutral-white light fields: approximately `6%` near
-the upper-right content edge and `3.5%` near the lower-left. Their purpose is to
-give translucent surfaces environmental variation without turning the canvas
-gray or competing with page content.
+Use **Neutral + Brand Ambient** above the approved Canvas base `#131313`. The
+background retains two broad, low-contrast neutral-white light fields:
+approximately `6%` near the upper-right content edge and `3.5%` near the
+lower-left. Add restrained Brand Mint fields at `8%` upper-right and `3%`
+lower-left. Their purpose is to give translucent surfaces environmental
+variation and a controlled brand atmosphere without recoloring the Canvas.
 
-Brand Mint is not part of the global background. Do not add a global grid,
-noise texture, or decorative glow. Mint ambience may only be reconsidered as a
-bounded local pattern in a later review.
+Brand Mint remains localized to the two broad edge fields; it is not a
+full-canvas green tint. Do not add a global grid, noise texture, or pulsing
+decorative glow.
 
 Keep the ambient fields stable behind the content shell when pages scroll and
-layouts reflow. If layered gradients are unavailable or intentionally reduced,
-fall back to the flat `#131313` Canvas.
+layouts reflow. The Main Content Shell must remain transparent so it does not
+mask the ambient fields. If layered gradients are unavailable or intentionally
+reduced, fall back to the flat `#131313` Canvas.
 
 ### 4.2 Typography
 
@@ -180,7 +182,7 @@ the universal card radius.
 
 - No default drop shadows.
 - No hover translation.
-- No global mint glow.
+- No full-canvas mint tint or saturated global glow.
 - Use tonal surface layering and 1px borders.
 - Interactive cards may reveal a short 2px cutline.
 - Focus-visible treatment must remain stronger than hover treatment.
@@ -450,7 +452,7 @@ nested Team Logo Container. The candidate must define coordinated strong,
 normal, muted, divider, and edge-highlight roles rather than changing only one
 background literal.
 
-Use Deep Light Glass at `40%` opacity over the approved Neutral Ambient
+Use Deep Light Glass at `40%` opacity over the approved Neutral + Brand Ambient
 background. This is a restricted Team Identity Surface rather than a new
 general-purpose panel:
 
@@ -469,7 +471,7 @@ All established ranking, roster, match-history, and box-score scenarios share
 one **Dark Glass Data Bay**:
 
 - use one bounded edge-highlight Dark Glass region around the table;
-- use `38px` Compact body rows;
+- keep the quiet header at `38px` and use `46px` body rows;
 - use a quiet tonal header, horizontal row dividers, and no vertical gridlines;
 - align numeric columns to the end with tabular figures;
 - apply a restrained neutral fill across the complete row on hover;
@@ -506,13 +508,18 @@ Two table-row variants have deliberately unrelated semantics:
   treatment increases the same neutral separation while preserving the
   standard Number Input focus state. It must not resemble warning, error,
   disabled, selected, or Winner treatment.
-- **Winner Result Row — Championship Gold:** use a restrained directional Gold
-  outcome tint and leading trace. Always pair it with a Trophy icon and explicit
-  result text such as `Champion`; preserve the treatment on hover. It must not
-  reuse Brand Mint or the Other-row neutral role.
+- **Winner Result Row — Semantic Bridge:** use a restrained directional
+  Prestige Lime-Gold `#d8cf70` outcome tint and leading trace. Always pair it
+  with a Trophy icon and explicit result text such as `Champion`; preserve the
+  treatment on hover. It must not reuse Brand Mint, warning, Rating, or the
+  Other-row neutral semantic role. Its dedicated token shares the new global
+  Championship Gold value `#d8cf70`, which also replaces the former Gold for
+  MVP and other existing outcome contexts.
 
-These variants share the Data Bay geometry, `38px` rhythm, columns, and
-responsive viewport, but never share their semantic color tokens.
+For both variants, the directional gradient is owned by the complete table row;
+cells remain transparent in Default and Hover so the field does not restart in
+each column. These variants share the Data Bay `46px` body-row geometry,
+columns, and responsive viewport, but never share their semantic color tokens.
 
 ### 6.10 Approved feedback states
 
@@ -651,7 +658,11 @@ Preserve the current four-card content hierarchy:
 Use **Frosted Depth with Strong Glow**:
 
 - apply one shared glass skeleton to Points, Rebounds, Assists, and Rating;
-- give each category a dedicated purpose-specific accent;
+- give each category a dedicated purpose-specific accent from the approved
+  **Mint Orbit** palette: Points `#43f2c8`, Rebounds `#78dda0`, Assists
+  `#62cee5`, and Rating `#b7dc78`;
+- keep the four accents inside a narrow Brand-adjacent green/cyan spectrum so
+  they read as one product language rather than four unrelated semantic colors;
 - use that accent for the value, Crown, localized ambient field, and Crown
   halo;
 - keep explicit category text so color is never the only distinction;
@@ -732,8 +743,8 @@ contexts:
 - keep the same anatomy in Event Summary Card and Event Detail hero;
 - use a compact list scale and a larger detail scale without changing visual
   identity;
-- preserve the semantic mapping: S Championship Gold, A ultraviolet, B Brand
-  Mint, and C neutral gray;
+- preserve the Semantic Bridge hierarchy: S Prestige Lime-Gold `#d8cf70`, A
+  Orbit Cyan `#62cee5`, B Brand Mint `#43f2c8`, and C Muted Jade `#7e9e95`;
 - pair color with the visible Tier letter and subtitle;
 - keep the insignia itself non-interactive;
 - in a clickable Event Summary Card, strengthen only the local trace and
@@ -775,7 +786,7 @@ Event-specific.
 Use one **Black Metal Plaque** for the complete Event Detail Player Awards
 presentation:
 
-- use a cut-corner, brushed near-black outer material with restrained edge
+- use a cut-corner, solid near-black outer material with restrained edge
   highlights and registration marks;
 - keep Player Awards and Event context in the plaque header;
 - place the full-width horizontal MVP field first;
@@ -796,10 +807,11 @@ presentation:
 - reflow the five-cell rows to two columns and then one column without changing
   award grouping.
 
-The metal grain, cut-corner frame, registration marks, and directional award
-trace are Event-awards-local roles. Do not graduate Black Metal Plaque into a
-generic Card or panel material. Exact ambient-light strength may be tuned during
-Event Detail scenario validation.
+The cut-corner frame, registration marks, and directional award trace are
+Event-awards-local roles. Do not add repeating stripes or a visible brushed
+grain. Do not graduate Black Metal Plaque into a generic Card or panel
+material. Exact ambient-light strength may be tuned during Event Detail
+scenario validation.
 
 ### 7.11 Match Record Card
 

@@ -66,22 +66,26 @@ selected styling is used only by controls that actually own selection.
 | Proposed production token | Candidate value | Active relationship | Purpose |
 |---|---:|---|---|
 | `--color-status-online` | `#43f2c8` | map to Brand | API online/success where appropriate |
-| `--color-status-checking` | `#ffb95f` | add semantic alias | Pending/checking |
+| `--color-status-checking` | `#d8cf70` | add semantic alias | Pending/checking |
 | `--color-status-offline` | `#ff6b6b` | add semantic alias | Offline/error |
-| `--color-warning` | `#ffb95f` | retain | Warning |
+| `--color-warning` | `#d8cf70` | revise | Warning |
 | `--color-danger` | `#ff6b6b` | retain | Destructive/error |
 | `--color-danger-strong` | `#ef4444` | retain | Strong danger |
 | `--color-danger-border` | `rgba(255, 107, 107, 0.45)` | retain | Danger edge |
 | `--color-danger-surface` | `rgba(255, 107, 107, 0.10)` | retain | Danger trace |
-| `--color-outcome-winner` | `#ffb95f` | add alias | Championship Gold signal |
-| `--color-outcome-winner-border` | `rgba(255, 185, 95, 0.45)` | rename | Winner structural trace |
-| `--color-outcome-winner-surface` | `rgba(255, 185, 95, 0.08)` | rename | Winner row/strip tint |
+| `--color-outcome-winner` | `#d8cf70` | add alias | Championship Gold signal |
+| `--color-outcome-winner-border` | `rgba(216, 207, 112, 0.45)` | rename | Winner structural trace |
+| `--color-outcome-winner-surface` | `rgba(216, 207, 112, 0.08)` | rename | Winner row/strip tint |
+| `--color-event-result-winner` | `#d8cf70` | add | Final Team Results Champion signal |
+| `--color-event-result-winner-border` | Prestige Lime-Gold at `45%` | add | Champion-row leading trace |
+| `--color-event-result-winner-surface` | Prestige Lime-Gold at `8%` | add | Champion-row directional field |
+| `--color-event-result-winner-hover` | Prestige Lime-Gold at `8%` | add | Champion-row retained Hover field |
 | `--color-row-operational-surface` | `rgba(255, 255, 255, 0.045)` | add | Match-entry Other row |
 | `--color-row-operational-border` | `rgba(255, 255, 255, 0.19)` | add | Other-row leading rail |
 
-Brand Mint, success/online, and Championship Gold may share nearby visual
-energy but retain separate semantic names. The Other row never uses warning,
-danger, selected, or winner roles.
+Brand Mint, success/online, Warning/Checking, Rating, and Championship Gold
+retain separate semantic names even where palette values are shared. The Other
+row never uses warning, danger, selected, or winner roles.
 
 ## Typography, shape, spacing, and motion
 
@@ -106,7 +110,8 @@ danger, selected, or winner roles.
 | `--control-height-dense` | `34px` | add |
 | `--control-height-medium` | `30px` | add |
 | `--control-height-small` | `28px` | add |
-| `--table-row-height-compact` | `38px` | add |
+| `--table-header-height` | `38px` | add |
+| `--table-row-height` | `46px` | add |
 
 The spacing scale supplies repeatable rhythm; page and component layout remain
 owned by their consuming CSS. `--radius-pill`, 20px chips, and 24px button
@@ -119,32 +124,48 @@ radii are not part of the candidate language.
 | `--breakpoint-compact` | `560px` | document/build-time role |
 | `--breakpoint-narrow` | `760px` | document/build-time role |
 | `--breakpoint-intermediate` | `980px` | document/build-time role |
-| `--background-ambient-upper` | neutral white at approximately `6%` | add |
-| `--background-ambient-lower` | neutral white at approximately `3.5%` | add |
+| `--color-background-ambient-upper` | neutral white at approximately `6%` | add |
+| `--color-background-ambient-lower` | neutral white at approximately `3.5%` | add |
+| `--color-background-brand-ambient-upper` | Brand Mint at approximately `8%` | add |
+| `--color-background-brand-ambient-lower` | Brand Mint at approximately `3%` | add |
 
 CSS custom properties cannot be used directly in every media-query condition,
 so breakpoint values may be mirrored through the build layer or documented
-constants. Neutral Ambient falls back to the flat Canvas under reduced
-transparency or when layered backgrounds are unavailable.
+constants. Neutral + Brand Ambient falls back to the flat Canvas under reduced
+transparency or when layered backgrounds are unavailable. The Main Content
+Shell stays transparent so it does not mask these background roles.
 
 ## Pattern-local roles
 
 These roles are allowed but should remain beside the owning shared component or
 feature until repeated usage justifies promotion:
 
-- Statistic Leader category tint and stronger hover-only category Glow;
+- Statistic Leader category tint and stronger hover-only category Glow, using
+  the Mint Orbit mapping below;
 - Team-color traces and Player Number Masthead Outline Echo;
 - Tournament Insignia S/A/B/C accents and ceremonial material;
-- Black Metal Plaque grain, cut corner, registration marks, and award trace;
+- Black Metal Plaque cut corner, registration marks, and award trace;
 - Segmented Meter interval geometry;
 - Event Insignia Rail and Champion strip geometry;
+
+| Statistic Leader role | Active value |
+|---|---:|
+| `--color-stat-points` | `#43f2c8` |
+| `--color-stat-rebounds` | `#78dda0` |
+| `--color-stat-assists` | `#62cee5` |
+| `--color-stat-rating` | `#b7dc78` |
+
+Each role derives its local surface at `29%` and Strong Glow at `62%`. These
+roles belong to the four Statistic Leader Cards and do not redefine Brand,
+success, status, or general data-visualization semantics.
 - Scoreline Rail and Arena Scoreline layout traces;
 - Read-only Star partial-fill mask;
 - radar/chart guides and data-driven visualization colors.
 
-Tier semantics remain S Championship Gold, A ultraviolet, B Brand Mint, and C
-neutral. Pattern-local roles must still consume foundation text, focus, and
-Reduced Motion rules.
+Tier semantics use the approved Semantic Bridge hierarchy: S Prestige
+Lime-Gold `#d8cf70`, A Orbit Cyan `#62cee5`, B Brand Mint `#43f2c8`, and C
+Muted Jade `#7e9e95`. Pattern-local roles must still consume foundation text,
+focus, and Reduced Motion rules.
 
 ## Mantine alignment
 

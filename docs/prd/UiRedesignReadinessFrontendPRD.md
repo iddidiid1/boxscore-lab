@@ -165,7 +165,7 @@ progress record for readiness and migration verification.
 **背景**：Batch 5 曾将 `EventsPage.css` 的 Event summary 渐变、获奖（winner）高亮与 `EventTierBadge.css` 的 tier crest 渐变一并记为“有意的数据可视化字面量”，并写入 `check-style-literals.mjs` 的 `visualizationAllowlist`。后续复核发现，`EventsPage.css` 中的获奖金色实为早期版本遗留：当主题切换到薄荷绿+近黑后，作者未同步调整 design token，而是硬编码了一个与全站 `--color-warning`（`#ffb95f`）不一致的旧金色（`#FBBF24` = `rgba(251,191,36,…)`），并混入旧 slate 残留（卡片渐变 `rgba(15,23,42,…)`、页脚分隔线 `rgba(51,65,85,…)`）。这些属于 token 化欠债，而非有意特效。
 
 **决策**：
-- `EventsPage.css` 全量去字面量：获奖金色接入既有专属 token 家族 `--color-event-winner-border` / `--color-event-winner-surface`（以 `#ffb95f` 为准，`#FBBF24` 弃用）；卡片渐变与页脚分隔线新增 `--color-event-card-gradient-top` / `--color-event-card-gradient-bottom` / `--color-event-card-divider`，**保留精确当前值**以维持视觉保真。
+- `EventsPage.css` 全量去字面量：获奖金色接入既有专属 token 家族 `--color-event-winner-border` / `--color-event-winner-surface`（当时以 `#ffb95f` 为准，`#FBBF24` 弃用；现由 UI-DEC-064 统一更新为 `#d8cf70`）；卡片渐变与页脚分隔线新增 `--color-event-card-gradient-top` / `--color-event-card-gradient-bottom` / `--color-event-card-divider`，**保留精确当前值**以维持视觉保真。
 - 渐变结构与布局完全不变，仅将颜色搬入 `variables.css`，使其可追溯、可在后续重设计中一处改值。
 - 将 `EventsPage.css` 从 `check-style-literals.mjs` 的 `visualizationAllowlist` 中移除；`EventTierBadge.css` 仍保留在 allowlist（tier crest 的 token 化另行决策，本次不动）。
 - 金色与薄荷绿的配色和谐问题**不在本次范围**，留待后续独立的 design token 重设计；本次仅统一到既有 token 值、消除硬编码欠债。
@@ -185,7 +185,7 @@ progress record for readiness and migration verification.
 
 ### 7.4 2026-07-16 - Event Tier Crest 文档化为可视化例外并 token 化
 
-**背景**：`EventTierBadge.css` 的四档（S/A/B/C）配色是半迁移状态：结构（圆角/字体）已 token 化，但每档的边框与渐变洗色仍为旧 slate/蓝主题的裸值，且与各档实色 token 不一致（S 字母用 `--color-warning` #ffb95f 却配 #FBBF24 洗色，B 字母用 `--color-success` #3cffd0 却配 #4EDEA3，A 档更是 `#60a5fa` 蓝——薄荷体系无对应 token 的化石色）。CLAUDE.md 新增「design-token 变更先改 DESIGN.md 再镜像 variables.css」的规则后，此改动须先在 DESIGN.md 立意图。同时 DESIGN.md 明确「避免渐变、mint 稀用」，而 tier crest 本质是多彩渐变纹章，需要一个合法身份。
+**背景**：`EventTierBadge.css` 的四档（S/A/B/C）配色是半迁移状态：结构（圆角/字体）已 token 化，但每档的边框与渐变洗色仍为旧 slate/蓝主题的裸值，且与各档实色 token 不一致（S 字母当时使用 `--color-warning` #ffb95f、现由 UI-DEC-064 更新为 #d8cf70，却曾搭配 #FBBF24 洗色；B 字母用 `--color-success` #3cffd0 却配 #4EDEA3，A 档更是 `#60a5fa` 蓝——薄荷体系无对应 token 的化石色）。CLAUDE.md 新增「design-token 变更先改 DESIGN.md 再镜像 variables.css」的规则后，此改动须先在 DESIGN.md 立意图。同时 DESIGN.md 明确「避免渐变、mint 稀用」，而 tier crest 本质是多彩渐变纹章，需要一个合法身份。
 
 **决策**：
 - 在 `docs/DESIGN.md` 新增 “Event Tier Crest — data-visualization exception” 小节，将 tier crest 明文登记为**受认可的可视化例外**（与 Stat Leader Card 渐变同类），并定义 tier accent 色阶：S=`warning`、A=`uv`(#a07aff)、B=`success`、C=`text-soft`。

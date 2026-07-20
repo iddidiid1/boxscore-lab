@@ -25,6 +25,8 @@
   --color-surface-overlay: rgba(35, 35, 35, 0.94);
   --color-background-ambient-upper: rgba(255, 255, 255, 0.06);
   --color-background-ambient-lower: rgba(255, 255, 255, 0.035);
+  --color-background-brand-ambient-upper: rgba(67, 242, 200, 0.08);
+  --color-background-brand-ambient-lower: rgba(67, 242, 200, 0.03);
 
   /* Text */
   --color-text-strong: #ffffff;
@@ -77,15 +79,15 @@
   /* Semantic states */
   --color-success: #43f2c8;
   --color-success-strong: #2ccfaa;
-  --color-warning: #ffb95f;
-  --color-warning-strong: #f59e0b;
+  --color-warning: #d8cf70;
+  --color-warning-strong: #b9ad4f;
   --color-danger: #ff6b6b;
   --color-danger-strong: #ef4444;
   --color-danger-border: rgba(255, 107, 107, 0.45);
   --color-danger-surface: rgba(255, 107, 107, 0.10);
   --color-neutral-status: #555555;
   --color-status-online: #43f2c8;
-  --color-status-checking: #ffb95f;
+  --color-status-checking: #d8cf70;
   --color-status-offline: #ff6b6b;
 
   /* Interaction surfaces */
@@ -94,18 +96,18 @@
   --color-table-row-hover: rgba(255, 255, 255, 0.03);
 
   /* Statistical and ranking accents */
-  --color-stat-points: #f59a56;
-  --color-stat-rebounds: #74d58b;
-  --color-stat-assists: #f08fc0;
-  --color-stat-rating: #aa91ef;
-  --color-stat-points-surface: rgba(245, 154, 86, 0.29);
-  --color-stat-rebounds-surface: rgba(116, 213, 139, 0.29);
-  --color-stat-assists-surface: rgba(240, 143, 192, 0.29);
-  --color-stat-rating-surface: rgba(170, 145, 239, 0.29);
-  --color-stat-points-glow: rgba(245, 154, 86, 0.62);
-  --color-stat-rebounds-glow: rgba(116, 213, 139, 0.62);
-  --color-stat-assists-glow: rgba(240, 143, 192, 0.62);
-  --color-stat-rating-glow: rgba(170, 145, 239, 0.62);
+  --color-stat-points: #43f2c8;
+  --color-stat-rebounds: #78dda0;
+  --color-stat-assists: #62cee5;
+  --color-stat-rating: #b7dc78;
+  --color-stat-points-surface: rgba(67, 242, 200, 0.29);
+  --color-stat-rebounds-surface: rgba(120, 221, 160, 0.29);
+  --color-stat-assists-surface: rgba(98, 206, 229, 0.29);
+  --color-stat-rating-surface: rgba(183, 220, 120, 0.29);
+  --color-stat-points-glow: rgba(67, 242, 200, 0.62);
+  --color-stat-rebounds-glow: rgba(120, 221, 160, 0.62);
+  --color-stat-assists-glow: rgba(98, 206, 229, 0.62);
+  --color-stat-rating-glow: rgba(183, 220, 120, 0.62);
   --color-stat-neutral-surface: rgba(255, 255, 255, 0.05);
   --color-success-border: rgba(67, 242, 200, 0.45);
   --color-success-surface: rgba(67, 242, 200, 0.10);
@@ -128,15 +130,18 @@
   --color-event-stage-border-hover: rgba(67, 242, 200, 0.45);
   --color-event-selected-border: rgba(67, 242, 200, 0.55);
   --color-event-selected-surface: rgba(67, 242, 200, 0.10);
-  --color-event-winner-border: rgba(255, 185, 95, 0.45);
-  --color-event-winner-surface: rgba(255, 185, 95, 0.10);
-  --color-event-winner-row: rgba(255, 185, 95, 0.08);
-  --color-outcome-winner: #ffb95f;
-  --color-outcome-winner-border: rgba(255, 185, 95, 0.45);
-  --color-outcome-winner-surface: rgba(255, 185, 95, 0.08);
+  --color-event-winner-border: rgba(216, 207, 112, 0.45);
+  --color-event-winner-surface: rgba(216, 207, 112, 0.10);
+  --color-outcome-winner: #d8cf70;
+  --color-outcome-winner-border: rgba(216, 207, 112, 0.45);
+  --color-outcome-winner-surface: rgba(216, 207, 112, 0.08);
+  --color-event-result-winner: #d8cf70;
+  --color-event-result-winner-border: rgba(216, 207, 112, 0.45);
+  --color-event-result-winner-surface: rgba(216, 207, 112, 0.08);
+  --color-event-result-winner-hover: rgba(216, 207, 112, 0.08);
   --color-row-operational-surface: rgba(255, 255, 255, 0.045);
   --color-row-operational-border: rgba(255, 255, 255, 0.19);
-  --color-rating-fill: #ffb95f;
+  --color-rating-fill: #d8cf70;
   --color-rating-empty: rgba(255, 255, 255, 0.20);
   --color-rating-unavailable: rgba(148, 148, 148, 0.36);
   --color-team-trace-neutral: rgba(200, 200, 200, 0.42);
@@ -156,17 +161,16 @@
   --color-event-insignia-trace-active: rgba(255, 255, 255, 0.18);
   --color-event-plaque-surface: #101111;
   --color-event-plaque-surface-raised: #171817;
-  --color-event-plaque-grain: rgba(255, 255, 255, 0.025);
   --color-event-plaque-edge: rgba(255, 255, 255, 0.17);
   --color-event-plaque-rule: rgba(255, 255, 255, 0.11);
   --color-event-plaque-rule-secondary: rgba(255, 255, 255, 0.07);
   --color-event-plaque-registration: rgba(67, 242, 200, 0.38);
-  --color-event-plaque-mvp-trace: rgba(255, 185, 95, 0.14);
+  --color-event-plaque-mvp-trace: rgba(216, 207, 112, 0.14);
   /* Event Tier accent channels are a documented data-visualization exception. */
-  --color-tier-s-accent: 255, 185, 95;   /* warning   #ffb95f */
-  --color-tier-a-accent: 160, 122, 255;  /* uv accent #a07aff */
-  --color-tier-b-accent: 67, 242, 200;   /* brand     #43f2c8 */
-  --color-tier-c-accent: 200, 200, 200;  /* text-soft #c8c8c8 */
+  --color-tier-s-accent: 216, 207, 112;  /* prestige lime-gold #d8cf70 */
+  --color-tier-a-accent: 98, 206, 229;   /* orbit cyan          #62cee5 */
+  --color-tier-b-accent: 67, 242, 200;   /* brand mint          #43f2c8 */
+  --color-tier-c-accent: 126, 158, 149;  /* muted jade          #7e9e95 */
 
   /* Shape and elevation */
   --radius-sharp: 0;
@@ -197,7 +201,8 @@
   --control-height-dense: 34px;
   --control-height-medium: 30px;
   --control-height-small: 28px;
-  --table-row-height-compact: 38px;
+  --table-header-height: 38px;
+  --table-row-height: 46px;
   --duration-fast: 100ms;
   --duration-standard: 160ms;
   --duration-slow: 220ms;

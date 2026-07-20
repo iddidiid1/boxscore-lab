@@ -79,15 +79,15 @@ An MVP may also be selected for the First or Second Team.
 All visual rules come from `docs/DESIGN.md §8.3` and its named Black Metal
 Plaque exception. In particular:
 
-- use one cut-corner, brushed near-black outer Plaque;
+- use one cut-corner, solid near-black outer Plaque;
 - integrate the MVP field and both roster groups without nested Cards;
 - use Championship Gold for MVP meaning and restrained Brand Mint for
   structure;
 - render First Team and optional Second Team as engraved five-cell ruled grids
   at desktop width;
 - reflow the roster grids responsively without changing award grouping;
-- use canonical tokens and keep metal grain, registration marks, and
-  directional traces local to this Pattern.
+- use canonical tokens and keep registration marks and directional traces local
+  to this Pattern; do not add repeating stripes or visible brushed grain.
 
 The data requirements remain: show API-provided Position, keep equal roster-cell
 roles, preserve API order, omit absent Second Team, and retain the inline `MVP`
