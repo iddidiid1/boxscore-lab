@@ -1,8 +1,19 @@
 # Player Statistics Frontend PRD
 
+## Status and authority
+
+**Status:** Active feature contract.
+
+This PRD remains authoritative for Player statistics content, data/query
+behavior, ordering, routes, availability rules, and interaction workflows.
+`docs/DESIGN.md` owns the current visual treatment. References to preserving an
+existing Leader Card or Performance Bars appearance preserve their data
+meaning and page role, not their obsolete visual composition; product-pattern
+implementation belongs to the approved Editorial Scoreboard migration batch.
+
 ## 1. 目标
 
-将现有 Player 排行榜与详情 mock 页面接入真实后端数据，使用户能够查看 active Player 的动态排行榜、筛选统计与领先者，并通过 Player 详情查看 Overall 或指定 Event 的表现、比赛历史、荣誉和可解释的 Performance Bars，同时保持现有 sports-console 视觉与交互布局。
+将现有 Player 排行榜与详情 mock 页面接入真实后端数据，使用户能够查看 active Player 的动态排行榜、筛选统计与领先者，并通过 Player 详情查看 Overall 或指定 Event 的表现、比赛历史、荣誉和可解释的 Performance Profile，同时保持既有功能构图与交互流程；视觉处理遵循当前 `docs/DESIGN.md`。
 
 ## 2. 影响页面
 
@@ -15,7 +26,7 @@
 - 修改 `/players/:slug` Player 详情页，使用不可变 Player slug 加载真实资料与统计。
 - Player 详情支持 Overall 与指定 Event 筛选，并展示汇总统计、比赛历史和 Event Awards。
 - inactive Player 不出现在排行榜，但其历史详情页仍可通过直接地址访问并明确显示 inactive 状态。
-- 保留现有 Performance Bars 视觉设计，展示后端按当前统计范围领先者比例动态计算的值。
+- 保留 Performance Profile 的后端数值语义与页面位置，展示后端按当前统计范围领先者比例动态计算的值；具体视觉由 `docs/DESIGN.md` 的 Segmented Performance Profile 定义。
 - 为两个页面补全 loading、empty、not-found、error 和正常数据状态。
 - 复用现有 semantic tokens、Mantine theme、共享组件和页面布局；不进行无关视觉重设计。
 
@@ -37,7 +48,7 @@
 - `PlayerDetailPage`：按 slug 加载详情，管理 Event 筛选和比赛历史分页，移除全部 mock 数据。
 - `PlayerProfileHeader`：增加 Player inactive 与 Team archived 状态显示。
 - `PlayerStatSummary`：展示后端统计对象，不自行重新计算。
-- `PlayerPerformanceBars`：保留现有布局，消费 API 按领先者比例返回的 `0–100` 值，不在前端重复计算。
+- `PlayerPerformanceBars`：保留组件职责并消费 API 按领先者比例返回的 `0–100` 值，不在前端重复计算；其视觉可在对应 Editorial Scoreboard Pattern 批次迁移为 Segmented Performance Profile。
 - `PlayerMatchHistory`：接入真实 Match、Event、Opponent 与当场统计；使用 API 每场返回的比赛时 Team，不以 profile 中的当前 Team 覆盖，并使用 Match id 链接 `/matches/:id`。历史列表展示 Match/Opponent、Date、Event、Points、Rebounds、Assists、FG%、3PT%、Minutes 与 Rating；Stage 可保留为 Match/Event 辅助信息，但不是必需列。
 - 新增或扩展共享 API client/types，统一处理 `{ statusCode, error, message, details }`。
 

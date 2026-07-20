@@ -5,23 +5,26 @@
 This directory is the working laboratory for a broader BoxScore Lab UI
 refactoring experiment.
 
-The goal is to inventory the UI required by the current MVP, design and review
-it in manageable batches, and produce an approved candidate system before any
-large-scale application migration begins.
+The lab inventoried the UI required by the current MVP, reviewed it in
+manageable batches, and produced the Editorial Scoreboard system approved at
+Gate E2 on 2026-07-20.
 
-This laboratory is deliberately separated from the active product:
+The laboratory remains an historical and migration-reference area:
 
-- it may define candidate tokens and UI patterns;
-- it may contain static previews and comparison scenarios;
-- it does not change `docs/DESIGN.md`;
-- it does not change `apps/frontend/src/styles/variables.css`;
-- it does not authorize refactoring existing pages.
+- active intent now lives in `docs/DESIGN.md`;
+- canonical shared token values now live in
+  `apps/frontend/src/styles/variables.css`;
+- static previews record comparisons and approval evidence;
+- the lab does not independently authorize page refactoring.
 
 ## Documents
 
 | File | Purpose |
 |---|---|
 | `DESIGN.md` | Candidate design intent and visual rules |
+| `TOKEN_MAPPING.md` | Gate E2 semantic-token contract and active-token delta |
+| `MIGRATION_PLAN.md` | Intentional exceptions, implementation impact, batches, and verification |
+| `E6_APPROVAL_PACKET.md` | Whole-system Gate E2 review index |
 | `UI_INVENTORY.md` | Complete MVP UI inventory and review status |
 | `DECISION_LOG.md` | Durable record of approved, revised, and rejected decisions |
 | `color-system-lab.html` | Interactive whole-system color exploration |
@@ -52,7 +55,36 @@ This laboratory is deliberately separated from the active product:
 | `b06-special-row-lab.html` | B06-B independent Other Statistics and Winner Result row material comparison |
 | `b07-feedback-states-lab.html` | B07-A persistent banners, empty states, loading/skeleton, and error/retry comparison |
 | `b07-confirmation-dialog-lab.html` | B07-B Confirmation Dialog shell, action layout, consequence semantics, loading, and retained-error comparison |
-| `card-ui-preview.html` | Initial card-pattern exploration; not yet approved |
+| `team-overview-pattern-lab.html` | Team Pattern round: Division Board and Team Identity Card composition comparison |
+| `team-detail-hero-lab.html` | Team Pattern round: Team Detail identity and five-axis profile Hero composition comparison |
+| `team-identity-preview-lab.html` | Team Pattern round: Create/Edit live Team Identity Preview composition comparison |
+| `player-leader-card-lab.html` | Player Pattern round: rejected first-pass Statistic Leader Card composition comparison |
+| `player-leader-surface-lab.html` | Player Pattern revision: current Leader Card composition with container material and Hover comparison |
+| `player-leader-glow-lab.html` | Player Pattern tuning: Frosted Depth category Glow strength comparison |
+| `player-detail-identity-lab.html` | Player Pattern round: Player Detail identity, roster metadata, and historical-state comparison |
+| `player-number-masthead-lab.html` | Player Pattern tuning: Number Masthead oversized Anton jersey-number treatment |
+| `player-performance-profile-lab.html` | Player Pattern round: read-only Points, Rebounds, and Assists leader-relative visualization comparison |
+| `player-awards-history-lab.html` | Player Pattern round: cross-Event Award type, award-time Team, and optional Notes history comparison |
+| `event-tier-family-lab.html` | Event Pattern round: shared Tier identity across Event list-card and detail-hero contexts |
+| `event-tier-luxury-lab.html` | Event Tier revision: more refined Faceted Seal, Tournament Insignia, and Prism Monogram treatments |
+| `event-summary-card-lab.html` | Event Pattern round: Event Summary Card hierarchy, champion placement, states, and parent-card response |
+| `event-player-awards-lab.html` | Event Pattern round: MVP spotlight and All-Event First/Second Team presentation comparison |
+| `event-awards-container-lab.html` | Event Player Awards revision: fixed information hierarchy across three richer container materials |
+| `match-record-card-lab.html` | Match Pattern round: list-card scoreline, Team identity, optional Stage, and responsive hierarchy comparison |
+| `match-detail-score-header-lab.html` | Match Pattern round: detail-score hero composition, outcome emphasis, record states, missing Stage, and responsive hierarchy comparison |
+| `teams-overview-scenario.html` | E5 scenario validation: Sidebar, Functional Page Header, Create action, Open Division Stacks, Score Ledger Team Cards, and page states together |
+| `team-detail-scenario.html` | E5 scenario validation: Detail actions, archived notice, Unified Field Team hero, Ruled Grid summary, and Roster Data Bay together |
+| `team-editor-scenario.html` | E5 scenario validation: Create/Edit header actions, Editorial Outline form sections, Identity Proof, profile ratings, Player management, validation, submission, and archived states |
+| `players-overview-scenario.html` | E5 scenario validation: Players header, cascading filters, four Frosted Depth Leader Cards, Ranking Data Bay, pagination, and retained/empty/loading states |
+| `player-detail-scenario.html` | E5 scenario validation: Number Masthead, Honors Ledger, Segmented Performance Profile, weak Event filter region, Stat Summary, Match History, and historical/unavailable states |
+| `events-overview-scenario.html` | E5 scenario validation: Events header, Tournament Insignia rails, status plates, Champion strip, team counts, responsive list composition, and loading/empty/error states |
+| `event-detail-scenario.html` | E5 scenario validation: Event actions, large Tournament Insignia hero, realistic 16-Team full-width Participants roster, compact Stage/Result Tag row, Final Team Results, Black Metal Player Awards, and historical/non-happy states |
+| `event-editor-scenario.html` | E5 scenario validation: Event Create/Edit header, identity fields, realistic 16-Team participant selection, Stage/Result Tag editors, ordering controls, and lifecycle/read-only states |
+| `event-outcomes-scenario.html` | E5 visual-scope validation: Team Result assignment for 16 Teams, current Player Award selection behavior, filtering, limits, inactive history, and read-only/prerequisite states; workflow redesign is deferred |
+| `matches-overview-scenario.html` | E5 scenario validation: Matches header, cascading filter region, Scoreline Rail cards, pagination, and loading/empty/retained-error states |
+| `match-detail-scenario.html` | E5 scenario validation: Detail actions, Arena Scoreline without Winner marker, two Box Score Data Bays, Other/Total rows, void/restore, historical Event, and missing Stage states |
+| `match-editor-scenario.html` | E5 scenario validation: Match Create/Edit header, Match Information, two roster-stat entry Data Bays, live Team score, Other rows, validation/submitting/prerequisite/unavailable states |
+| `card-ui-preview.html` | Historical initial card-pattern exploration; not authoritative |
 
 Additional preview files may be introduced when a batch needs focused
 comparison, but the lab should remain small and navigable.
@@ -65,8 +97,8 @@ Every inventory item belongs to one of four levels:
    and responsive rules.
 2. **Component** — reusable business-neutral UI such as Button, Input, Badge,
    Table, Modal, and Empty State.
-3. **Pattern** — BoxScore Lab-specific composition such as Team Identity Card,
-   Event Archive Row, Match Scoreboard, or Team Summary Panel.
+3. **Pattern** — BoxScore Lab-specific composition such as a Score Ledger Team
+   Card, Insignia Rail Event Card, Match Scoreline, or Team Summary.
 4. **Scenario** — representative page composition used to validate how approved
    components and patterns work together.
 
@@ -90,42 +122,38 @@ Each inventory item uses one of these statuses:
 | `Formalized` | Approved decision has been written into active project design docs |
 | `Implemented` | Formalized decision has been migrated into the application |
 
-`Approved` applies only to the candidate experiment. It is not equivalent to
-`Formalized` or `Implemented`.
+`Approved` records the candidate review decision. The inventory-level
+formalization marker records whether those approved decisions have graduated;
+`Formalized` is still not equivalent to page-level `Implemented`.
 
 ## Working workflow
 
-**Current phase:** E4 Review boundary. Foundation/Component batches B01–B07
-were approved through `UI-DEC-032` on 2026-07-18. Product-specific Pattern and
-Scenario work remains a separate next round and has not begun. Gate E1 was
-approved on 2026-07-17. Gate E0 was approved on 2026-07-17 using the Neutral
-Black foundation with Deep Green Black brand mint (`#43f2c8`).
+**Current phase:** Formalized / migration planning. Gate E2 was approved on
+2026-07-20 after Foundation/Component batches B01–B07,
+Team/Player/Event/Match product patterns, and representative E5 Overview/List,
+Detail, and Create/Edit scenarios completed through `UI-DEC-058`. All 97
+inventory items have an explicit review disposition: 91 Approved and now
+Formalized, four Deferred, and two Rejected. The Player Awards selection
+workflow is explicitly deferred to a separate functional PR.
+Gate E1 was approved on
+2026-07-17. Gate E0 was approved on 2026-07-17 using the Neutral Black
+foundation with Deep Green Black brand mint (`#43f2c8`).
 
 ### Current-round scope
 
-The current design round is limited to:
+The completed experiment covers:
 
-- Foundation rules and tokens;
+- Foundation rules and candidate semantic tokens;
 - reusable, business-neutral Components;
-- shared interaction states and accessibility behavior.
+- shared interaction, accessibility, and responsive behavior;
+- current-MVP Team, Player, Event, and Match Patterns;
+- representative Overview/List, Detail, and Create/Edit Scenarios.
 
-Product-specific Patterns and page Scenarios may be inventoried now so they are
-not forgotten, but their internal content composition is **not designed in this
-round**.
-
-Examples deferred from the current round:
-
-- Team Identity Card content composition;
-- Event Archive Row content composition;
-- Match Scoreboard composition;
-- Team Summary data arrangement;
-- Player ranking and leader compositions;
-- Event Tier Crest and radar presentation changes;
-- complete Overview, Detail, or Create/Edit page layouts.
-
-The existing `card-ui-preview.html` remains an early direction study only. It
-does not approve or schedule those product patterns for the current component
-round.
+It does not redesign backend behavior, API contracts, persistence, the broader
+Sidebar/mobile-navigation structure, or the Event Player Awards selection
+workflow. `card-ui-preview.html` and unselected lab alternatives remain
+historical evidence only; the decision log and candidate specification define
+the approved direction.
 
 ### Phase E0 — Theme direction
 

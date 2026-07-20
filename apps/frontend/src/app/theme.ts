@@ -18,15 +18,15 @@ export const appTheme = createTheme({
   },
   radius: {
     xs: "4px",
-    sm: "4px",
-    md: "16px",
-    lg: "16px",
-    xl: "24px"
+    sm: "8px",
+    md: "10px",
+    lg: "12px",
+    xl: "12px"
   },
   components: {
     Button: Button.extend({
       defaultProps: {
-        radius: "xl",
+        radius: "xs",
         size: "md"
       }
     })
@@ -35,9 +35,9 @@ export const appTheme = createTheme({
     teal: [
       "#e0fff9",
       "#b3fff0",
-      "#80ffe6",
-      "#4dffdb",
-      "#3cffd0",
+      "#88f8de",
+      "#62f5d2",
+      "#43f2c8",
       "#2ccfaa",
       "#1fa080",
       "#127558",

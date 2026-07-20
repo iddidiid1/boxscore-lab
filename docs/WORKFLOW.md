@@ -203,6 +203,30 @@ Call out any contract assumptions between frontend and backend (field names, err
 - Once approved, PRDs are the authoritative spec — do not deviate without user discussion
 - PRDs are not deleted after implementation; they serve as historical record
 
+### Document authority and conflict resolution
+
+Documents own different concerns:
+
+1. `prisma/schema.prisma` owns the implemented database model.
+2. Backend feature PRDs own business rules, API contracts, validation, and
+   error behavior for their feature.
+3. Frontend feature PRDs own page capabilities, content requirements, routes,
+   data behavior, and interaction workflows for their feature.
+4. `docs/DESIGN.md` owns active global visual intent, shared component visual
+   language, accessibility-state treatment, and approved product-pattern
+   visuals.
+5. A currently approved migration PRD owns the implementation scope, file
+   boundary, sequencing, and acceptance criteria for that migration.
+6. A specialized copy/content PRD may own wording or icon semantics only when
+   it explicitly declares that narrow authority.
+
+When documents overlap, the owner of the specific concern wins; a feature PRD
+must not freeze an obsolete visual treatment against the active
+`docs/DESIGN.md`, and a design or migration document must not silently change
+feature behavior. New PRDs must list any document they supersede or complement.
+Historical PRDs remain in the repository but must carry a clear status/authority
+note when later decisions replace part of them.
+
 ---
 
 ## What This Workflow Does NOT Cover

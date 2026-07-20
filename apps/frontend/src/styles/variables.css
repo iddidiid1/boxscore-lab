@@ -19,48 +19,61 @@
   --color-surface-control: #0d0d0d;
   --color-surface-inset: #0d0d0d;
   --color-surface-subtle: #232323;
+  --color-surface-glass: rgba(26, 26, 26, 0.82);
+  --color-surface-identity: rgba(53, 58, 55, 0.40);
+  --color-surface-overlay: rgba(35, 35, 35, 0.94);
+  --color-background-ambient-upper: rgba(255, 255, 255, 0.06);
+  --color-background-ambient-lower: rgba(255, 255, 255, 0.035);
 
   /* Text */
   --color-text-strong: #ffffff;
   --color-text: #ffffff;
   --color-text-soft: #c8c8c8;
   --color-text-muted: #949494;
-  --color-text-disabled: rgba(85, 85, 85, 0.72);
+  --color-text-disabled: rgba(148, 148, 148, 0.52);
   --color-text-navigation: rgba(148, 148, 148, 0.90);
   --color-text-on-accent: #000000;
 
   /* Borders and focus */
-  --color-border: rgba(255, 255, 255, 0.10);
-  --color-border-subtle: rgba(255, 255, 255, 0.06);
-  --color-border-muted: rgba(255, 255, 255, 0.06);
-  --color-border-hover: rgba(255, 255, 255, 0.18);
+  --color-border: rgba(255, 255, 255, 0.13);
+  --color-border-subtle: rgba(255, 255, 255, 0.075);
+  --color-border-muted: rgba(255, 255, 255, 0.075);
+  --color-border-hover: rgba(255, 255, 255, 0.19);
   --color-border-navigation: rgba(255, 255, 255, 0.08);
   --color-border-preview: rgba(255, 255, 255, 0.18);
   --color-border-divider: rgba(255, 255, 255, 0.08);
-  --color-border-control-strong: rgba(255, 255, 255, 0.18);
-  --color-border-table-cell: rgba(255, 255, 255, 0.06);
+  --color-border-control-strong: rgba(255, 255, 255, 0.19);
+  --color-border-table-cell: rgba(255, 255, 255, 0.075);
   --color-border-control-mark: rgba(148, 148, 148, 0.50);
   --color-border-control: rgba(255, 255, 255, 0.14);
-  --color-border-control-hover: rgba(60, 255, 208, 0.45);
-  --color-border-interactive-hover: rgba(60, 255, 208, 0.45);
+  --color-border-control-hover: rgba(255, 255, 255, 0.19);
+  --color-border-interactive-hover: rgba(255, 255, 255, 0.19);
   --color-border-table-subtle: rgba(255, 255, 255, 0.04);
-  --color-focus-ring: #3cffd0;
+  --color-focus-ring: rgba(67, 242, 200, 0.88);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
   --color-icon-muted: rgba(148, 148, 148, 0.82);
   --color-preview-pattern: rgba(148, 148, 148, 0.20);
 
   /* Actions — mint replaces blue */
-  --color-action-primary: #3cffd0;
+  --color-brand: #43f2c8;
+  --color-brand-hover: #2ccfaa;
+  --color-brand-soft: rgba(67, 242, 200, 0.10);
+  --color-brand-soft-hover: rgba(67, 242, 200, 0.16);
+  --color-brand-border: rgba(67, 242, 200, 0.45);
+  --color-brand-border-subtle: rgba(67, 242, 200, 0.20);
+  --color-action-primary: #43f2c8;
   --color-action-primary-hover: #2ccfaa;
-  --color-action-primary-soft: rgba(60, 255, 208, 0.10);
-  --color-action-primary-soft-hover: rgba(60, 255, 208, 0.16);
-  --color-action-primary-emphasis: #3cffd0;
-  --color-action-primary-border: rgba(60, 255, 208, 0.45);
-  --color-action-primary-border-subtle: rgba(60, 255, 208, 0.20);
-  --color-action-primary-surface: rgba(60, 255, 208, 0.08);
-  --color-action-primary-surface-hover: rgba(60, 255, 208, 0.12);
+  --color-action-primary-soft: rgba(67, 242, 200, 0.10);
+  --color-action-primary-soft-hover: rgba(67, 242, 200, 0.16);
+  --color-action-primary-emphasis: #43f2c8;
+  --color-action-primary-border: rgba(67, 242, 200, 0.45);
+  --color-action-primary-border-subtle: rgba(67, 242, 200, 0.20);
+  --color-action-primary-surface: rgba(67, 242, 200, 0.08);
+  --color-action-primary-surface-hover: rgba(67, 242, 200, 0.12);
 
   /* Semantic states */
-  --color-success: #3cffd0;
+  --color-success: #43f2c8;
   --color-success-strong: #2ccfaa;
   --color-warning: #ffb95f;
   --color-warning-strong: #f59e0b;
@@ -69,73 +82,102 @@
   --color-danger-border: rgba(255, 107, 107, 0.45);
   --color-danger-surface: rgba(255, 107, 107, 0.10);
   --color-neutral-status: #555555;
+  --color-status-online: #43f2c8;
+  --color-status-checking: #ffb95f;
+  --color-status-offline: #ff6b6b;
 
   /* Interaction surfaces */
   --color-hover-surface: rgba(255, 255, 255, 0.04);
-  --color-active-surface: rgba(60, 255, 208, 0.08);
+  --color-active-surface: rgba(67, 242, 200, 0.08);
   --color-table-row-hover: rgba(255, 255, 255, 0.03);
 
   /* Statistical and ranking accents */
   --color-stat-points: #a07aff;
   --color-stat-points-surface: rgba(82, 0, 255, 0.15);
-  --color-stat-assists-surface: rgba(60, 255, 208, 0.12);
-  --color-stat-rebounds-surface: rgba(60, 255, 208, 0.07);
+  --color-stat-assists-surface: rgba(67, 242, 200, 0.12);
+  --color-stat-rebounds-surface: rgba(67, 242, 200, 0.07);
   --color-stat-rating-surface: rgba(255, 185, 95, 0.11);
   --color-stat-neutral-surface: rgba(255, 255, 255, 0.05);
-  --color-success-border: rgba(60, 255, 208, 0.45);
-  --color-success-surface: rgba(60, 255, 208, 0.10);
-  --color-success-glow: rgba(60, 255, 208, 0.20);
+  --color-success-border: rgba(67, 242, 200, 0.45);
+  --color-success-surface: rgba(67, 242, 200, 0.10);
+  --color-success-glow: rgba(67, 242, 200, 0.20);
   --color-ranking-bronze: #c08457;
   --color-text-score-muted: #949494;
   --color-text-score-divider: #555555;
   --color-text-row-muted: #949494;
   --color-border-tag: rgba(255, 255, 255, 0.14);
   --color-border-meta: rgba(255, 255, 255, 0.10);
-  --color-border-total: rgba(60, 255, 208, 0.35);
+  --color-border-total: rgba(67, 242, 200, 0.35);
   --color-surface-tag: rgba(0, 0, 0, 0.30);
   --color-surface-row-muted: rgba(0, 0, 0, 0.20);
   --color-table-row-hover-subtle: rgba(255, 255, 255, 0.02);
-  --color-action-primary-border-strong: rgba(60, 255, 208, 0.90);
+  --color-action-primary-border-strong: rgba(67, 242, 200, 0.90);
   --color-radar-guide: rgba(255, 255, 255, 0.08);
   --color-radar-axis: rgba(255, 255, 255, 0.06);
-  --color-radar-fill: rgba(60, 255, 208, 0.25);
-  --color-event-stage-border: rgba(60, 255, 208, 0.25);
-  --color-event-stage-border-hover: rgba(60, 255, 208, 0.45);
-  --color-event-selected-border: rgba(60, 255, 208, 0.55);
-  --color-event-selected-surface: rgba(60, 255, 208, 0.10);
+  --color-radar-fill: rgba(67, 242, 200, 0.25);
+  --color-event-stage-border: rgba(67, 242, 200, 0.25);
+  --color-event-stage-border-hover: rgba(67, 242, 200, 0.45);
+  --color-event-selected-border: rgba(67, 242, 200, 0.55);
+  --color-event-selected-surface: rgba(67, 242, 200, 0.10);
   --color-event-winner-border: rgba(255, 185, 95, 0.45);
   --color-event-winner-surface: rgba(255, 185, 95, 0.10);
   --color-event-winner-row: rgba(255, 185, 95, 0.08);
-  /* Event summary card chrome. Values are legacy pre-mint literals kept as-is
-     for visual fidelity; the pending design-token redesign will re-value them. */
-  --color-event-card-gradient-top: rgba(15, 23, 42, 0.92);
-  --color-event-card-gradient-bottom: rgba(18, 28, 47, 0.98);
-  --color-event-card-divider: rgba(51, 65, 85, 0.52);
+  --color-outcome-winner: #ffb95f;
+  --color-outcome-winner-border: rgba(255, 185, 95, 0.45);
+  --color-outcome-winner-surface: rgba(255, 185, 95, 0.08);
+  --color-row-operational-surface: rgba(255, 255, 255, 0.045);
+  --color-row-operational-border: rgba(255, 255, 255, 0.19);
+  /* Compatibility roles consumed until the Event patterns migrate in M4. */
+  --color-event-card-gradient-top: rgba(26, 26, 26, 0.82);
+  --color-event-card-gradient-bottom: rgba(19, 19, 19, 0.96);
+  --color-event-card-divider: rgba(255, 255, 255, 0.13);
   /* Event tier crest accent scale — space-separated RGB channels so one accent
      drives both the solid color and its gradient/border alpha washes.
      Documented data-visualization exception; see docs/DESIGN.md. */
   --color-tier-s-accent: 255, 185, 95;   /* warning   #ffb95f */
   --color-tier-a-accent: 160, 122, 255;  /* uv accent #a07aff */
-  --color-tier-b-accent: 60, 255, 208;   /* success   #3cffd0 */
+  --color-tier-b-accent: 67, 242, 200;   /* brand     #43f2c8 */
   --color-tier-c-accent: 200, 200, 200;  /* text-soft #c8c8c8 */
-  /* Shared tier crest chrome — legacy pre-mint literals kept for fidelity. */
-  --color-tier-crest-border: rgba(148, 163, 184, 0.38);
-  --color-tier-crest-sheen: rgba(248, 250, 252, 0.08);
-  --color-tier-crest-base: rgba(12, 20, 37, 0.92);
-  --color-tier-crest-shadow: rgba(15, 23, 42, 0.72);
+  /* Compatibility chrome consumed until Tournament Insignia migrates in M4. */
+  --color-tier-crest-border: rgba(255, 255, 255, 0.13);
+  --color-tier-crest-sheen: rgba(255, 255, 255, 0.08);
+  --color-tier-crest-base: rgba(26, 26, 26, 0.92);
+  --color-tier-crest-shadow: rgba(13, 13, 13, 0.72);
 
   /* Shape and elevation */
   --radius-sharp: 0;
-  --radius-chip: 20px;
-  --radius-focus-target: 3px;
+  --radius-chip: 4px;
+  --radius-focus-target: 4px;
   --radius-control: 4px;
-  --radius-team-logo: 10px;
-  --radius-interactive-card: 16px;
-  --radius-panel: 16px;
-  --radius-large: 16px;
-  --radius-xl: 24px;
+  --radius-compact: 8px;
+  --radius-team-logo: 8px;
+  --radius-interactive: 10px;
+  --radius-interactive-card: 10px;
+  --radius-overlay: 10px;
+  --radius-panel: 12px;
+  --radius-large: 12px;
+  --radius-xl: 12px;
   --radius-pill: 999px;
   --shadow-surface: none;
+
+  /* Spacing, density, and motion */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --control-height-large: 42px;
+  --control-height-default: 40px;
+  --control-height-dense: 34px;
+  --control-height-medium: 30px;
+  --control-height-small: 28px;
+  --table-row-height-compact: 38px;
+  --duration-fast: 100ms;
+  --duration-standard: 160ms;
+  --duration-slow: 220ms;
+  --easing-functional: ease-out;
 
   /* Layout constants are not part of the visual theme. */
   --layout-sidebar-width: 260px;

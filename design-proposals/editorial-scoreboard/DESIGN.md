@@ -1,6 +1,6 @@
 ---
 name: Editorial Scoreboard
-status: experimental
+status: formalized-reference
 basedOn: ../verge-dark-current/DESIGN.md
 product: BoxScore Lab
 ---
@@ -9,20 +9,23 @@ product: BoxScore Lab
 
 ## 1. Status and authority
 
-This document records a **candidate UI direction** for BoxScore Lab. It is an
-experiment, not the active project specification.
+This document records the **approved candidate direction** that passed Gate E2
+on 2026-07-20. It is retained as experiment history; `docs/DESIGN.md` is now the
+active project specification.
 
 - The active design intent remains `docs/DESIGN.md`.
 - The active implementation tokens remain
   `apps/frontend/src/styles/variables.css`.
-- Values in this directory must not be copied into the application until the
-  experiment has been reviewed and explicitly approved.
-- When this candidate graduates, the approved intent is written to
-  `docs/DESIGN.md` first, then mirrored into `variables.css` and the Mantine
-  theme.
+- Approved shared values have been mirrored into `docs/DESIGN.md`,
+  `variables.css`, and the Mantine theme by M0.
+- Proposal-only specimen names and unselected alternatives remain historical
+  evidence and must not be copied into production.
 
 The current Verge Dark system remains the baseline. Editorial Scoreboard is a
-focused evolution of that system rather than an unrelated visual reset.
+focused evolution of that system rather than an unrelated visual reset. The
+candidate covers the current MVP visual system through `UI-DEC-058`; the Event
+Player Awards selection workflow remains a separately documented functional
+design deferral.
 
 ## 2. Design thesis
 
@@ -76,8 +79,8 @@ changes with the information:
 | Information type | Preferred pattern |
 |---|---|
 | Team or player identity | Compact identity card |
-| Event archive or historical list | Archive row |
-| Match result or fixture | Horizontal scoreboard card |
+| Event collection | Insignia Rail Event Summary Card |
+| Match result | Scoreline Rail list card or Arena Scoreline detail hero |
 | Aggregated statistics | Single data panel with internal dividers |
 | Ranking or tabular comparison | Data grid or table row |
 | Editorial highlight | Feature card |
@@ -94,7 +97,7 @@ borders, and radii.
 The following effects are not flattened into the base card system:
 
 - stat leader-card tint or gradient;
-- Event Tier Crest gradient and tier accent;
+- Tournament Insignia material and tier accent;
 - radar-chart layers;
 - team colors supplied by data;
 - event or match winner emphasis when it communicates a real outcome.
@@ -160,14 +163,14 @@ chrome.
 
 ### 4.3 Shape
 
-Initial candidate radius model:
+Approved candidate radius model:
 
 | Role | Candidate |
 |---|---|
-| Compact/archive treatment | `8px` |
+| Compact surface or inset | `8px` |
 | Base interactive card | `10px` |
-| Large feature/visualization frame | `12–16px`, decided per pattern |
-| Input/control | Keep current `4px` pending control review |
+| Standard panel or overlay | `12px` |
+| Input/control | `4px` |
 | Button/badge | `4px` Precise geometry |
 
 The experiment does not assume that the existing 16px panel radius must remain
@@ -181,8 +184,9 @@ the universal card radius.
 - Use tonal surface layering and 1px borders.
 - Interactive cards may reveal a short 2px cutline.
 - Focus-visible treatment must remain stronger than hover treatment.
-- Motion should be short and functional; exact duration tokens are not yet
-  decided.
+- Motion uses the approved `100ms`, `160ms`, and `220ms` functional duration
+  roles. Reduced Motion removes non-essential transitions and animation while
+  preserving immediate state feedback.
 
 ## 5. Candidate card grammar
 
@@ -197,26 +201,26 @@ Used for Team and potentially Player identity.
 - dynamic team color may style the mark or cutline;
 - mint is reserved for the primary system value or active state.
 
-### 5.2 Archive Row
+### 5.2 Event Summary Card
 
-Used for Events and other historical collections.
+Used for Events overview.
 
-- visually belongs to a continuous list;
-- no independent rounded box required for every row;
-- uses horizontal dividers and aligned metadata columns;
-- status is compact and subordinate;
-- hover may reveal a subtle directional mint wash or arrow;
-- no decorative left rail by default.
+- uses the approved Insignia Rail composition;
+- keeps Tier identity in a compact Tournament Insignia rail;
+- uses an open Champion strip only when a Champion exists;
+- makes the complete card the sole navigation target;
+- coordinates local edge and ambient response without lift or scale.
 
-### 5.3 Scoreboard Card
+### 5.3 Match Scoreline
 
-Used for Match list and result summaries.
+Used for Match list results and the Match Detail hero.
 
-- score occupies the visual center;
-- team names sit on opposing sides;
-- winner emphasis is semantic;
+- score occupies the visual center and Team names sit on opposing sides;
+- Scoreline Rail list cards use Trophy plus `Winner`;
+- Arena Scoreline detail heroes preserve symmetry and use score hierarchy
+  without a separate Winner marker;
 - event, stage, date, and status form a compact metadata rail;
-- the card remains horizontal until the mobile breakpoint requires stacking.
+- each composition remains horizontal until its approved narrow reflow.
 
 ### 5.4 Data Panel
 
@@ -262,8 +266,9 @@ Table, Empty State, and base Panel.
 
 ### Product UI patterns
 
-BoxScore Lab compositions such as Team Identity Card, Event Archive Row, Match
-Scoreboard, Team Summary Panel, Stat Leader Card, and Tier Crest.
+BoxScore Lab compositions such as Score Ledger Team Cards, Insignia Rail Event
+Cards, Match Scorelines, Team Summary, Statistic Leader Cards, and Tournament
+Insignia.
 
 Product patterns may consume component tokens, but their information order and
 layout are not tokens.
@@ -280,7 +285,9 @@ B03 approves a single Precise button family:
 The family uses Outline hierarchy:
 
 - Primary is the only solid Brand Mint action in its immediate group;
-- Return/Cancel is a transparent neutral outline;
+- Cancel/Exit is a transparent neutral outline. Create/Edit page headers use
+  the visible label `Cancel`; do not substitute `Return to …` for that form
+  action. Detail-page return navigation remains the separate Detail Back Link;
 - Destructive is a restrained danger outline with a soft danger interaction
   surface;
 - Related Workflow is a transparent, brand-derived outline with strong neutral
@@ -565,7 +572,290 @@ Its leading symbol is a return/restore arrow rendered in Strong foreground over
 a restrained Brand Mint field with a visible Mint boundary. Do not render a
 thin low-contrast Mint glyph directly on the near-black surface.
 
-## 7. Responsive and accessibility requirements
+## 7. Approved product patterns
+
+### 7.1 Team Overview
+
+The Division Team Board uses **Open Stacks**. Each Division is an uncontained
+vertical section with a compact data-label heading and horizontal rule. Do not
+wrap the complete Division in another panel. The Team Card grid belongs inside
+that section and reflows independently; Division membership must remain clear
+when cards collapse to one column.
+
+Team Identity Card uses the **Score Ledger** composition on the approved `40%`
+Team Identity Surface:
+
+- place Logo Artwork or Neutral Frame + Initials fallback beside the Team name;
+- align total points in a stable numeric column;
+- place five fractional stars plus the exact `x / 10` value on a full-width
+  secondary ledger row;
+- truncate unusually long Team names without changing card height;
+- retain the restrained Team-color cutline as a data-driven exception;
+- preserve the complete-card detail link, pointer cursor, focus-visible,
+  pressed, and restrained hover states;
+- do not create a nested Logo bay or add independent controls inside the card.
+
+The Teams overview API returns active Teams only, so archived presentation does
+not appear in this Board. Archived identity remains available in Team Detail
+and historical Match/Event contexts.
+
+### 7.2 Team Detail Hero
+
+Team Detail uses the **Unified Field** composition. Place Identity Summary and
+the five-axis Team Profile inside one shared `40%` Team Identity Surface, with
+one structural divider between them:
+
+- Identity leads with Logo Artwork or Neutral Frame + Initials fallback, Team
+  name, Division, description, total points, and fractional star rating;
+- Team Profile remains a distinct Radar visualization in the trailing region;
+- keep DEF, OFF, CON, COH, and DEP values visibly labeled and accessibly
+  described;
+- if profile ratings are unavailable, retain the Profile region and show an
+  explicit no-profile message;
+- stack Identity before Profile on narrow screens;
+- keep Detail Back Link, Manage Team, and the archived notice outside the
+  Unified Field;
+- hide Manage Team for archived Teams while retaining historical content.
+
+Do not place the Radar in a second card, turn the Radar into a generic Stat
+Summary Panel, or promote the Team Identity Surface to a default Detail-page
+container.
+
+### 7.3 Team Create/Edit Identity Preview
+
+Use **Identity Proof** inside the approved Open Well:
+
+- compose live Logo Artwork or Neutral Frame + Initials fallback beside the
+  current Team name and Division;
+- show the current fractional star rating with its exact value;
+- let the data-driven Team primary color appear as a restrained cutline and
+  compact color reference;
+- use `New Team`, `No division selected`, zero rating, and initials fallback for
+  an empty draft;
+- preserve the same geometry when Logo artwork is missing or broken;
+- stack Logo before identity content on narrow screens.
+
+The preview is non-interactive and does not duplicate the final Team Card or
+Team Detail Hero. Do not add points, Radar, navigation, hover/pressed behavior,
+or field-by-field preview rows.
+
+### 7.4 Player Overview Statistic Leader Cards
+
+Preserve the current four-card content hierarchy:
+
+1. Crown plus statistic label;
+2. large category-colored value;
+3. Player name;
+4. Team name.
+
+Use **Frosted Depth with Strong Glow**:
+
+- apply one shared glass skeleton to Points, Rebounds, Assists, and Rating;
+- give each category a dedicated purpose-specific accent;
+- use that accent for the value, Crown, localized ambient field, and Crown
+  halo;
+- keep explicit category text so color is never the only distinction;
+- on Hover, strengthen the localized ambient light without lift, scale, or
+  cursor change;
+- preserve equal card geometry and four/two/one-column responsive flow;
+- when no eligible Player exists, retain the card and display `0.0` plus
+  `No eligible players`.
+
+These cards are non-interactive. Do not add click, navigation, pressed,
+selected, or action-focus behavior. Strong Glow is a restricted feature-card
+exception rather than a generic surface treatment.
+
+### 7.5 Player Detail Identity
+
+Use an open **Number Masthead with Outline Echo**:
+
+- place an oversized Anton Display `#number` before the Player identity;
+- use Strong foreground for the main number plus a restrained data-driven
+  Team-color offset shadow and outline echo;
+- do not add a Jersey label—the number is the identity mark;
+- place Player name, current Team, and Position in the adjacent identity
+  region;
+- show Inactive Player and Archived Team as independent, explicit status
+  markers that may appear together;
+- retain the Detail Back Link outside the Masthead;
+- stack the number before the identity facts on narrow screens.
+
+The Masthead remains open and non-interactive. Awards, Performance Bars, Stat
+Summary, Event filter, and Match History are separate patterns or components.
+Outline Echo is a Player Detail exception and must not become a generic heading
+or numeric-data effect.
+
+### 7.6 Player Performance Profile
+
+Use a **Segmented Meter** for the backend-provided Points, Rebounds, and Assists
+leader-relative values:
+
+- keep the three dimensions in backend order;
+- use ten equal intervals on a `0–100` scale;
+- fill complete intervals and partially fill the next interval when required;
+- show the exact integer value without a percent symbol;
+- retain helper and accessible text explaining that the number is relative to
+  the current statistics-scope Leader;
+- render all intervals empty when the value is zero;
+- preserve the actual Player statistics in Stat Summary for context;
+- keep meter transitions functional and disable them under Reduced Motion.
+
+The Segmented Meter is read-only. It is not the editable Rating Slider and its
+numbers are not ordinary percentage-stat fields. Omitting `%` here does not
+change FG%, 3PT%, or other genuine percentage formatting.
+
+### 7.7 Player Awards History
+
+Use an **Honors Ledger** for the Player-centric cross-Event award history:
+
+- arrange awards as quiet ruled rows rather than cards or badge clusters;
+- lead with Award type and a non-color icon: Trophy for MVP, Star for First
+  Team, and Medal for Second Team;
+- follow with Event and award-time Team as supporting facts;
+- preserve the current plain-text Event and Team behavior;
+- show Notes only when present and omit the Notes row entirely otherwise;
+- use `No awards in this scope.` as the compact empty state;
+- keep every row read-only with no hover, pressed, selected, or navigation
+  treatment.
+
+Do not reuse the Event Detail MVP Award Card or All-Event Team roster cells.
+Those components describe the hierarchy inside one Event; the Honors Ledger
+records one Player's history across Events.
+
+### 7.8 Event Tier Badge Family
+
+Use a **Tournament Insignia** for Tier identity across Event list and detail
+contexts:
+
+- compose fine open rails, a central faceted medallion, the Tier letter, and
+  the Tier subtitle as one recognizable insignia;
+- keep the same anatomy in Event Summary Card and Event Detail hero;
+- use a compact list scale and a larger detail scale without changing visual
+  identity;
+- preserve the semantic mapping: S Championship Gold, A ultraviolet, B Brand
+  Mint, and C neutral gray;
+- pair color with the visible Tier letter and subtitle;
+- keep the insignia itself non-interactive;
+- in a clickable Event Summary Card, strengthen only the local trace and
+  ambient light as part of the parent card's Hover and Focus-visible response;
+- give the Detail insignia no independent Hover, Focus, Pressed, or Glow
+  behavior;
+- remove the current oversized filled-crest treatment.
+
+Tournament Insignia may reuse Dark Glass, precise edge-highlight, inset,
+divider, Glow, text, and Data typography roles, but its rails, medallion, and
+context scales remain Event-specific. Do not apply this ceremonial construction
+to ordinary Badges, Tags, or identity artwork.
+
+### 7.9 Event Summary Card
+
+Use **Insignia Rail** for Event overview cards:
+
+- preserve the current left-Tier/right-content reading model;
+- replace the oversized filled crest with a compact Tournament Insignia in a
+  dedicated left rail;
+- lead the content field with Event name, description summary, and Semantic
+  Status Edge Plate;
+- present Champion as an open ruled strip with Trophy and Championship Gold,
+  not as a nested card;
+- omit the Champion strip entirely for Preparing and Ongoing Events;
+- keep participating Team count and the destination cue in a quiet footer;
+- make the entire card the sole navigation target;
+- coordinate Hover and Focus-visible across the card and Tournament Insignia
+  without lift or scale;
+- keep Tier, Status, Champion, and footer metadata non-interactive;
+- move the Tier rail above the content only at the narrowest breakpoint.
+
+Insignia Rail reuses the shared Interactive Card and Event Tier systems. Its
+column dimensions, Champion-strip rhythm, and responsive reflow remain
+Event-specific.
+
+### 7.10 Event Player Awards
+
+Use one **Black Metal Plaque** for the complete Event Detail Player Awards
+presentation:
+
+- use a cut-corner, brushed near-black outer material with restrained edge
+  highlights and registration marks;
+- keep Player Awards and Event context in the plaque header;
+- place the full-width horizontal MVP field first;
+- use Trophy plus Championship Gold as the MVP signal while Brand Mint remains
+  a structural trace;
+- integrate the MVP field into the plaque rather than nesting another Card;
+- follow with explicit All-Event First Team and optional All-Event Second Team
+  groups;
+- render each roster as a five-cell engraved ruled grid on desktop;
+- preserve backend order and API-provided Player name, Position, and award-time
+  Team;
+- retain an inline Gold `MVP` marker when the MVP is also a roster member;
+- lower Second Team emphasis with neutral rules and supporting text;
+- omit the entire Second Team group when absent;
+- mark inactive historical Players explicitly;
+- use open content inside the plaque for the no-awards state;
+- keep the component read-only and give roster cells no interaction states;
+- reflow the five-cell rows to two columns and then one column without changing
+  award grouping.
+
+The metal grain, cut-corner frame, registration marks, and directional award
+trace are Event-awards-local roles. Do not graduate Black Metal Plaque into a
+generic Card or panel material. Exact ambient-light strength may be tuned during
+Event Detail scenario validation.
+
+### 7.11 Match Record Card
+
+Use **Scoreline Rail** for Match list cards:
+
+- keep Event, optional Compact Match Stage Badge, and formatted Match time in a
+  quiet metadata rail;
+- omit the Stage Badge entirely when no Stage exists;
+- arrange HOME identity, central score comparison, and AWAY identity in a
+  symmetrical horizontal scoreline;
+- use approved loaded Logo Artwork or Neutral Frame + Initials fallback;
+- retain restrained data-driven Team-color traces without recoloring logos;
+- identify only the higher-scoring Team with Trophy plus `Winner`;
+- strengthen the winning Team name and score while keeping the text/non-color
+  Winner signal;
+- render equal-score API data without a Winner marker;
+- make the complete card the only navigation target;
+- coordinate Hover and Focus-visible across the card using restrained local
+  Team light, without lift or scale;
+- keep every internal identity, score, Badge, and Winner signal
+  non-interactive;
+- on narrow screens, stack HOME then AWAY and place the score in its own ruled
+  row while preserving HOME/AWAY labels.
+
+The Match list API exposes valid past records only. Do not add scheduled,
+incomplete, voided, archived-Event, ResultTag, or synthetic Match-status
+content to Scoreline Rail. Equal-score rendering is defensive presentation, not
+a change to Match business rules.
+
+### 7.12 Match Detail Score Header
+
+Use **Arena Scoreline** for the read-only Match Detail hero:
+
+- keep Event, Stage, and formatted Match time in a quiet metadata rail;
+- render `—` when the optional Stage is absent, preserving the current Detail
+  requirement rather than applying the list-card omission rule;
+- arrange HOME identity, central final-score comparison, and AWAY identity in
+  one open, symmetrical field;
+- use approved loaded Logo Artwork or Neutral Frame + Initials fallback;
+- retain restrained data-driven Team-color traces without recoloring logos;
+- communicate the outcome through the numeric score and hierarchy only:
+  preserve full-strength winning score and Team name while de-emphasizing the
+  losing pair;
+- do not add Trophy or `Winner`, because it breaks symmetry and repeats
+  information already encoded by the score;
+- render defensive equal-score data with both Teams at the same visual level;
+- keep the complete hero read-only, without Hover, Focus, or Pressed behavior;
+- stack HOME, AWAY, then the ruled score row on narrow screens while preserving
+  explicit HOME/AWAY labels.
+
+For voided and historical/unavailable Event records, the header may echo the
+state with a compact marker and local trace. Full reason, recovery guidance,
+Back/Edit/Void/Restore actions, and persistent notices remain owned by the
+Detail page outside Arena Scoreline.
+
+## 8. Responsive and accessibility requirements
 
 Every reviewed component or pattern must include:
 
@@ -580,7 +870,7 @@ Every reviewed component or pattern must include:
 Hover-only affordances are insufficient because the application must remain
 usable on touch devices and with keyboard navigation.
 
-## 8. Anti-patterns
+## 9. Anti-patterns
 
 - One universal 16px card for every information type.
 - Cards nested inside cards to create hierarchy.
@@ -592,19 +882,31 @@ usable on touch devices and with keyboard navigation.
   global card style.
 - Introducing page-local literals when a confirmed shared semantic role exists.
 
-## 9. Open decisions
+## 10. Candidate-system disposition
 
-The following are intentionally unresolved until reviewed in the UI System Lab:
+The candidate passed Gate E2 with no unresolved required visual-system
+decisions. All 97 inventory items have an explicit review disposition: 91
+Approved and now Formalized, two Rejected, and four Deferred.
 
-- final surface and border values;
-- final radius scale;
-- selected versus hover treatment;
-- focus-ring composition;
-- motion duration and easing;
-- table density and row height;
-- mobile card transformations;
-- which product patterns graduate to shared components;
-- whether existing Event summary chrome should be retained or re-valued.
+The Deferred items preserve current behavior or structure:
 
-Decisions are tracked in `DECISION_LOG.md`; coverage and review status are
-tracked in `UI_INVENTORY.md`.
+- Sidebar Shell;
+- Sidebar Brand Header;
+- Main Content Shell;
+- Event Player Awards Selection Workflow.
+
+The first three are intentionally conservative because the current application
+shell is already satisfactory and its broader mobile-navigation behavior was
+not part of this visual experiment. The Awards workflow requires functional
+interaction design and belongs in a separate PR; this candidate approves only
+the visual treatment surrounding the existing behavior.
+
+The rejected Decorative Page Eyebrow and nested Team Logo Container must not be
+implemented. Historical alternatives in lab files are evidence, not candidate
+system options.
+
+`TOKEN_MAPPING.md` defines the proposed production-token contract.
+`MIGRATION_PLAN.md` records intentional exceptions, implementation impact, and
+recommended migration batches. `E6_APPROVAL_PACKET.md` is the Gate E2 review
+index. Decisions remain traceable in `DECISION_LOG.md`, and coverage remains
+traceable in `UI_INVENTORY.md`.

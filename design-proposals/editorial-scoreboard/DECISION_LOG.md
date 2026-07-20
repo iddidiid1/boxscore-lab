@@ -2176,3 +2176,1500 @@ not close the dialog or erase the consequence copy.
 
 The Foundation/Component design batches B01–B07 are complete. Prepare the next
 round boundary before beginning product-specific Pattern and Scenario work.
+
+## UI-DEC-033 — Approve Score Ledger with Open Stacks
+
+- Date: 2026-07-18
+- Inventory IDs: `TEM-PAT-001`, `TEM-PAT-002`
+- Batch: Team Pattern — Overview
+- State: Approved
+- Approved by: User
+
+### Context
+
+The first Team Pattern comparison preserved the established Teams overview
+content—Logo, name, total points, overall rating, Division grouping, and
+complete-card detail navigation—while comparing three card compositions and
+two Division Board structures.
+
+### Decision
+
+Approve:
+
+- **Score Ledger** for Team Identity Card;
+- **Open Stacks** for Division Team Board.
+
+### Reasoning
+
+Score Ledger gives total points a stable numeric column and retains the complete
+five-star rating as a separate comparison row without adding a nested Logo
+container.
+
+Open Stacks keeps Division as information hierarchy rather than another card
+shell. Each Division remains an uncontained labeled section and owns its
+responsive Team grid.
+
+### Token impact
+
+Reuse the approved `40%` Team Identity Surface, Logo/Fallback, star-rating,
+numeric typography, divider, Team-color cutline, hover, pressed, and focus
+roles. No new Division container surface is introduced.
+
+### Component and pattern impact
+
+Approve `TEM-PAT-001` and `TEM-PAT-002`. Preserve long-name truncation,
+initials fallback, complete-card navigation, and responsive one-column
+collapse.
+
+### Exceptions
+
+Teams overview contains active Teams only. Archived Team presentation belongs
+to Team Detail and historical contexts rather than this Board.
+
+### Follow-up
+
+Continue the Team Pattern round with Team Detail Identity Summary and Team
+Profile Radar.
+
+## UI-DEC-034 — Approve Unified Field for Team Detail Hero
+
+- Date: 2026-07-18
+- Inventory IDs: `TEM-PAT-003`, `TEM-CMP-001`, `TEM-CMP-002`
+- Batch: Team Pattern — Detail Hero
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Team Detail comparison preserved the existing Logo, Team name, Division,
+total points, fractional rating, description, five profile ratings, archived
+notice, Detail Back Link, and Manage Team action while comparing Balanced
+Split, Unified Field, and Editorial Stack compositions.
+
+### Decision
+
+Approve **B — Unified Field**.
+
+Use one shared Team Identity Surface for the Detail Hero. Identity content owns
+the leading region and the five-axis Team Profile owns the trailing region,
+separated by one structural divider rather than a second card shell.
+
+### Reasoning
+
+Unified Field removes the accidental impression that identity and profile are
+two unrelated peer cards. The divider keeps the Radar visually independent
+without adding another surface, while the shared field gives the entity Hero a
+single readable boundary and a stable desktop-to-mobile relationship.
+
+### Token impact
+
+Reuse the approved `40%` Team Identity Surface, edge highlight, Logo/Fallback,
+numeric typography, fractional star rating, Brand Mint visualization,
+structural divider, and responsive spacing roles. No new generic surface token
+is introduced.
+
+### Component and pattern impact
+
+Approve `TEM-PAT-003`, `TEM-CMP-001`, and `TEM-CMP-002`.
+
+- keep all five Radar values visibly labeled and accessibly described;
+- retain the Radar region when profile ratings are unavailable and show its
+  explicit no-profile message;
+- stack identity before profile on narrow screens;
+- keep the archived notice outside the Identity field and hide Manage Team for
+  archived Teams;
+- preserve Detail Back Link and existing business behavior.
+
+### Exceptions
+
+The Radar remains a dedicated visualization, not a generic Stat Summary Panel.
+The shared Identity field is specific to the Team Detail Hero and does not make
+the Team Identity Surface a default page container.
+
+### Follow-up
+
+Continue the Team Pattern round with the Team Create/Edit Identity Preview.
+
+## UI-DEC-035 — Approve Identity Proof for Team Editor Preview
+
+- Date: 2026-07-18
+- Inventory IDs: `TEM-PAT-004`
+- Batch: Team Pattern — Create/Edit Preview
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Team Create/Edit comparison preserved the live Logo/Initials, Team name,
+Division, overall rating, and primary-color feedback while comparing Specimen
+Labels, Identity Proof, and Verification Ledger across complete, empty-draft,
+and broken-logo states.
+
+### Decision
+
+Approve **B — Identity Proof**.
+
+Use one live identity composition inside the approved Open Well rather than
+repeating each edited field as an independently labeled preview row.
+
+### Reasoning
+
+Identity Proof lets the editor evaluate whether Logo, name, Division, rating,
+and Team color work together as an identity. It remains clearly a draft preview
+without duplicating the final Team Card or turning the preview into a second
+form inspector.
+
+### Token impact
+
+Reuse the approved Open Well, Logo Artwork / Neutral Frame + Initials fallback,
+fractional star rating, data-driven Team-color cutline, strong/default/muted
+text, and responsive spacing roles. No new generic preview surface is added.
+
+### Component and pattern impact
+
+Approve `TEM-PAT-004`.
+
+- update the identity proof live as draft values change;
+- use `New Team`, `No division selected`, zero rating, and initials fallback for
+  an empty draft;
+- replace missing or broken Logo artwork with the approved fallback without
+  changing the preview geometry;
+- stack Logo before identity content on narrow screens;
+- keep submission and validation behavior outside the preview.
+
+### Exceptions
+
+The Identity Proof is an editor preview, not a detail Hero and not a clickable
+Team Card. It does not inherit hover, pressed, navigation, points, or Radar
+behavior from those patterns.
+
+### Follow-up
+
+The Team-specific Pattern round is complete. Continue with the Player Overview
+Statistic Leader Card Set.
+
+## UI-DEC-036 — Preserve Current Leader Card Composition and Revise Its Surface
+
+- Date: 2026-07-18
+- Inventory IDs: `PLY-PAT-001`, `PLY-CMP-001`
+- Batch: Player Pattern — Overview Leader Cards
+- State: Revise
+- Approved by: User
+
+### Context
+
+The first Leader Card comparison proposed Scoreplate, Split Ledger, and Signal
+Field compositions. The user found all three weaker than the current product
+composition and identified the actual deficiencies as the current container
+material and missing Hover treatment.
+
+### Decision
+
+Reject all three first-round content compositions.
+
+Preserve the current internal hierarchy exactly:
+
+1. Crown plus statistic label;
+2. large category-colored value;
+3. Player name;
+4. Team name.
+
+Revise only the container material and non-clickable Hover response.
+
+### Reasoning
+
+The current structure already presents the leader and its statistic with an
+effective sports-console hierarchy. Changing that hierarchy solved no product
+problem and weakened the cards. The remaining work is a narrower material and
+state decision.
+
+### Token impact
+
+Retain the four dedicated statistic-category accent roles and existing
+typography hierarchy. Explore only pattern-level surface, edge highlight,
+category wash, Hover overlay, and transition roles; do not introduce new
+content-layout tokens.
+
+### Component and pattern impact
+
+Keep `PLY-PAT-001` and `PLY-CMP-001` in `Revise`. Preserve the four/two/one
+column responsive set, explicit no-eligible fallback, equal card geometry,
+default cursor, and absence of click, focus, pressed, selected, and navigation
+behavior.
+
+### Follow-up
+
+Compare revised container materials around the unchanged current composition,
+including default and Hover states.
+
+### Revision feedback
+
+The user preferred **B — Frosted Depth** but requested a stronger category Glow.
+Keep Frosted Depth's surface brightness, edge treatment, current content
+composition, and Hover behavior fixed while comparing stronger ambient and
+Crown Glow levels.
+
+## UI-DEC-037 — Approve Frosted Depth with Strong Glow for Leader Cards
+
+- Date: 2026-07-18
+- Inventory IDs: `PLY-PAT-001`, `PLY-CMP-001`
+- Batch: Player Pattern — Overview Leader Cards
+- State: Approved
+- Approved by: User
+
+### Context
+
+After preserving the current Leader Card composition, the revised surface
+comparison identified Frosted Depth as the preferred shell. A focused tuning
+round then compared Balanced+, Strong, and Vivid category Glow levels in
+default and Hover states.
+
+### Decision
+
+Approve:
+
+- **Frosted Depth** as the Statistic Leader Card material;
+- **B — Strong** as its category Glow level.
+
+Retain the current Crown + statistic label, large category-colored value,
+Player name, and Team name composition.
+
+### Reasoning
+
+Strong Glow gives each statistic category a clearly recognizable atmosphere
+without reaching the neon-like dominance of Vivid. Frosted Depth improves the
+container quality while retaining the content hierarchy that already works in
+the current product.
+
+### Token impact
+
+Add four purpose-specific Leader category accents and derived Strong ambient
+Glow / Crown halo roles. Reuse the approved edge-highlight glass, text,
+typography, radius, and `160ms` transition roles. The Hover overlay increases
+local category light without changing geometry.
+
+### Component and pattern impact
+
+Approve `PLY-PAT-001` and `PLY-CMP-001`.
+
+- keep equal card geometry and four/two/one-column responsive flow;
+- keep explicit category labels and dedicated category colors;
+- preserve `0.0` plus `No eligible players` when no leader exists;
+- strengthen category ambient light and Crown halo on Hover;
+- keep the default cursor and omit click, focus, pressed, selected, and
+  navigation behavior;
+- do not lift or scale the cards.
+
+### Exceptions
+
+The stronger Glow is restricted to these four feature cards. It does not
+promote category Glow, Crown halo, or saturated ambient fields to generic panel
+or card defaults.
+
+### Follow-up
+
+Continue the Player Pattern round with Player Detail Identity.
+
+## UI-DEC-038 — Approve Number Masthead with Outline Echo
+
+- Date: 2026-07-18
+- Inventory IDs: `PLY-PAT-002`
+- Batch: Player Pattern — Detail Identity
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Player Detail Identity comparison preserved Player name, jersey number,
+Position, current Team, Detail Back Link, and independently combinable
+inactive-Player / archived-Team states while comparing Accent Rail, Roster
+Ledger, and Number Masthead. The user preferred Number Masthead but requested a
+larger, heavier special number treatment without a redundant Jersey label.
+
+A focused Anton Display comparison then evaluated Monument Solid, Team Core,
+and Outline Echo.
+
+### Decision
+
+Approve:
+
+- **Number Masthead** as the Player Detail Identity composition;
+- **C — Outline Echo** as the jersey-number treatment.
+
+Render an oversized Anton Display `#number` with a restrained Team-color offset
+shadow and outline echo. Do not place a Jersey label above it.
+
+### Reasoning
+
+The number becomes a genuine Player identity mark rather than another labeled
+metadata value. Outline Echo adds the requested sports-poster character and
+visual impact while the open Masthead keeps the Player name, Team, and Position
+readable and structurally separate.
+
+### Token impact
+
+Reuse Anton Display, strong foreground, data-driven Team color, structural
+divider, Detail Back Link, and status roles. Add pattern-local Outline Echo and
+offset-shadow treatments; do not promote them to generic typography or card
+tokens.
+
+### Component and pattern impact
+
+Approve `PLY-PAT-002`.
+
+- place the oversized `#number` before the Player name in reading order;
+- omit the Jersey label;
+- show Team and Position as explicit facts;
+- retain independently combinable Inactive Player and Archived Team status
+  markers;
+- preserve the Back to Players link;
+- stack the number before identity facts on narrow screens;
+- keep Awards, Performance Bars, Stat Summary, Event filter, and Match History
+  outside this Identity pattern.
+
+### Exceptions
+
+Outline Echo is restricted to the Player Detail jersey-number identity mark.
+It is not a generic heading effect, a Team identity treatment, or a reusable
+data-value default.
+
+### Follow-up
+
+Continue the Player Pattern round with Player Performance Profile.
+
+## UI-DEC-039 — Approve Segmented Meter for Player Performance Profile
+
+- Date: 2026-07-18
+- Inventory IDs: `PLY-PAT-003`
+- Batch: Player Pattern — Performance Profile
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Player Performance Profile comparison preserved the backend-provided
+Points, Rebounds, and Assists `0–100` values while comparing Luminous Rail,
+Segmented Meter, and Benchmark Line. Every candidate included mixed and all-zero
+states plus visible and accessible values.
+
+### Decision
+
+Approve **B — Segmented Meter**.
+
+Use ten visible intervals with a partially filled final interval when required.
+Display the numeric value without a percent symbol, for example `84`, `67`, and
+`92`.
+
+### Reasoning
+
+Segmented Meter provides the strongest sports-console reading and keeps the
+three dimensions immediately comparable. Omitting `%` avoids presenting the
+derived leader-relative score as an ordinary percentage statistic even though
+its backend calculation is proportional.
+
+### Token impact
+
+Reuse the approved inset track, Brand Mint visualization, Glow, divider,
+numeric typography, and `220ms` visualization-transition roles. Add
+pattern-local segment gap, filled, partial, and empty interval roles.
+
+### Component and pattern impact
+
+Approve `PLY-PAT-003`.
+
+- retain Points, Rebounds, and Assists in the backend-provided order;
+- render each value on a `0–100` ten-segment scale;
+- show the exact integer without `%`;
+- describe the value as “relative to the current scope leader” in helper and
+  accessible text;
+- render all intervals empty for zero;
+- preserve the actual statistics elsewhere in Stat Summary for context;
+- keep the visualization read-only and distinct from Rating Slider.
+
+### Exceptions
+
+These numbers are leader-relative profile values, not percentage-stat fields.
+The no-percent-symbol rule does not change FG%, 3PT%, or other real percentage
+display conventions.
+
+### Follow-up
+
+Continue the Player Pattern round with Player Awards History.
+
+## UI-DEC-040 — Approve Honors Ledger for Player Awards History
+
+- Date: 2026-07-18
+- Inventory IDs: `PLY-PAT-004`
+- Batch: Player Pattern — Awards History
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Player Awards History comparison preserved award type, Event, award-time
+Team, optional Notes, multiple-event history, and the explicit no-awards state
+while comparing Honors Ledger, Award Index, and Event Stamps.
+
+### Decision
+
+Approve **A — Honors Ledger**.
+
+Use quiet ruled rows. Lead each record with its award type and a non-color
+award icon, then show Event and award-time Team as supporting facts. Notes are
+optional and their row is omitted entirely when no note exists.
+
+### Reasoning
+
+Honors Ledger is the clearest Player-centric record of honors across Events.
+It stays dense and historical without turning each award into another card or
+borrowing the more ceremonial MVP and All-Event Team compositions used on
+Event Detail.
+
+### Token impact
+
+Reuse the approved section divider, quiet table/ledger rules, Strong and Muted
+text roles, data typography, and achievement icon/color roles. Add no new
+generic surface or badge token.
+
+### Component and pattern impact
+
+Approve `PLY-PAT-004`.
+
+- preserve Award type, Event, and award-time Team for every record;
+- use Trophy for MVP, Star for First Team, and Medal for Second Team so award
+  meaning does not depend on color;
+- retain current plain Event and Team text behavior rather than introducing
+  navigation;
+- omit the Notes row when Notes are absent;
+- use `No awards in this scope.` for the compact empty state;
+- keep the ledger read-only and do not add row hover, pressed, selected, or
+  navigation affordances;
+- do not reuse Event Detail MVP Award Card or All-Event Team roster cells.
+
+### Exceptions
+
+The ledger is a Player Detail cross-Event history. Event Detail remains free to
+present one Event's MVP and All-Event Teams with a more ceremonial hierarchy.
+
+### Follow-up
+
+The Player-specific Pattern round is complete. Continue the Event Pattern round
+with Event Tier Badge Family.
+
+## UI-DEC-041 — Approve Tournament Insignia for Event Tier Badge Family
+
+- Date: 2026-07-18
+- Inventory IDs: `EVT-CMP-001`
+- Batch: Event Pattern — Tier Badge Family
+- State: Approved
+- Approved by: User
+
+### Context
+
+The first Event Tier comparison established the possible relationship between
+the list-card and detail-hero treatments but was judged insufficiently refined.
+The revision retained the product's near-black glass, precise edge highlights,
+weak radii, and restrained motion while comparing Faceted Seal, Tournament
+Insignia, and Prism Monogram.
+
+Every candidate preserved Tier letter and subtitle, the current S/A/B/C accent
+mapping, both list and detail contexts, and parent-card-only Hover behavior in
+the list.
+
+### Decision
+
+Approve **B — Tournament Insignia**.
+
+Use one recognizable open insignia structure in both contexts: fine structural
+rails, a central faceted medallion, the Tier letter, and its subtitle. The list
+version is compact; the detail version receives more scale and breathing room
+without changing identity.
+
+### Reasoning
+
+Tournament Insignia adds ceremony and refinement through internal structure
+rather than stronger card borders, excessive glow, or unrelated ornament. It
+is more distinctive than the restrained first pass while remaining compatible
+with the approved Editorial Scoreboard language.
+
+### Token impact
+
+Reuse the approved Dark Glass, precise edge-highlight, inset, divider, Glow,
+Strong/Muted text, and Data typography roles. Preserve the existing semantic
+Tier accent mapping:
+
+- S — Championship Gold;
+- A — ultraviolet;
+- B — Brand Mint;
+- C — neutral gray.
+
+Add pattern-local roles for the open rails, faceted medallion edge, restrained
+ambient Tier trace, and list/detail scale. These are not generic Badge tokens.
+
+### Component and pattern impact
+
+Approve `EVT-CMP-001`.
+
+- keep Tier letter and subtitle as the non-color identity signal;
+- use the same insignia anatomy in Event Summary Card and Event Detail hero;
+- allow context-specific dimensions and spacing without creating two unrelated
+  components;
+- keep the Tier component itself non-interactive;
+- in Event Summary Card, strengthen only the local trace and ambient light when
+  the clickable parent card is hovered or keyboard-focused;
+- do not add independent cursor, hover, pressed, selected, or focus behavior;
+- do not animate or glow the Detail insignia independently;
+- remove the current oversized filled-crest assumption.
+
+### Exceptions
+
+The ceremonial internal construction is restricted to Event Tier identity. It
+must not become the default treatment for status badges, Result/Stage Tags, or
+entity logos.
+
+### Follow-up
+
+Continue the Event Pattern round with Event Summary Card.
+
+## UI-DEC-042 — Approve Insignia Rail for Event Summary Card
+
+- Date: 2026-07-19
+- Inventory IDs: `EVT-PAT-002`
+- Batch: Event Pattern — Summary Card
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Event Summary Card comparison preserved Event name, description summary,
+Tier, status, participating Team count, optional Champion, and whole-card
+navigation while comparing Insignia Rail, Editorial Bracket, and Outcome Deck.
+Preparing, Ongoing, and Completed states were tested alongside parent-card
+Default, Hover, and Focus-visible behavior.
+
+### Decision
+
+Approve **A — Insignia Rail**.
+
+Retain the current left-Tier/right-content reading model but replace the
+oversized filled crest with the approved Tournament Insignia. Use an open
+Champion strip and a quiet metadata footer inside the content field.
+
+### Reasoning
+
+Insignia Rail preserves the strongest part of the current composition while
+improving density, material quality, and state behavior. Tier remains
+immediately recognizable, the Event title stays dominant, and Champion can
+appear or disappear without leaving an empty nested card.
+
+### Token impact
+
+Reuse the approved Interactive Card shell, Tournament Insignia, Semantic Status
+Edge Plate, Championship Gold, divider, Dark Glass, Focus, and motion roles.
+Add only pattern-local grid dimensions and Champion-strip spacing.
+
+### Component and pattern impact
+
+Approve `EVT-PAT-002`.
+
+- place the compact Tournament Insignia in a dedicated left rail;
+- keep name, description, and Semantic Status in the primary content heading;
+- render Champion as an open ruled strip with Trophy plus Championship Gold;
+- omit the entire Champion strip for Preparing and Ongoing Events;
+- preserve `participatingTeamCount` in the quiet footer;
+- preserve whole-card navigation and a stable accessible destination label;
+- coordinate Hover and Focus-visible across the card and Tier Insignia;
+- do not add independent interactions to the Tier, Champion, status, or footer;
+- stack the Tier rail above content only at the narrowest breakpoint.
+
+### Exceptions
+
+The dedicated Tier rail is specific to Event Summary Card and does not change
+generic Interactive Card anatomy.
+
+### Follow-up
+
+Continue the Event Pattern round with Event Player Awards Presentation.
+
+## UI-DEC-043 — Reject first Event Player Awards composition set
+
+- Date: 2026-07-19
+- Inventory IDs: `EVT-PAT-001`, `EVT-CMP-002`, `EVT-CMP-003`
+- Batch: Event Pattern — Player Awards Presentation
+- State: Revise
+- Approved by: User
+
+### Context
+
+The first comparison applied the established MVP-first hierarchy to Spotlight
+Ledger, Crownline, and Honors Board. All three preserved the required award
+data and states but remained visually unsatisfactory.
+
+### Decision
+
+Reject all three first-pass presentation candidates.
+
+Preserve the business and information structure, but stop varying the roster
+composition. Explore materially different outer-container treatments around one
+stable MVP/First Team/Second Team hierarchy.
+
+### Retained requirements
+
+- MVP remains the strongest award and precedes both roster groups;
+- First Team and optional Second Team remain explicit groups;
+- desktop keeps five equal cells in backend order;
+- every award preserves Player name, API-provided Position, and award-time Team;
+- an MVP repeated in a roster keeps the inline Gold Trophy/MVP marker;
+- inactive historical Players remain explicit;
+- Second Team omission and the open no-awards state remain valid;
+- Brand Mint remains structural while Gold is restricted to MVP signals.
+
+### Rejected directions
+
+- Spotlight Ledger;
+- Crownline;
+- Honors Board.
+
+Their names and compositions must not be treated as approved candidate-system
+language.
+
+### Follow-up
+
+Compare Trophy Case, Black Metal Plaque, and Aurora Showcase container materials
+around one stable awards layout.
+
+## UI-DEC-044 — Approve Black Metal Plaque for Event Player Awards
+
+- Date: 2026-07-19
+- Inventory IDs: `EVT-PAT-001`, `EVT-CMP-002`, `EVT-CMP-003`
+- Batch: Event Pattern — Player Awards Presentation
+- State: Approved
+- Approved by: User
+
+### Context
+
+After rejecting the first composition set, the revision held the MVP,
+First Team, and Second Team hierarchy constant and compared Trophy Case, Black
+Metal Plaque, and Aurora Showcase as single outer-container materials.
+
+### Decision
+
+Approve **B — Black Metal Plaque**.
+
+Use one cut-corner, brushed near-black plaque for the complete Player Awards
+section. Integrate the MVP and both roster groups through engraved rules and
+material hierarchy rather than nested cards.
+
+Exact ambient-light strength remains tunable during Event Detail scenario
+validation; the Black Metal material decision does not require a globally fixed
+Rich lighting value.
+
+### Reasoning
+
+Black Metal Plaque gives the Event honors a dedicated, ceremonial identity
+without introducing a bright glass field or a broad multicolor gradient. Its
+harder geometry fits the sports-console language, and one continuous material
+keeps ten roster cells from reading as a collection of cheap mini-cards.
+
+### Token impact
+
+Reuse near-black Surface, precise Edge Highlight, Strong/Muted text, Brand
+Mint, Championship Gold, neutral divider, and Data typography roles. Add
+Event-awards-local roles for:
+
+- brushed metal grain;
+- restrained cut-corner frame;
+- engraved internal rule;
+- plaque corner registration marks;
+- MVP Gold/Mint directional trace.
+
+These roles do not create a general-purpose metal Card material.
+
+### Component and pattern impact
+
+Approve `EVT-PAT-001`, `EVT-CMP-002`, and `EVT-CMP-003`.
+
+- use one Black Metal Plaque as the section's only container;
+- keep the Section title inside the plaque header;
+- place the full-width horizontal MVP field first;
+- make Trophy plus Gold the MVP's non-color/semantic signal while Brand Mint
+  remains structural;
+- do not place the MVP inside a nested Card;
+- render First Team and optional Second Team as engraved five-cell ruled grids;
+- retain API order and visible Player name, Position, and award-time Team;
+- retain an inline Gold `MVP` marker when the MVP is repeated in a roster;
+- reduce Second Team emphasis through neutral rules and supporting text;
+- omit the complete Second Team group when absent;
+- preserve an explicit Inactive historical marker;
+- use open content inside the same plaque for the no-awards state;
+- keep the complete presentation read-only with no Hover, Focus, Pressed,
+  Selected, or navigation behavior on cells.
+
+### Exceptions
+
+Black Metal Plaque is a restricted Event Player Awards feature material. It
+must not become the default container for Event panels, tables, Team/Player
+cards, or generic achievement/status content.
+
+### Follow-up
+
+The inventoried Event-specific Patterns are complete. Continue with Match Record
+Card in the Match Pattern round.
+
+## UI-DEC-045 — Approve Scoreline Rail for Match Record Card
+
+- Date: 2026-07-20
+- Inventory IDs: `MAT-PAT-001`
+- Batch: Match Pattern — Record Card
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Match Record Card comparison preserved the actual `MatchListItem` contract:
+Event, optional Stage Tag, `playedAt`, HOME/AWAY Team identity, API-provided
+scores, and whole-card navigation. It compared Scoreline Rail, Team Ledger, and
+Center Court across HOME win, AWAY win, equal-score data, optional Stage, narrow
+reflow, Hover, and Focus-visible.
+
+Repository and PRD review also confirmed that Match list results contain only
+valid past Match records. Voided Match history and archived/deleted Event
+history are excluded from the list, and `MatchListItem` contains no ResultTag.
+
+### Decision
+
+Approve **A — Scoreline Rail**.
+
+Preserve the current symmetrical HOME/score/AWAY composition while adding the
+approved Team identity treatment, explicit Winner signal, clearer metadata
+rail, and coordinated whole-card interaction.
+
+### Reasoning
+
+Scoreline Rail retains the strongest part of the current Match card: direct
+left-to-right score comparison. It improves identity and outcome recognition
+without making every list item as tall as a detail scoreboard or weakening the
+two-Team comparison into unrelated rows.
+
+### Token impact
+
+Reuse the Interactive Card shell, Logo Artwork / Initials Fallback, Team-color
+exception, Compact Match Stage Badge, Championship Gold/Trophy, score/data
+typography, divider, Focus, and restrained ambient-light roles. Add only
+pattern-local scoreline grid and narrow-stack dimensions.
+
+### Component and pattern impact
+
+Approve `MAT-PAT-001`.
+
+- place Event, optional Compact Stage Badge, and formatted `playedAt` in the
+  metadata rail;
+- omit Stage entirely when absent rather than rendering a placeholder;
+- place HOME identity left, the score comparison centrally, and AWAY identity
+  right;
+- use approved loaded Logo Artwork or Neutral Frame + Initials fallback;
+- retain data-driven Team-color traces without recoloring artwork;
+- mark only the higher-scoring Team with Trophy plus `Winner`;
+- strengthen the winning Team name and score without relying on color alone;
+- show no Winner marker when equal-score data is returned;
+- make the whole card the sole navigation target;
+- coordinate Hover and Focus-visible across the card with restrained local Team
+  light, without lift or scale;
+- keep Team identity, score, metadata, and Winner markers non-interactive;
+- on narrow screens, stack HOME then AWAY while preserving roles and place the
+  score comparison in a separate ruled row;
+- do not invent scheduled/incomplete, voided, archived-Event, ResultTag, or
+  Match-status content for the list card.
+
+### Exceptions
+
+The symmetrical scoreline is Match-specific and does not redefine generic
+Interactive Card content alignment. Equal-score rendering is a resilient API
+state, not a new business rule permitting tied basketball games.
+
+### Follow-up
+
+Continue the Match Pattern round with Match Detail Score Header.
+
+## UI-DEC-046 — Approve Arena Scoreline for Match Detail Score Header
+
+- Date: 2026-07-20
+- Inventory IDs: `MAT-PAT-002`
+- Batch: Match Pattern — Detail Score Header
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Match Detail comparison tested Arena Scoreline, Score Bridge, and Broadcast
+Ledger using the actual Detail contract: Event, optional Stage, `playedAt`,
+HOME/AWAY Team identity, final scores, voided records, historical/unavailable
+Events, logo fallback, defensive equal-score data, and narrow reflow.
+
+Detail-page Back/Edit/Void/Restore actions and full persistent notices are
+outside `MatchScoreHeader`, so the pattern review did not move them into the
+hero.
+
+### Decision
+
+Approve **A — Arena Scoreline**, with the explicit Winner signal removed.
+
+Use a symmetrical HOME/score/AWAY open field beneath the metadata rail. Express
+the result through the numeric comparison plus full-strength winning score and
+Team name against a de-emphasized losing pair.
+
+### Reasoning
+
+Arena Scoreline preserves the direct comparison and visual balance already
+appropriate to Match Detail while giving it more ceremony than the list card.
+An additional Trophy/`Winner` marker duplicated the information in the score
+and visibly broke the two-sided symmetry. The larger numeric score remains a
+non-color outcome signal, so the explicit label is unnecessary.
+
+### Token impact
+
+Reuse the Dark Glass detail surface, Logo Artwork / Initials Fallback,
+Team-color exception, score/data typography, divider, muted-text, Compact Stage,
+and existing status-feedback roles. No new Winner token is introduced.
+
+### Component and pattern impact
+
+Approve `MAT-PAT-002`.
+
+- retain Event, Stage, and time in the metadata rail;
+- render missing Stage as `—` in Detail;
+- place HOME identity left, score centrally, and AWAY identity right;
+- use loaded Logo Artwork or Neutral Frame + Initials fallback;
+- keep the winning score and Team name at full strength;
+- de-emphasize the losing score and Team name;
+- keep both sides level for equal-score data;
+- omit Trophy and `Winner`;
+- keep the hero read-only;
+- allow only compact Voided/Historical state echoes in the hero;
+- keep full notices and all page actions outside the hero;
+- stack HOME, AWAY, then score at narrow widths without losing role labels.
+
+### Exceptions
+
+The Match Record Card retains its previously approved Trophy plus `Winner`
+signal because list scanning and whole-card interaction create a different
+context. The Detail hero intentionally uses the score itself and does not revise
+that list-card decision.
+
+### Follow-up
+
+The inventoried product-specific Pattern round is complete. Begin representative
+page Scenario validation with Teams Overview.
+
+## UI-DEC-047 — Validate Teams Overview page composition
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-001`, `NAV-PAT-001`, `LAY-PAT-001`
+- Batch: E5 Scenario Validation — Teams Overview
+- State: Approved
+- Approved by: User
+
+### Context
+
+The first E5 scenario combined the current minimally revised Sidebar, no-eyebrow
+Functional Page Header, Create Team action, approved Open Division Stacks,
+Score Ledger Team Identity Cards, and Normal/Loading/Empty/Error page states.
+It also preserved the current two-column Division board and narrow one-column
+collapse.
+
+### Decision
+
+Approve the Teams Overview composition as a representative Overview/List-page
+scenario.
+
+### Validation result
+
+- page title, description, and Create action establish a clear first level;
+- Division remains open information hierarchy rather than a repeated container;
+- Team Identity Cards remain the only repeated card surface;
+- page-level loading, empty, and error states replace the board without creating
+  nested chrome;
+- the existing desktop Sidebar does not compete with the page header;
+- narrow content reflow is viable, while the current hidden-mobile-Sidebar
+  behavior remains a separate application-shell question.
+
+This validates the Teams instance but does not yet approve every Overview/List
+page or close `PAG-PAT-001`.
+
+### Follow-up
+
+Continue E5 with Team Detail.
+
+## UI-DEC-048 — Validate Team Detail page composition
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-002`, `TEM-PAT-003`, `DAT-CMP-001`,
+  `TBL-CMP-001`
+- Batch: E5 Scenario Validation — Team Detail
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Team Detail scenario combined Detail Back Link and Manage Team action,
+archived Edge Signal, the approved Unified Field Team Hero, Ruled Grid Team
+Summary, Roster Data Bay, and Active/Archived/No-profile/Empty-roster states.
+It also tested the identity-first narrow reflow and local table overflow.
+
+### Decision
+
+Approve the Team Detail composition as a representative Detail-page scenario.
+
+### Validation result
+
+- navigation/actions remain outside entity identity and do not compete with it;
+- the archived notice remains page-owned and does not alter Logo/Fallback;
+- one Unified Field keeps identity and Radar related without nested cards;
+- Team Summary forms a quieter second-level data region;
+- Roster Data Bay remains the densest lower module and owns local overflow;
+- no-profile and empty-roster states preserve module positions;
+- the identity, Radar, Summary, and Roster reflow without changing meaning.
+
+This validates the Team instance but does not yet approve every Detail page or
+close `PAG-PAT-002`.
+
+### Follow-up
+
+Continue E5 with Team Create/Edit.
+
+## UI-DEC-049 — Validate Team Create/Edit page composition
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-003`, `TEM-PAT-004`, `FRM-CMP-001`–`FRM-CMP-006`,
+  `TBL-CMP-001`
+- Batch: E5 Scenario Validation — Team Create/Edit
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Team editor scenario combined Create and Edit modes with one no-eyebrow
+Functional Page Header, Save/Create and Cancel actions, Editorial Outline form
+sections, the approved Open Well Identity Proof, five Profile Rating Sliders,
+Player Management table/actions, and the Edit-only Archive section. It tested
+Default, Validation, Submitting, Archived/read-only, and narrow states.
+
+### Decision
+
+Approve the Team Create/Edit composition as the first representative editor-page
+scenario.
+
+### Validation result
+
+- Create and Edit share one page hierarchy while changing only mode-specific
+  copy and the Archive section;
+- page actions remain in the header rather than being repeated per section;
+- Editorial Outline separates work areas without making every field a card;
+- Identity Proof stays a non-interactive draft preview inside the Basic Info
+  section;
+- Profile Rating rows preserve labels, controls, and exact values;
+- Player Management remains a bounded workflow with compact row actions;
+- validation remains associated with fields/roster and submission keeps the
+  layout stable;
+- archived Edit mode becomes read-only and does not invent a Create equivalent;
+- narrow layouts stack actions, form/proof, sliders, and dense data safely.
+
+This validates the Team editor instance but does not yet approve every
+Create/Edit page or close `PAG-PAT-003`.
+
+### Follow-up
+
+Continue E5 with Players Overview.
+
+## UI-DEC-050 — Validate Players Overview page composition
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-001`, `FLT-CMP-001`, `PLY-PAT-001`,
+  `TBL-CMP-001`, `PGN-CMP-001`
+- Batch: E5 Scenario Validation — Players Overview
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Players Overview scenario combined the no-eyebrow Functional Page Header,
+Event → Team → Position filtering, four approved Frosted Depth Leader Cards,
+Ranking Data Bay, sorting, local table overflow, integrated pagination, and
+Normal/Loading/Empty/retained-data Refresh Error states.
+
+During review, the Filter Bar boundary was reconsidered. The existing
+UI-DEC-013 decision remains: filtering needs one visible shared region, but it
+must read as a weak edge-highlight Dark Glass grouping rather than a formal Card
+equal to Leader or Data surfaces.
+
+### Decision
+
+Approve the Players Overview composition.
+
+### Validation result
+
+- the Filter Bar communicates one cascading control scope without per-field
+  mini-cards;
+- the filter boundary remains weaker than Leader Cards and Ranking Data Bay;
+- the four Strong Glow Leader Cards remain the page's feature emphasis without
+  replacing the authoritative ranking table;
+- Leader Cards remain fixed and show `0.0` plus `No eligible players` for empty
+  candidate sets;
+- Ranking Data Bay owns sorting, compact rows, local overflow, and pagination;
+- Loading/Empty/Refresh Error states preserve the newest valid query and content
+  hierarchy;
+- the four/two/one Leader grid and stacked Filter controls remain usable at
+  narrow widths.
+
+This is the second accepted Overview/List instance; `PAG-PAT-001` remains open
+until Event and Match Overview scenarios are checked.
+
+### Follow-up
+
+Continue E5 with Player Detail.
+
+## UI-DEC-051 — Validate Player Detail page composition
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-002`, `PLY-PAT-002`, `PLY-PAT-003`,
+  `PLY-PAT-004`, `DAT-CMP-001`, `TBL-CMP-001`, `PGN-CMP-001`,
+  `FLT-CMP-001`
+- Batch: E5 Scenario Validation — Player Detail
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Player Detail scenario combined the approved Number Masthead and Outline
+Echo, independent inactive-player and archived-Team markers, a quiet Honors
+Ledger, Segmented Performance Profile, weak Event filter region, six-cell
+Ruled Grid Stat Summary, Match History Data Bay, and pagination. It also
+compared Active, Inactive, Archived Team, unavailable-scope, and empty-history
+states.
+
+### Decision
+
+Tentatively approve the Player Detail composition as the representative Player
+instance of the Detail Page Pattern. It may be revisited if later Event or
+Match scenarios reveal a system-wide density problem.
+
+### Validation result
+
+- Number Masthead leads Player identity without introducing an Overview-style
+  page title;
+- Awards remain a quiet ruled ledger inside the identity field rather than
+  becoming another equal-weight Card;
+- Performance Profile is a peer to identity and preserves leader-relative
+  semantics with exact values and no percent symbol;
+- the Event filter remains a weak visible region rather than a formal Card;
+- Stat Summary and Match History descend clearly from the two-part identity
+  Hero;
+- unavailable scope retains identity, awards, and filtering while displaying
+  zero or unavailable statistics and an empty history;
+- inactive Player and archived Team remain independent states;
+- narrow layouts preserve identity, profile, filter, summary, and history
+  reading order.
+
+`PAG-PAT-002` remains open until Event and Match Detail scenarios are checked.
+
+### Follow-up
+
+Continue E5 with Events Overview.
+
+## UI-DEC-052 — Validate Events Overview page composition
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-001`, `EVT-PAT-002`, `EVT-CMP-001`,
+  `STA-CMP-001`, `FDB-CMP-002`, `FDB-CMP-004`, `FDB-CMP-005`
+- Batch: E5 Scenario Validation — Events Overview
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Events Overview scenario combined the no-eyebrow Functional Page Header
+and Create action with two-column Insignia Rail Event Cards. Its normal state
+displayed Preparing, Ongoing, and Completed Events together, including the
+Completed-only Champion strip, participating-Team count, destination cue, and
+parent-card interaction. Loading, first-use Empty, Error/Retry, and narrow
+layouts were also represented.
+
+### Decision
+
+Approve the Events Overview composition.
+
+### Validation result
+
+- the shared Tournament Insignia anatomy remains recognizable at compact list
+  scale without becoming a filled crest;
+- Event name, description, and Status remain the primary information field;
+- Champion appears only for Completed Events as an open Trophy/Gold ruled
+  strip;
+- Team count and destination remain quiet footer metadata;
+- whole-card Hover and Focus-visible strengthen only the local Tier response
+  without lift or scale;
+- Loading preserves approximate card geometry, while Empty and Error remain
+  open page content rather than substitute Cards;
+- the two-column grid becomes one column before the Tier rail stacks above the
+  content at the narrowest width.
+
+This is the third accepted Overview/List instance; `PAG-PAT-001` remains open
+until Match Overview is checked.
+
+### Follow-up
+
+Continue E5 with Event Detail.
+
+## UI-DEC-053 — Validate Event Detail page composition
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-002`, `EVT-CMP-001`, `SUR-CMP-003`,
+  `TAG-CMP-002`, `TAG-CMP-003`, `TBL-CMP-001`, `TBL-CMP-006`,
+  `EVT-PAT-001`
+- Batch: E5 Scenario Validation — Event Detail
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Event Detail scenario combined Detail Back and entity/workflow actions,
+archived-state signaling, a large Tournament Insignia hero, Event identity and
+Champion facts, Participants, Stage and Result Tags, Final Team Results, and
+the Black Metal Player Awards Plaque. Completed, Ongoing, Archived, Loading,
+and Not-found states were checked.
+
+The first composition placed Participants beside a vertical stack of Stage and
+Result Tag panels. Review exposed a cardinality mismatch: real Events commonly
+contain 16 Teams while each Tag group is comparatively small, so equal columns
+would create unstable height and large dead space.
+
+### Decision
+
+Approve Event Detail with a full-width Participants ruled roster followed by
+two compact peer Tag sections. Do not place high-cardinality Participants and
+low-cardinality Tags in equal-height parallel columns.
+
+### Validation result
+
+- the larger Tournament Insignia preserves the same anatomy as the list
+  version without adding independent interaction;
+- Event name, status, description, participant count, and optional Champion
+  form one coherent Detail identity field;
+- 16 representative Teams fit a full-width four-column ruled roster, reducing
+  to two and one columns on narrower layouts;
+- Stage and Result Tags follow Participants as compact peer sections rather
+  than controlling its height;
+- Final Results retains the shared Data Bay and Championship Gold Winner row;
+- Black Metal Plaque remains a single restricted feature material with MVP,
+  First Team, optional Second Team, inactive history, and open empty state;
+- Ongoing removes final Champion/results/awards content without collapsing the
+  rest of the Event identity;
+- Archived, Loading, and Not-found states preserve the established Detail Page
+  hierarchy.
+
+`PAG-PAT-002` remains open until Match Detail is checked.
+
+### Follow-up
+
+Continue E5 with Event Create/Edit.
+
+## UI-DEC-054 — Validate Event Create/Edit page composition
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-003`, `ACT-CMP-001`, `ACT-CMP-002`,
+  `ACT-CMP-003`, `ACT-CMP-004`, `ACT-CMP-006`, `ACT-CMP-007`,
+  `FRM-CMP-001`, `FRM-CMP-004`, `TAG-CMP-002`, `TAG-CMP-003`
+- Batch: E5 Scenario Validation — Event Create/Edit
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Event Create/Edit scenario combined the Functional Page Header, Event
+identity fields, realistic 16-Team participation selection, Match Stage Tag
+rows, Result Tag data-entry table and ordering controls, and Event lifecycle
+actions. Create, Preparing Edit, Ongoing Edit, Completed, and Archived states
+were compared.
+
+Review also caught an incorrect `Return to Event` label in the scenario. The
+active Event form, Team editor, and approved action hierarchy already share one
+Cancel token; the problem was preview copy rather than a token fork.
+
+### Decision
+
+Approve the Event Create/Edit composition. Keep `ACT-CMP-002` as the shared
+Large Cancel/Exit action and require the visible `Cancel` label in Create/Edit
+page headers. Detail-page return navigation remains `NAV-CMP-003` and must not
+be substituted here.
+
+### Validation result
+
+- Create and Edit reuse one no-eyebrow Functional Page Header and Editorial
+  Outline work-area hierarchy;
+- Create uses empty identity/tag/participant defaults while Edit preserves
+  configured content;
+- 16 Team options use a ruled four/two/one-column checkbox grid rather than
+  participant chips or separate Cards;
+- an existing unavailable participant may be retained or removed, while an
+  archived/unselected Team remains unavailable for addition;
+- Stage Tags use compact labeled rows with a Medium Add action and Small
+  destructive removal;
+- Result Tags use the shared Data Entry table, Filled Checkbox, Number Input,
+  paired Up/Down controls with disabled boundaries, and Small destructive
+  removal;
+- Preparing, Ongoing, and Completed expose only their valid next lifecycle
+  action;
+- Completed and Archived correctly disable configuration; Archived removes
+  lifecycle and Save actions;
+- the Header secondary action is `Cancel`, not `Return to Event`.
+
+`PAG-PAT-003` remains open until Event Outcomes and Match Create/Edit are
+checked.
+
+### Follow-up
+
+Continue E5 with Event Results & Awards.
+
+## UI-DEC-055 — Validate Event Results & Awards visual scope and defer Awards workflow redesign
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-003`, `TBL-CMP-001`, `FRM-CMP-003`,
+  `FRM-CMP-007`, `FRM-CMP-009`, `STA-CMP-002`, `EVT-PAT-003`
+- Batch: E5 Scenario Validation — Event Results & Awards
+- State: Approved with explicit workflow deferral
+- Approved by: User
+
+### Context
+
+The Event Outcomes scenario combined the no-eyebrow Functional Page Header,
+Save and Cancel actions, a 16-Team Result assignment table, Result Tag
+prerequisite handling, Player Award selection, Team filtering, selection
+limits, inactive historical awards, and Completed/Archived read-only states.
+
+A candidate Award Assignment Matrix exposed the larger issue: the current
+Player Awards selection is not merely visually weak. Improving it changes
+candidate browsing, award assignment, limits and mutual-exclusion feedback,
+inactive-history handling, keyboard behavior, validation, and frontend state.
+That is a workflow redesign rather than a visual-token migration.
+
+### Decision
+
+Approve the Event Results & Awards page only within the current visual-refactor
+scope:
+
+- approve its page framing, Team Results editor, shared controls, feedback,
+  read-only states, and responsive behavior;
+- preserve the existing Player Awards selection behavior in the current PR;
+- do not approve or implement the candidate matrix as part of this round;
+- defer Player Awards selection workflow redesign to a separate functional PR.
+
+### Validation result
+
+- Results & Awards uses the same Functional Page Header, Primary Save, and
+  visible `Cancel` action as other editors;
+- all 16 participating Teams remain represented in the compact Result
+  data-entry table;
+- Result Tag and participant prerequisites degrade independently without
+  blocking still-valid Awards work;
+- Completed and Archived Events remove Save and disable outcome controls while
+  retaining historical content and a clear Edit Event route;
+- Team filtering, award counts, inactive retained awards, and current
+  checkbox primitives may receive the approved visual treatment without
+  changing their behavior;
+- no matrix, staged flow, candidate-pool model, or other award-selection
+  interaction is part of this approval.
+
+The Event scenario set is complete. `PAG-PAT-003` remains open until Match
+Create/Edit is checked.
+
+### Follow-up
+
+Continue E5 with Matches Overview. Open a separate future PR for
+`EVT-PAT-003` Event Player Awards Selection Workflow.
+
+## UI-DEC-056 — Validate Matches Overview and close the Overview/List Pattern
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-001`, `FLT-CMP-001`, `FLT-CMP-002`,
+  `MAT-PAT-001`, `TAG-CMP-004`, `PGN-CMP-001`, `FDB-CMP-002`,
+  `FDB-CMP-004`, `FDB-CMP-005`
+- Batch: E5 Scenario Validation — Matches Overview
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Matches Overview scenario combined the no-eyebrow Functional Page Header,
+Create Match action, cascading Team/Event/Stage filters, Scoreline Rail Match
+Cards, pagination, and Normal/Loading/filtered-Empty/retained-data Refresh
+Error states. HOME win, AWAY win, defensive equal score, and omitted optional
+Stage were represented.
+
+The actual list contract was preserved: voided Matches and Matches belonging
+to archived/deleted Events are excluded, and no scheduled/incomplete Match
+state was invented.
+
+### Decision
+
+Approve Matches Overview and close `PAG-PAT-001` Overview/List Page as an
+approved representative page pattern.
+
+### Validation result
+
+- Match filters use the same weak visible Filter region as Players Overview;
+- Stage remains disabled until Event selection supplies valid options;
+- Scoreline Rail preserves Event/optional Stage/time metadata, symmetrical Team
+  identity, central score, Trophy plus Winner on list cards, and whole-card
+  navigation;
+- the Detail-only removal of Winner text does not leak into list cards;
+- missing Stage is omitted rather than rendered as a placeholder;
+- defensive equal-score data gives both Teams equal hierarchy and no Winner;
+- Loading preserves card geometry, filtered Empty offers Clear filters, and
+  refresh failure retains the last successful list;
+- pagination remains a quiet final strip beneath the card grid;
+- narrow layouts reduce to one card column and stack Team identities before the
+  score without lift or scale.
+
+With Teams, Players, Events, and Matches accepted, Overview/List Page is
+approved while retaining feature-specific content bodies.
+
+### Follow-up
+
+Continue E5 with Match Detail.
+
+## UI-DEC-057 — Validate Match Detail and close the Detail Page Pattern
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-002`, `NAV-CMP-003`, `ACT-CMP-001`,
+  `ACT-CMP-003`, `MAT-PAT-002`, `TBL-CMP-001`, `TBL-CMP-004`,
+  `TBL-CMP-005`, `FDB-CMP-001`, `OVR-CMP-001`
+- Batch: E5 Scenario Validation — Match Detail
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Match Detail scenario combined Detail Back and Edit/Void/Restore actions,
+Voided/Historical/retained Action Error feedback, the approved Arena Scoreline,
+two Team Box Score Data Bays, Operational Neutral Other rows, Team Total rows,
+and Normal/Voided/Historical Event/Missing Stage/Action Error states.
+
+### Decision
+
+Approve Match Detail and close `PAG-PAT-002` Detail Page as an approved
+representative page pattern.
+
+### Validation result
+
+- Arena Scoreline preserves its open symmetrical HOME/score/AWAY composition;
+- outcome remains encoded only by numeric score and winning/losing hierarchy,
+  with no Trophy or `Winner` marker;
+- optional missing Stage renders `—` in Detail as required;
+- Voided removes Edit/Void, exposes Restore, and retains the complete read-only
+  record;
+- Historical Event removes all Match mutations while preserving the record and
+  reason;
+- action failure remains above retained content and does not destroy the
+  current record;
+- each Team owns one Box Score Data Bay with local horizontal overflow;
+- row scan Hover, Operational Neutral Other, strong Team Total, percentage
+  unavailable values, and dense numeric alignment remain readable;
+- narrow layout stacks HOME, AWAY, then the ruled score row and preserves the
+  page action hierarchy.
+
+With Team, Player, Event, and Match Detail accepted, Detail Page is approved
+without introducing the Overview/Edit Functional Page Header.
+
+### Follow-up
+
+Continue E5 with Match Create/Edit.
+
+## UI-DEC-058 — Validate Match Create/Edit and close E5 Scenario Validation
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-003`, `PAG-CMP-001`, `ACT-CMP-001`,
+  `ACT-CMP-002`, `FRM-CMP-001`, `FRM-CMP-003`, `FRM-CMP-004`,
+  `FRM-CMP-005`, `TBL-CMP-001`, `TBL-CMP-005`, `FDB-CMP-001`
+- Batch: E5 Scenario Validation — Match Create/Edit
+- State: Approved
+- Approved by: User
+
+### Context
+
+The Match Create/Edit scenario combined the no-eyebrow Functional Page Header,
+Create/Save and Cancel actions, Match Information fields, two Team roster-stat
+entry Data Bays, Played controls, immediate Team scores, Operational Neutral
+Other rows, and Create/Edit/Validation/Submitting/No Events/Unavailable states.
+
+### Decision
+
+Approve Match Create/Edit, close `PAG-PAT-003`, and complete Phase E5 Scenario
+Validation.
+
+### Validation result
+
+- Create and Edit share one page hierarchy while Edit locks Event and Team
+  identity without locking Stage, date/time, or statistics;
+- the native local-time date/time field remains unchanged;
+- both Team entry sections use the same dense Data Bay and local horizontal
+  overflow;
+- Played controls expose statistics only for participating Players and preserve
+  inactive historical roster data where supplied;
+- immediate Team Score remains in each Team header without becoming a separate
+  Card;
+- Other retains its Operational Neutral row and only applicable required
+  fields;
+- Validation retains entered data, Submitting disables mutable controls, and
+  Cancel remains the shared secondary form action;
+- No Events degrades before roster entry and routes back to Event setup;
+- voided Match or unavailable Event exits the editor into one concise
+  unavailable state with a return-to-detail action;
+- narrow layouts stack the Functional Page Header and information fields while
+  keeping irreducible statistic columns inside local overflow.
+
+With Team, Event, Event Outcomes visual scope, and Match editor scenarios
+accepted, Create/Edit Page is approved. All required E5 representative
+scenarios now have explicit approval.
+
+### Follow-up
+
+Enter Phase E6. Prepare the complete candidate `DESIGN.md`, final semantic
+token mapping, coverage/exception summary, and migration impact plan for
+Experiment Gate E2 approval. Keep `EVT-PAT-003` Player Awards Selection
+Workflow deferred to a separate functional PR.
+
+## UI-DEC-059 — Approve Gate E2 and formalize Editorial Scoreboard
+
+- Date: 2026-07-20
+- Inventory IDs: all current-MVP inventory items
+- Batch: E6 Candidate System Approval / M0 Formalization
+- State: Approved
+- Approved by: User
+
+### Context
+
+E6 consolidated the approved Foundation, Component, Team, Player, Event, Match,
+and page-scenario decisions into a final candidate specification, semantic
+token mapping, coverage and exception summary, and bounded migration plan.
+
+The final inventory contained 97 items: 91 Approved, four Deferred, and two
+Rejected. `EVT-PAT-003` remained outside the visual-refactor scope because its
+selection experience requires functional interaction design.
+
+### Decision
+
+Approve Editorial Scoreboard at Experiment Gate E2 and authorize M0
+formalization:
+
+- make `docs/DESIGN.md` the active Editorial Scoreboard specification;
+- mirror the approved shared semantic values into canonical `variables.css`;
+- align the Mantine theme and project design-system quick reference;
+- preserve the inventory's Approved/Rejected/Deferred review history while
+  marking all Approved entries as Formalized at the inventory level.
+
+### Boundary
+
+Gate E2 and M0 do not authorize page-by-page implementation, business-logic
+changes, API changes, or the Player Awards selection workflow redesign.
+Application migration follows the approved M1–M6 batches and the project's
+frontend PRD approval workflow.

@@ -1,5 +1,21 @@
 # UI Redesign Readiness Frontend PRD
 
+## Status and authority
+
+**Status:** Completed historical preparation PRD.
+
+This document remains authoritative for the completed semantic-token cleanup,
+style-literal regression guard, and the historical reasons recorded in §7. It
+does not own the current visual direction. Its requirements to preserve the
+then-current appearance applied only to the readiness migration and were
+superseded for active visual work by `docs/DESIGN.md` and the approved
+Editorial Scoreboard migration PRDs.
+
+Where this document names old colors, radii, card treatments, Tier chrome, or
+shared visual variants, treat them as implementation history rather than
+current requirements. `docs/UI_REDESIGN_READINESS_CHECKLIST.md` remains the
+progress record for readiness and migration verification.
+
 ## 1. 目标
 
 按 `docs/UI_REDESIGN_READINESS_CHECKLIST.md` 增量收敛前端视觉样式，使颜色、字体、圆角、边框、阴影与常用控件主要由语义 token、Mantine 主题和小型共享视觉原语控制，从而降低未来视觉重设计的改动范围。迁移期间保持当前外观、布局、DOM 结构、响应式行为和业务逻辑不变。

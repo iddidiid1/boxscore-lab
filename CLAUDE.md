@@ -75,12 +75,14 @@ All validation errors must be collected before responding — no short-circuit o
 
 ## Design System
 
-Dark sports-editorial theme — "Verge Dark." Near-black canvas with acid-mint as the sole hazard accent. Details in `docs/DESIGN.md`; canonical token values in `apps/frontend/src/styles/variables.css`.
+Dark sports-editorial theme — "Editorial Scoreboard." Near-black Neutral Ambient canvas with Brand Mint used as a precise signal. Details in `docs/DESIGN.md`; canonical token values in `apps/frontend/src/styles/variables.css`.
 
 - **Fonts**: Anton (display / large headlines ≥24px), Space Grotesk (body / all UI text), JetBrains Mono (stats/data/labels)
-- **Colors**: near-black backgrounds (`#131313` canvas, `#1a1a1a` surface), acid-mint (`#3cffd0`) primary + success, amber (`#ffb95f`) warning, coral (`#ff6b6b`) danger
-- **Shape**: role-based radius scale — 4px inputs, 16px cards/panels, 24px buttons, 20px badges; 1px borders (mostly white-alpha), no drop shadows
-- **Density**: tight card padding (14–16px), information-dense layout
+- **Colors**: near-black backgrounds (`#131313` canvas, `#1a1a1a` surface), Brand Mint (`#43f2c8`) primary + online/success, amber (`#ffb95f`) warning/outcome, coral (`#ff6b6b`) danger
+- **Shape**: precise role-based radius scale — 4px controls/buttons/badges, 8px compact surfaces, 10px interactive cards/overlays, 12px panels
+- **Surfaces**: Editorial Outline for Editor contexts, edge-highlight Dark Glass for Data/Summary, restricted Deep Light Glass for Team identity
+- **Motion**: functional 100/160/220ms roles with Reduced Motion support; lift, scale, glow, and pulse are not generic defaults
+- **Density**: 42px Large actions, 40px regular fields, 34px dense number entry, 30px Medium actions, 28px Small/Icon actions, 38px table rows
 - Do not introduce new component libraries without explicit request
 - Do not redesign existing layout patterns unless explicitly asked
 
