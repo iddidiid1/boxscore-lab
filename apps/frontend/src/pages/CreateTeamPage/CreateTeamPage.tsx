@@ -136,7 +136,6 @@ export function CreateTeamPage() {
     <Stack className="manage-team-page" gap="lg">
       <Group align="flex-start" className="manage-team-header" justify="space-between">
         <Box>
-          <Text className="eyebrow">TEAM WORKSPACE</Text>
           <Title className="page-title" order={1}>
             Create Team
           </Title>

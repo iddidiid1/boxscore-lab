@@ -128,13 +128,15 @@ formalization marker records whether those approved decisions have graduated;
 
 ## Working workflow
 
-**Current phase:** Formalized / migration planning. Gate E2 was approved on
+**Current phase:** Implemented / final M6 acceptance pending. Gate E2 was approved on
 2026-07-20 after Foundation/Component batches B01–B07,
 Team/Player/Event/Match product patterns, and representative E5 Overview/List,
 Detail, and Create/Edit scenarios completed through `UI-DEC-058`. All 97
 inventory items have an explicit review disposition: 91 Approved and now
 Formalized, four Deferred, and two Rejected. The Player Awards selection
 workflow is explicitly deferred to a separate functional PR.
+The bounded M0–M6 application migration is now implemented and its final
+scenario sweep is complete; only user acceptance of the M6 test report remains.
 Gate E1 was approved on
 2026-07-17. Gate E0 was approved on 2026-07-17 using the Neutral Black
 foundation with Deep Green Black brand mint (`#43f2c8`).

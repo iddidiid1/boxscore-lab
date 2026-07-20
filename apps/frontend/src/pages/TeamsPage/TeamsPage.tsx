@@ -40,7 +40,6 @@ export function TeamsPage() {
     <Stack className="teams-page" gap="xl">
       <Group align="flex-start" className="teams-header" justify="space-between">
         <Box>
-          <Text className="eyebrow">League overview</Text>
           <Title className="page-title" order={1}>
             Teams
           </Title>

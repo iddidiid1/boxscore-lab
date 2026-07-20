@@ -74,7 +74,7 @@ Formalization must change both in the same bounded change.
 
 Validation: token/theme diff review, style lint, typecheck, and a build.
 
-### M1 — Foundation and shared primitives
+### M1 — Foundation and shared primitives — completed 2026-07-20
 
 - background, typography, spacing, radius, border, focus, and motion roles;
 - shared Button/action variants and links;
@@ -85,7 +85,7 @@ Validation: token/theme diff review, style lint, typecheck, and a build.
 Validation: keyboard focus, disabled/loading/pressed/selected states, Reduced
 Motion, and compact/narrow viewport specimens.
 
-### M2 — Data display
+### M2 — Data display — completed 2026-07-20
 
 - Data Bay table shell, sortable headers, row hover, local overflow;
 - Operational Neutral Other row and Championship Gold Winner row;
@@ -96,7 +96,7 @@ Motion, and compact/narrow viewport specimens.
 Validation: all four table contexts plus data-entry and winner tables; long
 names, zero/unavailable values, and 560/760/980px boundaries.
 
-### M3 — Team and Player patterns
+### M3 — Team and Player patterns — completed 2026-07-20
 
 - Open Division Stacks and Score Ledger Team Cards;
 - Unified Field Team hero and Identity Proof editor preview;
@@ -106,7 +106,7 @@ names, zero/unavailable values, and 560/760/980px boundaries.
 Validation: loaded/dark/failed logos, initials fallback, archived/historical
 states, partial stars, hover-only leader behavior, and narrow stacking.
 
-### M4 — Event patterns
+### M4 — Event patterns — completed 2026-07-20
 
 - Tournament Insignia and Insignia Rail Event cards;
 - Event Detail participants/tags/results hierarchy;
@@ -116,7 +116,7 @@ states, partial stars, hover-only leader behavior, and narrow stacking.
 Validation: realistic 16-Team Events, missing optional content, all lifecycle
 states, award history, and preservation of current Awards selection behavior.
 
-### M5 — Match patterns
+### M5 — Match patterns — completed 2026-07-20
 
 - Scoreline Rail cards;
 - Arena Scoreline detail hero;
@@ -125,13 +125,20 @@ states, award history, and preservation of current Awards selection behavior.
 Validation: home/away wins, defensive equal score, missing Stage, loaded and
 fallback artwork, void/restore, unavailable Event, and dense table overflow.
 
-### M6 — Scenario sweep and cleanup
+### M6 — Scenario sweep and cleanup — implementation complete 2026-07-20; final acceptance pending
 
 - run Overview, Detail, and Create/Edit representative scenarios;
 - remove superseded page-local visual duplication;
 - verify no proposal-only token names or obsolete universal-card rules remain;
 - complete the active redesign-readiness checklist;
 - obtain final user acceptance.
+
+The implementation sweep covered 15 wide-screen routes plus 12 representative
+routes at each of 760px and 560px. It removed the unused placeholder component,
+obsolete universal-card/telemetry selectors, hidden Eyebrow markup, and the
+redundant `app-panel` aliases. Dense tables retain local overflow without
+creating whole-page overflow. The final remaining gate is user acceptance of
+the M6 test report.
 
 ## Verification contract
 

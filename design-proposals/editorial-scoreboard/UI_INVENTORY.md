@@ -2,10 +2,12 @@
 
 ## Status
 
-**Current phase:** Formalized. Gate E2 was approved on 2026-07-20. The approved
-Foundation, Component, Pattern, and Scenario decisions are now represented by
-active `docs/DESIGN.md`, canonical `variables.css`, and the Mantine theme. The
-Player Awards selection workflow remains deferred to a separate functional PR.
+**Current phase:** Implemented; final M6 acceptance pending. Gate E2 was
+approved on 2026-07-20. The approved Foundation, Component, Pattern, and
+Scenario decisions are represented by active `docs/DESIGN.md`, canonical
+`variables.css`, the Mantine theme, shared primitives, and their consuming
+pages. The Player Awards selection workflow remains deferred to a separate
+functional PR.
 
 E0 Theme Direction was approved on 2026-07-17: Neutral Black foundation with
 Deep Green Black brand mint (`#43f2c8`). Collection and visual review are
@@ -22,6 +24,11 @@ current-MVP foundations, components, states, and deferred product patterns.
 `Formalized` as of 2026-07-20. Table cells retain the original review
 disposition so Approved, Rejected, and Deferred decisions remain auditable.
 Formalized does not mean page implementation is complete.
+
+**Implementation state:** the bounded M0–M6 migration and final scenario
+sweep were completed on 2026-07-20. The remaining gate is user acceptance of
+the M6 test report; row-level review dispositions remain unchanged for
+historical auditability.
 
 ## Inventory rules
 
