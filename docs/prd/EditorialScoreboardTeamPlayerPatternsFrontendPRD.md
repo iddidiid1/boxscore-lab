@@ -43,7 +43,9 @@ Performance Profile 与 Honors Ledger。
 - Team Create `/teams/new` 与 Team Edit `/teams/:slug/manage`
   - 将现有分散预览重组为 Editor 内 Open Well 中的只读 Identity Proof。
   - 预览实时反映 logo/fallback、Team name、division、team color 与 fractional rating；
-    空草稿使用 `New Team`、`No division selected`、零评分和 initials fallback。
+    name 为空时使用 `New Team`，division 未选择或无法匹配时使用
+    `No division selected`，零评分使用 initials fallback；Create 页面既有的首项
+    division 自动预选行为保持不变。
   - failed logo 使用与 missing logo 相同几何；预览不获得 hover、pressed、导航、
     points 或 radar。
 - Players Overview `/players`
@@ -190,7 +192,8 @@ Team Editor Identity Proof 使用。建议位于
   FractionalStarRating 与 data-driven Team-color trace。
 - draft 映射：
   - trimmed name 为空：`New Team`；
-  - `divisionId` 未命中当前 divisions：`No division selected`；
+  - `divisionId` 未命中当前 divisions：`No division selected`；Create 页面加载后若按
+    现有业务逻辑自动选中首个 division，则如实显示该 division；
   - logo 为空或失败：由 preview name 生成 initials；
   - overall rating：直接使用草稿数值，空初始草稿为 `0`；
   - primary color 仅在现有 hex 校验通过时进入 trace，否则使用 neutral trace。

@@ -123,6 +123,24 @@ This is an incremental maintainability task, not a request to redesign the curre
 - [x] Run frontend style literal checking, type checking, production build,
   diff checking, and browser console-error inspection.
 
+### Editorial Scoreboard M3 - Team and Player Patterns
+
+- [x] Consolidate Team artwork across Overview, Detail, and Editor preview with
+  Open Artwork plus Neutral Frame initials fallback.
+- [x] Migrate Teams Overview to Open Division Stacks and Score Ledger Team
+  Cards without changing navigation or active-Team scope.
+- [x] Migrate Team Detail to one Unified Field and Team Editor preview to
+  Identity Proof while preserving archive, form, and roster behavior.
+- [x] Migrate the four Statistic Leader Cards to Frosted Depth with
+  category-specific Strong Glow and hover-only interaction.
+- [x] Migrate Player Detail to Number Masthead, Segmented Performance Profile,
+  and Honors Ledger without changing request or award-history behavior.
+- [x] Verify loaded/failed artwork recovery, initials fallback, zero/partial
+  meter states, award-time Team, 560/760/900/980px stacking, and no whole-page
+  overflow.
+- [x] Run frontend style literal checking, type checking, production build,
+  diff checking, and browser console-error inspection.
+
 ## Phase 5 - Prevent regression
 
 - [x] Add a lint or CI check that flags new literal hex/rgb/hsl colors in frontend source outside approved token/theme files.

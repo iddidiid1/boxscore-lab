@@ -1,6 +1,6 @@
 import { Alert, Anchor, Box, Button, Group, Skeleton, Stack, Text } from "@mantine/core";
 import { Pencil } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { fetchTeam, type TeamDetail } from "../../features/teams";
 import { RosterTable, type Player } from "./components/RosterTable";
 import { TeamRadarCard, type TeamRadarAttribute } from "./components/TeamRadarCard";
@@ -70,6 +70,12 @@ function mapPlayers(team: TeamDetail): Player[] {
     averageMinutes: player.stats.avgMinutes,
     starRating: player.stats.avgRating
   }));
+}
+
+function getTeamTrace(primaryColor: string | null) {
+  return primaryColor && /^#[\da-f]{6}$/i.test(primaryColor)
+    ? primaryColor
+    : "var(--color-team-trace-neutral)";
 }
 
 export function TeamDetailPage() {
@@ -145,7 +151,10 @@ export function TeamDetailPage() {
         </Alert>
       ) : null}
 
-      <Box className="team-detail-hero">
+      <Box
+        className="team-detail-hero app-surface app-surface--identity"
+        style={{ "--team-trace": getTeamTrace(team.primaryColor) } as CSSProperties}
+      >
         <TeamProfileSummary
           description={team.description ?? ""}
           division={team.divisionName ?? "No Division"}

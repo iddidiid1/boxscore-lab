@@ -69,8 +69,12 @@ function getLabelPoint(index: number, total: number) {
 }
 
 export function TeamRadarCard({ attributes }: TeamRadarCardProps) {
+  const accessibleDescription = attributes
+    ?.map((attribute) => `${attribute.label} ${clampRating(attribute.value).toFixed(1)}`)
+    .join(", ");
+
   return (
-    <Box className="team-radar-card app-panel">
+    <Box className="team-radar-card">
       <Title className="team-radar-title" order={2}>
         Team Profile
       </Title>
@@ -78,22 +82,9 @@ export function TeamRadarCard({ attributes }: TeamRadarCardProps) {
         <Text className="module-copy">No profile ratings recorded.</Text>
       ) : (
       <Box className="team-radar-chart">
-        <svg aria-label="Team radar profile chart" role="img" viewBox="0 0 300 300">
-          <defs>
-            <filter id="radarGlow" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="3" />
-              <feColorMatrix
-                in="blur"
-                result="glow"
-                type="matrix"
-                values="0 0 0 0 0.305 0 0 0 0 0.871 0 0 0 0 0.639 0 0 0 0.42 0"
-              />
-              <feMerge>
-                <feMergeNode in="glow" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
+        <svg role="img" viewBox="0 0 300 300">
+          <title>Team profile ratings</title>
+          <desc>{accessibleDescription}</desc>
           {gridLevels.map((level) => {
             const radius = (level / 10) * maxRadius;
 

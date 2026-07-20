@@ -21,6 +21,7 @@
   --color-surface-subtle: #232323;
   --color-surface-glass: rgba(26, 26, 26, 0.82);
   --color-surface-identity: rgba(53, 58, 55, 0.40);
+  --color-surface-artwork-fallback: rgba(255, 255, 255, 0.055);
   --color-surface-overlay: rgba(35, 35, 35, 0.94);
   --color-background-ambient-upper: rgba(255, 255, 255, 0.06);
   --color-background-ambient-lower: rgba(255, 255, 255, 0.035);
@@ -41,6 +42,7 @@
   --color-border-hover: rgba(255, 255, 255, 0.19);
   --color-border-navigation: rgba(255, 255, 255, 0.08);
   --color-border-preview: rgba(255, 255, 255, 0.18);
+  --color-border-artwork-fallback: rgba(255, 255, 255, 0.16);
   --color-border-divider: rgba(255, 255, 255, 0.08);
   --color-border-control-strong: rgba(255, 255, 255, 0.19);
   --color-border-table-cell: rgba(255, 255, 255, 0.075);
@@ -92,11 +94,18 @@
   --color-table-row-hover: rgba(255, 255, 255, 0.03);
 
   /* Statistical and ranking accents */
-  --color-stat-points: #a07aff;
-  --color-stat-points-surface: rgba(82, 0, 255, 0.15);
-  --color-stat-assists-surface: rgba(67, 242, 200, 0.12);
-  --color-stat-rebounds-surface: rgba(67, 242, 200, 0.07);
-  --color-stat-rating-surface: rgba(255, 185, 95, 0.11);
+  --color-stat-points: #f59a56;
+  --color-stat-rebounds: #74d58b;
+  --color-stat-assists: #f08fc0;
+  --color-stat-rating: #aa91ef;
+  --color-stat-points-surface: rgba(245, 154, 86, 0.29);
+  --color-stat-rebounds-surface: rgba(116, 213, 139, 0.29);
+  --color-stat-assists-surface: rgba(240, 143, 192, 0.29);
+  --color-stat-rating-surface: rgba(170, 145, 239, 0.29);
+  --color-stat-points-glow: rgba(245, 154, 86, 0.62);
+  --color-stat-rebounds-glow: rgba(116, 213, 139, 0.62);
+  --color-stat-assists-glow: rgba(240, 143, 192, 0.62);
+  --color-stat-rating-glow: rgba(170, 145, 239, 0.62);
   --color-stat-neutral-surface: rgba(255, 255, 255, 0.05);
   --color-success-border: rgba(67, 242, 200, 0.45);
   --color-success-surface: rgba(67, 242, 200, 0.10);
@@ -130,6 +139,10 @@
   --color-rating-fill: #ffb95f;
   --color-rating-empty: rgba(255, 255, 255, 0.20);
   --color-rating-unavailable: rgba(148, 148, 148, 0.36);
+  --color-team-trace-neutral: rgba(200, 200, 200, 0.42);
+  --color-performance-segment-empty: rgba(255, 255, 255, 0.09);
+  --color-performance-segment-fill: #43f2c8;
+  --color-performance-segment-glow: rgba(67, 242, 200, 0.24);
   /* Compatibility roles consumed until the Event patterns migrate in M4. */
   --color-event-card-gradient-top: rgba(26, 26, 26, 0.82);
   --color-event-card-gradient-bottom: rgba(19, 19, 19, 0.96);
