@@ -1,0 +1,20 @@
+.event-status-badge {
+  min-height: 24px;
+  border-color: var(--color-border);
+  color: var(--color-text-soft);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  padding-inline: 8px;
+  text-transform: uppercase;
+}
+
+.event-status-badge[data-status="ONGOING"] {
+  border-color: var(--color-action-primary-border-subtle);
+  color: var(--color-action-primary);
+}
+
+.event-status-badge[data-status="COMPLETED"] {
+  border-color: var(--color-event-winner-border);
+  color: var(--color-warning);
+}

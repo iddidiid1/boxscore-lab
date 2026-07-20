@@ -143,22 +143,30 @@
   --color-performance-segment-empty: rgba(255, 255, 255, 0.09);
   --color-performance-segment-fill: #43f2c8;
   --color-performance-segment-glow: rgba(67, 242, 200, 0.24);
-  /* Compatibility roles consumed until the Event patterns migrate in M4. */
-  --color-event-card-gradient-top: rgba(26, 26, 26, 0.82);
-  --color-event-card-gradient-bottom: rgba(19, 19, 19, 0.96);
+  /* Event pattern materials */
+  --color-event-card-surface: rgba(26, 26, 26, 0.86);
+  --color-event-card-surface-hover: rgba(29, 31, 30, 0.92);
   --color-event-card-divider: rgba(255, 255, 255, 0.13);
-  /* Event tier crest accent scale — space-separated RGB channels so one accent
-     drives both the solid color and its gradient/border alpha washes.
-     Documented data-visualization exception; see docs/DESIGN.md. */
+  --color-event-card-destination: rgba(255, 255, 255, 0.38);
+  --color-event-insignia-rail: rgba(255, 255, 255, 0.10);
+  --color-event-insignia-rail-strong: rgba(255, 255, 255, 0.20);
+  --color-event-insignia-facet: rgba(255, 255, 255, 0.08);
+  --color-event-insignia-shadow: rgba(0, 0, 0, 0.72);
+  --color-event-insignia-trace: rgba(255, 255, 255, 0.11);
+  --color-event-insignia-trace-active: rgba(255, 255, 255, 0.18);
+  --color-event-plaque-surface: #101111;
+  --color-event-plaque-surface-raised: #171817;
+  --color-event-plaque-grain: rgba(255, 255, 255, 0.025);
+  --color-event-plaque-edge: rgba(255, 255, 255, 0.17);
+  --color-event-plaque-rule: rgba(255, 255, 255, 0.11);
+  --color-event-plaque-rule-secondary: rgba(255, 255, 255, 0.07);
+  --color-event-plaque-registration: rgba(67, 242, 200, 0.38);
+  --color-event-plaque-mvp-trace: rgba(255, 185, 95, 0.14);
+  /* Event Tier accent channels are a documented data-visualization exception. */
   --color-tier-s-accent: 255, 185, 95;   /* warning   #ffb95f */
   --color-tier-a-accent: 160, 122, 255;  /* uv accent #a07aff */
   --color-tier-b-accent: 67, 242, 200;   /* brand     #43f2c8 */
   --color-tier-c-accent: 200, 200, 200;  /* text-soft #c8c8c8 */
-  /* Compatibility chrome consumed until Tournament Insignia migrates in M4. */
-  --color-tier-crest-border: rgba(255, 255, 255, 0.13);
-  --color-tier-crest-sheen: rgba(255, 255, 255, 0.08);
-  --color-tier-crest-base: rgba(26, 26, 26, 0.92);
-  --color-tier-crest-shadow: rgba(13, 13, 13, 0.72);
 
   /* Shape and elevation */
   --radius-sharp: 0;

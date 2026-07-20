@@ -8,7 +8,7 @@ type EventResultTagsPanelProps = {
 
 export function EventResultTagsPanel({ tags }: EventResultTagsPanelProps) {
   return (
-    <Box className="event-detail-panel app-panel">
+    <Box className="event-tag-section">
       <Stack gap="md">
         <Box>
           <Title className="event-panel-title" order={2}>
@@ -30,6 +30,7 @@ export function EventResultTagsPanel({ tags }: EventResultTagsPanelProps) {
             </Group>
           ))}
         </Group>
+        {tags.length === 0 ? <Text className="event-detail-fallback-note">No result tags.</Text> : null}
       </Stack>
     </Box>
   );

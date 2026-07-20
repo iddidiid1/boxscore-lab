@@ -14,7 +14,7 @@ export function EventResultsTable({ resultTags, results }: EventResultsTableProp
     <Box className="event-results-panel app-data-bay">
       <Title className="event-panel-title" order={2}>Final team results</Title>
 
-      <Box className="event-results-table-wrap app-table-wrap">
+      {results.length ? <Box className="event-results-table-wrap app-table-wrap">
         <Table className="event-results-table app-data-table" verticalSpacing="md">
           <Table.Thead>
             <Table.Tr>
@@ -54,7 +54,7 @@ export function EventResultsTable({ resultTags, results }: EventResultsTableProp
             })}
           </Table.Tbody>
         </Table>
-      </Box>
+      </Box> : <Text className="event-detail-fallback-note event-results-empty">No final team results recorded.</Text>}
     </Box>
   );
 }

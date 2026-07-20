@@ -18,13 +18,20 @@ function AwardTeamRow({ awards, mvpPlayerId, secondary = false, title }: AwardTe
       <Box className="event-awards-team-grid">
         {awards.map((award) => (
           <Box className="event-awards-player-cell" key={award.id}>
-            <Group className="event-awards-player-heading" gap="xs" wrap="nowrap">
+            <Group align="flex-start" className="event-awards-player-heading" gap="xs" justify="space-between" wrap="nowrap">
               <Text className="event-awards-player-name">{award.playerName}</Text>
               <Text className="event-awards-player-position">{award.playerPosition}</Text>
-              {award.playerId === mvpPlayerId ? <Text className="event-awards-inline-mvp">MVP</Text> : null}
             </Group>
             <Text className="event-awards-player-team">{award.teamName}</Text>
-            {!award.playerIsActive ? <Text className="event-awards-player-status">Inactive</Text> : null}
+            <Group className="event-awards-player-markers" gap="xs">
+              {award.playerId === mvpPlayerId ? (
+                <Group className="event-awards-inline-mvp" gap={4} wrap="nowrap">
+                  <Trophy aria-hidden="true" size={11} />
+                  <Text>MVP</Text>
+                </Group>
+              ) : null}
+              {!award.playerIsActive ? <Text className="event-awards-player-status">Inactive</Text> : null}
+            </Group>
           </Box>
         ))}
       </Box>
@@ -38,20 +45,25 @@ export function EventPlayerAwardsPanel({ awards }: EventPlayerAwardsPanelProps) 
   const secondTeam = awards.filter((award) => award.awardType === "ALL_EVENT_SECOND_TEAM");
 
   return (
-    <Box className="event-detail-panel event-player-awards-panel app-panel">
-      <Title className="event-panel-title" order={2}>Player Awards</Title>
+    <Box className="event-player-awards-plaque">
+      <Box aria-hidden="true" className="event-awards-registration event-awards-registration--top" />
+      <Box aria-hidden="true" className="event-awards-registration event-awards-registration--bottom" />
+      <Title className="event-awards-plaque-title" order={2}>Player Awards</Title>
       {awards.length === 0 ? <Text className="event-detail-fallback-note">No player awards recorded.</Text> : null}
       {mvp ? (
-        <Box className="event-awards-mvp-card">
+        <Box className="event-awards-mvp-field">
           <Group className="event-awards-mvp-label" gap="xs">
-            <Trophy aria-hidden="true" size={16} />
+            <Trophy aria-hidden="true" size={17} />
             <Text>Event MVP</Text>
           </Group>
-          <Group className="event-awards-mvp-identity" gap="sm" wrap="nowrap">
+          <Group align="baseline" className="event-awards-mvp-identity" gap="sm" wrap="nowrap">
             <Text className="event-awards-mvp-name">{mvp.playerName}</Text>
             <Text className="event-awards-player-position event-awards-mvp-position">{mvp.playerPosition}</Text>
           </Group>
-          <Text className="event-awards-mvp-team">{mvp.teamName}</Text>
+          <Group gap="sm">
+            <Text className="event-awards-mvp-team">{mvp.teamName}</Text>
+            {!mvp.playerIsActive ? <Text className="event-awards-player-status">Inactive</Text> : null}
+          </Group>
         </Box>
       ) : null}
       <AwardTeamRow awards={firstTeam} mvpPlayerId={mvp?.playerId} title="All-Event First Team" />

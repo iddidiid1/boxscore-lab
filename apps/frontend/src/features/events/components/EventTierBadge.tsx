@@ -3,6 +3,7 @@ import type { EventTier } from "../types";
 import "./EventTierBadge.css";
 
 type EventTierBadgeProps = {
+  size?: "compact" | "detail";
   tier: EventTier;
 };
 
@@ -13,15 +14,22 @@ const tierSubtitles: Record<EventTier, string> = {
   C: "OPEN"
 };
 
-export function EventTierBadge({ tier }: EventTierBadgeProps) {
+export function EventTierBadge({ size = "compact", tier }: EventTierBadgeProps) {
   return (
-    <Box aria-label={`${tierSubtitles[tier]} tier`} className="event-tier-crest" data-tier={tier}>
-      <Text aria-hidden="true" className="event-tier-letter">
-        {tier}
-      </Text>
-      <Text aria-hidden="true" className="event-tier-label">
-        {tierSubtitles[tier]}
-      </Text>
+    <Box
+      aria-label={`Tier ${tier}, ${tierSubtitles[tier]}`}
+      className="event-tier-insignia"
+      data-size={size}
+      data-tier={tier}
+    >
+      <Box aria-hidden="true" className="event-tier-rail event-tier-rail--top" />
+      <Box aria-hidden="true" className="event-tier-medallion">
+        <Box className="event-tier-facet">
+          <Text className="event-tier-letter">{tier}</Text>
+        </Box>
+      </Box>
+      <Text aria-hidden="true" className="event-tier-label">{tierSubtitles[tier]}</Text>
+      <Box aria-hidden="true" className="event-tier-rail event-tier-rail--bottom" />
     </Box>
   );
 }
