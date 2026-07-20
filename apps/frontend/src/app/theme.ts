@@ -1,4 +1,17 @@
-import { Button, createTheme } from "@mantine/core";
+import {
+  ActionIcon,
+  Alert,
+  Badge,
+  Button,
+  Checkbox,
+  createTheme,
+  Modal,
+  NumberInput,
+  Select,
+  Slider,
+  Textarea,
+  TextInput
+} from "@mantine/core";
 
 /**
  * Mantine cannot consume the CSS custom-property palette as a typed color tuple.
@@ -18,16 +31,66 @@ export const appTheme = createTheme({
   },
   radius: {
     xs: "4px",
-    sm: "4px",
-    md: "16px",
-    lg: "16px",
-    xl: "24px"
+    sm: "8px",
+    md: "10px",
+    lg: "12px",
+    xl: "12px"
   },
   components: {
+    ActionIcon: ActionIcon.extend({
+      defaultProps: {
+        radius: "xs"
+      }
+    }),
+    Alert: Alert.extend({
+      defaultProps: {
+        radius: "sm"
+      }
+    }),
+    Badge: Badge.extend({
+      defaultProps: {
+        radius: "xs"
+      }
+    }),
     Button: Button.extend({
       defaultProps: {
-        radius: "xl",
+        radius: "xs",
         size: "md"
+      }
+    }),
+    Checkbox: Checkbox.extend({
+      defaultProps: {
+        radius: "xs"
+      }
+    }),
+    Modal: Modal.extend({
+      defaultProps: {
+        radius: "md"
+      }
+    }),
+    NumberInput: NumberInput.extend({
+      defaultProps: {
+        radius: "xs"
+      }
+    }),
+    Select: Select.extend({
+      defaultProps: {
+        radius: "xs"
+      }
+    }),
+    Slider: Slider.extend({
+      defaultProps: {
+        radius: "xs"
+      }
+    }),
+    Textarea: Textarea.extend({
+      defaultProps: {
+        radius: "xs"
+      }
+    }),
+    TextInput: TextInput.extend({
+      defaultProps: {
+        radius: "xs"
       }
     })
   },
@@ -35,9 +98,9 @@ export const appTheme = createTheme({
     teal: [
       "#e0fff9",
       "#b3fff0",
-      "#80ffe6",
-      "#4dffdb",
-      "#3cffd0",
+      "#88f8de",
+      "#62f5d2",
+      "#43f2c8",
       "#2ccfaa",
       "#1fa080",
       "#127558",

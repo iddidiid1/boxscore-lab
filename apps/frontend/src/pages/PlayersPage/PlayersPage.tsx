@@ -1,7 +1,9 @@
-import { Alert, Box, Button, Group, Loader, Stack, Text, Title } from "@mantine/core";
+import { Alert, Box, Button, Group, Stack, Text, Title } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { fetchPlayers, type PlayerListParams, type PlayerListResponse, type PlayerPosition } from "../../features/players";
-import { PlayerRankingFilters, PlayerRankingTable, StatisticLeaderCards, TurnPageControls } from "./components";
+import { DataPagination } from "../../shared/components/data-display";
+import { LoadingState } from "../../shared/components/LoadingState";
+import { PlayerRankingFilters, PlayerRankingTable, StatisticLeaderCards } from "./components";
 import type { PlayerRankingSortField } from "./types";
 import "./PlayersPage.css";
 
@@ -21,16 +23,15 @@ export function PlayersPage() {
   const update = (change: Partial<PlayerListParams>, replace = false) => { const next = { ...query, ...change }; writeQuery(next, replace); setQuery(next); };
   const eventValue = query.eventId ? String(query.eventId) : "overall", teamValue = query.teamId ? String(query.teamId) : "all", positionValue = query.position ?? "all";
   const leaders = (data?.leaders ?? []).map((leader) => ({ id: leader.stat, accent: leader.stat, label: leader.label, value: leader.value.toFixed(1), playerName: leader.player?.name ?? "No eligible players", teamName: leader.team?.name ?? "" }));
-  if (!data && loading) return <Stack className="players-page" align="center"><Loader /><Text>Loading player statistics…</Text></Stack>;
-  if (!data && error) return <Alert title="Unable to load players"><Text>{error}</Text><Button mt="sm" onClick={() => setQuery({ ...query })}>Retry</Button></Alert>;
+  if (!data && loading) return <LoadingState label="Loading player statistics…" />;
+  if (!data && error) return <Alert title="Unable to load players"><Text>{error}</Text><Button className="app-action-button app-action-button--context" mt="sm" onClick={() => setQuery({ ...query })} variant="outline">Retry</Button></Alert>;
   return <Stack className="players-page" gap="xl">
-    <Group align="flex-start" className="players-header" justify="space-between"><Box><Text className="eyebrow">Performance source</Text><Title className="page-title" order={1}>Players</Title><Text className="page-summary" maw={600} mt="xs">Dynamic player rankings from eligible match records.</Text></Box></Group>
+    <Group align="flex-start" className="players-header" justify="space-between"><Box><Title className="page-title" order={1}>Players</Title><Text className="page-summary" maw={600} mt="xs">Dynamic player rankings from eligible match records.</Text></Box></Group>
     {error && <Alert title="Refresh failed">{error}</Alert>}
     <Box className="players-board" aria-busy={loading}>
       <PlayerRankingFilters eventOptions={[{ label: "Overall", value: "overall" }, ...(data?.filterOptions.events ?? []).map((item) => ({ label: item.name, value: String(item.id) }))]} eventValue={eventValue} onEventChange={(value) => update({ eventId: value === "overall" ? undefined : Number(value), teamId: undefined, position: undefined, page: 1 })} teamOptions={[{ label: "All teams", value: "all" }, ...(data?.filterOptions.teams ?? []).map((item) => ({ label: item.name, value: String(item.id) }))] as never} teamValue={teamValue} onTeamChange={(value) => update({ teamId: value === "all" ? undefined : Number(value), position: undefined, page: 1 })} positionOptions={["all", ...(data?.filterOptions.positions ?? [])]} positionValue={positionValue} onPositionChange={(value) => update({ position: value === "all" ? undefined : value as PlayerPosition, page: 1 })} />
       <StatisticLeaderCards leaders={leaders} />
-      {!data?.items.length ? <Text className="page-summary">No eligible players match these filters.</Text> : <PlayerRankingTable players={data.items} sortField={query.sortBy} sortDirection={query.sortDirection} onSort={(field) => update({ sortBy: field, sortDirection: field === query.sortBy && query.sortDirection === "desc" ? "asc" : "desc", page: 1 })} onPlayerSelect={(slug) => { history.pushState({}, "", `/players/${slug}`); dispatchEvent(new PopStateEvent("popstate")); }} />}
-      {data && <TurnPageControls activePage={data.pagination.page} pageSize={pageSize} totalItems={data.pagination.totalItems} onPageChange={(page) => update({ page })} />}
+      {data && <PlayerRankingTable pagination={<DataPagination activePage={data.pagination.page} pageSize={pageSize} totalItems={data.pagination.totalItems} onPageChange={(page) => update({ page })} />} players={data.items} sortField={query.sortBy} sortDirection={query.sortDirection} onSort={(field) => update({ sortBy: field, sortDirection: field === query.sortBy && query.sortDirection === "desc" ? "asc" : "desc", page: 1 })} onPlayerSelect={(slug) => { history.pushState({}, "", `/players/${slug}`); dispatchEvent(new PopStateEvent("popstate")); }} />}
     </Box>
   </Stack>;
 }

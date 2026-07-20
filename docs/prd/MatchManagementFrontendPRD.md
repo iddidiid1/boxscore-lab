@@ -1,8 +1,22 @@
 # Match Management Frontend PRD
 
+## Status and authority
+
+**Status:** Active feature contract.
+
+This PRD remains authoritative for Match capabilities, data entry, routes,
+validation, read-only/void/restore behavior, and API interaction. Active
+visual treatment is owned by `docs/DESIGN.md`, while approved Editorial
+Scoreboard migration PRDs own implementation scope. Historical references to
+the existing card or sports-console appearance do not freeze obsolete visual
+composition.
+
 ## 1. 目标
 
-将现有 Match 相关页面从 mock/static 状态接入真实后端 API，在保留现有页面结构、交互方向和 sports-console 视觉风格的前提下，完成比赛列表、详情、创建、编辑、作废与恢复流程，并为 loading、empty、error、validation 和 voided 状态提供明确反馈。
+将现有 Match 相关页面从 mock/static 状态接入真实后端 API，在保留既有
+功能结构与交互方向的前提下，完成比赛列表、详情、创建、编辑、作废与恢复
+流程，并为 loading、empty、error、validation 和 voided 状态提供明确反馈；
+视觉处理遵循当前 `docs/DESIGN.md`。
 
 ## 2. 影响页面
 

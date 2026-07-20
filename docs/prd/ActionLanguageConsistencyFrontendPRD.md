@@ -1,5 +1,16 @@
 # Action Language Consistency Frontend PRD
 
+## Status and authority
+
+**Status:** Active specialized content contract.
+
+This PRD is authoritative only for user-visible action copy, action icon
+semantics, Back-link wording/navigation semantics, and confirmation-button
+labels. `docs/DESIGN.md` and the active Editorial Scoreboard migration PRD own
+button, link, icon-control, and Confirmation Dialog visual treatment, geometry,
+color, spacing, and interaction-state styling. Feature PRDs continue to own the
+underlying action availability and business behavior.
+
 ## 1. 目标
 
 统一前端中“创建、添加、保存、取消、返回、移除、归档、作废与恢复”等常用操作的英文文案、图标和语义用法，减少同类操作在不同页面中混用不同动词、文本加号或不一致图标的情况。调整后应提高界面可预期性和扫读效率，同时保留 Archive、Void 和 Remove 等不同业务动作的准确含义。

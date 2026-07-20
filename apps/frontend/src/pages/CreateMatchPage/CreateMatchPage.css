@@ -30,21 +30,49 @@
 }
 
 .match-stats-section {
-  padding: 22px;
+  padding: 0;
 }
 
 .match-stats-title {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
+}
+
+.match-stats-title-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.match-stats-role {
+  color: var(--color-text-muted);
+  font-family: var(--font-family-data);
+  font-size: 0.58rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .match-stats-score {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
   margin-left: auto;
-  color: var(--color-text-strong);
+  color: var(--color-text-muted);
   font-family: var(--font-family-data);
-  font-size: 0.9rem;
+  font-size: 0.66rem;
   font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.match-stats-score strong {
+  color: var(--color-text-strong);
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
 }
 
 .match-stats-title-bar {
@@ -52,10 +80,6 @@
   width: 4px;
   height: 22px;
   border-radius: var(--radius-pill);
-}
-
-.match-stats-table-scroll {
-  overflow-x: auto;
 }
 
 .match-stats-input-table {
@@ -85,31 +109,14 @@
 }
 
 .match-stats-input-table th {
-  border-color: var(--color-border);
-  color: var(--color-text-muted);
-  font-family: var(--font-family-data);
   font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  padding: 10px;
-  text-transform: uppercase;
 }
 
-.match-stats-input-table td {
-  border-color: var(--color-border-table-cell);
-  padding: 10px;
+.match-stats-input-table.app-data-table td {
+  padding: 2px 8px;
 }
 
-.match-stats-input-table tbody tr:hover td {
-  background: var(--color-table-row-hover-subtle);
-}
-
-.match-stats-other-row td {
-  background: var(--color-surface-row-muted);
-}
-
-.match-stats-other-row .match-stats-player-name,
-.match-stats-other-row .match-stats-readonly-value {
+.match-stats-other-row .match-stats-player-name {
   color: var(--color-text-row-muted);
   font-style: italic;
 }
@@ -139,7 +146,8 @@
 
 .match-stats-input {
   width: 100%;
-  min-height: 38px;
+  min-height: var(--control-height-dense);
+  height: var(--control-height-dense);
   border-color: var(--color-border-control);
   border-radius: var(--radius-control);
   background: var(--color-surface-control);
@@ -172,5 +180,19 @@
 
   .match-form-section {
     padding: 16px;
+  }
+
+  .match-stats-section {
+    padding: 0;
+  }
+
+  .match-stats-title {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .match-stats-score {
+    flex: 1 0 100%;
+    margin-left: 14px;
   }
 }

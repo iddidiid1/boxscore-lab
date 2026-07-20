@@ -2,9 +2,16 @@
 
 ## Status
 
-This document is the source of truth for the Player Awards presentation on the Event Detail page.
+**Status:** Active content and ordering contract; visual specification
+superseded.
 
-It defines the component's information hierarchy, desktop layout, and visual treatment. It does not change award business rules, persistence, or editing workflows.
+This document remains authoritative for Player Awards information order, API
+ordering, MVP duplication, optional Second Team behavior, and displayed data.
+`docs/DESIGN.md` is the visual source of truth and defines the Event Detail
+presentation as the responsive **Black Metal Plaque** Pattern. Where historical
+visual language below conflicts with `docs/DESIGN.md`, the active Design System
+wins. This document does not change award business rules, persistence, or
+editing workflows.
 
 ## Scope
 
@@ -30,11 +37,12 @@ The MVP is the component's primary visual focus. The First Team is the primary r
 
 ### Event MVP
 
-- Render the MVP in one full-width horizontal spotlight card.
+- Render the MVP as the first full-width horizontal field integrated into the
+  single Black Metal Plaque; do not nest a separate Card.
 - Show the `EVENT MVP` label, player name, player position, and team name.
 - Use the display typeface for the player name and render it in uppercase.
-- Use the Jelly Mint action color for the card's primary accent line and border treatment.
-- Reserve gold for the Trophy icon and compact `MVP` markers only.
+- Use Championship Gold for the Trophy/outcome signal and Brand Mint only as a
+  restrained structural trace.
 - Do not use a full mint or gold background.
 
 ### All-Event First Team
@@ -68,15 +76,22 @@ An MVP may also be selected for the First or Second Team.
 
 ## Visual Rules
 
-- Follow the canonical tokens in `apps/frontend/src/styles/variables.css`.
-- Use `--font-family-display` for the MVP name and section-defining display text.
-- Use the body typeface for player names in roster cells.
-- Use the data typeface for small labels such as `EVENT MVP`, `FIRST TEAM`, `SECOND TEAM`, and the inline `MVP` marker.
-- Render player positions as compact data labels using the existing `PlayerPosition` enum values.
-- Reuse shared surface, border, text, warning, and action tokens. Do not hard-code theme colors in the component.
-- Jelly Mint is the component's primary structural accent. Gold is limited to the Trophy icon and `MVP` markers.
-- Keep all five roster cells equal in width and aligned to the same grid.
-- Preserve the sports-console visual language without turning the component into a decorative illustration.
+All visual rules come from `docs/DESIGN.md §8.3` and its named Black Metal
+Plaque exception. In particular:
+
+- use one cut-corner, solid near-black outer Plaque;
+- integrate the MVP field and both roster groups without nested Cards;
+- use Championship Gold for MVP meaning and restrained Brand Mint for
+  structure;
+- render First Team and optional Second Team as engraved five-cell ruled grids
+  at desktop width;
+- reflow the roster grids responsively without changing award grouping;
+- use canonical tokens and keep registration marks and directional traces local
+  to this Pattern; do not add repeating stripes or visible brushed grain.
+
+The data requirements remain: show API-provided Position, keep equal roster-cell
+roles, preserve API order, omit absent Second Team, and retain the inline `MVP`
+marker when duplicated.
 
 ## Desktop Wireframe
 
@@ -104,7 +119,6 @@ ALL-EVENT SECOND TEAM
 
 ## Non-Goals
 
-- Mobile or narrow-screen layout behavior.
 - Award notes presentation.
 - Award editing or selection controls.
 - Manual position ordering, basketball-court placement, or formation visualization. Positions are display labels and backend ordering keys, not award-specific stored data.
@@ -115,10 +129,12 @@ ALL-EVENT SECOND TEAM
 
 - The MVP, First Team, and optional Second Team are visually distinct at a glance.
 - The MVP is the strongest visual element in the component.
-- First and Second Team selections use five equal-width cells per row.
+- First and Second Team selections use five equal-role cells per desktop row
+  and the responsive reflow defined by `docs/DESIGN.md`.
 - A missing Second Team does not render an empty section.
 - An MVP selected in a team row remains in that row and receives an `MVP` marker.
 - Every rendered award shows the API-provided player position without deriving or persisting award-specific position data.
-- Jelly Mint provides the primary component accent; gold appears only on the Trophy icon and compact `MVP` markers.
+- Championship Gold communicates MVP meaning; Brand Mint remains a restrained
+  structural trace.
 - The component uses semantic design tokens and introduces no page-local theme.
 - Existing award data and event-detail interaction behavior remain unchanged.

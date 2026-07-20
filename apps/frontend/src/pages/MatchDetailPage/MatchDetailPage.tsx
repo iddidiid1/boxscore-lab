@@ -1,4 +1,4 @@
-import { Alert, Anchor, Box, Button, Center, Group, Loader, Stack } from "@mantine/core";
+import { Alert, Anchor, Box, Button, Group, Skeleton, Stack } from "@mantine/core";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchMatch, restoreMatch, voidMatch, type MatchDetail } from "../../features/matches";
@@ -6,6 +6,30 @@ import { ApiClientError } from "../../features/teams/api/teams";
 import { ConfirmModal } from "../../shared/components/ConfirmModal";
 import { MatchBoxScoreTable, MatchScoreHeader } from "./components";
 import "./MatchDetailPage.css";
+
+function MatchDetailSkeleton() {
+  return (
+    <Stack aria-label="Loading match" className="match-detail-page" gap="md">
+      <Box className="match-detail-score-card app-surface app-surface--data">
+        <Box className="match-detail-skeleton-meta">
+          <Skeleton height={10} width="34%" />
+          <Skeleton height={10} width="26%" />
+        </Box>
+        <Box className="match-detail-skeleton-arena">
+          <Skeleton height={112} />
+          <Skeleton height={72} />
+          <Skeleton height={112} />
+        </Box>
+      </Box>
+      {Array.from({ length: 2 }, (_, index) => (
+        <Box className="match-detail-skeleton-bay app-data-bay" key={index}>
+          <Skeleton height={18} width="32%" />
+          <Skeleton height={210} />
+        </Box>
+      ))}
+    </Stack>
+  );
+}
 
 export function MatchDetailPage({ matchId }: { matchId: string }) {
   const id = Number(matchId);
@@ -22,20 +46,19 @@ export function MatchDetailPage({ matchId }: { matchId: string }) {
   }, [id, reload]);
 
   async function mutate(action: "void" | "restore") {
-    setConfirmAction(null);
     setSubmitting(true); setError(undefined);
-    try { if (action === "void") await voidMatch(id); else await restoreMatch(id); setReload((value) => value + 1); }
+    try { if (action === "void") await voidMatch(id); else await restoreMatch(id); setConfirmAction(null); setReload((value) => value + 1); }
     catch (reason) { setError(reason instanceof ApiClientError ? [reason.response.message, ...reason.response.details.map((detail) => detail.message)].join(" ") : "Action failed."); }
     finally { setSubmitting(false); }
   }
 
-  if (loading) return <Center py="xl"><Loader aria-label="Loading match" /></Center>;
-  if (!match) return <Alert color="red" title={error ?? "Unable to load match"}><Button onClick={() => setReload((value) => value + 1)} size="xs">Retry</Button></Alert>;
+  if (loading) return <MatchDetailSkeleton />;
+  if (!match) return <Alert color="red" title={error ?? "Unable to load match"}><Button className="app-action-button app-action-button--context" onClick={() => setReload((value) => value + 1)} size="xs" variant="outline">Retry</Button></Alert>;
   const eventUnavailable = match.event.archivedAt !== null || match.event.deletedAt !== null || !["ONGOING", "COMPLETED"].includes(match.event.status);
   const home = match.teams.find((team) => team.role === "HOME")!;
   const away = match.teams.find((team) => team.role === "AWAY")!;
   return <Stack className="match-detail-page" gap="md">
-    <Group className="match-detail-actions" justify="space-between"><Anchor className="match-detail-back-link" href="/matches">← Back to Matches</Anchor><Group>
+    <Group className="match-detail-actions" justify="space-between"><Anchor className="match-detail-back-link app-detail-back-link" href="/matches">← Back to Matches</Anchor><Group>
       {!match.voidedAt && !eventUnavailable ? <><Button className="edit-match-button app-action-button app-action-button--primary" component="a" href={`/matches/${match.id}/edit`} leftSection={<Pencil size={16} />}>Edit Match</Button><Button className="app-action-button app-action-button--danger" disabled={submitting} onClick={() => setConfirmAction("void")} variant="outline">Void Match</Button></> : null}
       {match.voidedAt && !eventUnavailable ? <Button className="app-action-button app-action-button--primary" disabled={submitting} onClick={() => setConfirmAction("restore")}>Restore Match</Button> : null}
     </Group></Group>
@@ -43,10 +66,11 @@ export function MatchDetailPage({ matchId }: { matchId: string }) {
     {eventUnavailable ? <Alert color="gray" title="Historical match">The Event is archived, deleted, or otherwise unavailable. This record is read-only.</Alert> : null}
     {error ? <Alert color="red">{error}</Alert> : null}
     <MatchScoreHeader match={match} />
-    <Box className="match-box-score-grid"><MatchBoxScoreTable otherStats={home.otherStats} players={home.playerStats} teamColor={home.team.primaryColor} title={home.team.name} /><MatchBoxScoreTable otherStats={away.otherStats} players={away.playerStats} teamColor={away.team.primaryColor} title={away.team.name} /></Box>
+    <Box className="match-box-score-grid"><MatchBoxScoreTable otherStats={home.otherStats} players={home.playerStats} score={home.score} teamColor={home.team.primaryColor} title={home.team.name} /><MatchBoxScoreTable otherStats={away.otherStats} players={away.playerStats} score={away.score} teamColor={away.team.primaryColor} title={away.team.name} /></Box>
     <ConfirmModal
       confirmLabel={confirmAction === "void" ? "Void Match" : "Restore Match"}
       danger={confirmAction === "void"}
+      error={error}
       loading={submitting}
       onCancel={() => setConfirmAction(null)}
       onConfirm={() => confirmAction && mutate(confirmAction)}

@@ -1,0 +1,1 @@
+export { TeamArtwork } from "./TeamArtwork";

@@ -1,13 +1,12 @@
 .list-empty-state {
   min-width: 0;
-  min-height: 180px;
+  min-height: 144px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-panel);
-  background: var(--color-surface);
-  padding: 24px;
+  border-top: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding: var(--space-6) 0;
 }
 
 .list-empty-state h3 {
@@ -19,7 +18,7 @@
 
 @media (max-width: 560px) {
   .list-empty-state {
-    min-height: 150px;
-    padding: 18px;
+    min-height: 128px;
+    padding: var(--space-4) 0;
   }
 }

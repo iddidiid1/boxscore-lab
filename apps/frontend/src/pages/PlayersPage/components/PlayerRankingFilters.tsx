@@ -23,7 +23,7 @@ export function PlayerRankingFilters({
   teamValue
 }: PlayerRankingFiltersProps) {
   return (
-    <Group className="player-ranking-filters app-panel" gap="sm">
+    <Group className="player-ranking-filters app-filter-bar" gap="sm">
       <Select
         allowDeselect={false}
         aria-label="Event filter"

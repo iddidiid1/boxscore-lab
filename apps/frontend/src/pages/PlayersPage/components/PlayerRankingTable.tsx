@@ -4,6 +4,7 @@ import type { PlayerRanking, PlayerRankingSortDirection, PlayerRankingSortField 
 type PlayerRankingTableProps = {
   onPlayerSelect?: (playerId: string) => void;
   onSort: (field: PlayerRankingSortField) => void;
+  pagination?: React.ReactNode;
   players: PlayerRanking[];
   sortDirection: PlayerRankingSortDirection;
   sortField: PlayerRankingSortField;
@@ -105,12 +106,13 @@ function getRankingValueClass(player: PlayerRanking, columnKey: string) {
 export function PlayerRankingTable({
   onPlayerSelect,
   onSort,
+  pagination,
   players,
   sortDirection,
   sortField
 }: PlayerRankingTableProps) {
   return (
-    <Box className="player-ranking-card app-panel">
+    <Box className="player-ranking-card app-data-bay">
       <Title order={2}>Player Rankings</Title>
       <Box className="player-ranking-table-scroll app-table-wrap">
         <Table className="player-ranking-table app-data-table">
@@ -136,12 +138,12 @@ export function PlayerRankingTable({
                   >
                     {column.sortField ? (
                       <button
-                        className="player-sort-button"
+                        className="player-sort-button app-sort-control"
                         onClick={() => onSort(column.sortField!)}
                         type="button"
                       >
                         <span>{column.label}</span>
-                        <span aria-hidden="true" className="player-sort-indicator">
+                        <span aria-hidden="true" className="player-sort-indicator app-sort-control__indicator">
                           {isActiveSort ? sortIndicator : ""}
                         </span>
                       </button>
@@ -154,7 +156,15 @@ export function PlayerRankingTable({
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {players.map((player) => (
+            {players.length === 0 ? (
+              <Table.Tr>
+                <Table.Td colSpan={columns.length}>
+                  <Text className="page-summary">
+                    No eligible players match these filters.
+                  </Text>
+                </Table.Td>
+              </Table.Tr>
+            ) : players.map((player) => (
               <Table.Tr key={player.id}>
                 {columns.map((column) => (
                   <Table.Td className={column.className} key={column.key}>
@@ -172,6 +182,7 @@ export function PlayerRankingTable({
           </Table.Tbody>
         </Table>
       </Box>
+      {pagination}
     </Box>
   );
 }

@@ -1,5 +1,6 @@
-import { Button, Group, Modal, Stack, Text } from "@mantine/core";
+import { Alert, Button, Group, Modal, Stack, Text } from "@mantine/core";
 import type { ReactNode } from "react";
+import "./ConfirmModal.css";
 
 export type ConfirmModalProps = {
   opened: boolean;
@@ -10,6 +11,7 @@ export type ConfirmModalProps = {
   /** Consequence description. A string is wrapped in <Text>; nodes are rendered as-is. */
   children?: ReactNode;
   danger?: boolean;
+  error?: ReactNode;
   loading?: boolean;
   cancelLabel?: string;
 };
@@ -25,16 +27,35 @@ export function ConfirmModal({
   onCancel,
   children,
   danger = false,
+  error,
   loading = false,
   cancelLabel = "Cancel"
 }: ConfirmModalProps) {
   return (
-    <Modal centered onClose={onCancel} opened={opened} title={title}>
+    <Modal
+      centered
+      classNames={{
+        body: "app-confirm-modal__body",
+        content: "app-confirm-modal__content",
+        header: "app-confirm-modal__header",
+        title: "app-confirm-modal__title"
+      }}
+      closeOnClickOutside={!loading}
+      closeOnEscape={!loading}
+      onClose={onCancel}
+      opened={opened}
+      title={title}
+    >
       <Stack gap="md">
         {typeof children === "string" ? <Text>{children}</Text> : children}
-        <Group justify="flex-end">
+        {error ? (
+          <Alert className="app-confirm-modal__error" color="red" role="alert">
+            {error}
+          </Alert>
+        ) : null}
+        <Group className="app-confirm-modal__actions" justify="flex-end">
           <Button
-            className="app-action-button app-action-button--secondary"
+            className="app-action-button app-action-button--cancel"
             disabled={loading}
             onClick={onCancel}
             type="button"

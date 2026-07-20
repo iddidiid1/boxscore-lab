@@ -1,5 +1,21 @@
 # UI Redesign Readiness Frontend PRD
 
+## Status and authority
+
+**Status:** Completed historical preparation PRD.
+
+This document remains authoritative for the completed semantic-token cleanup,
+style-literal regression guard, and the historical reasons recorded in §7. It
+does not own the current visual direction. Its requirements to preserve the
+then-current appearance applied only to the readiness migration and were
+superseded for active visual work by `docs/DESIGN.md` and the approved
+Editorial Scoreboard migration PRDs.
+
+Where this document names old colors, radii, card treatments, Tier chrome, or
+shared visual variants, treat them as implementation history rather than
+current requirements. `docs/UI_REDESIGN_READINESS_CHECKLIST.md` remains the
+progress record for readiness and migration verification.
+
 ## 1. 目标
 
 按 `docs/UI_REDESIGN_READINESS_CHECKLIST.md` 增量收敛前端视觉样式，使颜色、字体、圆角、边框、阴影与常用控件主要由语义 token、Mantine 主题和小型共享视觉原语控制，从而降低未来视觉重设计的改动范围。迁移期间保持当前外观、布局、DOM 结构、响应式行为和业务逻辑不变。
@@ -143,3 +159,39 @@
 - 未来整体调整 panel 底色、边框、圆角或 elevation 时，leader card 必须自动跟随；局部渐变仍保留，除非后续重设计明确要求移除。
 
 **范围影响**：该决策是 Batch 2 - Player Statistics 的视觉保真要求，不将渐变提升为所有 panel 的共享默认效果。
+
+### 7.2 2026-07-16 - Event 卡与获奖高亮改为 token 化，取代 Batch 5 的字面量保留决策
+
+**背景**：Batch 5 曾将 `EventsPage.css` 的 Event summary 渐变、获奖（winner）高亮与 `EventTierBadge.css` 的 tier crest 渐变一并记为“有意的数据可视化字面量”，并写入 `check-style-literals.mjs` 的 `visualizationAllowlist`。后续复核发现，`EventsPage.css` 中的获奖金色实为早期版本遗留：当主题切换到薄荷绿+近黑后，作者未同步调整 design token，而是硬编码了一个与全站 `--color-warning`（`#ffb95f`）不一致的旧金色（`#FBBF24` = `rgba(251,191,36,…)`），并混入旧 slate 残留（卡片渐变 `rgba(15,23,42,…)`、页脚分隔线 `rgba(51,65,85,…)`）。这些属于 token 化欠债，而非有意特效。
+
+**决策**：
+- `EventsPage.css` 全量去字面量：获奖金色接入既有专属 token 家族 `--color-event-winner-border` / `--color-event-winner-surface`（当时以 `#ffb95f` 为准，`#FBBF24` 弃用；现由 UI-DEC-064 统一更新为 `#d8cf70`）；卡片渐变与页脚分隔线新增 `--color-event-card-gradient-top` / `--color-event-card-gradient-bottom` / `--color-event-card-divider`，**保留精确当前值**以维持视觉保真。
+- 渐变结构与布局完全不变，仅将颜色搬入 `variables.css`，使其可追溯、可在后续重设计中一处改值。
+- 将 `EventsPage.css` 从 `check-style-literals.mjs` 的 `visualizationAllowlist` 中移除；`EventTierBadge.css` 仍保留在 allowlist（tier crest 的 token 化另行决策，本次不动）。
+- 金色与薄荷绿的配色和谐问题**不在本次范围**，留待后续独立的 design token 重设计；本次仅统一到既有 token 值、消除硬编码欠债。
+
+**范围影响**：本决策取代 §7.1 之后 Batch 5 中“Event summary/winner 渐变作为字面量保留”的部分，仅限 `EventsPage.css`。`docs/UI_REDESIGN_READINESS_CHECKLIST.md` 的 Batch 5 相应条目同步更新。不改变任何页面布局、DOM、响应式断点或业务逻辑。
+
+### 7.3 2026-07-16 - `check-style-literals.mjs` 扩展至 `.tsx` 与动态值 allowlist
+
+**背景**：防回归脚本原先只扫描 `.css`，导致 `.tsx` 内联样式中的颜色字面量（如 `TeamCard.tsx` 的动态对比色、`primaryColor` 数据默认值）不受守护。
+
+**决策**：
+- 扫描范围扩展到 `.css` 与 `.tsx`。`.tsx` 的 `fontFamily` / `borderRadius` 为驼峰写法，不触发 font-family / border-radius 规则，故仅颜色规则实际生效，无误报风险。
+- 新增窄范围 `dynamicValueAllowlist`（按文件+用途注明）：`TeamCard.tsx`（运行时按团队主色计算的兜底/对比色）、`CreateTeamPage.tsx` 与 `ManageTeamPage.tsx`（团队主色数据默认值）、`TeamEditorForm.tsx`（仅在 placeholder/校验文案中作为示例文本出现的 hex）。
+- allowlist 保持窄化到文件与用途，不做全目录或全规则跳过。
+
+**范围影响**：属 Phase 5 防回归收敛。团队主色等业务数据动态值不强制 token 化，符合 §5.1；未来若这些默认值需跟随主题，另行进入需求确认流程。
+
+### 7.4 2026-07-16 - Event Tier Crest 文档化为可视化例外并 token 化
+
+**背景**：`EventTierBadge.css` 的四档（S/A/B/C）配色是半迁移状态：结构（圆角/字体）已 token 化，但每档的边框与渐变洗色仍为旧 slate/蓝主题的裸值，且与各档实色 token 不一致（S 字母当时使用 `--color-warning` #ffb95f、现由 UI-DEC-064 更新为 #d8cf70，却曾搭配 #FBBF24 洗色；B 字母用 `--color-success` #3cffd0 却配 #4EDEA3，A 档更是 `#60a5fa` 蓝——薄荷体系无对应 token 的化石色）。CLAUDE.md 新增「design-token 变更先改 DESIGN.md 再镜像 variables.css」的规则后，此改动须先在 DESIGN.md 立意图。同时 DESIGN.md 明确「避免渐变、mint 稀用」，而 tier crest 本质是多彩渐变纹章，需要一个合法身份。
+
+**决策**：
+- 在 `docs/DESIGN.md` 新增 “Event Tier Crest — data-visualization exception” 小节，将 tier crest 明文登记为**受认可的可视化例外**（与 Stat Leader Card 渐变同类），并定义 tier accent 色阶：S=`warning`、A=`uv`(#a07aff)、B=`success`、C=`text-soft`。
+- **A 档由旧电蓝 #60a5fa 改为 uv 紫 #a07aff**（用户决策），与 S 金/B 绿拉开区分，且不再引入薄荷体系外的离群蓝。
+- `variables.css` 镜像新增 `--color-tier-{s,a,b,c}-accent`（空格/逗号分隔 RGB 通道，使单一 accent 同时派生实色与 alpha 洗色）与共享 `--color-tier-crest-*` chrome token（保留旧 slate 值以维持视觉保真，留待重设计再定值）。
+- `EventTierBadge.css` 全部裸值改为 token 引用；各档实色与洗色统一到同一 accent，根除「一档两色」。S/B/C 视觉仅极轻微色相位移，A 档按决策改紫。
+- `EventTierBadge.css` **保留在** `check-style-literals.mjs` 的 `visualizationAllowlist`：它现已 token 驱动，但仍用 `rgba(var(--tier-accent), α)` 组合透明度渐变，属登记在案的可视化例外，非未迁移裸值。
+
+**范围影响**：本决策把 tier crest 从「Batch 5 allowlist 里的未说明字面量」升级为「DESIGN.md 登记的正式可视化例外」。执行顺序遵循 CLAUDE.md 新规则：DESIGN.md → variables.css → 组件 CSS。同时补记 §7.2 的 `--color-event-card-*` / `--color-event-winner-*` token 进 DESIGN.md，消除新规则下的文档-实现同步缺口。不改变布局、DOM、响应式或业务逻辑。

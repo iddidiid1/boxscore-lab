@@ -1,8 +1,13 @@
-import { Alert, Button, Center, Loader, Stack, Text } from "@mantine/core";
+import { Alert, Button, Stack, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { fetchMatches, type MatchFilterOptions, type MatchListItem } from "../../features/matches";
-import { TurnPageControls } from "../PlayersPage/components";
-import { MatchFilters, MatchHistoryList, MatchesPageHeader } from "./components/matches";
+import { DataPagination } from "../../shared/components/data-display";
+import {
+  MatchFilters,
+  MatchHistoryList,
+  MatchHistoryListSkeleton,
+  MatchesPageHeader
+} from "./components/matches";
 import "./MatchesPage.css";
 
 const matchesPerPage = 10;
@@ -43,6 +48,14 @@ export function MatchesPage() {
     setPage(1);
   }
 
+  const hasRetainedMatches = matches.length > 0;
+  const isInitialLoading = loading && !hasRetainedMatches;
+  const hasFilters = eventId !== undefined || teamId !== undefined || stageTagId !== undefined;
+
+  function clearFilters() {
+    changeEvent(undefined);
+  }
+
   return (
     <Stack className="matches-page" gap="xl">
       <MatchesPageHeader />
@@ -58,11 +71,54 @@ export function MatchesPage() {
           teamId={teamId}
           teams={options.teams}
         />
-        {loading ? <Center py="xl"><Loader aria-label="Loading matches" /></Center> : null}
-        {error ? <Alert color="red" title="Unable to load matches">{error}<Button ml="md" onClick={() => setReloadKey((value) => value + 1)} size="xs">Retry</Button></Alert> : null}
-        {!loading && !error && matches.length === 0 ? <Alert title="No matches found"><Text mb="sm">There are no matches for the selected filters.</Text><Button onClick={() => { changeEvent(undefined); setTeamId(undefined); }} size="xs">Clear filters</Button></Alert> : null}
-        {!loading && !error ? <MatchHistoryList matches={matches} /> : null}
-        {!loading && !error && totalItems > 0 ? <TurnPageControls activePage={page} onPageChange={setPage} pageSize={matchesPerPage} totalItems={totalItems} /> : null}
+        {isInitialLoading ? <MatchHistoryListSkeleton /> : null}
+        {loading && hasRetainedMatches ? (
+          <Alert className="matches-refresh-feedback" title="Refreshing matches">
+            Keeping the current results visible while the latest records load.
+          </Alert>
+        ) : null}
+        {error ? (
+          <Alert color="red" title="Unable to load matches">
+            {error}
+            <Button
+              className="app-action-button app-action-button--context"
+              ml="md"
+              onClick={() => setReloadKey((value) => value + 1)}
+              size="xs"
+              variant="outline"
+            >
+              Retry
+            </Button>
+          </Alert>
+        ) : null}
+        {!loading && !error && matches.length === 0 ? (
+          <Alert title="No matches found">
+            <Text mb="sm">
+              {hasFilters
+                ? "There are no matches for the selected filters."
+                : "There are no recorded matches yet."}
+            </Text>
+            {hasFilters ? (
+              <Button
+                className="app-action-button app-action-button--context"
+                onClick={clearFilters}
+                size="xs"
+                variant="outline"
+              >
+                Clear filters
+              </Button>
+            ) : null}
+          </Alert>
+        ) : null}
+        {!isInitialLoading && hasRetainedMatches ? <MatchHistoryList matches={matches} /> : null}
+        {!isInitialLoading && totalItems > 0 ? (
+          <DataPagination
+            activePage={page}
+            onPageChange={setPage}
+            pageSize={matchesPerPage}
+            totalItems={totalItems}
+          />
+        ) : null}
       </Stack>
     </Stack>
   );

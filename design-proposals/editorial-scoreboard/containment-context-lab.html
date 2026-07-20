@@ -1,0 +1,1828 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Containment Context Lab</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Containment Context Lab" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Containment Context Lab&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;containment-context-lab&quot; data-context=&quot;data&quot; data-material=&quot;open&quot; data-eyebrow=&quot;off&quot;&gt;
+  &lt;style&gt;
+    @import url(&quot;https://fonts.googleapis.com/css2?family=Anton&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500&amp;display=swap&quot;);
+
+    #containment-context-lab {
+      --canvas: #131313;
+      --panel: #1a1a1a;
+      --inset: #0f0f0f;
+      --raised: #232323;
+      --text-strong: #ffffff;
+      --text: #dedede;
+      --text-soft: #b9b9b9;
+      --text-muted: #949494;
+      --brand: #43f2c8;
+      --brand-soft: rgb(67 242 200 / 10%);
+      --border-subtle: rgb(255 255 255 / 7.5%);
+      --border-structural: rgb(255 255 255 / 13%);
+      --focus: rgb(67 242 200 / 88%);
+      --s1: 4px;
+      --s2: 8px;
+      --s3: 12px;
+      --s4: 16px;
+      --s5: 24px;
+      --s6: 32px;
+      --s7: 48px;
+      position: relative;
+      isolation: isolate;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 82% 58%, rgb(67 242 200 / 7%), transparent 30%),
+        var(--canvas);
+      font-family: &quot;Space Grotesk&quot;, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    #containment-context-lab::before {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      opacity: .65;
+      background-image:
+        linear-gradient(rgb(255 255 255 / 2%) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(255 255 255 / 2%) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, transparent, black 30%, black 88%, transparent);
+      content: &quot;&quot;;
+    }
+
+    #containment-context-lab * {
+      box-sizing: border-box;
+    }
+
+    #containment-context-lab button,
+    #containment-context-lab input,
+    #containment-context-lab select {
+      color: inherit;
+      font: inherit;
+    }
+
+    #containment-context-lab button:focus-visible,
+    #containment-context-lab input:focus-visible,
+    #containment-context-lab select:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .ccl-toolbar {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: var(--s4);
+      align-items: center;
+      padding: var(--s3) 0 var(--s4);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .ccl-kicker,
+    .ccl-label,
+    .ccl-table-head,
+    .ccl-number,
+    .ccl-section-meta,
+    .ccl-fact {
+      font-family: &quot;JetBrains Mono&quot;, monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ccl-kicker,
+    .ccl-label,
+    .ccl-table-head {
+      color: var(--text-muted);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .ccl-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: var(--s2);
+    }
+
+    .ccl-control-group {
+      display: inline-flex;
+      gap: 2px;
+      padding: 2px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      background: rgb(26 26 26 / 82%);
+      backdrop-filter: blur(10px);
+    }
+
+    .ccl-control {
+      min-height: 32px;
+      padding: 0 var(--s3);
+      border: 0;
+      border-radius: 3px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: &quot;JetBrains Mono&quot;, monospace;
+      font-size: 10px;
+    }
+
+    .ccl-control:hover {
+      background: var(--raised);
+      color: var(--text-strong);
+    }
+
+    .ccl-control[aria-pressed=&quot;true&quot;] {
+      background: var(--brand);
+      color: #081510;
+    }
+
+    .ccl-page {
+      padding: var(--s7) 0 var(--s6);
+    }
+
+    .ccl-page-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--s5);
+      align-items: end;
+      padding-bottom: var(--s6);
+      border-bottom: 1px solid var(--border-structural);
+    }
+
+    .ccl-eyebrow {
+      display: none;
+      margin: 0 0 var(--s2);
+      color: var(--brand);
+      font-family: &quot;JetBrains Mono&quot;, monospace;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    #containment-context-lab[data-eyebrow=&quot;on&quot;] .ccl-eyebrow {
+      display: block;
+    }
+
+    .ccl-title {
+      margin: 0;
+      color: var(--text-strong);
+      font-family: &quot;Anton&quot;, sans-serif;
+      font-size: clamp(40px, 7vw, 58px);
+      font-weight: 400;
+      letter-spacing: -.015em;
+      line-height: .98;
+      text-transform: uppercase;
+    }
+
+    .ccl-page-description {
+      max-width: 58ch;
+      margin: var(--s3) 0 0;
+      color: var(--text-soft);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .ccl-page-action {
+      min-height: 40px;
+      padding: 0 var(--s4);
+      border: 1px solid rgb(67 242 200 / 42%);
+      border-radius: 4px;
+      background: var(--brand);
+      color: #081510 !important;
+      font-weight: 500;
+    }
+
+    .ccl-context-line {
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+      min-height: 38px;
+      margin: var(--s4) 0;
+      color: var(--text-muted);
+      font-family: &quot;JetBrains Mono&quot;, monospace;
+      font-size: 11px;
+    }
+
+    .ccl-context-line::before {
+      width: 16px;
+      height: 2px;
+      background: var(--brand);
+      content: &quot;&quot;;
+    }
+
+    .ccl-surface {
+      position: relative;
+      overflow: hidden;
+      transition:
+        background 180ms cubic-bezier(.2, .8, .2, 1),
+        border-color 180ms cubic-bezier(.2, .8, .2, 1),
+        border-radius 180ms cubic-bezier(.2, .8, .2, 1),
+        padding 180ms cubic-bezier(.2, .8, .2, 1),
+        box-shadow 180ms cubic-bezier(.2, .8, .2, 1);
+    }
+
+    #containment-context-lab[data-material=&quot;open&quot;] .ccl-surface {
+      padding: 0;
+      border-top: 1px solid var(--border-structural);
+      border-bottom: 1px solid var(--border-structural);
+      border-radius: 0;
+      background: transparent;
+    }
+
+    #containment-context-lab[data-material=&quot;outline&quot;] .ccl-surface {
+      padding: var(--s4);
+      border: 1px solid var(--border-structural);
+      border-radius: 10px;
+      background: rgb(19 19 19 / 56%);
+    }
+
+    #containment-context-lab[data-material=&quot;outline&quot;] .ccl-surface::before {
+      position: absolute;
+      top: -1px;
+      left: var(--s4);
+      width: 64px;
+      height: 2px;
+      background: var(--brand);
+      content: &quot;&quot;;
+    }
+
+    #containment-context-lab[data-material=&quot;glass&quot;] .ccl-surface {
+      padding: var(--s4);
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, rgb(255 255 255 / 7%), transparent 42%),
+        rgb(24 24 24 / 58%);
+      box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 8%),
+        inset 1px 0 0 rgb(255 255 255 / 3%),
+        0 14px 30px rgb(0 0 0 / 17%);
+      backdrop-filter: blur(16px) saturate(115%);
+    }
+
+    .ccl-section-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--s4);
+      align-items: end;
+      padding: var(--s4) 0 var(--s3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    #containment-context-lab:not([data-material=&quot;open&quot;]) .ccl-section-header {
+      padding-top: 0;
+    }
+
+    .ccl-section-title {
+      margin: 0;
+      color: var(--text-strong);
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: -.01em;
+    }
+
+    .ccl-section-description {
+      margin: var(--s1) 0 0;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .ccl-section-meta {
+      color: var(--text-soft);
+      font-size: 11px;
+    }
+
+    .ccl-pane {
+      display: none;
+    }
+
+    #containment-context-lab[data-context=&quot;data&quot;] .ccl-pane[data-context-pane=&quot;data&quot;],
+    #containment-context-lab[data-context=&quot;editor&quot;] .ccl-pane[data-context-pane=&quot;editor&quot;],
+    #containment-context-lab[data-context=&quot;summary&quot;] .ccl-pane[data-context-pane=&quot;summary&quot;] {
+      display: block;
+    }
+
+    .ccl-table-head,
+    .ccl-row {
+      display: grid;
+      grid-template-columns: 36px minmax(130px, 1.5fr) minmax(90px, .8fr) 64px 64px;
+      gap: var(--s3);
+      align-items: center;
+      padding: var(--s2) 0;
+    }
+
+    .ccl-table-head {
+      min-height: 34px;
+    }
+
+    .ccl-row {
+      min-height: 54px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .ccl-rank {
+      color: var(--text-muted);
+      font-family: &quot;JetBrains Mono&quot;, monospace;
+    }
+
+    .ccl-name {
+      min-width: 0;
+    }
+
+    .ccl-name strong,
+    .ccl-name span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .ccl-name strong {
+      color: var(--text-strong);
+      font-weight: 500;
+    }
+
+    .ccl-name span {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .ccl-number {
+      text-align: right;
+    }
+
+    .ccl-number-key {
+      color: var(--brand);
+    }
+
+    .ccl-editor-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(200px, .65fr);
+      gap: var(--s4);
+      padding-top: var(--s4);
+    }
+
+    .ccl-fields {
+      display: grid;
+      gap: var(--s3);
+    }
+
+    .ccl-field {
+      display: grid;
+      gap: var(--s1);
+    }
+
+    .ccl-field label {
+      color: var(--text-soft);
+      font-size: 12px;
+    }
+
+    .ccl-field input,
+    .ccl-field select {
+      width: 100%;
+      min-height: 38px;
+      padding: 0 var(--s3);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      background: var(--inset);
+      color: var(--text-strong);
+    }
+
+    .ccl-inset {
+      align-self: start;
+      padding: var(--s4);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      background: var(--inset);
+    }
+
+    .ccl-preview {
+      display: flex;
+      align-items: center;
+      gap: var(--s3);
+    }
+
+    .ccl-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 1px solid rgb(67 242 200 / 20%);
+      border-radius: 8px;
+      background: var(--brand-soft);
+      color: var(--brand);
+      font-weight: 500;
+    }
+
+    .ccl-preview strong,
+    .ccl-preview span {
+      display: block;
+    }
+
+    .ccl-preview strong {
+      color: var(--text-strong);
+      font-weight: 500;
+    }
+
+    .ccl-preview span {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .ccl-inset p {
+      margin: var(--s3) 0 0;
+      padding-top: var(--s3);
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .ccl-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .ccl-stat {
+      min-height: 100px;
+      padding: var(--s4) 0;
+      text-align: center;
+    }
+
+    .ccl-stat + .ccl-stat {
+      border-left: 1px solid var(--border-subtle);
+    }
+
+    .ccl-stat strong,
+    .ccl-stat span {
+      display: block;
+    }
+
+    .ccl-stat strong {
+      color: var(--text-strong);
+      font-family: &quot;JetBrains Mono&quot;, monospace;
+      font-size: 24px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ccl-stat:first-child strong {
+      color: var(--brand);
+    }
+
+    .ccl-stat span {
+      margin-top: var(--s1);
+      color: var(--text-muted);
+      font-family: &quot;JetBrains Mono&quot;, monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .ccl-fact {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 30px;
+      padding: 0 var(--s3);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      background: var(--inset);
+      color: var(--text-soft);
+      font-size: 10px;
+    }
+
+    .ccl-fact::before {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand);
+      content: &quot;&quot;;
+    }
+
+    .ccl-rule-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s3) var(--s5);
+      margin-top: var(--s5);
+      padding-top: var(--s3);
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .ccl-rule-line strong {
+      color: var(--text-soft);
+      font-weight: 500;
+    }
+
+    @media (max-width: 760px) {
+      .ccl-toolbar,
+      .ccl-page-header {
+        grid-template-columns: 1fr;
+      }
+
+      .ccl-controls {
+        justify-content: flex-start;
+      }
+
+      .ccl-page-action {
+        justify-self: start;
+      }
+
+      .ccl-editor-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .ccl-control-group {
+        display: flex;
+        width: 100%;
+      }
+
+      .ccl-control {
+        flex: 1;
+        padding-inline: var(--s2);
+      }
+
+      .ccl-page {
+        padding-top: var(--s6);
+      }
+
+      .ccl-section-header {
+        grid-template-columns: 1fr;
+      }
+
+      .ccl-table-head,
+      .ccl-row {
+        grid-template-columns: 30px minmax(104px, 1fr) 58px 58px;
+      }
+
+      .ccl-table-head &gt; :nth-child(3),
+      .ccl-row &gt; :nth-child(3) {
+        display: none;
+      }
+
+      .ccl-summary {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .ccl-stat:nth-child(3) {
+        border-left: 0;
+        border-top: 1px solid var(--border-subtle);
+      }
+
+      .ccl-stat:nth-child(4) {
+        border-top: 1px solid var(--border-subtle);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ccl-surface {
+        transition: none;
+      }
+    }
+
+    @supports not ((backdrop-filter: blur(1px))) {
+      #containment-context-lab[data-material=&quot;glass&quot;] .ccl-surface {
+        background:
+          linear-gradient(135deg, rgb(255 255 255 / 6%), transparent 42%),
+          #1b1b1b;
+      }
+    }
+  &lt;/style&gt;
+
+  &lt;div class=&quot;ccl-toolbar&quot;&gt;
+    &lt;span class=&quot;ccl-kicker&quot;&gt;B02-B / Context assignment&lt;/span&gt;
+    &lt;div class=&quot;ccl-controls&quot; aria-label=&quot;Containment context controls&quot;&gt;
+      &lt;div class=&quot;ccl-control-group&quot; aria-label=&quot;Usage context&quot;&gt;
+        &lt;button class=&quot;ccl-control&quot; type=&quot;button&quot; data-set=&quot;context&quot; data-value=&quot;data&quot; aria-pressed=&quot;true&quot;&gt;Data&lt;/button&gt;
+        &lt;button class=&quot;ccl-control&quot; type=&quot;button&quot; data-set=&quot;context&quot; data-value=&quot;editor&quot; aria-pressed=&quot;false&quot;&gt;Editor&lt;/button&gt;
+        &lt;button class=&quot;ccl-control&quot; type=&quot;button&quot; data-set=&quot;context&quot; data-value=&quot;summary&quot; aria-pressed=&quot;false&quot;&gt;Summary&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;ccl-control-group&quot; aria-label=&quot;Containment material&quot;&gt;
+        &lt;button class=&quot;ccl-control&quot; type=&quot;button&quot; data-set=&quot;material&quot; data-value=&quot;open&quot; aria-pressed=&quot;true&quot;&gt;Open&lt;/button&gt;
+        &lt;button class=&quot;ccl-control&quot; type=&quot;button&quot; data-set=&quot;material&quot; data-value=&quot;outline&quot; aria-pressed=&quot;false&quot;&gt;Outline&lt;/button&gt;
+        &lt;button class=&quot;ccl-control&quot; type=&quot;button&quot; data-set=&quot;material&quot; data-value=&quot;glass&quot; aria-pressed=&quot;false&quot;&gt;Glass&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;ccl-control-group&quot; aria-label=&quot;Decorative eyebrow&quot;&gt;
+        &lt;button class=&quot;ccl-control&quot; type=&quot;button&quot; data-set=&quot;eyebrow&quot; data-value=&quot;off&quot; aria-pressed=&quot;true&quot;&gt;No eyebrow&lt;/button&gt;
+        &lt;button class=&quot;ccl-control&quot; type=&quot;button&quot; data-set=&quot;eyebrow&quot; data-value=&quot;on&quot; aria-pressed=&quot;false&quot;&gt;Eyebrow&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;main class=&quot;ccl-page&quot;&gt;
+    &lt;header class=&quot;ccl-page-header&quot;&gt;
+      &lt;div&gt;
+        &lt;p class=&quot;ccl-eyebrow&quot; data-page-eyebrow&gt;League intelligence&lt;/p&gt;
+        &lt;h1 class=&quot;ccl-title&quot; data-page-title&gt;Player Rankings&lt;/h1&gt;
+        &lt;p class=&quot;ccl-page-description&quot; data-page-description&gt;Compare player production across every completed match, with event and position filters available above the ranking table.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;button class=&quot;ccl-page-action&quot; type=&quot;button&quot; data-page-action&gt;Create player&lt;/button&gt;
+    &lt;/header&gt;
+
+    &lt;div class=&quot;ccl-context-line&quot; aria-live=&quot;polite&quot;&gt;
+      &lt;span data-context-label&gt;Data context · long, scan-heavy, divider-based content&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;section class=&quot;ccl-surface&quot;&gt;
+      &lt;header class=&quot;ccl-section-header&quot;&gt;
+        &lt;div&gt;
+          &lt;h2 class=&quot;ccl-section-title&quot; data-section-title&gt;League table&lt;/h2&gt;
+          &lt;p class=&quot;ccl-section-description&quot; data-section-description&gt;Active players · minimum 3 matches&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;span class=&quot;ccl-section-meta&quot; data-section-meta&gt;1–20 of 128&lt;/span&gt;
+      &lt;/header&gt;
+
+      &lt;div class=&quot;ccl-pane&quot; data-context-pane=&quot;data&quot;&gt;
+        &lt;div class=&quot;ccl-table-head&quot;&gt;
+          &lt;span&gt;#&lt;/span&gt;&lt;span&gt;Player&lt;/span&gt;&lt;span&gt;Team&lt;/span&gt;&lt;span class=&quot;ccl-number&quot;&gt;PTS&lt;/span&gt;&lt;span class=&quot;ccl-number&quot;&gt;RAT&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ccl-row&quot;&gt;
+          &lt;span class=&quot;ccl-rank&quot;&gt;01&lt;/span&gt;
+          &lt;span class=&quot;ccl-name&quot;&gt;&lt;strong&gt;Marcus Vale&lt;/strong&gt;&lt;span&gt;Point Guard&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;ccl-name&quot;&gt;&lt;strong&gt;Comets&lt;/strong&gt;&lt;span&gt;North&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;ccl-number ccl-number-key&quot;&gt;28.4&lt;/span&gt;
+          &lt;span class=&quot;ccl-number&quot;&gt;9.2&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ccl-row&quot;&gt;
+          &lt;span class=&quot;ccl-rank&quot;&gt;02&lt;/span&gt;
+          &lt;span class=&quot;ccl-name&quot;&gt;&lt;strong&gt;Julian Cross&lt;/strong&gt;&lt;span&gt;Shooting Guard&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;ccl-name&quot;&gt;&lt;strong&gt;Voyagers&lt;/strong&gt;&lt;span&gt;South&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;ccl-number ccl-number-key&quot;&gt;26.9&lt;/span&gt;
+          &lt;span class=&quot;ccl-number&quot;&gt;8.8&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;ccl-row&quot;&gt;
+          &lt;span class=&quot;ccl-rank&quot;&gt;03&lt;/span&gt;
+          &lt;span class=&quot;ccl-name&quot;&gt;&lt;strong&gt;Eli Mercer&lt;/strong&gt;&lt;span&gt;Forward&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;ccl-name&quot;&gt;&lt;strong&gt;Foundry&lt;/strong&gt;&lt;span&gt;East&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;ccl-number ccl-number-key&quot;&gt;24.7&lt;/span&gt;
+          &lt;span class=&quot;ccl-number&quot;&gt;8.5&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;ccl-pane&quot; data-context-pane=&quot;editor&quot;&gt;
+        &lt;div class=&quot;ccl-editor-grid&quot;&gt;
+          &lt;div class=&quot;ccl-fields&quot;&gt;
+            &lt;div class=&quot;ccl-field&quot;&gt;
+              &lt;label for=&quot;ccl-team-name&quot;&gt;Team name&lt;/label&gt;
+              &lt;input id=&quot;ccl-team-name&quot; type=&quot;text&quot; value=&quot;Blue Comets&quot;&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;ccl-field&quot;&gt;
+              &lt;label for=&quot;ccl-division&quot;&gt;Division&lt;/label&gt;
+              &lt;select id=&quot;ccl-division&quot;&gt;&lt;option&gt;North Division&lt;/option&gt;&lt;/select&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;aside class=&quot;ccl-inset&quot;&gt;
+            &lt;div class=&quot;ccl-preview&quot;&gt;
+              &lt;span class=&quot;ccl-mark&quot; aria-hidden=&quot;true&quot;&gt;BC&lt;/span&gt;
+              &lt;span&gt;&lt;strong&gt;Blue Comets&lt;/strong&gt;&lt;span&gt;North Division&lt;/span&gt;&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;p&gt;Live identity preview inside an explicit inset surface.&lt;/p&gt;
+          &lt;/aside&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;ccl-pane&quot; data-context-pane=&quot;summary&quot;&gt;
+        &lt;div class=&quot;ccl-summary&quot;&gt;
+          &lt;div class=&quot;ccl-stat&quot;&gt;&lt;strong&gt;12&lt;/strong&gt;&lt;span&gt;Teams&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;ccl-stat&quot;&gt;&lt;strong&gt;42&lt;/strong&gt;&lt;span&gt;Matches&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;ccl-stat&quot;&gt;&lt;strong&gt;1,938&lt;/strong&gt;&lt;span&gt;Points&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;ccl-stat&quot;&gt;&lt;strong&gt;46.2%&lt;/strong&gt;&lt;span&gt;FG&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;footer class=&quot;ccl-rule-line&quot;&gt;
+      &lt;span&gt;&lt;strong&gt;Current material:&lt;/strong&gt; &lt;span data-material-label&gt;Open Section&lt;/span&gt;&lt;/span&gt;
+      &lt;span&gt;&lt;strong&gt;Question:&lt;/strong&gt; should this context need a bounded surface?&lt;/span&gt;
+    &lt;/footer&gt;
+  &lt;/main&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&quot;containment-context-lab&quot;);
+      const contexts = {
+        data: {
+          pageEyebrow: &quot;League intelligence&quot;,
+          pageTitle: &quot;Player Rankings&quot;,
+          pageDescription: &quot;Compare player production across every completed match, with event and position filters available above the ranking table.&quot;,
+          pageAction: &quot;Create player&quot;,
+          contextLabel: &quot;Data context · long, scan-heavy, divider-based content&quot;,
+          sectionTitle: &quot;League table&quot;,
+          sectionDescription: &quot;Active players · minimum 3 matches&quot;,
+          sectionMeta: &quot;1–20 of 128&quot;
+        },
+        editor: {
+          pageEyebrow: &quot;Team management&quot;,
+          pageTitle: &quot;Manage Team&quot;,
+          pageDescription: &quot;Update team identity, division details, profile ratings, and the active roster.&quot;,
+          pageAction: &quot;Save changes&quot;,
+          contextLabel: &quot;Editor context · bounded fields with a nested preview&quot;,
+          sectionTitle: &quot;Basic information&quot;,
+          sectionDescription: &quot;Core team identity and league placement&quot;,
+          sectionMeta: &quot;Required&quot;
+        },
+        summary: {
+          pageEyebrow: &quot;Event archive&quot;,
+          pageTitle: &quot;Events&quot;,
+          pageDescription: &quot;Review competition status, outcomes, participation, and aggregate performance across the league.&quot;,
+          pageAction: &quot;Create event&quot;,
+          contextLabel: &quot;Summary context · compact peer statistics inside one region&quot;,
+          sectionTitle: &quot;League snapshot&quot;,
+          sectionDescription: &quot;Completed-match totals across the current event&quot;,
+          sectionMeta: &quot;Updated&quot;
+        }
+      };
+      const materials = {
+        open: &quot;Open Section&quot;,
+        outline: &quot;Editorial Outline&quot;,
+        glass: &quot;Dark Glass · Edge Highlight&quot;
+      };
+
+      function updateContext(value) {
+        const next = contexts[value];
+        root.querySelector(&quot;[data-page-eyebrow]&quot;).textContent = next.pageEyebrow;
+        root.querySelector(&quot;[data-page-title]&quot;).textContent = next.pageTitle;
+        root.querySelector(&quot;[data-page-description]&quot;).textContent = next.pageDescription;
+        root.querySelector(&quot;[data-page-action]&quot;).textContent = next.pageAction;
+        root.querySelector(&quot;[data-context-label]&quot;).textContent = next.contextLabel;
+        root.querySelector(&quot;[data-section-title]&quot;).textContent = next.sectionTitle;
+        root.querySelector(&quot;[data-section-description]&quot;).textContent = next.sectionDescription;
+        root.querySelector(&quot;[data-section-meta]&quot;).textContent = next.sectionMeta;
+      }
+
+      root.querySelectorAll(&quot;[data-set]&quot;).forEach((button) =&gt; {
+        button.addEventListener(&quot;click&quot;, () =&gt; {
+          const property = button.dataset.set;
+          const value = button.dataset.value;
+          root.dataset[property] = value;
+          root.querySelectorAll(`[data-set=&quot;${property}&quot;]`).forEach((peer) =&gt; {
+            peer.setAttribute(&quot;aria-pressed&quot;, String(peer === button));
+          });
+          if (property === &quot;context&quot;) updateContext(value);
+          if (property === &quot;material&quot;) {
+            root.querySelector(&quot;[data-material-label]&quot;).textContent = materials[value];
+          }
+        });
+      });
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>

@@ -143,7 +143,7 @@ export function PlayerManagementSection({
   }
 
   return (
-    <Box className="manage-team-section app-panel">
+    <Box className="manage-team-section app-surface app-surface--editor">
       <Group align="flex-start" className="player-management-header" justify="space-between">
         <Box>
           <Title order={2}>Player Management</Title>
@@ -151,13 +151,13 @@ export function PlayerManagementSection({
           {rosterError ? <Text className="app-field-error">{rosterError}</Text> : null}
         </Box>
 
-        <Button className="player-add-button app-action-button app-action-button--primary" disabled={disabled} leftSection={<Plus size={16} />} onClick={handleAddPlayer} size="sm">
+        <Button className="player-add-button app-action-button app-action-button--context" disabled={disabled} leftSection={<Plus size={14} />} onClick={handleAddPlayer} size="xs" variant="outline">
           Add Player
         </Button>
       </Group>
 
       {showPlayerForm ? (
-        <Box className="player-inline-form app-panel app-panel--inset">
+        <Box className="player-inline-form app-surface app-surface--inset">
           <Text className="data-label">{isEditing ? "Edit Player" : "Add Player"}</Text>
           <Box className="player-form-grid">
             <NumberInput
@@ -212,7 +212,7 @@ export function PlayerManagementSection({
             <Button className="player-save-button app-action-button app-action-button--primary" disabled={disabled} onClick={handleSavePlayer}>
               Save Player
             </Button>
-            <Button className="player-cancel-button app-action-button app-action-button--secondary" onClick={handleCancelPlayerForm} variant="outline">
+            <Button className="player-cancel-button app-action-button app-action-button--cancel" onClick={handleCancelPlayerForm} variant="outline">
               Cancel
             </Button>
           </Group>
@@ -251,7 +251,7 @@ export function PlayerManagementSection({
                 <Table.Td className="player-actions-cell">
                   <Group gap="xs" justify="flex-end">
                     <Button
-                      className="player-table-action app-action-button app-action-button--quiet"
+                      className="player-table-action app-action-button app-action-button--small-edit"
                       disabled={disabled}
                       onClick={() => handleEditPlayer(player)}
                       size="xs"
@@ -260,7 +260,7 @@ export function PlayerManagementSection({
                       Edit
                     </Button>
                     <Button
-                      className="player-table-action app-action-button app-action-button--danger"
+                      className="player-table-action app-action-button app-action-button--small-danger"
                       disabled={disabled}
                       onClick={() => handleRemovePlayer(player)}
                       size="xs"

@@ -1,43 +1,157 @@
 .app-action-button {
-  border-radius: var(--radius-xl);
+  min-height: var(--control-height-large);
+  border-radius: var(--radius-control);
   font-weight: 600;
+  transition:
+    background-color var(--duration-fast) var(--easing-functional),
+    border-color var(--duration-fast) var(--easing-functional),
+    color var(--duration-fast) var(--easing-functional),
+    opacity var(--duration-fast) var(--easing-functional);
+}
+
+.app-action-button:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.app-action-button:disabled,
+.app-action-button[data-disabled],
+.app-action-button[data-loading] {
+  border-color: var(--color-border-subtle);
+  background: var(--color-surface-control);
+  color: var(--color-text-disabled);
+  opacity: 1;
+}
+
+.app-action-button:active:not(:disabled, [data-disabled], [data-loading]) {
+  background: var(--color-active-surface);
 }
 
 .app-action-button--primary {
+  min-height: var(--control-height-large);
+  border-color: var(--color-action-primary);
   background: var(--color-action-primary);
   color: var(--color-text-on-accent);
 }
 
-.app-action-button--primary:hover {
+.app-action-button--primary:hover:not(:disabled, [data-disabled], [data-loading]),
+.app-action-button--primary:active:not(:disabled, [data-disabled], [data-loading]) {
+  border-color: var(--color-action-primary-hover);
   background: var(--color-action-primary-hover);
 }
 
+.app-action-button--cancel,
 .app-action-button--secondary {
+  min-height: var(--control-height-default);
   border-color: var(--color-border-control-strong);
+  background: transparent;
   color: var(--color-text-soft);
 }
 
-.app-action-button--secondary:hover {
+.app-action-button--cancel:hover:not(:disabled, [data-disabled], [data-loading]),
+.app-action-button--secondary:hover:not(:disabled, [data-disabled], [data-loading]) {
   border-color: var(--color-border-hover);
   background: var(--color-hover-surface);
   color: var(--color-text-strong);
 }
 
 .app-action-button--danger {
+  min-height: var(--control-height-default);
   border-color: var(--color-danger-border);
+  background: transparent;
   color: var(--color-danger);
 }
 
-.app-action-button--danger:hover {
+.app-action-button--danger:hover:not(:disabled, [data-disabled], [data-loading]) {
   border-color: var(--color-danger-strong);
   background: var(--color-danger-surface);
+  color: var(--color-text-strong);
 }
 
+.app-action-button--related {
+  min-height: var(--control-height-default);
+  border-color: var(--color-action-primary-border);
+  background: var(--color-action-primary-surface);
+  color: var(--color-action-primary);
+}
+
+.app-action-button--related:hover:not(:disabled, [data-disabled], [data-loading]) {
+  border-color: var(--color-action-primary-border-strong);
+  background: var(--color-action-primary-surface-hover);
+  color: var(--color-text-strong);
+}
+
+.app-action-button--context {
+  min-height: var(--control-height-medium);
+  padding-inline: var(--space-3);
+  border-color: var(--color-border-control-strong);
+  background: transparent;
+  color: var(--color-text-soft);
+  font-size: 0.78rem;
+}
+
+.app-action-button--context:hover:not(:disabled, [data-disabled], [data-loading]) {
+  border-color: var(--color-action-primary-border);
+  background: var(--color-action-primary-surface);
+  color: var(--color-action-primary);
+}
+
+.app-action-button--small-edit,
 .app-action-button--quiet {
+  min-height: var(--control-height-small);
+  padding-inline: var(--space-2);
+  border-color: transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+}
+
+.app-action-button--small-edit:hover:not(:disabled, [data-disabled], [data-loading]),
+.app-action-button--quiet:hover:not(:disabled, [data-disabled], [data-loading]) {
+  background: var(--color-hover-surface);
+  color: var(--color-text-strong);
+}
+
+.app-action-button--small-danger {
+  min-height: var(--control-height-small);
+  padding-inline: var(--space-2);
+  border-color: var(--color-danger-border);
+  background: transparent;
+  color: var(--color-danger);
+  font-size: 0.75rem;
+}
+
+.app-action-button--small-danger:hover:not(:disabled, [data-disabled], [data-loading]) {
+  background: var(--color-danger-surface);
+  color: var(--color-text-strong);
+}
+
+.mantine-ActionIcon-root.app-action-button--small-danger {
+  width: var(--control-height-small);
+  min-width: var(--control-height-small);
+  height: var(--control-height-small);
+  padding: 0;
+}
+
+.app-action-button--order {
+  width: var(--control-height-small);
+  min-width: var(--control-height-small);
+  height: var(--control-height-small);
+  min-height: var(--control-height-small);
+  padding: 0;
+  border-color: var(--color-border);
+  background: transparent;
   color: var(--color-text-muted);
 }
 
-.app-action-button--quiet:hover {
+.app-action-button--order:hover:not(:disabled, [data-disabled], [data-loading]) {
+  border-color: var(--color-border-hover);
   background: var(--color-hover-surface);
   color: var(--color-text-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-action-button {
+    transition: none;
+  }
 }

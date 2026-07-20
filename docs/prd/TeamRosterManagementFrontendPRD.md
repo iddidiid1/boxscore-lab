@@ -1,5 +1,16 @@
 # Team Roster Management Frontend PRD
 
+## Status and authority
+
+**Status:** Active feature contract.
+
+This PRD remains authoritative for Team/Roster capabilities, data mapping,
+routes, validation, content, and interaction workflows. `docs/DESIGN.md` owns
+the current visual treatment, and an approved Editorial Scoreboard migration
+PRD owns its implementation scope. Historical references to the previous
+palette, universal card treatment, or visual-preservation direction are not
+current visual requirements.
+
 ## 1. 目标
 
 为 Team Management 域完成前端设计与实现规格，使现有四个页面从 mock/static 状态接入真实后端 API，并在保留当前页面结构的前提下完成一次轻量视觉打磨。
@@ -108,10 +119,12 @@ API 来源：`GET /api/teams/:slug`
 `overallRating` 是 Team 字段。
 
 后端字段类型为 number，允许 `0-10`。前端展示为 5 星视觉：
-- `0` 或 `null`：显示 5 个空星，并辅以 muted 状态。
-- `1-10`：映射到 0.5 星粒度，例如 `8.0 / 10` 显示为 4 颗星。
+- `0`：显示 5 个空星，并显示精确 `0 / 10`。
+- `null`：显示明确的 unavailable 状态和 em dash，与真实零分区分。
+- `1-10`：按实际值映射为可部分填充的 5 星，并显示精确 `x / 10`；
+  例如 `8.0 / 10` 显示为 4 颗星。
 - 编辑控件优先使用 5 星选择器或 0.5 星 step 的 rating 控件；提交时转换回 `0-10` 数值。
-- UI 中不以普通数字作为主要呈现，但可在辅助文本中显示 `8.0 / 10` 以避免歧义。
+- UI 中星级是主要呈现，同时始终显示精确 `x / 10` 辅助文本以避免歧义。
 
 若 Mantine 当前版本没有合适 Rating 组件，可以用现有按钮/图标实现，但不得引入新组件库。
 
@@ -254,7 +267,7 @@ PATCH payload 规则：
 
 归档流程：
 1. 点击 Archive Team。
-2. 展开 inline confirmation，不使用 modal。
+2. 打开共享 Confirmation Dialog；对话框只改变确认呈现，不改变归档触发条件或保护流程。
 3. 文案明确：归档不可撤销，Team 会从默认列表移除，历史数据保留。
 4. 确认后调用 `POST /api/teams/:slug/archive`。
 5. 成功后跳转 `/teams`。
@@ -346,25 +359,27 @@ Props：
 
 ## 8. 视觉设计要求
 
-本次包含轻量视觉打磨，但不做重设计。
+当前功能实现遵循 `docs/DESIGN.md`；本节只补充 Team 功能自身的内容、
+状态和响应式要求，不建立独立视觉主题。
 
 设计方向：
 - 深色 analytics theme。
 - 高信息密度。
-- 4-6px radius。
-- 1px low-contrast border。
-- primary action 使用蓝色。
-- dangerous action 使用 muted red。
+- 使用 `docs/DESIGN.md` 的 `4/8/10/12px` role-based radius。
+- 使用 subtle/structural/hover 语义边框。
+- primary action 使用 `docs/DESIGN.md` 定义的 Brand Primary。
+- dangerous action 使用 `docs/DESIGN.md` 定义的 restrained Danger treatment。
 - stats 使用 JetBrains Mono。
 
 具体要求：
-- 卡片层级统一：列表 card、详情 module、表单 section 使用一致边框和背景。
+- 列表 card、详情 module 与表单 section 按 `docs/DESIGN.md` 的 Pattern 和 Context surface 分工，不强制使用同一种边框、背景或容器。
 - 表单控件保持紧凑，label 与 error spacing 稳定。
 - 页面级错误、字段错误、空状态、loading 状态风格统一。
 - 按钮 hover/focus/disabled 状态完整。
 - Team logo fallback 与 primaryColor 有轻量关联，但不能造成低对比度。
 - 移动端不出现文字重叠、按钮溢出、表格挤压；表格可横向滚动。
-- 不使用大面积渐变、装饰性 orb、营销式 hero。
+- 只使用 `docs/DESIGN.md` 登记的 Team Pattern 和视觉例外，不自行增加
+  装饰性 orb 或营销式 hero。
 
 ## 9. 验收标准
 

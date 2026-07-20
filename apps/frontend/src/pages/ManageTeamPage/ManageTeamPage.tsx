@@ -94,6 +94,7 @@ export function ManageTeamPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showArchiveConfirm, setShowArchiveConfirm] = useState(false);
+  const [archiveError, setArchiveError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pageError, setPageError] = useState<string | null>(null);
   const [rosterError, setRosterError] = useState<string | null>(null);
@@ -165,16 +166,21 @@ export function ManageTeamPage() {
 
   async function handleArchive() {
     setIsSubmitting(true);
+    setArchiveError(null);
     setPageError(null);
     try {
       await archiveTeam(slug);
+      setShowArchiveConfirm(false);
       allowUnload();
       window.location.href = "/teams";
     } catch (error) {
       if (error instanceof ApiClientError) {
+        setArchiveError(error.response.message);
         setPageError(error.response.message);
       } else {
-        setPageError(error instanceof Error ? error.message : "Unable to archive team.");
+        const message = error instanceof Error ? error.message : "Unable to archive team.";
+        setArchiveError(message);
+        setPageError(message);
       }
     } finally {
       setIsSubmitting(false);
@@ -189,7 +195,6 @@ export function ManageTeamPage() {
     <Stack className="manage-team-page" gap="lg">
       <Group align="flex-start" className="manage-team-header" justify="space-between">
         <Box>
-          <Text className="eyebrow">Team workspace</Text>
           <Title className="page-title" order={1}>
             Manage Team
           </Title>
@@ -208,7 +213,7 @@ export function ManageTeamPage() {
             Save Changes
           </Button>
           <Button
-            className="manage-team-cancel-button app-action-button app-action-button--secondary"
+            className="manage-team-cancel-button app-action-button app-action-button--cancel"
             component="a"
             href={`/teams/${slug}`}
             variant="outline"
@@ -245,7 +250,7 @@ export function ManageTeamPage() {
             value={players}
           />
 
-          <Box className="manage-team-section app-panel">
+          <Box className="manage-team-section app-surface app-surface--editor">
             <Title order={2}>Archive Team</Title>
             <Text className="module-copy">
               Archiving is not reversible in this MVP. The team is removed from the default list and historical data is retained.
@@ -254,7 +259,7 @@ export function ManageTeamPage() {
               className="app-action-button app-action-button--danger"
               disabled={isArchived}
               mt="md"
-              onClick={() => setShowArchiveConfirm(true)}
+              onClick={() => { setArchiveError(null); setShowArchiveConfirm(true); }}
               variant="outline"
             >
               Archive Team
@@ -266,6 +271,7 @@ export function ManageTeamPage() {
       <ConfirmModal
         confirmLabel="Archive Team"
         danger
+        error={archiveError}
         loading={isSubmitting}
         onCancel={() => setShowArchiveConfirm(false)}
         onConfirm={() => void handleArchive()}

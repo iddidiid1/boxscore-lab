@@ -15,7 +15,66 @@
   min-width: 112px;
 }
 
+.event-outcomes-table {
+  min-width: 720px;
+}
+
+.event-outcomes-table .mantine-Input-input {
+  min-height: var(--control-height-dense);
+  height: var(--control-height-dense);
+}
+
+.event-outcomes-team-name {
+  color: var(--color-text-strong);
+  font-weight: 750;
+}
+
+.event-outcomes-award-groups {
+  border-top: 1px solid var(--color-border);
+}
+
+.event-outcomes-award-group {
+  display: grid;
+  gap: 10px;
+  border-bottom: 1px solid var(--color-border-table-cell);
+  padding: 16px 0;
+}
+
+.event-outcomes-award-label {
+  color: var(--color-text-strong);
+  font-size: 0.9rem;
+  font-weight: 750;
+}
+
 .event-outcomes-award-count {
-  background: var(--color-action-primary);
-  color: var(--color-text-on-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 24px;
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+}
+
+.event-outcomes-award-count[data-complete] {
+  border-color: var(--color-success-border);
+  color: var(--color-success);
+}
+
+.event-outcomes-candidate-grid {
+  align-items: flex-start;
+  gap: 10px 18px;
+}
+
+@media (max-width: 760px) {
+  .event-outcomes-header,
+  .event-outcomes-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .event-outcomes-actions,
+  .event-outcomes-actions .app-action-button {
+    width: 100%;
+  }
 }

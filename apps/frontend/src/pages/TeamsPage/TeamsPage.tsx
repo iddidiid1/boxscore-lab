@@ -40,7 +40,6 @@ export function TeamsPage() {
     <Stack className="teams-page" gap="xl">
       <Group align="flex-start" className="teams-header" justify="space-between">
         <Box>
-          <Text className="eyebrow">League overview</Text>
           <Title className="page-title" order={1}>
             Teams
           </Title>
@@ -57,7 +56,7 @@ export function TeamsPage() {
         <Alert color="red" title="Unable to load teams">
           <Stack gap="sm">
             <Text>{error}</Text>
-            <Button onClick={() => void loadTeams()} variant="light">Retry</Button>
+            <Button className="app-action-button app-action-button--context" onClick={() => void loadTeams()} variant="outline">Retry</Button>
           </Stack>
         </Alert>
       ) : null}
@@ -66,10 +65,10 @@ export function TeamsPage() {
         <Stack gap="xl">
           {Array.from({ length: 2 }).map((_, index) => (
             <Stack key={index} gap="sm">
-              <Skeleton height={16} width={120} radius={4} />
+              <Skeleton height={16} width={120} radius="xs" />
               <Box className="team-grid">
                 {Array.from({ length: 4 }).map((_, j) => (
-                  <Skeleton height={76} key={j} radius={16} />
+                  <Skeleton height={76} key={j} radius="md" />
                 ))}
               </Box>
             </Stack>

@@ -1,5 +1,6 @@
 import { Badge } from "@mantine/core";
 import type { EventStatus } from "../types";
+import "./EventStatusBadge.css";
 
 type EventStatusBadgeProps = {
   status: EventStatus;
@@ -13,7 +14,7 @@ const statusLabels: Record<EventStatus, string> = {
 
 export function EventStatusBadge({ status }: EventStatusBadgeProps) {
   return (
-    <Badge className="event-status-badge" data-status={status} variant="outline">
+    <Badge className="event-status-badge app-edge-plate" data-status={status} variant="outline">
       {statusLabels[status]}
     </Badge>
   );

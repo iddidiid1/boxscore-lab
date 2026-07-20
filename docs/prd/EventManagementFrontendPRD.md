@@ -1,5 +1,17 @@
 # Event Management Frontend PRD
 
+## Status and authority
+
+**Status:** Active feature contract.
+
+This PRD remains authoritative for Event capabilities, lifecycle, data
+contracts, routes, content, selection behavior, and interaction workflows.
+`docs/DESIGN.md` owns current Event and shared-component visual treatment.
+Editorial Scoreboard migration PRDs own implementation scope. The Player
+Awards selection workflow remains governed by this feature PRD until a separate
+functional redesign is approved; the read-only Event Detail awards
+presentation follows `docs/DESIGN.md`.
+
 ## 1. 目标
 
 将现有 Event 页面和组件从 mock/static 状态接入真实后端 API，使管理员可以在前端完成赛事列表查看、赛事详情查看、赛事创建、赛事编辑、赛事归档、最终球队结果录入和球员奖项录入。前端应复用当前 sports-console / analytics 风格和已有 Event 页面结构，把 Event 相关配置、结果和奖项集中在 Event 管理流程中，但用独立 outcomes 页面承载结果和奖项录入，避免 Event 编辑页过长。前端不得发送 `slug`、`rankingOrder` 或任何派生统计字段。Event 的赛事流程状态只使用 `PREPARING`、`ONGOING`、`COMPLETED`；归档状态只由 `archivedAt != null` 表示，前端不得提交 `ARCHIVED` 作为 `status`。
@@ -205,12 +217,14 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
 
 - **Layout**: 详情页展示完整 Event 信息，但保持高密度分区。
 - **Sections**:
-  - Header: name、tier、status、description、participant count、champion
+  - Header: name、tier、status、description、participant count
   - Participants
   - Stage tags
   - Result tags
   - Team results
   - Player awards
+- Event Detail 不在 Header 重复展示 champion summary；用户通过 Final team
+  results 中带 Trophy 与 Championship Gold 的 Winner row 查阅 Champion。
 - **Actions**:
   - `Edit Event` 跳转 `/events/:slug/edit`
   - `Manage Results & Awards` 跳转 `/events/:slug/outcomes`
@@ -225,11 +239,12 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
 
 #### Player Awards presentation
 
-- Event Detail 按 `docs/PLAYER_AWARDS_COMPONENT_DESIGN.md` 渲染 Player Awards；该文档是组件级视觉 SOT。
+- Event Detail 按 `docs/DESIGN.md` 的 Black Metal Plaque Pattern 渲染 Player Awards；`docs/PLAYER_AWARDS_COMPONENT_DESIGN.md` 仅保留信息顺序、API ordering 和 MVP 重复规则，不再是视觉 SOT。
 - MVP、First Team 和可选 Second Team 都展示 API 返回的 `playerPosition`。
 - Position 只用于展示；前端不得根据数组顺序、award type 或阵容格位置推导球员位置。
 - First Team 与 Second Team 直接使用后端稳定顺序；位置顺序为 `PG`、`SG`、`G`、`SF`、`PF`、`F`、`C`，前端不再次排序。
-- Jelly Mint 是组件的主要结构强调色；金色仅用于 Trophy 图标和紧凑 `MVP` 标记。
+- Championship Gold 负责 MVP 语义，Brand Mint 只作为 Black Metal Plaque
+  的 restrained structural trace；具体视觉以 `docs/DESIGN.md` 为准。
 
 ### 5.3 EventFormPage `/events/new` 与 `/events/:slug/edit`
 
@@ -253,7 +268,7 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
   - 直接访问 archived Event 的 edit URL 时仍加载并展示 Event 信息和 archived banner，但整个表单只读，隐藏保存与归档操作，并提供返回详情页入口
 - **Archive**:
   - 编辑页提供归档入口
-  - 使用 inline confirmation
+  - 使用共享 Confirmation Dialog；不改变归档触发条件或保护流程
   - PREPARING、ONGOING 和 COMPLETED Event 都可归档；对 ONGOING 或 outcomes 不完整的 Event，确认文案明确说明归档会保留当前不完整状态
   - 成功后跳转 `/events`
 - **Validation feedback**:
@@ -268,8 +283,10 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
 - **Entry**: 从 Event 详情页进入。
 - **Routing implementation**: 需要在 `App.tsx` 中新增 `/events/:slug/outcomes` matcher；本项目当前不是完整 React Router route table。
 - **Layout**:
-  - 顶部使用项目标准 workspace eyebrow、page title 和 summary 结构，标题为 `Results & Awards`，Event name 放在 summary 中。
-  - 可编辑状态使用标准 `Save Changes` primary action 与 `Cancel` secondary action；`Cancel` 返回 Event 详情页。
+  - 顶部使用 `docs/DESIGN.md` 的无 Eyebrow Functional Page Header，标题为 `Results & Awards`，Event name 放在 description 中。
+  - 可编辑状态使用 `ActionLanguageConsistencyFrontendPRD.md` 定义的
+    `Save Outcomes` primary action 与 `Cancel` action；`Cancel` 返回 Event
+    详情页。
   - 保存使用表单 submit 语义。成功后必须显示明确的保存成功反馈，失败时保留当前输入并显示错误。
   - Results section 使用紧凑表格
   - Awards section 使用按奖项类型分组的选择控件
@@ -286,7 +303,7 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
   - Player options 来自 `awardCandidatePlayers`，只包含 active players
   - 既有 `playerAwards` 中的 inactive player 作为带 `Inactive` 标记的保留项展示，不进入正常候选项；其奖项只能原样保留或移除
   - First Team 与 Second Team 互斥选择；MVP 可与 First Team 或 Second Team 重叠
-  - 奖项计数 badge 使用主强调色背景和 on-accent 黑色文字，必须满足可读性要求。
+  - 奖项计数使用共享 Count Badge/Edge Plate 语言，不使用实心 Brand 填充作为默认处理，并满足可读性要求。
 - **Rules**:
   - 不创建或编辑 ResultTag；需要变更标签时引导去 Edit Event。
   - 不显示 StageTag 编辑控件。
@@ -309,8 +326,9 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
 ### 5.5 Visual Requirements
 
 - 复用现有 Mantine + CSS 结构，不新增 UI component library。
-- 保持深色 analytics / sports-console 风格。
-- 表格和表单保持紧凑，避免大面积营销式 hero。
+- 遵循 `docs/DESIGN.md` 的 Editorial Scoreboard 风格。
+- 表格和表单保持紧凑；只使用正式 Design System 登记的 Event Pattern，
+  不自行增加营销式 hero。
 - 移动端需要避免按钮文字溢出、表格挤压和 section 重叠。
 - outcomes 页面可以使用 tabs 或分区，但不要创建全局 Awards 页面。
 
@@ -323,8 +341,12 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
 - Event slug 由后端创建时生成且不可变；前端编辑 Event name 后仍使用原 slug 跳转和调用 API。
 - 前端不得发送派生统计字段，例如 `totalPoints`、standings rank、player averages。
 - Event 列表页使用 `GET /api/events` 返回的 champion summary，不在前端重新推导完整结果。
-- 尚无 champion 时后端稳定返回 `champion: null`，前端显示未产生冠军的空状态，不将字段缺失视为另一套契约。
+- 尚无 champion 时，Event list response 稳定返回 `champion: null`；列表卡片
+  省略 Champion strip，不将字段缺失视为另一套契约。
 - Event 详情页、编辑页和 outcomes 页都使用 `GET /api/events/:slug` 作为单个 Event 的权威数据源。
+- Event detail response 不包含重复的 `champion` summary。详情页不从
+  `teamResults`、`resultTags`、最高分或数组顺序推导 Header Champion；Final
+  team results Winner row 是详情页的胜者呈现。
 - Event 详情中的 participants、award candidates、tags、team results 和 player awards 使用 Backend PRD 定义的稳定顺序；前端不得使用相互冲突的默认排序覆盖后端顺序。
 - `GET /api/teams` 返回按 Division 分组的数据；参与球队候选项只使用未归档且具有有效 Division 的 Team，后端仍负责最终资格校验。
 - EventForm 必须将 `divisions[].teams[]` 展开为保留 Team 与 Division 标识的 `TeamOption[]`；选择状态使用 `teamId`，请求 payload 只发送 `participantTeamIds`。前端可按 Division 分组渲染，但不得改变 API 内既有分组和球队顺序。

@@ -1,4 +1,4 @@
-import { Alert, Box, Center, Group, Loader, Stack, Text, Title } from "@mantine/core";
+import { Alert, Box, Group, Stack, Text, Title } from "@mantine/core";
 import { useEffect, useMemo, useState } from "react";
 import {
   createMatch,
@@ -15,6 +15,7 @@ import {
 import { ApiClientError } from "../../features/teams/api/teams";
 import { useIsDirty } from "../../shared/hooks/useIsDirty";
 import { useUnsavedChangesWarning } from "../../shared/hooks/useUnsavedChangesWarning";
+import { LoadingState } from "../../shared/components/LoadingState";
 import { MatchFormActions, MatchInfoForm, MatchStatsInputTable } from "./components";
 import { emptyOtherStats, emptyPlayerStats, toStatNumbers, type MatchFormPlayer, type MatchFormTeam, type TeamFormState } from "./types";
 import "./CreateMatchPage.css";
@@ -101,13 +102,13 @@ export function MatchFormPage({ mode, matchId, cancelHref = "/matches", descript
   const dirty = useIsDirty(JSON.stringify({ eventId, stageTagId, playedAt, home, away }), !loading && !unavailable);
   useUnsavedChangesWarning(dirty);
 
-  if (loading) return <Center py="xl"><Loader aria-label="Loading match form" /></Center>;
-  if (unavailable) return <Alert color="orange" title="Match cannot be edited">This Match is voided or its Event is unavailable. <a href={cancelHref}>Return to detail.</a></Alert>;
-  return <Stack className="create-match-page" gap="lg"><Group align="flex-start" className="create-match-header" justify="space-between"><Box><Text className="eyebrow">Match workspace</Text><Title className="page-title" order={1}>{title}</Title><Text className="page-summary" maw={640} mt="xs">{description}</Text></Box><MatchFormActions canSave={canSave} cancelHref={cancelHref} mode={mode} onSave={save} submitting={submitting} /></Group>
+  if (loading) return <LoadingState label="Loading match form…" />;
+  if (unavailable) return <Alert color="orange" title="Match cannot be edited">This Match is voided or its Event is unavailable. <a className="app-inline-link" href={cancelHref}>Return to detail.</a></Alert>;
+  return <Stack className="create-match-page" gap="lg"><Group align="flex-start" className="create-match-header" justify="space-between"><Box><Title className="page-title" order={1}>{title}</Title><Text className="page-summary" maw={640} mt="xs">{description}</Text></Box><MatchFormActions canSave={canSave} cancelHref={cancelHref} mode={mode} onSave={save} submitting={submitting} /></Group>
     {error ? <Alert color="red" title="Unable to save match">{error}</Alert> : null}
     {events.length === 0 && mode === "create" ? <Alert title="No available Events">Create or reopen an Event before recording a Match.</Alert> : null}
     <MatchInfoForm awayTeamId={away.team?.id ?? null} eventId={eventId} events={events} homeTeamId={home.team?.id ?? null} mode={mode} onAwayChange={(id) => selectTeam("away", id)} onEventChange={changeEvent} onHomeChange={(id) => selectTeam("home", id)} onPlayedAtChange={(value) => { setPlayedAt(value); setTimeDirty(true); }} onStageChange={setStageTagId} playedAt={playedAt} stageTagId={stageTagId} stageTags={options?.stageTags ?? []} teams={teams} />
-    {home.team ? <MatchStatsInputTable entries={home.entries} onOtherStatChange={(key, value) => setHome((current) => ({ ...current, otherStats: { ...current.otherStats, [key]: value } }))} onPlayerStatChange={(id, key, value) => setEntry("home", id, (entry) => ({ ...entry, stats: { ...entry.stats, [key]: value } }))} onToggle={(id, checked) => setEntry("home", id, () => ({ appeared: checked, stats: emptyPlayerStats() }))} otherStats={home.otherStats} team={home.team} /> : null}
-    {away.team ? <MatchStatsInputTable entries={away.entries} onOtherStatChange={(key, value) => setAway((current) => ({ ...current, otherStats: { ...current.otherStats, [key]: value } }))} onPlayerStatChange={(id, key, value) => setEntry("away", id, (entry) => ({ ...entry, stats: { ...entry.stats, [key]: value } }))} onToggle={(id, checked) => setEntry("away", id, () => ({ appeared: checked, stats: emptyPlayerStats() }))} otherStats={away.otherStats} team={away.team} /> : null}
+    {home.team ? <MatchStatsInputTable entries={home.entries} onOtherStatChange={(key, value) => setHome((current) => ({ ...current, otherStats: { ...current.otherStats, [key]: value } }))} onPlayerStatChange={(id, key, value) => setEntry("home", id, (entry) => ({ ...entry, stats: { ...entry.stats, [key]: value } }))} onToggle={(id, checked) => setEntry("home", id, () => ({ appeared: checked, stats: emptyPlayerStats() }))} otherStats={home.otherStats} role="HOME" team={home.team} /> : null}
+    {away.team ? <MatchStatsInputTable entries={away.entries} onOtherStatChange={(key, value) => setAway((current) => ({ ...current, otherStats: { ...current.otherStats, [key]: value } }))} onPlayerStatChange={(id, key, value) => setEntry("away", id, (entry) => ({ ...entry, stats: { ...entry.stats, [key]: value } }))} onToggle={(id, checked) => setEntry("away", id, () => ({ appeared: checked, stats: emptyPlayerStats() }))} otherStats={away.otherStats} role="AWAY" team={away.team} /> : null}
   </Stack>;
 }

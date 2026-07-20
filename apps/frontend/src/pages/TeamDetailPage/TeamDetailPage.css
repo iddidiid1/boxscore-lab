@@ -32,46 +32,31 @@
 }
 
 .team-detail-hero {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 1fr);
-  gap: 18px;
+  overflow: hidden;
   align-items: stretch;
+}
+
+.team-detail-hero::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--team-trace);
+  content: "";
+  opacity: 0.8;
 }
 
 .team-profile-summary {
   width: 100%;
   min-height: 330px;
-  border: 0;
-  border-radius: var(--radius-panel);
-  background: transparent;
-  padding: 24px;
+  padding: 30px 28px 28px 30px;
 }
 
 .team-profile-logo {
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
-  width: 104px;
-  height: 104px;
-  border: 1px solid var(--color-border-preview);
-  border-radius: var(--radius-panel);
-  object-fit: contain;
-}
-
-.team-profile-logo-fallback {
-  background: var(--color-surface-subtle);
-  color: var(--color-text-soft);
-}
-
-.team-profile-logo-fallback svg {
-  color: var(--color-success);
-}
-
-.team-profile-logo-fallback span {
-  font-family: var(--font-family-data);
-  font-size: 0.9rem;
-  font-weight: 800;
-  line-height: 1;
+  width: 112px;
+  height: 112px;
 }
 
 .team-profile-content {
@@ -99,10 +84,7 @@
 }
 
 .team-profile-rating {
-  color: var(--color-warning);
-  font-size: 1rem;
-  line-height: 1;
-  white-space: nowrap;
+  margin-top: 2px;
 }
 
 .team-profile-description {
@@ -111,30 +93,19 @@
   line-height: 1.55;
 }
 
-.team-radar-card,
-.team-summary-card,
-.roster-table-card {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-panel);
-  background: var(--color-surface);
-}
-
 .team-radar-card {
   min-height: 330px;
-  border: 0;
-  background: transparent;
   display: grid;
   place-items: center;
-  padding: 0;
+  border-left: 1px solid var(--color-border-divider);
+  padding: 20px 24px;
 }
 
 .team-radar-title {
   display: none;
 }
 
-.team-radar-card h2,
-.team-summary-card h2,
-.roster-table-card h2 {
+.team-radar-card h2 {
   margin: 0 0 14px;
   color: var(--color-text-strong);
   font-size: 1.12rem;
@@ -167,7 +138,7 @@
 }
 
 .radar-value {
-  filter: url("#radarGlow");
+  filter: drop-shadow(0 0 8px var(--color-success-glow));
   fill: var(--color-radar-fill);
   stroke: var(--color-success);
   stroke-width: 2.5;
@@ -186,56 +157,13 @@
   font-weight: 800;
 }
 
-.team-summary-card,
 .roster-table-card {
-  padding: 20px 22px;
-}
-
-.team-summary-stats {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin-top: 8px;
-}
-
-.team-summary-stat {
-  min-width: 0;
-  padding: 18px 20px;
-  background: transparent;
-  border: 0;
-  border-radius: var(--radius-sharp);
-  box-shadow: none;
-}
-
-.team-summary-stat + .team-summary-stat {
-  border-left: 1px solid var(--color-border-subtle);
-}
-
-.team-summary-value {
-  color: var(--color-text-strong);
-  font-family: var(--font-family-data);
-  font-size: 1.45rem;
-  font-weight: 800;
-  line-height: 1.2;
-  margin-top: 6px;
-}
-
-.roster-table-scroll {
-  overflow-x: auto;
+  padding: 0;
 }
 
 .roster-table {
   width: 100%;
   min-width: 760px;
-}
-
-.roster-table th {
-  border-color: var(--color-border);
-  padding: 8px 10px;
-}
-
-.roster-table td {
-  border-color: var(--color-border-table-cell);
-  padding: 9px 10px;
 }
 
 .roster-table .roster-column-number {
@@ -250,43 +178,12 @@
   padding-right: 10px;
 }
 
-.roster-table tbody tr:hover td {
-  background: var(--color-hover-surface);
-}
-
 .roster-sort-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 4px;
-  width: 100%;
-  min-height: 24px;
-  border: 0;
-  background: transparent;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  font-family: var(--font-family-data);
   font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  padding: 0;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.roster-sort-button:hover {
-  color: var(--color-text-strong);
-}
-
-.roster-sort-button:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
 }
 
 .roster-sort-indicator {
-  display: inline-block;
-  min-width: 8px;
-  color: var(--color-action-primary);
+  min-width: 10px;
 }
 
 .roster-value {
@@ -309,13 +206,18 @@
 
 .roster-player-link:focus-visible {
   border-radius: var(--radius-focus-target);
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 @media (max-width: 980px) {
   .team-detail-hero {
     grid-template-columns: 1fr;
+  }
+
+  .team-radar-card {
+    border-top: 1px solid var(--color-border-divider);
+    border-left: 0;
   }
 }
 
@@ -323,13 +225,8 @@
   .team-profile-summary {
     align-items: flex-start;
     width: 100%;
-    padding: 18px;
+    padding: 22px 20px;
     min-height: auto;
-  }
-
-  .team-profile-logo {
-    width: 68px;
-    height: 68px;
   }
 
   .team-profile-content h1 {
@@ -344,23 +241,4 @@
     width: min(100%, 320px);
   }
 
-  .team-summary-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .team-summary-stat + .team-summary-stat {
-    border-left: 0;
-  }
-
-  .team-summary-stat {
-    border-top: 1px solid var(--color-border-subtle);
-  }
-
-  .team-summary-stat:nth-child(-n + 2) {
-    border-top: 0;
-  }
-
-  .team-summary-stat:nth-child(odd) {
-    border-right: 1px solid var(--color-border-subtle);
-  }
 }

@@ -10,8 +10,10 @@ import {
   TextInput,
   Title
 } from "@mantine/core";
-import { Shield } from "lucide-react";
+import type { CSSProperties } from "react";
 import type { Division, ProfileRating } from "../../../features/teams";
+import { FractionalStarRating } from "../../../shared/components/data-display";
+import { TeamArtwork } from "../../../shared/components/team-identity";
 
 export type TeamEditorValues = {
   name: string;
@@ -43,22 +45,6 @@ const profileRatingFields = [
 
 type ProfileRatingKey = (typeof profileRatingFields)[number]["key"];
 
-function getInitials(name: string) {
-  const initials = name
-    .split(" ")
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
-
-  return initials || "NT";
-}
-
-function getStars(rating: number) {
-  const roundedRating = Math.max(0, Math.min(5, Math.round(rating / 2)));
-  return `${"\u2605".repeat(roundedRating)}${"\u2606".repeat(5 - roundedRating)}`;
-}
-
 export function TeamEditorForm({
   value,
   onChange,
@@ -72,6 +58,13 @@ export function TeamEditorForm({
     value: String(division.id),
     label: division.name
   }));
+  const previewDivision =
+    divisions.find((division) => division.id === value.divisionId)?.name ??
+    "No division selected";
+  const previewTrace =
+    isPrimaryColorValid && value.primaryColor
+      ? value.primaryColor
+      : "var(--color-team-trace-neutral)";
 
   function update(partial: Partial<TeamEditorValues>) {
     onChange({ ...value, ...partial });
@@ -88,7 +81,7 @@ export function TeamEditorForm({
 
   return (
     <>
-      <Box className="manage-team-section app-panel">
+      <Box className="manage-team-section app-surface app-surface--editor">
         <Title order={2}>Team Basic Info</Title>
 
         <Box className="team-basic-info-layout">
@@ -175,40 +168,36 @@ export function TeamEditorForm({
             />
           </Stack>
 
-          <Stack className="team-basic-info-preview" gap="lg">
-            <Box>
-              <Text className="data-label">Logo Preview</Text>
-              {value.logoUrl ? (
-                <img alt="" className="manage-team-logo-preview" src={value.logoUrl} />
-              ) : (
-                <Box aria-hidden="true" className="manage-team-logo-preview manage-team-logo-fallback">
-                  <Shield size={30} />
-                  <span>{getInitials(previewName)}</span>
-                </Box>
-              )}
+          <Box
+            aria-label="Team identity preview"
+            className="team-basic-info-preview app-surface app-surface--inset"
+            style={{ "--team-trace": previewTrace } as CSSProperties}
+          >
+            <Text className="team-identity-proof-label">Identity proof</Text>
+            <Box className="team-identity-proof">
+              <TeamArtwork
+                className="manage-team-logo-preview"
+                logoUrl={value.logoUrl}
+                name={previewName}
+                size="preview"
+              />
+              <Box className="team-identity-proof-content">
+                <Text className="manage-team-preview-name">{previewName}</Text>
+                <Text className="manage-team-preview-division">{previewDivision}</Text>
+              </Box>
             </Box>
-
-            <Box>
-              <Text className="data-label">Team Preview</Text>
-              <Text className="manage-team-preview-value">{previewName}</Text>
+            <Box className="team-identity-proof-rating">
+              <Text className="data-label">Overall rating</Text>
+              <FractionalStarRating
+                className="manage-team-rating-preview"
+                value={value.overallRating}
+              />
             </Box>
-
-            <Box>
-              <Text className="data-label">Rating Preview</Text>
-              <Text className="manage-team-rating-preview">{getStars(value.overallRating)}</Text>
-            </Box>
-
-            <Box>
-              <Text className="data-label">Selected Division</Text>
-              <Text className="manage-team-preview-value">
-                {divisions.find((division) => division.id === value.divisionId)?.name ?? "None"}
-              </Text>
-            </Box>
-          </Stack>
+          </Box>
         </Box>
       </Box>
 
-      <Box className="manage-team-section app-panel">
+      <Box className="manage-team-section app-surface app-surface--editor">
         <Title order={2}>Team Profile Ratings</Title>
         <Stack className="profile-rating-list" gap="md">
           {profileRatingFields.map((field) => (

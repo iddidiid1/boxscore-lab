@@ -108,7 +108,7 @@ export function RosterTable({ players }: RosterTableProps) {
   }
 
   return (
-    <Box className="roster-table-card app-panel">
+    <Box className="roster-table-card app-data-bay">
       <Title order={2}>Roster</Title>
       <Box className="roster-table-scroll app-table-wrap">
         <Table className="roster-table app-data-table" highlightOnHover>
@@ -131,12 +131,12 @@ export function RosterTable({ players }: RosterTableProps) {
                     key={column.key}
                   >
                     <button
-                      className="roster-sort-button"
+                      className="roster-sort-button app-sort-control"
                       onClick={() => handleSort(column.key)}
                       type="button"
                     >
                       <span>{column.label}</span>
-                      <span aria-hidden="true" className="roster-sort-indicator">
+                      <span aria-hidden="true" className="roster-sort-indicator app-sort-control__indicator">
                         {isActiveSort ? sortIndicator : ""}
                       </span>
                     </button>

@@ -19,106 +19,194 @@
   --color-surface-control: #0d0d0d;
   --color-surface-inset: #0d0d0d;
   --color-surface-subtle: #232323;
+  --color-surface-glass: rgba(26, 26, 26, 0.82);
+  --color-surface-identity: rgba(53, 58, 55, 0.40);
+  --color-surface-artwork-fallback: rgba(255, 255, 255, 0.055);
+  --color-surface-overlay: rgba(35, 35, 35, 0.94);
+  --color-background-ambient-upper: rgba(255, 255, 255, 0.06);
+  --color-background-ambient-lower: rgba(255, 255, 255, 0.035);
+  --color-background-brand-ambient-upper: rgba(67, 242, 200, 0.08);
+  --color-background-brand-ambient-lower: rgba(67, 242, 200, 0.03);
 
   /* Text */
   --color-text-strong: #ffffff;
   --color-text: #ffffff;
   --color-text-soft: #c8c8c8;
   --color-text-muted: #949494;
-  --color-text-disabled: rgba(85, 85, 85, 0.72);
+  --color-text-disabled: rgba(148, 148, 148, 0.52);
   --color-text-navigation: rgba(148, 148, 148, 0.90);
   --color-text-on-accent: #000000;
 
   /* Borders and focus */
-  --color-border: rgba(255, 255, 255, 0.10);
-  --color-border-subtle: rgba(255, 255, 255, 0.06);
-  --color-border-muted: rgba(255, 255, 255, 0.06);
-  --color-border-hover: rgba(255, 255, 255, 0.18);
+  --color-border: rgba(255, 255, 255, 0.13);
+  --color-border-subtle: rgba(255, 255, 255, 0.075);
+  --color-border-muted: rgba(255, 255, 255, 0.075);
+  --color-border-hover: rgba(255, 255, 255, 0.19);
   --color-border-navigation: rgba(255, 255, 255, 0.08);
   --color-border-preview: rgba(255, 255, 255, 0.18);
+  --color-border-artwork-fallback: rgba(255, 255, 255, 0.16);
   --color-border-divider: rgba(255, 255, 255, 0.08);
-  --color-border-control-strong: rgba(255, 255, 255, 0.18);
-  --color-border-table-cell: rgba(255, 255, 255, 0.06);
+  --color-border-control-strong: rgba(255, 255, 255, 0.19);
+  --color-border-table-cell: rgba(255, 255, 255, 0.075);
   --color-border-control-mark: rgba(148, 148, 148, 0.50);
   --color-border-control: rgba(255, 255, 255, 0.14);
-  --color-border-control-hover: rgba(60, 255, 208, 0.45);
-  --color-border-interactive-hover: rgba(60, 255, 208, 0.45);
+  --color-border-control-hover: rgba(255, 255, 255, 0.19);
+  --color-border-interactive-hover: rgba(255, 255, 255, 0.19);
   --color-border-table-subtle: rgba(255, 255, 255, 0.04);
-  --color-focus-ring: #3cffd0;
+  --color-focus-ring: rgba(67, 242, 200, 0.88);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
   --color-icon-muted: rgba(148, 148, 148, 0.82);
   --color-preview-pattern: rgba(148, 148, 148, 0.20);
 
   /* Actions — mint replaces blue */
-  --color-action-primary: #3cffd0;
+  --color-brand: #43f2c8;
+  --color-brand-hover: #2ccfaa;
+  --color-brand-soft: rgba(67, 242, 200, 0.10);
+  --color-brand-soft-hover: rgba(67, 242, 200, 0.16);
+  --color-brand-border: rgba(67, 242, 200, 0.45);
+  --color-brand-border-subtle: rgba(67, 242, 200, 0.20);
+  --color-action-primary: #43f2c8;
   --color-action-primary-hover: #2ccfaa;
-  --color-action-primary-soft: rgba(60, 255, 208, 0.10);
-  --color-action-primary-soft-hover: rgba(60, 255, 208, 0.16);
-  --color-action-primary-emphasis: #3cffd0;
-  --color-action-primary-border: rgba(60, 255, 208, 0.45);
-  --color-action-primary-border-subtle: rgba(60, 255, 208, 0.20);
-  --color-action-primary-surface: rgba(60, 255, 208, 0.08);
-  --color-action-primary-surface-hover: rgba(60, 255, 208, 0.12);
+  --color-action-primary-soft: rgba(67, 242, 200, 0.10);
+  --color-action-primary-soft-hover: rgba(67, 242, 200, 0.16);
+  --color-action-primary-emphasis: #43f2c8;
+  --color-action-primary-border: rgba(67, 242, 200, 0.45);
+  --color-action-primary-border-subtle: rgba(67, 242, 200, 0.20);
+  --color-action-primary-surface: rgba(67, 242, 200, 0.08);
+  --color-action-primary-surface-hover: rgba(67, 242, 200, 0.12);
 
   /* Semantic states */
-  --color-success: #3cffd0;
+  --color-success: #43f2c8;
   --color-success-strong: #2ccfaa;
-  --color-warning: #ffb95f;
-  --color-warning-strong: #f59e0b;
+  --color-warning: #d8cf70;
+  --color-warning-strong: #b9ad4f;
   --color-danger: #ff6b6b;
   --color-danger-strong: #ef4444;
   --color-danger-border: rgba(255, 107, 107, 0.45);
   --color-danger-surface: rgba(255, 107, 107, 0.10);
   --color-neutral-status: #555555;
+  --color-status-online: #43f2c8;
+  --color-status-checking: #d8cf70;
+  --color-status-offline: #ff6b6b;
 
   /* Interaction surfaces */
   --color-hover-surface: rgba(255, 255, 255, 0.04);
-  --color-active-surface: rgba(60, 255, 208, 0.08);
+  --color-active-surface: rgba(67, 242, 200, 0.08);
   --color-table-row-hover: rgba(255, 255, 255, 0.03);
 
   /* Statistical and ranking accents */
-  --color-stat-points: #a07aff;
-  --color-stat-points-surface: rgba(82, 0, 255, 0.15);
-  --color-stat-assists-surface: rgba(60, 255, 208, 0.12);
-  --color-stat-rebounds-surface: rgba(60, 255, 208, 0.07);
-  --color-stat-rating-surface: rgba(255, 185, 95, 0.11);
+  --color-stat-points: #43f2c8;
+  --color-stat-rebounds: #78dda0;
+  --color-stat-assists: #62cee5;
+  --color-stat-rating: #b7dc78;
+  --color-stat-points-surface: rgba(67, 242, 200, 0.29);
+  --color-stat-rebounds-surface: rgba(120, 221, 160, 0.29);
+  --color-stat-assists-surface: rgba(98, 206, 229, 0.29);
+  --color-stat-rating-surface: rgba(183, 220, 120, 0.29);
+  --color-stat-points-glow: rgba(67, 242, 200, 0.62);
+  --color-stat-rebounds-glow: rgba(120, 221, 160, 0.62);
+  --color-stat-assists-glow: rgba(98, 206, 229, 0.62);
+  --color-stat-rating-glow: rgba(183, 220, 120, 0.62);
   --color-stat-neutral-surface: rgba(255, 255, 255, 0.05);
-  --color-success-border: rgba(60, 255, 208, 0.45);
-  --color-success-surface: rgba(60, 255, 208, 0.10);
-  --color-success-glow: rgba(60, 255, 208, 0.20);
+  --color-success-border: rgba(67, 242, 200, 0.45);
+  --color-success-surface: rgba(67, 242, 200, 0.10);
+  --color-success-glow: rgba(67, 242, 200, 0.20);
   --color-ranking-bronze: #c08457;
   --color-text-score-muted: #949494;
   --color-text-score-divider: #555555;
   --color-text-row-muted: #949494;
   --color-border-tag: rgba(255, 255, 255, 0.14);
   --color-border-meta: rgba(255, 255, 255, 0.10);
-  --color-border-total: rgba(60, 255, 208, 0.35);
+  --color-border-total: rgba(67, 242, 200, 0.35);
   --color-surface-tag: rgba(0, 0, 0, 0.30);
   --color-surface-row-muted: rgba(0, 0, 0, 0.20);
   --color-table-row-hover-subtle: rgba(255, 255, 255, 0.02);
-  --color-action-primary-border-strong: rgba(60, 255, 208, 0.90);
+  --color-action-primary-border-strong: rgba(67, 242, 200, 0.90);
   --color-radar-guide: rgba(255, 255, 255, 0.08);
   --color-radar-axis: rgba(255, 255, 255, 0.06);
-  --color-radar-fill: rgba(60, 255, 208, 0.25);
-  --color-event-stage-border: rgba(60, 255, 208, 0.25);
-  --color-event-stage-border-hover: rgba(60, 255, 208, 0.45);
-  --color-event-selected-border: rgba(60, 255, 208, 0.55);
-  --color-event-selected-surface: rgba(60, 255, 208, 0.10);
-  --color-event-winner-border: rgba(255, 185, 95, 0.45);
-  --color-event-winner-surface: rgba(255, 185, 95, 0.10);
-  --color-event-winner-row: rgba(255, 185, 95, 0.08);
+  --color-radar-fill: rgba(67, 242, 200, 0.25);
+  --color-event-stage-border: rgba(67, 242, 200, 0.25);
+  --color-event-stage-border-hover: rgba(67, 242, 200, 0.45);
+  --color-event-selected-border: rgba(67, 242, 200, 0.55);
+  --color-event-selected-surface: rgba(67, 242, 200, 0.10);
+  --color-event-winner-border: rgba(216, 207, 112, 0.45);
+  --color-event-winner-surface: rgba(216, 207, 112, 0.10);
+  --color-outcome-winner: #d8cf70;
+  --color-outcome-winner-border: rgba(216, 207, 112, 0.45);
+  --color-outcome-winner-surface: rgba(216, 207, 112, 0.08);
+  --color-event-result-winner: #d8cf70;
+  --color-event-result-winner-border: rgba(216, 207, 112, 0.45);
+  --color-event-result-winner-surface: rgba(216, 207, 112, 0.08);
+  --color-event-result-winner-hover: rgba(216, 207, 112, 0.08);
+  --color-row-operational-surface: rgba(255, 255, 255, 0.045);
+  --color-row-operational-border: rgba(255, 255, 255, 0.19);
+  --color-rating-fill: #d8cf70;
+  --color-rating-empty: rgba(255, 255, 255, 0.20);
+  --color-rating-unavailable: rgba(148, 148, 148, 0.36);
+  --color-team-trace-neutral: rgba(200, 200, 200, 0.42);
+  --color-performance-segment-empty: rgba(255, 255, 255, 0.09);
+  --color-performance-segment-fill: #43f2c8;
+  --color-performance-segment-glow: rgba(67, 242, 200, 0.24);
+  /* Event pattern materials */
+  --color-event-card-surface: rgba(26, 26, 26, 0.86);
+  --color-event-card-surface-hover: rgba(29, 31, 30, 0.92);
+  --color-event-card-divider: rgba(255, 255, 255, 0.13);
+  --color-event-card-destination: rgba(255, 255, 255, 0.38);
+  --color-event-insignia-rail: rgba(255, 255, 255, 0.10);
+  --color-event-insignia-rail-strong: rgba(255, 255, 255, 0.20);
+  --color-event-insignia-facet: rgba(255, 255, 255, 0.08);
+  --color-event-insignia-shadow: rgba(0, 0, 0, 0.72);
+  --color-event-insignia-trace: rgba(255, 255, 255, 0.11);
+  --color-event-insignia-trace-active: rgba(255, 255, 255, 0.18);
+  --color-event-plaque-surface: #101111;
+  --color-event-plaque-surface-raised: #171817;
+  --color-event-plaque-edge: rgba(255, 255, 255, 0.17);
+  --color-event-plaque-rule: rgba(255, 255, 255, 0.11);
+  --color-event-plaque-rule-secondary: rgba(255, 255, 255, 0.07);
+  --color-event-plaque-registration: rgba(67, 242, 200, 0.38);
+  --color-event-plaque-mvp-trace: rgba(216, 207, 112, 0.14);
+  /* Event Tier accent channels are a documented data-visualization exception. */
+  --color-tier-s-accent: 216, 207, 112;  /* prestige lime-gold #d8cf70 */
+  --color-tier-a-accent: 98, 206, 229;   /* orbit cyan          #62cee5 */
+  --color-tier-b-accent: 67, 242, 200;   /* brand mint          #43f2c8 */
+  --color-tier-c-accent: 126, 158, 149;  /* muted jade          #7e9e95 */
 
   /* Shape and elevation */
   --radius-sharp: 0;
-  --radius-chip: 20px;
-  --radius-focus-target: 3px;
+  --radius-chip: 4px;
+  --radius-focus-target: 4px;
   --radius-control: 4px;
-  --radius-team-logo: 10px;
-  --radius-interactive-card: 16px;
-  --radius-panel: 16px;
-  --radius-large: 16px;
-  --radius-xl: 24px;
+  --radius-compact: 8px;
+  --radius-team-logo: 8px;
+  --radius-interactive: 10px;
+  --radius-interactive-card: 10px;
+  --radius-overlay: 10px;
+  --radius-panel: 12px;
+  --radius-large: 12px;
+  --radius-xl: 12px;
   --radius-pill: 999px;
   --shadow-surface: none;
+
+  /* Spacing, density, and motion */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --control-height-large: 42px;
+  --control-height-default: 40px;
+  --control-height-dense: 34px;
+  --control-height-medium: 30px;
+  --control-height-small: 28px;
+  --table-header-height: 38px;
+  --table-row-height: 46px;
+  --duration-fast: 100ms;
+  --duration-standard: 160ms;
+  --duration-slow: 220ms;
+  --easing-functional: ease-out;
 
   /* Layout constants are not part of the visual theme. */
   --layout-sidebar-width: 260px;

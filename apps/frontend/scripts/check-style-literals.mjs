@@ -7,9 +7,20 @@ const definitionFiles = new Set([
   "styles/variables.css"
 ]);
 const visualizationAllowlist = new Set([
-  // Intentional Event card and tier data-visualization gradients.
-  "features/events/components/EventTierBadge.css",
-  "pages/EventsPage/EventsPage.css"
+  // Intentional Event tier crest data-visualization gradients — now token-driven
+  // (--color-tier-*), but stays listed because it composes alpha via rgba(var(...)).
+  // Documented exception; see docs/DESIGN.md and UiRedesignReadinessFrontendPRD §7.4.
+  // (EventsPage.css was tokenized and removed — see §7.2.)
+  "features/events/components/EventTierBadge.css"
+]);
+const dynamicValueAllowlist = new Set([
+  // Team brand color is user data; fallback + luminance-contrast colors are computed at runtime.
+  "pages/TeamsPage/components/TeamCard.tsx",
+  // primaryColor default is a team brand-color data value, not a theme token.
+  "pages/CreateTeamPage/CreateTeamPage.tsx",
+  "pages/ManageTeamPage/ManageTeamPage.tsx",
+  // Hex appears only as user-facing example text in placeholder/validation copy.
+  "pages/ManageTeamPage/components/TeamEditorForm.tsx"
 ]);
 const rules = [
   { name: "color literal", pattern: /#[0-9a-f]{3,8}\b|(?:rgb|hsl)a?\(/i },
@@ -28,9 +39,13 @@ async function files(directory) {
 
 const violations = [];
 for (const file of await files(sourceRoot)) {
-  if (!/\.css$/.test(file)) continue;
+  if (!/\.(css|tsx)$/.test(file)) continue;
   const relative = path.relative(sourceRoot, file).replaceAll("\\", "/");
-  if (definitionFiles.has(relative) || visualizationAllowlist.has(relative)) continue;
+  if (
+    definitionFiles.has(relative) ||
+    visualizationAllowlist.has(relative) ||
+    dynamicValueAllowlist.has(relative)
+  ) continue;
   const lines = (await readFile(file, "utf8")).split(/\r?\n/);
   lines.forEach((line, index) => {
     for (const rule of rules) {

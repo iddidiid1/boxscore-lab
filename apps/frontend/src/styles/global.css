@@ -9,18 +9,59 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--color-canvas);
+  background:
+    radial-gradient(
+      circle at 78% -8%,
+      var(--color-background-brand-ambient-upper),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 5% 92%,
+      var(--color-background-brand-ambient-lower),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 76% -12%,
+      var(--color-background-ambient-upper),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 8% 92%,
+      var(--color-background-ambient-lower),
+      transparent 38%
+    ),
+    var(--color-canvas);
+  background-attachment: fixed;
 }
 
 a {
   color: inherit;
 }
 
+button,
+a,
+input,
+textarea,
+select,
+[tabindex] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
 .app-shell {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
   min-height: 100vh;
-  background: var(--color-app-shell);
+  background: transparent;
 }
 
 .sidebar {
@@ -74,22 +115,6 @@ a {
   color: var(--color-text-muted);
 }
 
-.status-card,
-.metric-card,
-.module-card {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-panel);
-  background: var(--color-surface-raised);
-  box-shadow: var(--shadow-surface);
-}
-
-.status-title {
-  color: var(--color-text-soft);
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-top: 5px;
-}
-
 /* ── Sidebar navigation ── */
 .nav-section-label {
   font-family: var(--font-family-data);
@@ -116,9 +141,9 @@ a {
   font-weight: 500;
   padding: 13px 22px;
   transition:
-    background-color 150ms ease,
-    color 150ms ease,
-    border-color 150ms ease;
+    background-color var(--duration-standard) var(--easing-functional),
+    color var(--duration-standard) var(--easing-functional),
+    border-color var(--duration-standard) var(--easing-functional);
 }
 
 .nav-item:hover {
@@ -167,11 +192,27 @@ a {
 
 .api-status-dot--connected {
   background: var(--color-success);
-  box-shadow: 0 0 6px var(--color-success);
+  box-shadow: 0 0 6px var(--color-success-glow);
+}
+
+.nav-item:focus-visible {
+  z-index: 1;
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: calc(var(--focus-ring-offset) * -1);
+}
+
+.nav-item:active {
+  background: var(--color-active-surface);
+  color: var(--color-text-strong);
 }
 
 .api-status-dot--checking {
-  background: var(--color-warning);
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--color-border-subtle);
+  border-top-color: var(--color-warning);
+  background: transparent;
+  animation: api-health-checking var(--duration-slow) linear infinite;
 }
 
 .api-status-dot--offline {
@@ -197,29 +238,34 @@ a {
   margin-left: auto;
 }
 
-.data-label,
-.data-point,
-.metric-value {
+.api-health-footer[data-status="connected"] .api-health-status {
+  color: var(--color-status-online);
+}
+
+.api-health-footer[data-status="checking"] .api-health-status {
+  color: var(--color-status-checking);
+}
+
+.api-health-footer[data-status="offline"] .api-health-status {
+  color: var(--color-status-offline);
+}
+
+@keyframes api-health-checking {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.data-label {
   font-family: var(--font-family-data);
 }
 
 .content {
+  min-width: 0;
   width: 100%;
   max-width: var(--layout-content-max-width);
   padding: 28px var(--layout-page-gutter);
-  background: var(--color-canvas);
-}
-
-.topbar {
-  margin-bottom: 20px;
-}
-
-.eyebrow {
-  color: var(--color-success);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  background: transparent;
 }
 
 .page-title {
@@ -233,18 +279,6 @@ a {
   margin-top: 6px;
 }
 
-.mode-chip,
-.status-chip {
-  border-radius: var(--radius-chip);
-  font-family: var(--font-family-data);
-  letter-spacing: 0;
-}
-
-.mode-chip {
-  border-color: var(--color-border);
-  color: var(--color-action-primary);
-}
-
 .data-label {
   color: var(--color-text-muted);
   font-size: 0.72rem;
@@ -253,80 +287,24 @@ a {
   text-transform: uppercase;
 }
 
-.data-point {
-  color: var(--color-text);
-  font-size: 0.75rem;
-}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    scroll-behavior: auto;
+    transition: none !important;
+  }
 
-.metric-value {
-  color: var(--color-text-strong);
-  font-size: 1.05rem;
-  font-weight: 700;
-}
+  .api-status-dot--checking {
+    animation: none;
+    border-color: var(--color-status-checking);
+    background: var(--color-status-checking);
+  }
 
-.telemetry-pip {
-  width: 18px;
-  height: 18px;
-  border-radius: var(--radius-sharp);
-}
-
-.telemetry-pip.blue {
-  background: var(--color-action-primary-emphasis);
-}
-
-.telemetry-pip.green {
-  background: var(--color-success-strong);
-}
-
-.telemetry-pip.orange {
-  background: var(--color-warning-strong);
-}
-
-.telemetry-pip.gray {
-  background: var(--color-neutral-status);
-}
-
-.active-module {
-  border-color: var(--color-action-primary-emphasis);
-}
-
-.module-card h3 {
-  color: var(--color-text-strong);
-  font-size: 1.35rem;
-}
-
-.table-module {
-  overflow-x: auto;
-}
-
-.data-table {
-  min-width: 420px;
-}
-
-.data-table th {
-  color: var(--color-text-muted);
-  font-family: var(--font-family-data);
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.data-table td {
-  color: var(--color-text);
-  border-color: var(--color-border);
-  font-size: 0.82rem;
-}
-
-.rule-line {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-control);
-  background: var(--color-surface-inset);
-  padding: 10px 12px;
-}
-
-.rule-line p:first-child {
-  color: var(--color-text-soft);
-  font-size: 0.86rem;
+  .nav-item {
+    transition: none;
+  }
 }
 
 @media (max-width: 760px) {
@@ -350,9 +328,5 @@ a {
 
   .content {
     padding: 20px var(--layout-page-gutter-mobile);
-  }
-
-  .topbar {
-    flex-direction: column;
   }
 }

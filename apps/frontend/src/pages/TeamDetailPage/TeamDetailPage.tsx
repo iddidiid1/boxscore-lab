@@ -1,6 +1,6 @@
 import { Alert, Anchor, Box, Button, Group, Skeleton, Stack, Text } from "@mantine/core";
 import { Pencil } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { fetchTeam, type TeamDetail } from "../../features/teams";
 import { RosterTable, type Player } from "./components/RosterTable";
 import { TeamRadarCard, type TeamRadarAttribute } from "./components/TeamRadarCard";
@@ -72,6 +72,12 @@ function mapPlayers(team: TeamDetail): Player[] {
   }));
 }
 
+function getTeamTrace(primaryColor: string | null) {
+  return primaryColor && /^#[\da-f]{6}$/i.test(primaryColor)
+    ? primaryColor
+    : "var(--color-team-trace-neutral)";
+}
+
 export function TeamDetailPage() {
   const slug = getSlugFromPath();
   const [team, setTeam] = useState<TeamDetail | null>(null);
@@ -101,9 +107,9 @@ export function TeamDetailPage() {
   if (isLoading) {
     return (
       <Stack className="team-detail-page" gap="md">
-        <Skeleton height={40} radius={4} />
-        <Skeleton height={280} radius={6} />
-        <Skeleton height={160} radius={6} />
+        <Skeleton height={40} radius="xs" />
+        <Skeleton height={280} radius="sm" />
+        <Skeleton height={160} radius="sm" />
       </Stack>
     );
   }
@@ -111,7 +117,7 @@ export function TeamDetailPage() {
   if (error || team === null) {
     return (
       <Stack className="team-detail-page" gap="md">
-        <Anchor className="team-detail-back-link" href="/teams">
+        <Anchor className="team-detail-back-link app-detail-back-link" href="/teams">
           {"\u2190 Back to Teams"}
         </Anchor>
         <Alert color="red" title="Team not found">
@@ -124,7 +130,7 @@ export function TeamDetailPage() {
   return (
     <Stack className="team-detail-page" gap="md">
       <Group className="team-detail-actions" justify="space-between">
-        <Anchor className="team-detail-back-link" href="/teams">
+        <Anchor className="team-detail-back-link app-detail-back-link" href="/teams">
           {"\u2190 Back to Teams"}
         </Anchor>
         {team.archivedAt === null ? (
@@ -145,13 +151,16 @@ export function TeamDetailPage() {
         </Alert>
       ) : null}
 
-      <Box className="team-detail-hero">
+      <Box
+        className="team-detail-hero app-surface app-surface--identity"
+        style={{ "--team-trace": getTeamTrace(team.primaryColor) } as CSSProperties}
+      >
         <TeamProfileSummary
           description={team.description ?? ""}
           division={team.divisionName ?? "No Division"}
           logoUrl={team.logoUrl ?? undefined}
           name={team.name}
-          overallRating={team.overallRating ?? 0}
+          overallRating={team.overallRating}
           points={team.totalPoints}
         />
         <TeamRadarCard attributes={mapRadar(team)} />
