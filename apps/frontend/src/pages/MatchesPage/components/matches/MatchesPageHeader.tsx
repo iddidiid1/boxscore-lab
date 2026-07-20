@@ -5,7 +5,6 @@ export function MatchesPageHeader() {
   return (
     <Group align="flex-start" className="matches-header" justify="space-between">
       <Box>
-        <Text className="eyebrow">Match records</Text>
         <Title className="page-title" order={1}>
           Matches
         </Title>

@@ -81,13 +81,13 @@ This is an incremental maintainability task, not a request to redesign the curre
   - [x] Run frontend type checking, build, and residual literal scan.
   - [x] Confirm the list/detail routes' default visual state through user review.
   - [ ] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
-- [ ] Batch 3 - Match History and Entry (`MatchesPage`, `CreateMatchPage`, `EditMatchPage`, and `MatchDetailPage`).
+- [x] Batch 3 - Match History and Entry (`MatchesPage`, `CreateMatchPage`, `EditMatchPage`, and `MatchDetailPage`).
   - [x] Replace page-level visual literals with semantic tokens across all four routes.
   - [x] Reuse shared action-button, panel, form-control, and table styles where the existing structure supports them.
   - [x] Preserve dynamic team colors, score hierarchy, dense table overflow, and void/restore semantics.
   - [x] Run frontend type checking, build, residual literal scan, and diff checks.
   - [x] Confirm the routes' default visual state through user review.
-  - [ ] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
+  - [x] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
 - [ ] Batch 4 - Team Browsing (`TeamsPage` and `TeamDetailPage`).
   - [x] Replace page-level visual literals with semantic and radar visualization tokens.
   - [x] Reuse shared action-button, panel, and table styles across list and detail routes.
@@ -161,6 +161,28 @@ This is an incremental maintainability task, not a request to redesign the curre
 - [x] Verify 16-Team loaded scenarios, five/two/one-column awards reflow,
   560/760/980/1440px behavior, local table overflow, no whole-page overflow,
   keyboard semantics, and browser console output.
+- [x] Run frontend style literal checking, type checking, production build,
+  diff checking, and browser console-error inspection.
+
+### Editorial Scoreboard M5 - Match Patterns
+
+- [x] Migrate Matches Overview to no-eyebrow framing, weak Filter region,
+  Scoreline Rail links, shared Team Artwork, list-only Trophy plus Winner,
+  shape-preserving loading, retained refresh feedback, and integrated
+  pagination.
+- [x] Migrate Match Detail to Arena Scoreline without a Winner marker, shared
+  Team Artwork, two Box Score Data Bays, Operational Neutral Other rows, and
+  strong API-score Team Total rows.
+- [x] Migrate Match Create/Edit to no-eyebrow framing, Editorial Outline
+  information fields, two HOME/AWAY Data Entry Bays, live scores, Filled
+  Played checkboxes, dense Number Inputs, and Operational Neutral Other rows.
+- [x] Preserve native `datetime-local`, list filters/pagination, Match payload,
+  equal-score submit guard, Void/Restore wiring, historical Event read-only
+  behavior, inactive Player retention, and archived Team restrictions.
+- [x] Verify real Match Overview/Detail/Edit routes at desktop plus 760/560px,
+  whole-card link semantics, list/detail Winner distinction, initials
+  fallback, native date-time input, Played enable/disable behavior, Team
+  Totals, local table overflow, and no whole-page horizontal overflow.
 - [x] Run frontend style literal checking, type checking, production build,
   diff checking, and browser console-error inspection.
 
