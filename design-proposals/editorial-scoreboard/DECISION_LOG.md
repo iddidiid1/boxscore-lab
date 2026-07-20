@@ -3673,3 +3673,39 @@ Gate E2 and M0 do not authorize page-by-page implementation, business-logic
 changes, API changes, or the Player Awards selection workflow redesign.
 Application migration follows the approved M1–M6 batches and the project's
 frontend PRD approval workflow.
+
+## UI-DEC-060 — Keep Event Detail Champion in Final Team Results
+
+- Date: 2026-07-20
+- Inventory IDs: `PAG-PAT-002`, `TBL-CMP-006`
+- Batch: M4 Event Patterns implementation clarification
+- State: Approved
+- Approved by: User
+
+### Context
+
+M4 implementation confirmed that the Event list response owns an optional
+`champion` summary while the existing Event detail response does not duplicate
+that field. Event Detail already presents the winning Team in Final Team
+Results through the Championship Gold Winner row with Trophy and explicit
+result text.
+
+The earlier E5 scenario preview included an optional Champion fact in the
+Detail identity field. Adding it to the real page would require an API contract
+change or a new frontend derivation rule, neither of which belongs to the
+approved M4 visual migration.
+
+### Decision
+
+Do not display Champion in the Event Detail hero.
+
+- Event Summary Card continues to use the list response's optional Champion
+  strip.
+- Event Detail users inspect Champion in Final Team Results.
+- The Winner row remains the sole Event Detail Champion presentation.
+- Frontend must not derive a hero Champion from ResultTag, points, or array
+  order.
+- No Backend, Schema, or API change is required.
+
+This decision supersedes only the optional Detail Champion fact described in
+UI-DEC-053. All other Event Detail composition decisions remain approved.

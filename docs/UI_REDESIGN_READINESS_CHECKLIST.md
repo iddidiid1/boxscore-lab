@@ -101,7 +101,7 @@ This is an incremental maintainability task, not a request to redesign the curre
   - [x] Tokenize `EventTierBadge.css` and register the Tier Crest as a documented data-visualization exception in `docs/DESIGN.md` (A tier recolored to uv violet) — see PRD §7.4; file stays allowlisted as it composes alpha via `rgba(var(--tier-accent), α)`.
   - [x] Run frontend type checking, build, and diff checks.
   - [x] Confirm the routes' default visual state through user review.
-  - [ ] Complete desktop/mobile and interactive-state browser verification when browser tooling is available.
+  - [x] Complete desktop/mobile and interactive-state browser verification.
 - [x] Batch 6 - Shared Cleanup and Regression Guard.
 - [x] During each migration, preserve layout, responsive breakpoints, DOM structure, and behavior unless separately requested.
 - [ ] Remove obsolete selectors after each page is migrated.
@@ -138,6 +138,29 @@ This is an incremental maintainability task, not a request to redesign the curre
 - [x] Verify loaded/failed artwork recovery, initials fallback, zero/partial
   meter states, award-time Team, 560/760/900/980px stacking, and no whole-page
   overflow.
+- [x] Run frontend style literal checking, type checking, production build,
+  diff checking, and browser console-error inspection.
+
+### Editorial Scoreboard M4 - Event Patterns
+
+- [x] Replace the filled Tier Crest with one compact/detail Tournament
+  Insignia anatomy and parent-card-only interaction response.
+- [x] Migrate Events Overview to Insignia Rail cards with Semantic Status,
+  open Champion strip, quiet Team-count footer, and shape-preserving loading.
+- [x] Migrate Event Detail to a 16-Team full-width ruled Participants roster,
+  compact peer Tag sections, the existing Data Bay Results table, and one
+  read-only Black Metal Player Awards Plaque; keep Champion lookup in the
+  Final Team Results Winner row instead of duplicating it in the hero.
+- [x] Migrate Event Create/Edit to no-eyebrow Page Header, Editorial Outline
+  work areas, four/two/one-column checkbox roster, Data Entry ResultTag table,
+  and disabled order boundaries.
+- [x] Migrate Event Results & Awards framing, Team Results table, award counts,
+  and shared controls without changing the existing Awards selection workflow.
+- [x] Remove the unused participant-chip selector and legacy filled-crest,
+  nested Champion, footer-status, and nested award-card selectors.
+- [x] Verify 16-Team loaded scenarios, five/two/one-column awards reflow,
+  560/760/980/1440px behavior, local table overflow, no whole-page overflow,
+  keyboard semantics, and browser console output.
 - [x] Run frontend style literal checking, type checking, production build,
   diff checking, and browser console-error inspection.
 

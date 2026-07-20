@@ -217,12 +217,14 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
 
 - **Layout**: 详情页展示完整 Event 信息，但保持高密度分区。
 - **Sections**:
-  - Header: name、tier、status、description、participant count、champion
+  - Header: name、tier、status、description、participant count
   - Participants
   - Stage tags
   - Result tags
   - Team results
   - Player awards
+- Event Detail 不在 Header 重复展示 champion summary；用户通过 Final team
+  results 中带 Trophy 与 Championship Gold 的 Winner row 查阅 Champion。
 - **Actions**:
   - `Edit Event` 跳转 `/events/:slug/edit`
   - `Manage Results & Awards` 跳转 `/events/:slug/outcomes`
@@ -339,8 +341,12 @@ Event API/domain 类型中的 `status` 必须直接使用后端枚举值 `PREPAR
 - Event slug 由后端创建时生成且不可变；前端编辑 Event name 后仍使用原 slug 跳转和调用 API。
 - 前端不得发送派生统计字段，例如 `totalPoints`、standings rank、player averages。
 - Event 列表页使用 `GET /api/events` 返回的 champion summary，不在前端重新推导完整结果。
-- 尚无 champion 时后端稳定返回 `champion: null`，前端显示未产生冠军的空状态，不将字段缺失视为另一套契约。
+- 尚无 champion 时，Event list response 稳定返回 `champion: null`；列表卡片
+  省略 Champion strip，不将字段缺失视为另一套契约。
 - Event 详情页、编辑页和 outcomes 页都使用 `GET /api/events/:slug` 作为单个 Event 的权威数据源。
+- Event detail response 不包含重复的 `champion` summary。详情页不从
+  `teamResults`、`resultTags`、最高分或数组顺序推导 Header Champion；Final
+  team results Winner row 是详情页的胜者呈现。
 - Event 详情中的 participants、award candidates、tags、team results 和 player awards 使用 Backend PRD 定义的稳定顺序；前端不得使用相互冲突的默认排序覆盖后端顺序。
 - `GET /api/teams` 返回按 Division 分组的数据；参与球队候选项只使用未归档且具有有效 Division 的 Team，后端仍负责最终资格校验。
 - EventForm 必须将 `divisions[].teams[]` 展开为保留 Team 与 Division 标识的 `TeamOption[]`；选择状态使用 `teamId`，请求 payload 只发送 `participantTeamIds`。前端可按 Division 分组渲染，但不得改变 API 内既有分组和球队顺序。
