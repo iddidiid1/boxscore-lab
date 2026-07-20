@@ -1,5 +1,8 @@
 # Editorial Scoreboard Shared Primitives Frontend PRD
 
+> 阶段定义：本 PRD 属于 [Editorial Scoreboard 迁移 PRD 索引](./EditorialScoreboardMigrationIndex.md)
+> 的 **M1 — Foundation and Shared Primitives**。
+
 ## 1. 目标
 
 将已经通过 Gate E2 并在 M0 正式化的 Editorial Scoreboard Foundation 与跨页面 Shared Primitives 实施到前端，使背景、排版、间距、圆角、边框、焦点、动效、表面、操作按钮、链接、表单控件、Badge/Tag、API Health、反馈状态与确认对话框由一致的语义 token、Mantine theme 和小型共享样式/组件控制，为后续 M2–M5 的 Data Display 与 Team、Player、Event、Match 业务 Pattern 迁移建立稳定基础。

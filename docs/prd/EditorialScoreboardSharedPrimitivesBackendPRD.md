@@ -1,5 +1,8 @@
 # Editorial Scoreboard Shared Primitives Backend PRD
 
+> 阶段定义：本 PRD 属于 [Editorial Scoreboard 迁移 PRD 索引](./EditorialScoreboardMigrationIndex.md)
+> 的 **M1 — Foundation and Shared Primitives**。
+
 ## 1. 目标
 
 确认 Editorial Scoreboard M1 Foundation and Shared Primitives 是纯前端视觉系统迁移，不需要后端、Prisma Schema、数据库、API 契约、业务规则或错误响应发生任何变化；通过独立 Backend PRD 明确该边界，防止视觉实现过程中无意扩大到数据或业务层。

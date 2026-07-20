@@ -1,5 +1,8 @@
 # Editorial Scoreboard Event Patterns Backend PRD
 
+> 阶段定义：本 PRD 属于 [Editorial Scoreboard 迁移 PRD 索引](./EditorialScoreboardMigrationIndex.md)
+> 的 **M4 — Event Patterns**。
+
 ## 1. 目标
 
 确认 Editorial Scoreboard M4 Event Patterns 是建立在现有 Event Management

@@ -1,5 +1,8 @@
 # Editorial Scoreboard Data Display Backend PRD
 
+> 阶段定义：本 PRD 属于 [Editorial Scoreboard 迁移 PRD 索引](./EditorialScoreboardMigrationIndex.md)
+> 的 **M2 — Data Display**。
+
 ## 1. 目标
 
 确认 Editorial Scoreboard M2 Data Display 是建立在现有 Team、Player、Event、

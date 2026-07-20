@@ -1,5 +1,8 @@
 # Editorial Scoreboard Team Player Patterns Frontend PRD
 
+> 阶段定义：本 PRD 属于 [Editorial Scoreboard 迁移 PRD 索引](./EditorialScoreboardMigrationIndex.md)
+> 的 **M3 — Team and Player Patterns**。
+
 ## 1. 目标
 
 实施 Editorial Scoreboard M3 Team and Player Patterns，在不改变现有内容、数据流、

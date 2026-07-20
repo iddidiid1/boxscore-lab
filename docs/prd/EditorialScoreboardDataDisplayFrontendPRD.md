@@ -1,5 +1,8 @@
 # Editorial Scoreboard Data Display Frontend PRD
 
+> 阶段定义：本 PRD 属于 [Editorial Scoreboard 迁移 PRD 索引](./EditorialScoreboardMigrationIndex.md)
+> 的 **M2 — Data Display**。
+
 ## 1. 目标
 
 实施 Editorial Scoreboard M2 Data Display，将项目中重复出现的数据表格、排序表头、
