@@ -13,7 +13,11 @@ export function MatchScoreHeader({ match }: { match: MatchDetail }) {
       <Group className="match-detail-meta" gap="xs">
         <Text className="match-detail-event">{match.event.name}</Text>
         {match.stageTag ? (
-          <Badge className="match-detail-tag" variant="light">
+          <Badge
+            className="match-detail-tag app-edge-plate"
+            title={match.stageTag.label}
+            variant="light"
+          >
             {match.stageTag.label}
           </Badge>
         ) : (

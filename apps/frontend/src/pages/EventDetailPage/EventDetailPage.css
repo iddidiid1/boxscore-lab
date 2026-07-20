@@ -130,7 +130,6 @@
 .event-participant-unavailable {
   flex: 0 0 auto;
   min-height: 22px;
-  border-color: var(--color-border);
   color: var(--color-text-muted);
   font-size: 0.56rem;
   letter-spacing: 0.04em;
@@ -171,27 +170,15 @@
 }
 
 .event-stage-chip {
-  border: 1px solid var(--color-event-stage-border);
-  background: var(--color-surface-control);
-  color: var(--color-action-primary);
+  --app-edge-plate-tone: var(--color-action-primary);
 }
 
 .event-result-chip {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--color-border-tag);
-  background:
-    linear-gradient(135deg, var(--color-background-ambient-upper), transparent 55%),
-    var(--color-surface-tag);
-  clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+  --app-edge-plate-tone: var(--color-text-muted);
 }
 
 .event-result-chip[data-winner] {
-  border-color: var(--color-event-winner-border);
-  background:
-    linear-gradient(135deg, var(--color-event-winner-surface), transparent 62%),
-    var(--color-surface-tag);
-  color: var(--color-warning);
+  --app-edge-plate-tone: var(--color-warning);
 }
 
 .event-results-panel {

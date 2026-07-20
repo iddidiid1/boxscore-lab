@@ -17,7 +17,7 @@ export function EventStageTagsPanel({ tags }: EventStageTagsPanelProps) {
 
         <Group className="event-tag-chip-row" gap="xs">
           {tags.map((tag) => (
-            <Box className="event-stage-chip" key={tag.id}>
+            <Box className="event-stage-chip app-edge-plate" key={tag.id}>
               <Text>{tag.label}</Text>
             </Box>
           ))}

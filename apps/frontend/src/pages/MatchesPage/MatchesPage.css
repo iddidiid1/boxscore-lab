@@ -149,10 +149,8 @@
 }
 
 .match-tag-badge {
+  --app-edge-plate-tone: var(--color-action-primary);
   max-width: 100%;
-  border: 1px solid var(--color-event-stage-border);
-  border-radius: var(--radius-chip);
-  background: var(--color-surface-tag);
   color: var(--color-text-soft);
   font-family: var(--font-family-data);
   font-size: 0.6rem;

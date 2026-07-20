@@ -248,9 +248,14 @@ Selects and Filter Selects share the same primitive.
 The default compact treatment is a **Neutral Gradient Edge Plate**:
 
 - 4px geometry;
-- restrained cut-corner gradient field;
-- short semantic leading edge;
+- near-black plate with a neutral directional highlight;
+- restrained top highlight and 2px semantic leading edge;
 - label and/or icon provides a non-color signal.
+
+The plate keeps a rectangular 4px silhouette. Cut-corner, complete outline, and
+soft semantic-fill variants are not part of the shared Badge/Tag language.
+Semantic color stays concentrated in the leading edge, icon, or dot; ordinary
+label text remains neutral.
 
 An **Open Marker** may be used as a contained-inline exception. Event Stage Chip
 is larger and independently placed; Match Stage and Result Tags converge on one
